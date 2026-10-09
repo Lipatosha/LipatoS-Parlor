@@ -1,13 +1,24 @@
 # LipatoS — Parlor
 
-Integrated Parlor Casino Simulator (1.3.4) and Fantasy Tavern (1.0.3) as a single Foundry VTT module.
+Единый модуль для Foundry VTT: **Parlor Casino Simulator** и тема **Fantasy Tavern**.
 
-- Module ID remains `parlor` to retain existing world settings and paths.
-- The Tavern theme is registered during core `init`, after the internal API is assigned.
-- Supports Foundry VTT 13+, declared compatibility verified for V14 by original authors. Runtime tests in Foundry V14 and dnd5e 6.0.6 are still required.
-- Both former components are maintained in the same package; install ONLY this merged module.
-- Original license and attribution notices remain in the repository.
+## Версия 1.5.0 — ручная русификация
 
-## Development
+- Все **2 202** исходных ключа интерфейса переведены на русский вручную, без онлайн-переводчиков.
+- Сохранены все идентификаторы локализации, плейсхолдеры и пути.
+- Русский язык включён в `module.json`; английский и китайский языки сохранены.
+- Исправленная терминология для казино, карт, ставок, жучиных бегов и оформления таверны.
 
-Source: `scripts/`; integrated theme: `scripts/tavern/`; theme styles: `styles/tavern.css`.
+### Установка в Foundry
+
+Манифест: https://github.com/Lipatosha/LipatoS-Parlor/releases/latest/download/module.json
+
+Модуль использует ID `parlor`, поэтому сохраняет существующие настройки мира. Отдельно устанавливать прежние Parlor Casino Simulator и Fantasy Tavern **не нужно**.
+
+Поддерживаемая версия Foundry: V13 и V14, согласно манифесту. Работа непосредственно в мире Foundry V14 и с dnd5e 6.0.6 требует дополнительной проверки.
+
+## Разработка и права
+
+Основной код: `scripts/`; встроенная тема таверны: `scripts/tavern/`; стили: `styles/`; переводы: `languages/`.
+
+Исходные лицензии и уведомления об авторстве сохранены в репозитории.
