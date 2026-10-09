@@ -1,8 +1,8 @@
 {
   "id": "parlor",
   "title": "LipatoS — Parlor",
-  "description": "Integrated casino and fantasy tavern games for Foundry VTT; includes the Fantasy Tavern theme.",
-  "version": "1.4.0",
+  "description": "Полностью русифицированный модуль казино и фэнтезийной таверны с карточными играми, ставками, жучиными бегами и оформлением игровых столов для Foundry VTT.",
+  "version": "1.5.0",
   "manifest": "https://github.com/Lipatosha/LipatoS-Parlor/releases/latest/download/module.json",
   "url": "https://github.com/Lipatosha/LipatoS-Parlor",
   "compatibility": {
@@ -44,7 +44,12 @@
       "lang": "cn",
       "name": "简体中文",
       "path": "languages/cn.json"
+    },
+    {
+      "lang": "ru",
+      "name": "Русский",
+      "path": "languages/ru.json"
     }
   ],
-  "download": "https://github.com/Lipatosha/LipatoS-Parlor/releases/download/v1.4.0/lipatos-parlor-v1.4.0.zip"
+  "download": "https://github.com/Lipatosha/LipatoS-Parlor/releases/download/v1.5.0/lipatos-parlor-v1.5.0.zip"
 }
