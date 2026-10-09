@@ -2,7 +2,7 @@ name: Publish Foundry module
 on:
   push:
     branches: [main]
-    paths: ['lipatos-parlor-v1.4.0.zip', '.github/workflows/release.yml']
+    paths: ['lipatos-parlor-v1.4.0.zip', '.github/workflows/release.yml', 'module.json', 'languages/ru.json']
     tags: ['v*']
   workflow_dispatch:
 permissions:
