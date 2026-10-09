@@ -1,0 +1,505 @@
+/* Three Card Poker 专用样式
+   这桌继续吃共享座位卡和 HUD，只把布局和细节单独收一层。 */
+
+#parlor-tcp-overlay[data-tcp-style="v14"] {
+    --tcp-layout-max-w: 1880px;
+    position: fixed;
+    inset: 0;
+    z-index: 2100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 18px 124px;
+    box-sizing: border-box;
+}
+
+#parlor-tcp-overlay[data-tcp-style="v14"] .parlor-tcp-backdrop {
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(circle at 50% 10%, rgba(255,215,133,0.13), transparent 28%),
+        radial-gradient(circle at 18% 52%, rgba(70,34,18,0.2), transparent 34%),
+        radial-gradient(circle at 82% 48%, rgba(20,74,52,0.18), transparent 32%),
+        rgba(4,7,6,0.94);
+    backdrop-filter: blur(10px) saturate(0.92);
+}
+
+#parlor-tcp-overlay[data-tcp-style="v14"] .parlor-tcp-layout {
+    position: relative;
+    z-index: 1;
+    width: min(var(--tcp-layout-max-w), calc(100vw - 36px));
+    display: grid;
+    grid-template-columns: 252px minmax(0, 1fr) 252px;
+    align-items: center;
+    gap: clamp(8px, 1vw, 18px);
+}
+
+#parlor-tcp-overlay[data-tcp-style="v14"] .parlor-tcp-scene {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 2200 / 1080;
+}
+
+#parlor-tcp-overlay[data-tcp-style="v14"] .parlor-tcp-scene::before {
+    content: '';
+    position: absolute;
+    inset: 14% 12% 16%;
+    border-radius: 50%;
+    background: radial-gradient(ellipse at center, rgba(42,130,87,0.48), rgba(10,26,18,0) 72%);
+    filter: blur(72px);
+    opacity: 0.86;
+    pointer-events: none;
+}
+
+/* 桌面氛围层：顶部吊灯聚光 + 椭圆内描金 + 桌缘 vignette 暗角。
+   tcp 复用 bj 的 SVG（viewBox 2200×1080，felt 在 242,172,1716,736），inset 16% 11% */
+#parlor-tcp-overlay[data-tcp-style="v14"] .parlor-tcp-scene::after {
+    content: '';
+    position: absolute;
+    inset: 16% 11%;
+    border-radius: 999px;
+    pointer-events: none;
+    background:
+        radial-gradient(ellipse 52% 34% at 50% 4%, rgba(255,242,200,0.40), rgba(255,242,200,0) 68%);
+    box-shadow:
+        inset 0 0 0 2px rgba(255,219,148,0.50),
+        inset 0 0 14px 0 rgba(255,219,148,0.22),
+        inset 0 0 110px 14px rgba(0,0,0,0.62);
+}
+
+#parlor-tcp-overlay[data-tcp-style="v14"] .parlor-tcp-table {
+    position: absolute;
+    inset: 0;
+}
+
+#parlor-tcp-overlay[data-tcp-style="v14"] .parlor-tcp-table-svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    filter: saturate(1.02) contrast(1.01);
+}
+
+#parlor-tcp-overlay[data-tcp-style="v14"] .parlor-tcp-stage {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: clamp(18px, 2.6vh, 28px);
+    padding: clamp(28px, 3.2%, 42px) clamp(168px, 10.1%, 228px) clamp(64px, 6%, 88px);
+    box-sizing: border-box;
+}
+
+#parlor-tcp-overlay[data-tcp-style="v14"] .parlor-tcp-game-badge,
+#parlor-tcp-overlay[data-tcp-style="v14"] .parlor-tcp-dealer-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 20px;
+    border-radius: 999px;
+    background: linear-gradient(180deg, rgba(40,28,8,0.94), rgba(12,10,4,0.9));
+    border: 1px solid rgba(255,225,156,0.22);
+    color: #ffe6ab;
+    box-shadow: 0 10px 18px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,247,221,0.12);
+}
+
+#parlor-tcp-overlay[data-tcp-style="v14"] .parlor-tcp-dealer-zone {
+    width: min(100%, 780px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+
+#parlor-tcp-overlay[data-tcp-style="v14"] .parlor-tcp-dealer-cards {
+    min-height: 196px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+}
+
+#parlor-tcp-overlay[data-tcp-style="v14"] .parlor-tcp-dealer-qualifier {
+    margin-left: 6px;
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-size: 0.72rem;
+}
+
+#parlor-tcp-overlay[data-tcp-style="v14"] .parlor-tcp-dealer-qualifier.is-qualified {
+    color: #dffff1;
+    background: rgba(86, 190, 148, 0.18);
+}
+
+#parlor-tcp-overlay[data-tcp-style="v14"] .parlor-tcp-dealer-qualifier.is-soft {
+    color: #ffe6af;
+    background: rgba(166, 119, 41, 0.2);
+}
+
+#parlor-tcp-overlay[data-tcp-style="v14"] .parlor-tcp-center {
+    width: min(100%, 620px);
+}
+
+#parlor-tcp-overlay[data-tcp-style="v14"] .parlor-tcp-center:empty {
+    display: none;
+}
+
+#parlor-tcp-overlay[data-tcp-style="v14"] .parlor-tcp-prompt {
+    position: relative;
+    padding: 18px 22px 20px;
+    border-radius: 22px;
+    border: 1px solid rgba(255,231,176,0.14);
+    background:
+        linear-gradient(180deg, rgba(10,28,19,0.82), rgba(6,18,12,0.74)),
+        var(--parlor-felt-texture) center / 240px 240px repeat;
+    background-blend-mode: normal, multiply;
+    color: #f0e5c9;
+    box-shadow: 0 12px 24px rgba(0,0,0,0.16), inset 0 1px 0 rgba(255,244,214,0.06);
+    text-align: center;
+    overflow: hidden;
+}
+
+#parlor-tcp-overlay[data-tcp-style="v14"] .parlor-tcp-prompt::before {
+    content: '';
+    position: absolute;
+    inset: 3px;
+    border-radius: 18px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0));
+    opacity: 0.68;
+    pointer-events: none;
+}
+
+#parlor-tcp-overlay[data-tcp-style="v14"] .parlor-tcp-prompt > * {
+    position: relative;
+    z-index: 1;
+}
+
+#parlor-tcp-overlay[data-tcp-style="v14"] .parlor-tcp-prompt-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+#parlor-tcp-overlay[data-tcp-style="v14"] .parlor-tcp-prompt-phase,
+#parlor-tcp-overlay[data-tcp-style="v14"] .parlor-tcp-prompt-round {
+    min-height: 30px;
+    padding: 0 12px;
+    display: inline-flex;
+    align-items: center;
+    border-radius: 999px;
+    font-size: 0.74rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+}
+
+#parlor-tcp-overlay[data-tcp-style="v14"] .parlor-tcp-prompt-phase {
+    background: rgba(255,225,158,0.12);
+    border: 1px solid rgba(255,231,176,0.16);
+    color: #ffe6ad;
+}
+
+#parlor-tcp-overlay[data-tcp-style="v14"] .parlor-tcp-prompt-round {
+    background: rgba(7,16,12,0.42);
+    border: 1px solid rgba(255,231,176,0.08);
+    color: rgba(240,229,201,0.72);
+}
+
+#parlor-tcp-overlay[data-tcp-style="v14"] .parlor-tcp-prompt-title {
+    font-size: 1.08rem;
+    font-weight: 700;
+    color: #fff0c9;
+}
+
+#parlor-tcp-overlay[data-tcp-style="v14"] .parlor-tcp-prompt-sub {
+    margin-top: 8px;
+    color: rgba(240,229,201,0.88);
+    line-height: 1.5;
+}
+
+#parlor-tcp-overlay[data-tcp-style="v14"] .parlor-tcp-prompt-stats {
+    margin-top: 14px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+    gap: 10px;
+}
+
+#parlor-tcp-overlay[data-tcp-style="v14"] .parlor-tcp-prompt-stat {
+    padding: 11px 12px;
+    border-radius: 16px;
+    background: rgba(7,16,12,0.34);
+    border: 1px solid rgba(255,231,176,0.08);
+    text-align: left;
+}
+
+#parlor-tcp-overlay[data-tcp-style="v14"] .parlor-tcp-prompt-stat-label {
+    color: rgba(240,229,201,0.62);
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+}
+
+#parlor-tcp-overlay[data-tcp-style="v14"] .parlor-tcp-prompt-stat-value {
+    margin-top: 5px;
+    color: #fff0c9;
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+#parlor-tcp-overlay[data-tcp-style="v14"] .parlor-tcp-prompt-note {
+    margin-top: 12px;
+    padding-top: 11px;
+    border-top: 1px solid rgba(255,231,176,0.08);
+    color: rgba(240,229,201,0.72);
+    font-size: 0.8rem;
+    line-height: 1.55;
+}
+
+#parlor-tcp-overlay[data-tcp-style="v14"] .parlor-tcp-prompt-actions {
+    margin-top: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+#parlor-tcp-overlay[data-tcp-style="v14"] .parlor-tcp-prompt.tone-active {
+    border-color: rgba(121,227,179,0.18);
+}
+
+#parlor-tcp-overlay[data-tcp-style="v14"] .parlor-tcp-prompt.tone-ready .parlor-tcp-prompt-phase {
+    background: rgba(185,224,255,0.12);
+    color: #dcefff;
+}
+
+#parlor-tcp-overlay[data-tcp-style="v14"] .parlor-tcp-prompt.tone-dealing .parlor-tcp-prompt-phase {
+    background: rgba(255,205,146,0.14);
+    color: #ffe1b1;
+}
+
+#parlor-tcp-overlay[data-tcp-style="v14"] .parlor-tcp-seat {
+    max-width: 242px;
+    --parlor-seat-min-h: 178px;
+    align-items: flex-start;
+}
+
+#parlor-tcp-overlay[data-tcp-style="v14"] .parlor-tcp-seat .parlor-seat-info {
+    min-height: 0;
+}
+
+#parlor-tcp-overlay[data-tcp-style="v14"] .parlor-tcp-seat-tags,
+#parlor-hand-hud .parlor-tcp-hud-tags {
+    display: flex;
+    align-items: center;
+    align-content: flex-start;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+#parlor-tcp-overlay[data-tcp-style="v14"] .parlor-tcp-seat-tags {
+    min-height: 0;
+}
+
+#parlor-tcp-overlay[data-tcp-style="v14"] .parlor-tcp-seat-pill {
+    min-height: 26px;
+    padding: 4px 10px;
+    display: inline-flex;
+    align-items: center;
+    border-radius: 999px;
+    background: rgba(7,16,12,0.44);
+    border: 1px solid rgba(255,232,176,0.08);
+    color: #f2e3b8;
+    font-size: 0.72rem;
+    font-weight: 700;
+}
+
+#parlor-tcp-overlay[data-tcp-style="v14"] .parlor-tcp-seat-pill.is-accent {
+    background: rgba(167,115,34,0.24);
+    color: #fff2cd;
+}
+
+#parlor-tcp-overlay[data-tcp-style="v14"] .parlor-tcp-seat-pill.is-empty {
+    color: rgba(242,227,184,0.5);
+}
+
+#parlor-tcp-overlay[data-tcp-style="v14"] .parlor-tcp-seat-cards {
+    min-height: 96px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+#parlor-tcp-overlay[data-tcp-style="v14"] .parlor-tcp-seat-empty {
+    color: rgba(240,229,201,0.54);
+    font-size: 0.8rem;
+}
+
+#parlor-tcp-overlay[data-tcp-style="v14"] .parlor-tcp-seat-note {
+    min-height: 0;
+    color: rgba(240,229,201,0.72);
+    font-size: 0.78rem;
+    line-height: 1.45;
+}
+
+#parlor-tcp-overlay[data-tcp-style="v14"] .parlor-tcp-close-btn {
+    position: fixed;
+    top: 18px;
+    right: 20px;
+    z-index: 100001;
+    width: 42px;
+    height: 42px;
+    border-radius: 999px;
+    border: 1px solid rgba(255,236,184,0.18);
+    background: linear-gradient(180deg, rgba(18,26,21,0.95), rgba(7,12,10,0.92));
+    color: #f3e4ba;
+    box-shadow: 0 12px 22px rgba(0,0,0,0.3);
+}
+
+#parlor-hand-hud .parlor-tcp-hud-shell {
+    grid-template-columns: minmax(230px, 1.02fr) minmax(260px, 1fr) minmax(360px, 1.18fr);
+    gap: 18px;
+}
+
+#parlor-hand-hud .parlor-tcp-hud-context {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+#parlor-hand-hud .parlor-tcp-hud-select,
+#parlor-hand-hud .parlor-tcp-hud-name {
+    color: #fff0ca;
+    font-size: 0.95rem;
+    font-weight: 700;
+}
+
+#parlor-hand-hud .parlor-tcp-hud-select {
+    min-width: 0;
+    padding: 7px 10px;
+    border-radius: 12px;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,236,184,0.14);
+}
+
+#parlor-hand-hud .parlor-tcp-hud-betbox {
+    width: 100%;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+#parlor-hand-hud .parlor-tcp-hud-field {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    color: rgba(236,224,190,0.72);
+    font-size: 0.74rem;
+}
+
+#parlor-tcp-settlement[data-tcp-style="v14"] {
+    position: fixed;
+    inset: 0;
+    z-index: 2200;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,0,0,0.52);
+    backdrop-filter: blur(6px);
+}
+
+#parlor-tcp-settlement[data-tcp-style="v14"] .parlor-tcp-settlement-box {
+    width: min(1120px, calc(100vw - 32px));
+    max-height: min(78vh, 860px);
+    overflow: auto;
+    padding: 22px 24px 20px;
+    border-radius: 28px;
+    background:
+        linear-gradient(180deg, rgba(12,34,22,0.96), rgba(6,17,12,0.92)),
+        var(--parlor-felt-texture) center / 220px 220px repeat,
+        var(--parlor-rail-texture) center / 280px 280px repeat;
+    background-blend-mode: normal, multiply, normal;
+    border: 1px solid rgba(255,232,180,0.18);
+    box-shadow: 0 30px 50px rgba(0,0,0,0.36), inset 0 1px 0 rgba(255,255,255,0.08);
+    color: #f0e5c9;
+}
+
+#parlor-tcp-settlement[data-tcp-style="v14"] .settlement-title {
+    margin-bottom: 8px;
+    font-size: 1.16rem;
+    font-weight: 700;
+    color: #fff0c9;
+}
+
+#parlor-tcp-settlement[data-tcp-style="v14"] .settlement-sub {
+    margin-bottom: 14px;
+    color: rgba(240,229,201,0.72);
+}
+
+#parlor-tcp-settlement[data-tcp-style="v14"] .settlement-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#parlor-tcp-settlement[data-tcp-style="v14"] .settlement-table th,
+#parlor-tcp-settlement[data-tcp-style="v14"] .settlement-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid rgba(255,232,180,0.09);
+    text-align: left;
+}
+
+#parlor-tcp-settlement[data-tcp-style="v14"] .parlor-tcp-settlement-reveal {
+    min-width: 154px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+#parlor-tcp-settlement[data-tcp-style="v14"] .parlor-tcp-settlement-reveal .parlor-playing-card {
+    width: 48px;
+    height: 67px;
+    border-radius: 12px;
+    filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.26));
+    cursor: default;
+}
+
+@media (max-width: 1180px) {
+    #parlor-tcp-overlay[data-tcp-style="v14"] .parlor-tcp-layout {
+        grid-template-columns: 204px minmax(0, 1fr) 204px;
+    }
+
+    #parlor-tcp-overlay[data-tcp-style="v14"] .parlor-tcp-stage {
+        padding-inline: 132px;
+    }
+}
+
+@media (max-width: 1080px) {
+    #parlor-tcp-overlay[data-tcp-style="v14"] {
+        padding-bottom: 132px;
+    }
+
+    #parlor-tcp-overlay[data-tcp-style="v14"] .parlor-tcp-layout {
+        grid-template-columns: 168px minmax(0, 1fr) 168px;
+        gap: 10px;
+    }
+
+    #parlor-tcp-overlay[data-tcp-style="v14"] .parlor-tcp-stage {
+        padding-inline: 94px;
+        padding-top: 24px;
+    }
+
+    #parlor-hand-hud .parlor-tcp-hud-shell {
+        grid-template-columns: 1fr;
+    }
+
+    #parlor-hand-hud .parlor-tcp-hud-betbox {
+        justify-content: center;
+    }
+}

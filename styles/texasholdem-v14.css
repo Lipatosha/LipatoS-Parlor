@@ -1,0 +1,816 @@
+/* 德州扑克专用样式层。
+   视觉骨架刻意贴近 21 点桌面：同一套桌面比例、侧边座位和提示条语言。 */
+
+#parlor-th-overlay[data-th-style="v14"] {
+    --th-scene-ratio: 2.037037;
+    --th-layout-max-w: 1920px;
+    --th-seat-felt: var(--parlor-felt-texture, linear-gradient(180deg, rgba(26, 105, 79, 0.96), rgba(11, 56, 42, 0.98) 54%, rgba(6, 31, 24, 0.99) 100%));
+    --th-prompt-wood: var(--parlor-rail-texture, linear-gradient(180deg, rgba(201, 152, 89, 0.96), rgba(113, 72, 31, 0.98) 38%, rgba(55, 31, 10, 0.99) 100%));
+    --th-seat-shell: var(--parlor-seat-shell, linear-gradient(180deg, rgba(212,164,86,0.98), rgba(126,81,27,0.96) 34%, rgba(67,38,12,0.98) 100%));
+    --th-seat-shell-soft: var(--parlor-seat-shell-soft, linear-gradient(180deg, rgba(228,189,111,0.96), rgba(138,90,32,0.94) 38%, rgba(73,42,13,0.96) 100%));
+    position: fixed;
+    inset: 0;
+    z-index: 3000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 18px 124px;
+    box-sizing: border-box;
+}
+
+#parlor-th-overlay[data-th-style="v14"] .parlor-th-backdrop {
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(circle at 50% 10%, rgba(255,215,133,0.12), transparent 28%),
+        radial-gradient(circle at 18% 52%, rgba(20,74,52,0.26), transparent 34%),
+        radial-gradient(circle at 82% 48%, rgba(20,74,52,0.24), transparent 32%),
+        rgba(3,8,7,0.94);
+    backdrop-filter: blur(10px) saturate(0.92);
+}
+
+#parlor-th-overlay[data-th-style="v14"] .parlor-th-layout {
+    position: relative;
+    z-index: 1;
+    width: min(var(--th-layout-max-w), calc(100vw - 36px));
+    display: grid;
+    grid-template-columns: 252px minmax(0, 1fr) 252px;
+    align-items: center;
+    gap: clamp(8px, 1vw, 18px);
+}
+
+#parlor-th-overlay[data-th-style="v14"] .parlor-th-scene {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    aspect-ratio: 2200 / 1080;
+    overflow: visible;
+}
+
+#parlor-th-overlay[data-th-style="v14"] .parlor-th-scene::before {
+    content: '';
+    position: absolute;
+    inset: 14% 12% 16%;
+    border-radius: 50%;
+    background: radial-gradient(ellipse at center, rgba(42,130,87,0.48), rgba(10,26,18,0) 72%);
+    filter: blur(72px);
+    opacity: 0.86;
+    pointer-events: none;
+}
+
+#parlor-th-overlay[data-th-style="v14"] .parlor-th-scene::after {
+    content: '';
+    position: absolute;
+    inset: 16% 11%;
+    border-radius: 999px;
+    pointer-events: none;
+    background:
+        radial-gradient(ellipse 52% 34% at 50% 4%, rgba(255,242,200,0.34), rgba(255,242,200,0) 68%);
+    box-shadow:
+        inset 0 0 0 2px rgba(255,219,148,0.44),
+        inset 0 0 14px rgba(255,219,148,0.18),
+        inset 0 0 110px 14px rgba(0,0,0,0.60);
+}
+
+#parlor-th-overlay[data-th-style="v14"] .parlor-th-table {
+    position: absolute;
+    inset: 0;
+    height: auto;
+}
+
+#parlor-th-overlay[data-th-style="v14"] .parlor-th-table-svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    filter: saturate(1.05) contrast(1.02);
+}
+
+#parlor-th-overlay[data-th-style="v14"] .parlor-th-table-stage {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    display: grid;
+    grid-template-rows: auto auto auto;
+    align-content: center;
+    justify-items: center;
+    gap: clamp(14px, 2vh, 22px);
+    padding: clamp(70px, 7.2%, 96px) clamp(178px, 10.6%, 236px) clamp(78px, 7.2%, 104px);
+    box-sizing: border-box;
+}
+
+#parlor-th-overlay[data-th-style="v14"] .parlor-th-game-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 18px;
+    border-radius: 999px;
+    background: linear-gradient(180deg, rgba(41,29,9,0.94), rgba(13,10,4,0.9));
+    border: 1px solid rgba(255,226,161,0.2);
+    color: #ffdf91;
+    font-size: 0.76rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    box-shadow:
+        0 12px 22px rgba(0,0,0,0.22),
+        inset 0 1px 0 rgba(255,249,228,0.08);
+}
+
+#parlor-th-overlay[data-th-style="v14"] .parlor-th-community {
+    min-height: 196px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: clamp(12px, 1.2vw, 18px);
+}
+
+#parlor-th-overlay[data-th-style="v14"] .parlor-playing-card.size-table {
+    width: 140px;
+    height: 196px;
+}
+
+#parlor-th-overlay[data-th-style="v14"] .parlor-th-community .is-empty-slot {
+    opacity: 0.34;
+    filter: saturate(0.7);
+}
+
+#parlor-th-overlay[data-th-style="v14"] .parlor-th-pot-strip {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    max-width: min(720px, 88%);
+}
+
+#parlor-th-overlay[data-th-style="v14"] .parlor-th-pot-strip span,
+#parlor-th-overlay[data-th-style="v14"] .parlor-th-seat-pill,
+#parlor-hand-hud .parlor-th-hud-tags span {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    min-height: 28px;
+    padding: 5px 10px;
+    border-radius: 999px;
+    border: 1px solid rgba(255,229,166,0.16);
+    background: rgba(8,17,14,0.56);
+    color: #f7dfaa;
+    font-size: 0.76rem;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+#parlor-th-overlay[data-th-style="v14"] .parlor-th-status-dock {
+    display: flex;
+    justify-content: center;
+    min-height: 112px;
+    margin-top: clamp(4px, 1.2vh, 14px);
+}
+
+#parlor-th-overlay[data-th-style="v14"] .parlor-th-prompt {
+    position: relative;
+    width: min(100%, 600px);
+    padding: 18px 22px;
+    border-radius: 28px;
+    border: 3px solid transparent;
+    background-image:
+        linear-gradient(180deg, rgba(12,34,22,0.94), rgba(6,17,12,0.9)),
+        linear-gradient(180deg, rgba(255,249,228,0.05), rgba(255,249,228,0)),
+        var(--th-seat-felt),
+        var(--th-prompt-wood);
+    background-size: auto, auto, 220px 220px, 280px 280px;
+    background-repeat: no-repeat, no-repeat, repeat, repeat;
+    background-origin: padding-box, padding-box, padding-box, border-box;
+    background-clip: padding-box, padding-box, padding-box, border-box;
+    color: #f0e5c9;
+    box-shadow:
+        0 18px 30px rgba(0,0,0,0.22),
+        inset 0 1px 0 rgba(255,244,214,0.08);
+    text-align: center;
+    overflow: hidden;
+    pointer-events: auto;
+}
+
+#parlor-th-overlay[data-th-style="v14"] .parlor-th-prompt::before {
+    content: '';
+    position: absolute;
+    inset: 3px;
+    border-radius: 25px;
+    background:
+        radial-gradient(circle at 50% -8%, rgba(255,232,173,0.14), transparent 44%),
+        linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0));
+    opacity: 0.72;
+    pointer-events: none;
+}
+
+#parlor-th-overlay[data-th-style="v14"] .parlor-th-prompt > * {
+    position: relative;
+    z-index: 1;
+}
+
+#parlor-th-overlay[data-th-style="v14"] .parlor-th-prompt-head {
+    display: flex;
+    justify-content: space-between;
+    gap: 14px;
+    color: #d6b779;
+    font-size: 0.76rem;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+#parlor-th-overlay[data-th-style="v14"] .parlor-th-prompt-title {
+    margin-top: 8px;
+    color: #f7e8c7;
+    font-size: clamp(1rem, 1.35vw, 1.2rem);
+    font-weight: 800;
+}
+
+#parlor-th-overlay[data-th-style="v14"] .parlor-th-prompt-sub {
+    margin-top: 5px;
+    color: rgba(240,229,201,0.7);
+    font-size: 0.84rem;
+}
+
+#parlor-th-overlay[data-th-style="v14"] .parlor-th-close-btn {
+    position: fixed;
+    top: 18px;
+    right: 18px;
+    z-index: 4;
+    display: grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    border: 1px solid rgba(255,229,166,0.28);
+    border-radius: 12px;
+    background: rgba(18,14,10,0.88);
+    color: #f7dfaa;
+}
+
+#parlor-th-overlay[data-th-style="v14"] .parlor-th-seat-column {
+    position: relative;
+    width: 100%;
+    min-width: 252px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: clamp(10px, 1.4vh, 16px);
+    padding: 0;
+    overflow: visible;
+    pointer-events: none;
+    scrollbar-width: none;
+}
+
+#parlor-th-overlay[data-th-style="v14"] .parlor-th-seat-column.is-empty {
+    visibility: hidden;
+}
+
+#parlor-th-overlay[data-th-style="v14"] .parlor-th-seat-column.seat-column-left {
+    align-items: flex-end;
+}
+
+#parlor-th-overlay[data-th-style="v14"] .parlor-th-seat-column.seat-column-right {
+    align-items: flex-start;
+}
+
+#parlor-th-overlay[data-th-style="v14"] .parlor-th-seat-column::-webkit-scrollbar {
+    display: none;
+}
+
+#parlor-th-overlay[data-th-style="v14"] .parlor-th-seat {
+    position: relative;
+    width: 100%;
+    max-width: 236px;
+    min-height: 116px;
+    padding: 13px 15px;
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    border-radius: 26px;
+    background: var(--th-seat-shell);
+    border: 1px solid rgba(255,233,185,0.22);
+    box-shadow:
+        0 14px 26px rgba(0,0,0,0.24),
+        inset 0 1px 0 rgba(255,255,255,0.12);
+    overflow: hidden;
+    isolation: isolate;
+    pointer-events: auto;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+}
+
+#parlor-th-overlay[data-th-style="v14"] .parlor-th-seat > * {
+    position: relative;
+    z-index: 1;
+}
+
+#parlor-th-overlay[data-th-style="v14"] .parlor-th-seat::before {
+    content: '';
+    position: absolute;
+    inset: 4px;
+    border-radius: 24px;
+    background:
+        radial-gradient(circle at 18% 12%, rgba(255,245,213,0.1), transparent 26%),
+        linear-gradient(180deg, rgba(145,184,112,0.18), rgba(48,94,66,0.12) 34%, rgba(7,24,16,0.34) 100%),
+        var(--th-seat-felt) center / 196px 196px repeat,
+        linear-gradient(180deg, rgba(120,152,90,0.96), rgba(42,81,57,0.98) 54%, rgba(15,34,24,0.98));
+    background-blend-mode: screen, soft-light, normal, normal;
+    border: 1px solid rgba(255,248,214,0.05);
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.04),
+        inset 0 -20px 24px rgba(0,0,0,0.2);
+    z-index: -1;
+}
+
+#parlor-th-overlay[data-th-style="v14"] .parlor-th-seat:hover {
+    border-color: rgba(255,227,170,0.32);
+    box-shadow:
+        0 16px 28px rgba(0,0,0,0.26),
+        inset 0 1px 0 rgba(255,255,255,0.14);
+    filter: brightness(1.02);
+}
+
+#parlor-th-overlay[data-th-style="v14"] .parlor-th-seat.is-me {
+    border-color: rgba(110,231,183,0.26);
+    box-shadow:
+        0 12px 22px rgba(0,0,0,0.24),
+        0 0 0 1px rgba(110,231,183,0.08),
+        0 0 18px rgba(72,201,154,0.08);
+}
+
+#parlor-th-overlay[data-th-style="v14"] .parlor-th-seat.active-turn {
+    border-color: rgba(129,195,255,0.4);
+    box-shadow:
+        0 14px 26px rgba(0,0,0,0.24),
+        0 0 0 1px rgba(129,195,255,0.11),
+        0 0 18px rgba(89,169,245,0.14);
+}
+
+#parlor-th-overlay[data-th-style="v14"] .parlor-th-seat.is-folded {
+    filter: grayscale(0.72) saturate(0.38) brightness(0.76);
+}
+
+#parlor-th-overlay[data-th-style="v14"] .parlor-th-seat.is-all-in {
+    border-color: rgba(127,193,255,0.34);
+}
+
+#parlor-th-overlay[data-th-style="v14"] .parlor-th-seat.is-winner {
+    border-color: rgba(255,226,149,0.34);
+    box-shadow:
+        0 15px 30px rgba(0,0,0,0.28),
+        0 0 0 1px rgba(255,226,149,0.1),
+        0 0 20px rgba(255,214,126,0.14);
+}
+
+#parlor-th-overlay[data-th-style="v14"] .parlor-th-seat-avatar-wrap {
+    position: relative;
+    flex: 0 0 auto;
+    padding: 4px;
+    border-radius: 18px;
+    background: var(--th-seat-shell-soft);
+    box-shadow:
+        0 10px 18px rgba(0,0,0,0.18),
+        inset 0 1px 0 rgba(255,245,216,0.16);
+}
+
+#parlor-th-overlay[data-th-style="v14"] .parlor-th-seat-avatar-wrap::before {
+    content: '';
+    position: absolute;
+    inset: 1px;
+    border-radius: 15px;
+    border: 1px solid rgba(255,236,188,0.18);
+    pointer-events: none;
+}
+
+#parlor-th-overlay[data-th-style="v14"] .parlor-th-seat-avatar-wrap.is-bot::before { border-color: rgba(150,193,232,0.5); }
+#parlor-th-overlay[data-th-style="v14"] .parlor-th-seat-avatar-wrap.is-npc::before { border-color: rgba(196,160,230,0.5); }
+#parlor-th-overlay[data-th-style="v14"] .parlor-th-seat-avatar-wrap.is-human::before { border-color: rgba(126,224,170,0.55); }
+
+#parlor-th-overlay[data-th-style="v14"] .parlor-th-seat-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 14px;
+    border: 1px solid rgba(255,232,180,0.16);
+    display: grid;
+    place-items: center;
+    background:
+        linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0)),
+        var(--th-seat-felt) center / 144px 144px repeat,
+        linear-gradient(180deg, rgba(40,88,61,0.94), rgba(9,23,16,0.94));
+    background-blend-mode: screen, normal, normal;
+    overflow: hidden;
+    font-size: 1.32em;
+}
+
+#parlor-th-overlay[data-th-style="v14"] .parlor-th-seat-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+#parlor-th-overlay[data-th-style="v14"] .parlor-th-seat-info {
+    min-width: 0;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 7px;
+}
+
+#parlor-th-overlay[data-th-style="v14"] .parlor-th-seat-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    min-width: 0;
+}
+
+#parlor-th-overlay[data-th-style="v14"] .parlor-th-seat-name-text {
+    min-width: 0;
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    line-height: 1.2;
+    color: #f4ead0;
+    font-size: 0.9rem;
+    font-weight: 700;
+}
+
+#parlor-th-overlay[data-th-style="v14"] .parlor-th-seat-num {
+    flex: 0 0 auto;
+    min-width: 30px;
+    min-height: 22px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 8px;
+    border-radius: 999px;
+    background: rgba(255,219,127,0.14);
+    border: 1px solid rgba(255,232,170,0.1);
+    color: #ffe6ab;
+    font-size: 0.66rem;
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+#parlor-th-overlay[data-th-style="v14"] .parlor-th-seat-meta,
+#parlor-th-overlay[data-th-style="v14"] .parlor-th-seat-foot {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+#parlor-th-overlay[data-th-style="v14"] .parlor-th-seat-bet,
+#parlor-th-overlay[data-th-style="v14"] .parlor-th-seat-side,
+#parlor-th-overlay[data-th-style="v14"] .parlor-th-seat-status {
+    min-height: 23px;
+    padding: 3px 9px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+#parlor-th-overlay[data-th-style="v14"] .parlor-th-seat-bet {
+    color: #ffd979;
+    background: linear-gradient(180deg, rgba(107,79,19,0.52), rgba(68,46,10,0.32));
+    border: 1px solid rgba(255,215,0,0.08);
+}
+
+#parlor-th-overlay[data-th-style="v14"] .parlor-th-seat-side,
+#parlor-th-overlay[data-th-style="v14"] .parlor-th-seat-status {
+    color: #e9ddbf;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.06);
+}
+
+#parlor-th-overlay[data-th-style="v14"] .parlor-th-seat-status.status-live {
+    color: #ffe08a;
+    background: rgba(127,92,20,0.28);
+    border-color: rgba(255,218,118,0.14);
+}
+
+#parlor-th-overlay[data-th-style="v14"] .parlor-th-seat-status.status-playing {
+    color: #d6eeff;
+    background: rgba(33,91,146,0.34);
+    border-color: rgba(127,193,255,0.18);
+}
+
+#parlor-th-overlay[data-th-style="v14"] .parlor-th-seat-status.status-win {
+    color: #a8f0bc;
+    background: rgba(48,111,69,0.28);
+    border-color: rgba(123,232,154,0.16);
+}
+
+#parlor-th-overlay[data-th-style="v14"] .parlor-th-seat-status.status-lose {
+    color: #ffb0a6;
+    background: rgba(122,34,25,0.34);
+    border-color: rgba(255,140,122,0.14);
+}
+
+#parlor-th-overlay[data-th-style="v14"] .parlor-th-seat-status.status-push {
+    color: #ddd3bc;
+    background: rgba(255,255,255,0.08);
+}
+
+#parlor-th-overlay[data-th-style="v14"] .parlor-th-seat-pill {
+    min-height: 22px;
+    padding: 3px 9px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    border: 1px solid transparent;
+    font-size: 0.64rem;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+}
+
+#parlor-th-overlay[data-th-style="v14"] .parlor-th-seat-pill.is-dealer {
+    color: #2a1c06;
+    background: linear-gradient(180deg, #ffe7a6, #d7a948);
+    border-color: rgba(255,255,255,0.45);
+}
+
+#parlor-th-overlay[data-th-style="v14"] .parlor-th-seat-pill.is-sb {
+    color: #d4ecff;
+    background: rgba(33,91,146,0.55);
+    border-color: rgba(127,193,255,0.45);
+}
+
+#parlor-th-overlay[data-th-style="v14"] .parlor-th-seat-pill.is-bb {
+    color: #ffd9b0;
+    background: rgba(150,74,30,0.6);
+    border-color: rgba(255,170,90,0.45);
+}
+
+#parlor-hand-hud .parlor-th-hud-shell {
+    display: grid;
+    grid-template-columns: minmax(180px, 0.8fr) minmax(220px, 1fr) minmax(160px, 0.7fr);
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+}
+
+#parlor-hand-hud .parlor-th-hud-context {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+#parlor-hand-hud .parlor-th-hud-select,
+#parlor-hand-hud .parlor-th-hud-name,
+#parlor-hand-hud .parlor-th-hud-raise input {
+    width: 100%;
+    min-height: 34px;
+    border: 1px solid rgba(255,229,166,0.28);
+    border-radius: 10px;
+    background: rgba(14,12,9,0.72);
+    color: #f6e9cf;
+    padding: 6px 8px;
+    font-weight: 700;
+}
+
+#parlor-hand-hud .parlor-th-hud-tags {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 6px;
+}
+
+#parlor-hand-hud .parlor-th-hud-raise {
+    display: grid;
+    gap: 4px;
+}
+
+#parlor-hand-hud .parlor-th-hud-raise label {
+    color: rgba(246,233,207,0.72);
+    font-size: 0.74rem;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+#parlor-hand-hud .parlor-th-hud-raise.is-disabled {
+    opacity: 0.48;
+}
+
+#parlor-hand-hud .parlor-th-hud-raise-quick {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 4px;
+    margin-top: 2px;
+}
+
+#parlor-hand-hud .parlor-th-hud-raise-quick button {
+    min-height: 26px;
+    padding: 3px 4px;
+    border: 1px solid rgba(255,229,166,0.22);
+    border-radius: 8px;
+    background: rgba(20,16,11,0.66);
+    color: #f1dcab;
+    font-size: 0.7rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.16s ease, border-color 0.16s ease;
+}
+
+#parlor-hand-hud .parlor-th-hud-raise-quick button:hover {
+    background: rgba(46,34,16,0.82);
+    border-color: rgba(255,224,138,0.4);
+}
+
+#parlor-th-settlement[data-th-style="v14"] {
+    position: fixed;
+    inset: 0;
+    z-index: 3300;
+    display: grid;
+    place-items: center;
+    background: rgba(2,6,5,0.82);
+    backdrop-filter: blur(8px) saturate(0.92);
+}
+
+#parlor-th-settlement[data-th-style="v14"] .parlor-th-settlement-box {
+    width: min(920px, calc(100vw - 38px));
+    max-height: min(820px, calc(100vh - 42px));
+    overflow: auto;
+    padding: 22px;
+    border: 1px solid rgba(255,225,165,0.34);
+    border-radius: 28px;
+    background:
+        linear-gradient(180deg, rgba(37,28,18,0.98), rgba(11,10,9,0.98)),
+        var(--th-prompt-wood);
+    color: #f6e9cf;
+    box-shadow: 0 24px 70px rgba(0,0,0,0.58);
+}
+
+#parlor-th-settlement[data-th-style="v14"] .settlement-title {
+    margin: 0;
+    color: #f8d28a;
+    font-size: 1.35rem;
+}
+
+#parlor-th-settlement[data-th-style="v14"] .settlement-sub {
+    margin-top: 6px;
+    color: rgba(246,233,207,0.74);
+}
+
+#parlor-th-settlement[data-th-style="v14"] .parlor-th-pot-summary {
+    display: grid;
+    gap: 6px;
+    margin: 16px 0;
+    padding: 12px;
+    border-radius: 16px;
+    background: rgba(255,229,166,0.08);
+}
+
+#parlor-th-settlement[data-th-style="v14"] .settlement-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#parlor-th-settlement[data-th-style="v14"] .settlement-table th,
+#parlor-th-settlement[data-th-style="v14"] .settlement-table td {
+    padding: 9px 8px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    text-align: left;
+}
+
+#parlor-th-settlement[data-th-style="v14"] .settlement-table th {
+    color: #d8b978;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+}
+
+#parlor-th-settlement[data-th-style="v14"] .win { color: #a7edbe; }
+#parlor-th-settlement[data-th-style="v14"] .lose { color: #f0a4a4; }
+
+#parlor-th-settlement[data-th-style="v14"] .parlor-th-settlement-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 18px;
+}
+
+#parlor-th-settlement[data-th-style="v14"] .settlement-player {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+#parlor-th-settlement[data-th-style="v14"] .settlement-win-badge {
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: linear-gradient(180deg, rgba(255,226,149,0.95), rgba(214,169,72,0.95));
+    color: #2a1c06;
+    font-size: 0.64rem;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+}
+
+#parlor-th-settlement[data-th-style="v14"] tr.is-winner-row td {
+    background: rgba(255,226,149,0.08);
+}
+
+#parlor-th-settlement[data-th-style="v14"] .settlement-hand {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+#parlor-th-settlement[data-th-style="v14"] .settlement-hand-name {
+    font-weight: 700;
+    color: #f3e6c4;
+}
+
+#parlor-th-settlement[data-th-style="v14"] .settlement-hand-cards {
+    display: flex;
+    gap: 3px;
+    flex-wrap: wrap;
+}
+
+#parlor-th-settlement[data-th-style="v14"] .settlement-hand-cards .parlor-playing-card.size-mini {
+    position: relative;
+    width: 28px;
+    height: 39px;
+    border-radius: 4px;
+    box-shadow: 0 3px 7px rgba(0,0,0,0.32);
+}
+
+@media (max-width: 1320px) {
+    #parlor-th-overlay[data-th-style="v14"] {
+        padding-bottom: 110px;
+    }
+
+    #parlor-th-overlay[data-th-style="v14"] .parlor-th-layout {
+        grid-template-columns: 220px minmax(0, 1fr) 220px;
+    }
+
+    #parlor-th-overlay[data-th-style="v14"] .parlor-th-seat-column {
+        min-width: 220px;
+    }
+
+    #parlor-th-overlay[data-th-style="v14"] .parlor-th-seat {
+        max-width: 214px;
+    }
+
+    #parlor-th-overlay[data-th-style="v14"] .parlor-playing-card.size-table {
+        width: 118px;
+        height: 165px;
+    }
+
+    #parlor-hand-hud .parlor-th-hud-shell {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 860px) {
+    #parlor-th-overlay[data-th-style="v14"] {
+        align-items: flex-start;
+        padding: 18px 12px 150px;
+        overflow: auto;
+    }
+
+    #parlor-th-overlay[data-th-style="v14"] .parlor-th-layout {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto minmax(390px, 1fr) auto;
+        width: min(820px, calc(100vw - 24px));
+    }
+
+    #parlor-th-overlay[data-th-style="v14"] .parlor-th-seat-column {
+        min-width: 0;
+        flex-direction: row;
+        justify-content: flex-start;
+        overflow-x: auto;
+        pointer-events: auto;
+    }
+
+    #parlor-th-overlay[data-th-style="v14"] .parlor-th-seat-column.seat-column-left,
+    #parlor-th-overlay[data-th-style="v14"] .parlor-th-seat-column.seat-column-right {
+        align-items: stretch;
+    }
+
+    #parlor-th-overlay[data-th-style="v14"] .parlor-th-seat {
+        min-width: 210px;
+    }
+
+    #parlor-th-overlay[data-th-style="v14"] .parlor-th-table-stage {
+        padding: 58px 70px;
+    }
+
+    #parlor-th-overlay[data-th-style="v14"] .parlor-playing-card.size-table {
+        width: 74px;
+        height: 104px;
+    }
+
+    #parlor-th-overlay[data-th-style="v14"] .parlor-th-community {
+        min-height: 116px;
+        gap: 7px;
+    }
+}

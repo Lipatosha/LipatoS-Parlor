@@ -1,0 +1,752 @@
+#parlor-ld-overlay {
+    --ld-felt-color: var(--parlor-felt-texture, linear-gradient(180deg, rgba(26, 105, 79, 0.96), rgba(11, 56, 42, 0.98) 54%, rgba(6, 31, 24, 0.99) 100%));
+    --ld-felt-ao: radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0.16), transparent 72%);
+    --ld-wood-color: var(--parlor-rail-texture, linear-gradient(180deg, rgba(201, 152, 89, 0.96), rgba(113, 72, 31, 0.98) 38%, rgba(55, 31, 10, 0.99) 100%));
+    --ld-wood-detail: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(0, 0, 0, 0.08));
+    --ld-felt-surface: var(--parlor-seat-felt, var(--ld-felt-color));
+    --ld-rail-surface: var(--parlor-seat-rail-texture, var(--ld-wood-color));
+    position: fixed;
+    inset: 0;
+    z-index: 2100;
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+    color: #f2e6c6;
+    font-family: var(--parlor-font-ui, "Parlor Marcellus", "Noto Serif SC", "Source Han Serif SC", Georgia, serif);
+}
+
+.parlor-ld-backdrop {
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(circle at 20% 18%, rgba(231, 198, 112, 0.14), transparent 22%),
+        radial-gradient(circle at 78% 76%, rgba(63, 123, 92, 0.18), transparent 28%),
+        linear-gradient(180deg, rgba(5, 10, 8, 0.72), rgba(2, 4, 3, 0.82));
+    backdrop-filter: blur(6px);
+}
+
+.parlor-ld-layout {
+    position: relative;
+    z-index: 1;
+    width: min(1680px, 100vw);
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: minmax(216px, 260px) minmax(0, 1fr) minmax(216px, 260px);
+    gap: 24px;
+    align-items: center;
+    padding: 28px 22px 22px;
+    box-sizing: border-box;
+}
+
+.parlor-ld-scene {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.parlor-ld-table {
+    min-width: 0;
+    min-height: 0;
+}
+
+.parlor-ld-table-shell {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    border-radius: 42px;
+    padding: 84px 26px 24px;
+    background:
+        linear-gradient(180deg, rgba(89, 57, 23, 0.24), rgba(34, 18, 7, 0.24)),
+        var(--ld-wood-detail) center / 240px 240px repeat,
+        var(--ld-rail-surface) center / 220px 220px repeat,
+        linear-gradient(180deg, rgba(84, 57, 25, 0.96), rgba(38, 21, 8, 0.98));
+    background-blend-mode: soft-light, overlay, multiply, normal;
+    border: 1px solid rgba(255, 223, 158, 0.24);
+    box-shadow:
+        0 34px 54px rgba(0, 0, 0, 0.32),
+        inset 0 1px 0 rgba(255, 244, 214, 0.1),
+        inset 0 -24px 40px rgba(0, 0, 0, 0.24);
+    overflow: hidden;
+}
+
+.parlor-ld-table-shell::before {
+    content: "";
+    position: absolute;
+    inset: 14px;
+    border-radius: 34px;
+    background:
+        linear-gradient(180deg, rgba(244, 206, 130, 0.24), rgba(108, 62, 22, 0.14)),
+        var(--ld-wood-detail) center / 216px 216px repeat,
+        var(--ld-rail-surface) center / 176px 176px repeat,
+        linear-gradient(180deg, rgba(198, 149, 74, 0.92), rgba(114, 69, 24, 0.96) 36%, rgba(54, 29, 9, 0.96));
+    background-blend-mode: screen, soft-light, multiply, normal;
+    box-shadow:
+        inset 0 1px 0 rgba(255, 247, 224, 0.18),
+        inset 0 -18px 26px rgba(0, 0, 0, 0.18);
+    z-index: 0;
+}
+
+.parlor-ld-table-shell::after {
+    content: "";
+    position: absolute;
+    inset: 30px;
+    border-radius: 28px;
+    background:
+        radial-gradient(circle at 50% 0%, rgba(248, 227, 165, 0.16), transparent 24%),
+        linear-gradient(180deg, rgba(39, 120, 81, 0.34), rgba(7, 36, 23, 0.24)),
+        var(--ld-felt-ao) center / 240px 240px repeat,
+        var(--ld-felt-surface) center / 230px 230px repeat,
+        linear-gradient(180deg, rgba(20, 74, 49, 0.98), rgba(8, 31, 21, 0.98));
+    background-blend-mode: screen, soft-light, multiply, normal, normal;
+    border: 1px solid rgba(255, 235, 184, 0.12);
+    z-index: 0;
+}
+
+.parlor-ld-badge,
+.parlor-ld-center,
+.parlor-ld-footer-wrap {
+    position: relative;
+    z-index: 1;
+}
+
+.parlor-ld-badge {
+    position: absolute;
+    top: 22px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 10px 20px;
+    border-radius: 999px;
+    background: linear-gradient(180deg, rgba(18, 32, 25, 0.96), rgba(6, 12, 9, 0.94));
+    border: 1px solid rgba(255, 235, 184, 0.16);
+    color: #fff1cb;
+    font-size: 0.94rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    box-shadow: 0 14px 24px rgba(0, 0, 0, 0.22);
+}
+
+.parlor-ld-badge i {
+    margin-right: 8px;
+    color: #f0d58c;
+}
+
+.parlor-ld-center {
+    width: 100%;
+    max-width: 980px;
+    margin: 0 auto;
+}
+
+.parlor-ld-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 24px 28px;
+    border-radius: 28px;
+    background:
+        radial-gradient(circle at 50% 0%, rgba(255, 231, 176, 0.08), transparent 36%),
+        linear-gradient(180deg, rgba(15, 44, 30, 0.38), rgba(3, 10, 7, 0.46)),
+        var(--ld-felt-ao) center / 220px 220px repeat,
+        var(--ld-felt-surface) center / 220px 220px repeat,
+        linear-gradient(180deg, rgba(8, 23, 16, 0.72), rgba(3, 10, 7, 0.82));
+    background-blend-mode: screen, soft-light, multiply, normal, normal;
+    border: 1px solid rgba(255, 235, 184, 0.12);
+    box-shadow:
+        0 22px 36px rgba(0, 0, 0, 0.24),
+        inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(2px);
+}
+
+.parlor-ld-panel-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.parlor-ld-panel-phase {
+    color: #ffe1a1;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.parlor-ld-panel-round {
+    color: rgba(241, 230, 200, 0.74);
+    font-size: 0.78rem;
+}
+
+.parlor-ld-panel-title {
+    color: #fff2cd;
+    font-size: clamp(1.5rem, 2.1vw, 2.1rem);
+    font-weight: 700;
+    text-align: center;
+}
+
+.parlor-ld-panel-sub,
+.parlor-ld-panel-note {
+    color: rgba(241, 230, 200, 0.78);
+    text-align: center;
+    line-height: 1.55;
+}
+
+.parlor-ld-rule-banner {
+    display: inline-flex;
+    align-self: center;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
+    border-radius: 999px;
+    color: #fff2cd;
+    background: linear-gradient(180deg, rgba(158, 68, 39, 0.84), rgba(104, 33, 18, 0.9));
+    border: 1px solid rgba(255, 214, 170, 0.24);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.18);
+}
+
+.parlor-ld-panel-stats {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.parlor-ld-stat {
+    padding: 12px 14px;
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 235, 184, 0.08);
+    text-align: center;
+}
+
+.parlor-ld-stat span {
+    display: block;
+    color: rgba(241, 230, 200, 0.68);
+    font-size: 0.74rem;
+    letter-spacing: 0.05em;
+}
+
+.parlor-ld-stat strong {
+    display: block;
+    margin-top: 6px;
+    color: #fff0c7;
+    font-size: 1.02rem;
+}
+
+.parlor-ld-claim-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    padding: 14px 16px;
+    border-radius: 20px;
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02)),
+        rgba(6, 18, 13, 0.34);
+    border: 1px solid rgba(255, 235, 184, 0.1);
+}
+
+.parlor-ld-claim-card.is-empty {
+    opacity: 0.86;
+}
+
+.parlor-ld-claim-card span,
+.parlor-ld-resolution-cell span {
+    color: rgba(241, 230, 200, 0.68);
+    font-size: 0.74rem;
+    letter-spacing: 0.05em;
+}
+
+.parlor-ld-claim-card strong,
+.parlor-ld-resolution-cell strong {
+    color: #fff2cd;
+    font-size: 1.08rem;
+}
+
+.parlor-ld-claim-card em {
+    color: rgba(241, 230, 200, 0.8);
+    font-style: normal;
+}
+
+.parlor-ld-turn-order {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+}
+
+.parlor-ld-order-pill {
+    padding: 7px 12px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 235, 184, 0.08);
+    color: rgba(241, 230, 200, 0.88);
+    font-size: 0.78rem;
+    font-weight: 700;
+}
+
+.parlor-ld-order-pill.is-current {
+    color: #0e1f16;
+    background: linear-gradient(180deg, #f1d189, #d8a94c);
+    border-color: rgba(255, 232, 184, 0.48);
+}
+
+.parlor-ld-order-pill.is-starter {
+    box-shadow: inset 0 0 0 1px rgba(126, 212, 171, 0.3);
+}
+
+.parlor-ld-order-pill.is-out {
+    color: rgba(241, 230, 200, 0.48);
+    text-decoration: line-through;
+}
+
+.parlor-ld-count-grid {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.parlor-ld-resolution-grid {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.parlor-ld-resolution-cell {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    justify-content: center;
+    align-items: center;
+    padding: 12px 10px;
+    border-radius: 18px;
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02)),
+        rgba(6, 18, 13, 0.34);
+    border: 1px solid rgba(255, 235, 184, 0.1);
+    text-align: center;
+}
+
+.parlor-ld-count-cell {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 8px;
+    border-radius: 18px;
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02)),
+        rgba(6, 18, 13, 0.34);
+    border: 1px solid rgba(255, 235, 184, 0.1);
+}
+
+.parlor-ld-count-cell strong {
+    color: #fff0c7;
+    font-size: 1.1rem;
+}
+
+.parlor-ld-center-actions {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.parlor-ld-close-btn {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    z-index: 2;
+    width: 42px;
+    height: 42px;
+    border: none;
+    border-radius: 999px;
+    background: rgba(10, 19, 14, 0.86);
+    color: #fff0ca;
+    box-shadow: 0 14px 22px rgba(0, 0, 0, 0.26);
+    cursor: pointer;
+}
+
+.parlor-ld-close-btn:hover {
+    background: rgba(17, 31, 23, 0.94);
+}
+
+.parlor-ld-seat {
+    cursor: default;
+}
+
+.parlor-ld-seat.is-selectable {
+    cursor: pointer;
+}
+
+.parlor-ld-seat.is-selectable:hover {
+    transform: translateY(-2px);
+    border-color: rgba(255, 236, 184, 0.22);
+}
+
+.parlor-ld-seat.is-selected {
+    border-color: rgba(110, 231, 183, 0.34);
+    box-shadow:
+        0 16px 28px rgba(0, 0, 0, 0.26),
+        0 0 0 1px rgba(110, 231, 183, 0.12),
+        0 0 18px rgba(72, 201, 154, 0.08);
+}
+
+.parlor-ld-seat.is-current .parlor-seat-num {
+    background: linear-gradient(180deg, #f1d189, #d8a94c);
+    color: #15251b;
+    border-color: rgba(255, 232, 184, 0.38);
+}
+
+.parlor-ld-seat.is-out {
+    filter: saturate(0.76) brightness(0.86);
+}
+
+.parlor-ld-seat-note {
+    color: rgba(241, 230, 200, 0.78);
+    font-size: 0.78rem;
+    line-height: 1.45;
+}
+
+.parlor-ld-seat-dice {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.parlor-ld-seat-penalty {
+    margin-top: 2px;
+    align-self: flex-start;
+}
+
+.parlor-ld-footer-wrap {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.parlor-ld-footer-shell {
+    width: min(980px, 100%);
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding: 20px 24px 18px;
+    border-radius: 30px;
+    background:
+        radial-gradient(circle at 50% 0%, rgba(255, 231, 176, 0.09), transparent 38%),
+        linear-gradient(180deg, rgba(15, 43, 29, 0.34), rgba(3, 10, 7, 0.42)),
+        var(--ld-felt-ao) center / 210px 210px repeat,
+        var(--ld-felt-surface) center / 210px 210px repeat,
+        linear-gradient(180deg, rgba(7, 20, 14, 0.72), rgba(3, 10, 7, 0.84));
+    background-blend-mode: screen, soft-light, multiply, normal, normal;
+    border: 1px solid rgba(255, 235, 184, 0.12);
+    box-shadow:
+        0 24px 38px rgba(0, 0, 0, 0.28),
+        inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+.parlor-ld-footer-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    flex-wrap: wrap;
+}
+
+.parlor-ld-footer-title {
+    color: #fff2cd;
+    font-size: 1.06rem;
+    font-weight: 700;
+}
+
+.parlor-ld-footer-select {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: rgba(241, 230, 200, 0.76);
+    font-size: 0.78rem;
+}
+
+.parlor-ld-footer-select select {
+    min-width: 180px;
+    padding: 8px 10px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 235, 184, 0.14);
+    color: #f2e6c6;
+}
+
+.parlor-ld-footer-dice {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    min-height: 92px;
+    padding: 6px 0 2px;
+}
+
+/* 骰盅：倒扣的金属盅造型，纯 CSS 绘制。
+   形状用 border-radius 做"上窄下宽 + 圆顶"，::before 是金属环，::after 是杯口阴影 */
+.parlor-ld-cup {
+    position: relative;
+    width: 108px;
+    height: 84px;
+    border-radius: 50% 50% 14px 14px / 64% 64% 14px 14px;
+    background:
+        radial-gradient(ellipse 60% 28% at 50% 10%, rgba(255, 236, 184, 0.42), transparent 62%),
+        linear-gradient(180deg, #6f4d2c 0%, #432912 46%, #281708 100%);
+    border: 1px solid rgba(255, 225, 164, 0.22);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 240, 200, 0.32),
+        inset 0 -10px 22px rgba(0, 0, 0, 0.52),
+        0 14px 22px rgba(0, 0, 0, 0.45),
+        0 0 24px rgba(0, 0, 0, 0.25);
+}
+
+/* 金属环（盅顶装饰带） */
+.parlor-ld-cup::before {
+    content: '';
+    position: absolute;
+    left: 10%;
+    right: 10%;
+    top: 18%;
+    height: 7px;
+    border-radius: 999px;
+    background: linear-gradient(180deg, rgba(255, 236, 184, 0.45), rgba(120, 78, 30, 0.18));
+    box-shadow:
+        inset 0 1px 0 rgba(255, 250, 220, 0.5),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.34);
+}
+
+/* 杯口阴影（底部内凹） */
+.parlor-ld-cup::after {
+    content: '';
+    position: absolute;
+    left: 6%;
+    right: 6%;
+    bottom: 3px;
+    height: 8px;
+    border-radius: 999px;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.46), rgba(0, 0, 0, 0));
+    filter: blur(1px);
+}
+
+/* ROLLING 阶段：盅在摇 —— 小幅旋转 + 上下抖动，180ms 循环表达急促感 */
+.parlor-ld-footer-dice.is-rolling .parlor-ld-cup {
+    animation: parlor-ld-cup-shake 220ms cubic-bezier(0.36, 0.07, 0.19, 0.97) infinite;
+    transform-origin: 50% 80%;
+}
+
+@keyframes parlor-ld-cup-shake {
+    0%, 100% { transform: rotate(0) translateY(0); }
+    18%      { transform: rotate(-4deg) translateY(-3px); }
+    36%      { transform: rotate(3deg) translateY(2px); }
+    54%      { transform: rotate(-3deg) translateY(-2px); }
+    72%      { transform: rotate(4deg) translateY(1px); }
+}
+
+.parlor-ld-footer-actions {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.parlor-ld-claim-box {
+    width: min(100%, 760px);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.parlor-ld-claim-inputs {
+    display: flex;
+    justify-content: center;
+    align-items: end;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.parlor-ld-claim-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 150px;
+}
+
+.parlor-ld-claim-field span {
+    color: rgba(241, 230, 200, 0.76);
+    font-size: 0.78rem;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    flex-wrap: wrap;
+}
+
+.parlor-ld-claim-hint {
+    color: rgba(241, 230, 200, 0.56);
+    font-size: 0.7rem;
+    font-weight: 400;
+}
+
+.parlor-ld-claim-field input {
+    width: 100%;
+    min-width: 0;
+    padding: 10px 12px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 235, 184, 0.14);
+    color: #f2e6c6;
+}
+
+.parlor-ld-claim-face-row {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 8px;
+}
+
+.parlor-ld-claim-face-btn {
+    min-width: 0;
+}
+
+.parlor-ld-footer-note,
+.parlor-ld-dice-placeholder {
+    color: rgba(241, 230, 200, 0.74);
+    text-align: center;
+    line-height: 1.5;
+}
+
+.parlor-ld-die {
+    position: relative;
+    width: 62px;
+    height: 62px;
+    border-radius: 18px;
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(222, 213, 191, 0.96));
+    border: 1px solid rgba(17, 29, 22, 0.18);
+    box-shadow:
+        0 10px 18px rgba(0, 0, 0, 0.22),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8),
+        inset 0 -10px 16px rgba(0, 0, 0, 0.08);
+}
+
+.parlor-ld-die.is-small {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+}
+
+.parlor-ld-die.is-compact {
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+}
+
+.parlor-ld-pip {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-radius: 999px;
+    background: #18231b;
+    opacity: 0;
+    transform: translate(-50%, -50%);
+}
+
+.parlor-ld-die.is-small .parlor-ld-pip {
+    width: 6px;
+    height: 6px;
+}
+
+.parlor-ld-die.is-compact .parlor-ld-pip {
+    width: 8px;
+    height: 8px;
+}
+
+.parlor-ld-pip.is-on {
+    opacity: 1;
+}
+
+.parlor-ld-pip.pip-1 { top: 24%; left: 24%; }
+.parlor-ld-pip.pip-2 { top: 24%; left: 50%; }
+.parlor-ld-pip.pip-3 { top: 24%; left: 76%; }
+.parlor-ld-pip.pip-4 { top: 50%; left: 24%; }
+.parlor-ld-pip.pip-5 { top: 50%; left: 50%; }
+.parlor-ld-pip.pip-6 { top: 50%; left: 76%; }
+.parlor-ld-pip.pip-7 { top: 76%; left: 24%; }
+.parlor-ld-pip.pip-8 { top: 76%; left: 50%; }
+.parlor-ld-pip.pip-9 { top: 76%; left: 76%; }
+
+@media (max-width: 1180px) {
+    .parlor-ld-layout {
+        grid-template-columns: 1fr;
+        gap: 16px;
+        padding: 18px 12px 16px;
+    }
+
+    .parlor-seat-column {
+        min-width: 0;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .parlor-seat-column.seat-column-left,
+    .parlor-seat-column.seat-column-right {
+        align-items: stretch;
+    }
+
+    .parlor-seat-column.is-empty {
+        display: none;
+    }
+
+    .parlor-ld-table-shell {
+        padding: 76px 18px 18px;
+        gap: 16px;
+    }
+
+    .parlor-ld-table-shell::after {
+        inset: 24px;
+    }
+}
+
+@media (max-width: 760px) {
+    .parlor-ld-badge {
+        width: calc(100% - 42px);
+        max-width: 320px;
+        text-align: center;
+    }
+
+    .parlor-ld-panel {
+        padding: 18px 16px;
+    }
+
+    .parlor-ld-panel-stats,
+    .parlor-ld-resolution-grid,
+    .parlor-ld-count-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .parlor-ld-footer-shell {
+        padding: 16px 14px;
+        border-radius: 22px;
+    }
+
+    .parlor-ld-footer-head {
+        justify-content: center;
+    }
+
+    .parlor-ld-footer-select {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .parlor-ld-footer-select select {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .parlor-ld-claim-face-row {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}

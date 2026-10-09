@@ -1,0 +1,56 @@
+<div class="parlor-lobby-content">
+    <header class="parlor-lobby-header">
+        <div class="parlor-lobby-brand">
+            <span class="parlor-lobby-brand-icon" aria-hidden="true"><i class="fas fa-dice"></i></span>
+            <span class="parlor-lobby-brand-text">
+                <span class="parlor-lobby-title">{{localize "PARLOR.Lobby.Title"}}</span>
+                <span class="parlor-lobby-subtitle">{{localize "PARLOR.Lobby.Subtitle"}}</span>
+            </span>
+        </div>
+
+        <div class="parlor-lobby-toolbar">
+            {{#if isGM}}
+            <button type="button" class="parlor-lobby-toolbtn" data-chip-action="manage">
+                <i class="fas fa-coins" aria-hidden="true"></i>
+                <span>{{localize "PARLOR.Lobby.Toolbar.ManageChips"}}</span>
+            </button>
+            <button type="button" class="parlor-lobby-toolbtn" data-chip-action="settle">
+                <i class="fas fa-file-invoice-dollar" aria-hidden="true"></i>
+                <span>{{localize "PARLOR.Lobby.Toolbar.SettleChips"}}</span>
+            </button>
+            {{#if showDndGoldTools}}
+            <button type="button" class="parlor-lobby-toolbtn" data-chip-action="gold-admin">
+                <i class="fas fa-file-invoice-dollar" aria-hidden="true"></i>
+                <span>{{localize "PARLOR.Lobby.Toolbar.DndGoldTools"}}</span>
+            </button>
+            <button type="button" class="parlor-lobby-toolbtn" data-chip-action="prompt-player-exchange">
+                <i class="fas fa-exchange-alt" aria-hidden="true"></i>
+                <span>{{localize "PARLOR.Lobby.Toolbar.PromptExchange"}}</span>
+            </button>
+            {{/if}}
+            {{/if}}
+            {{#if showPlayerExchangeTool}}
+            <button type="button" class="parlor-lobby-toolbtn" data-chip-action="player-exchange">
+                <i class="fas fa-coins" aria-hidden="true"></i>
+                <span>{{localize "PARLOR.Lobby.Toolbar.PlayerExchange"}}</span>
+            </button>
+            {{/if}}
+        </div>
+    </header>
+
+    <div class="parlor-game-grid">
+        {{#each games}}
+        <div class="parlor-game-card" data-game-id="{{this.id}}" style="--card-color: {{this.color}}" role="button" tabindex="0">
+            <span class="parlor-game-card-icon" aria-hidden="true"><i class="{{this.icon}}"></i></span>
+            <span class="parlor-game-card-body">
+                <span class="parlor-game-card-name">{{this.name}}</span>
+                <button type="button" class="parlor-game-card-help" data-game-guide="{{this.id}}">
+                    <i class="fas fa-book-open" aria-hidden="true"></i>
+                    <span>{{localize "PARLOR.Lobby.GameGuide.Button"}}</span>
+                </button>
+            </span>
+            <span class="parlor-game-card-go" aria-hidden="true"><i class="fas fa-chevron-right"></i></span>
+        </div>
+        {{/each}}
+    </div>
+</div>

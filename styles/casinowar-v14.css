@@ -1,0 +1,495 @@
+/* 赌场战争专用样式层（V14 兼容优先）
+   桌面继续复用 21 点老桌，只把流程和中央舞台换成赌场战争。 */
+
+#parlor-cw-overlay[data-cw-style="v14"] {
+    --cw-layout-max-w: 1880px;
+    --parlor-seat-column-min: 252px;
+    position: fixed;
+    inset: 0;
+    z-index: 2100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 18px 124px;
+    box-sizing: border-box;
+}
+
+#parlor-cw-overlay[data-cw-style="v14"] .parlor-cw-backdrop {
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(circle at 50% 10%, rgba(255,215,133,0.13), transparent 28%),
+        radial-gradient(circle at 18% 52%, rgba(70,34,18,0.2), transparent 34%),
+        radial-gradient(circle at 82% 48%, rgba(20,74,52,0.18), transparent 32%),
+        rgba(4,7,6,0.94);
+    backdrop-filter: blur(10px) saturate(0.92);
+}
+
+#parlor-cw-overlay[data-cw-style="v14"] .parlor-cw-layout {
+    position: relative;
+    z-index: 1;
+    width: min(var(--cw-layout-max-w), calc(100vw - 36px));
+    display: grid;
+    grid-template-columns: 252px minmax(0, 1fr) 252px;
+    align-items: center;
+    gap: clamp(8px, 1vw, 18px);
+}
+
+#parlor-cw-overlay[data-cw-style="v14"] .parlor-cw-scene {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 2000 / 1120;
+}
+
+#parlor-cw-overlay[data-cw-style="v14"] .parlor-cw-scene::before {
+    content: '';
+    position: absolute;
+    inset: 15% 14% 17%;
+    border-radius: 50%;
+    background: radial-gradient(ellipse at center, rgba(44,124,84,0.42), rgba(10,26,18,0) 72%);
+    filter: blur(76px);
+    opacity: 0.84;
+    pointer-events: none;
+}
+
+/* 桌面氛围层：顶部吊灯聚光 + 椭圆内描金 + 桌缘 vignette 暗角。
+   cw 特殊：scene aspect 2000×1120 跟 SVG viewBox 2200×1080 不一致，preserveAspectRatio=meet
+   导致 SVG 按宽缩放（×0.909），高 981.8 居中，上下各有 ~6.2% letterbox。
+   felt 在 scene 内：top/bottom 20%, left/right 11% */
+#parlor-cw-overlay[data-cw-style="v14"] .parlor-cw-scene::after {
+    content: '';
+    position: absolute;
+    inset: 20% 11%;
+    border-radius: 999px;
+    pointer-events: none;
+    background:
+        radial-gradient(ellipse 52% 34% at 50% 4%, rgba(255,242,200,0.40), rgba(255,242,200,0) 68%);
+    box-shadow:
+        inset 0 0 0 2px rgba(255,219,148,0.50),
+        inset 0 0 14px 0 rgba(255,219,148,0.22),
+        inset 0 0 110px 14px rgba(0,0,0,0.62);
+}
+
+#parlor-cw-overlay[data-cw-style="v14"] .parlor-cw-table {
+    position: absolute;
+    inset: 0;
+}
+
+#parlor-cw-overlay[data-cw-style="v14"] .parlor-cw-table-svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    filter: saturate(0.96) contrast(1.01);
+}
+
+#parlor-cw-overlay[data-cw-style="v14"] .parlor-cw-stage {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(18px, 2.4vh, 28px);
+    padding: clamp(42px, 4%, 54px) clamp(172px, 10.2%, 228px) clamp(82px, 7.6%, 98px);
+    box-sizing: border-box;
+}
+
+#parlor-cw-overlay[data-cw-style="v14"] .parlor-cw-dealer-zone {
+    width: min(100%, 760px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    margin-top: 8px;
+}
+
+#parlor-cw-overlay[data-cw-style="v14"] .parlor-cw-dealer-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 20px;
+    border-radius: 999px;
+    background: linear-gradient(180deg, rgba(40,28,8,0.94), rgba(12,10,4,0.9));
+    border: 1px solid rgba(255,225,156,0.22);
+    color: #ffe6ab;
+    box-shadow: 0 10px 18px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,247,221,0.12);
+}
+
+#parlor-cw-overlay[data-cw-style="v14"] .parlor-cw-dealer-cards {
+    width: min(100%, 720px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+
+#parlor-cw-overlay[data-cw-style="v14"] .parlor-cw-dealer-main {
+    min-height: 212px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#parlor-cw-overlay[data-cw-style="v14"] .parlor-cw-dealer-war {
+    min-height: 116px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+#parlor-cw-overlay[data-cw-style="v14"] .parlor-cw-dealer-war-slot {
+    min-width: 76px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+}
+
+#parlor-cw-overlay[data-cw-style="v14"] .parlor-cw-dealer-war-label {
+    max-width: 92px;
+    color: rgba(240,229,201,0.72);
+    font-size: 0.72rem;
+    text-align: center;
+    line-height: 1.35;
+}
+
+#parlor-cw-overlay[data-cw-style="v14"] .parlor-cw-dealer-note {
+    min-height: 22px;
+    color: rgba(240,229,201,0.76);
+    font-size: 0.84rem;
+    text-align: center;
+}
+
+#parlor-cw-overlay[data-cw-style="v14"] .parlor-cw-center {
+    width: min(100%, 560px);
+    margin-top: 4px;
+}
+
+#parlor-cw-overlay[data-cw-style="v14"] .parlor-cw-prompt {
+    position: relative;
+    padding: 18px 22px 20px;
+    border-radius: 22px;
+    border: 1px solid rgba(255,231,176,0.14);
+    background:
+        linear-gradient(180deg, rgba(10,28,19,0.82), rgba(6,18,12,0.74)),
+        var(--parlor-felt-texture) center / 240px 240px repeat;
+    background-blend-mode: normal, multiply;
+    color: #f0e5c9;
+    box-shadow: 0 12px 24px rgba(0,0,0,0.16), inset 0 1px 0 rgba(255,244,214,0.06);
+    text-align: center;
+    overflow: hidden;
+}
+
+#parlor-cw-overlay[data-cw-style="v14"] .parlor-cw-prompt::before {
+    content: '';
+    position: absolute;
+    inset: 3px;
+    border-radius: 18px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0));
+    opacity: 0.68;
+    pointer-events: none;
+}
+
+#parlor-cw-overlay[data-cw-style="v14"] .parlor-cw-prompt > * {
+    position: relative;
+    z-index: 1;
+}
+
+#parlor-cw-overlay[data-cw-style="v14"] .parlor-cw-prompt-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+#parlor-cw-overlay[data-cw-style="v14"] .parlor-cw-prompt-phase,
+#parlor-cw-overlay[data-cw-style="v14"] .parlor-cw-prompt-round {
+    min-height: 30px;
+    padding: 0 12px;
+    display: inline-flex;
+    align-items: center;
+    border-radius: 999px;
+    font-size: 0.74rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+}
+
+#parlor-cw-overlay[data-cw-style="v14"] .parlor-cw-prompt-phase {
+    background: rgba(255,225,158,0.12);
+    border: 1px solid rgba(255,231,176,0.16);
+    color: #ffe6ad;
+}
+
+#parlor-cw-overlay[data-cw-style="v14"] .parlor-cw-prompt-round {
+    background: rgba(7,16,12,0.42);
+    border: 1px solid rgba(255,231,176,0.08);
+    color: rgba(240,229,201,0.72);
+}
+
+#parlor-cw-overlay[data-cw-style="v14"] .parlor-cw-prompt-title {
+    font-size: 1.08rem;
+    font-weight: 700;
+    color: #fff0c9;
+}
+
+#parlor-cw-overlay[data-cw-style="v14"] .parlor-cw-prompt-sub {
+    margin-top: 8px;
+    color: rgba(240,229,201,0.88);
+    line-height: 1.5;
+}
+
+#parlor-cw-overlay[data-cw-style="v14"] .parlor-cw-prompt-stats {
+    margin-top: 14px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+    gap: 10px;
+}
+
+#parlor-cw-overlay[data-cw-style="v14"] .parlor-cw-prompt-stat {
+    padding: 11px 12px;
+    border-radius: 16px;
+    background: rgba(7,16,12,0.34);
+    border: 1px solid rgba(255,231,176,0.08);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.04);
+    text-align: left;
+}
+
+#parlor-cw-overlay[data-cw-style="v14"] .parlor-cw-prompt-stat-label {
+    color: rgba(240,229,201,0.62);
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+}
+
+#parlor-cw-overlay[data-cw-style="v14"] .parlor-cw-prompt-stat-value {
+    margin-top: 5px;
+    color: #fff0c9;
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+#parlor-cw-overlay[data-cw-style="v14"] .parlor-cw-prompt-note {
+    margin-top: 12px;
+    padding-top: 11px;
+    border-top: 1px solid rgba(255,231,176,0.08);
+    color: rgba(240,229,201,0.72);
+    font-size: 0.8rem;
+    line-height: 1.55;
+}
+
+#parlor-cw-overlay[data-cw-style="v14"] .parlor-cw-prompt.tone-active {
+    border-color: rgba(121, 227, 179, 0.18);
+    box-shadow: 0 14px 26px rgba(0,0,0,0.18), 0 0 0 1px rgba(91, 214, 162, 0.05), inset 0 1px 0 rgba(255,244,214,0.07);
+}
+
+#parlor-cw-overlay[data-cw-style="v14"] .parlor-cw-prompt.tone-result .parlor-cw-prompt-phase {
+    background: rgba(255,226,139,0.16);
+    color: #fff1c1;
+}
+
+#parlor-cw-overlay[data-cw-style="v14"] .parlor-cw-prompt.tone-ready .parlor-cw-prompt-phase {
+    background: rgba(185,224,255,0.12);
+    color: #dcefff;
+}
+
+#parlor-cw-overlay[data-cw-style="v14"] .parlor-cw-prompt.tone-dealing .parlor-cw-prompt-phase {
+    background: rgba(255,205,146,0.14);
+    color: #ffe1b1;
+}
+
+#parlor-cw-overlay[data-cw-style="v14"] .parlor-cw-seat {
+    max-width: 242px;
+}
+
+#parlor-cw-overlay[data-cw-style="v14"] .parlor-cw-seat-cards {
+    min-height: 96px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+#parlor-cw-overlay[data-cw-style="v14"] .parlor-cw-seat-cards .is-war-card {
+    transform: translateY(4px);
+}
+
+#parlor-cw-overlay[data-cw-style="v14"] .parlor-cw-seat-empty {
+    color: rgba(240,229,201,0.54);
+    font-size: 0.8rem;
+}
+
+#parlor-cw-overlay[data-cw-style="v14"] .parlor-cw-seat-note {
+    min-height: 34px;
+    color: rgba(240,229,201,0.72);
+    font-size: 0.78rem;
+    line-height: 1.45;
+}
+
+#parlor-cw-overlay[data-cw-style="v14"] .parlor-cw-close-btn {
+    position: fixed;
+    top: 18px;
+    right: 20px;
+    z-index: 100001;
+    width: 42px;
+    height: 42px;
+    border-radius: 999px;
+    border: 1px solid rgba(255,236,184,0.18);
+    background: linear-gradient(180deg, rgba(18,26,21,0.95), rgba(7,12,10,0.92));
+    color: #f3e4ba;
+    box-shadow: 0 12px 22px rgba(0,0,0,0.3);
+}
+
+#parlor-hand-hud .parlor-cw-hud-shell {
+    grid-template-columns: minmax(240px, 1.04fr) minmax(260px, 1fr) minmax(360px, 1.18fr);
+    gap: 18px;
+}
+
+#parlor-hand-hud .parlor-cw-hud-side,
+#parlor-hand-hud .parlor-cw-hud-center {
+    min-width: 0;
+}
+
+#parlor-hand-hud .parlor-cw-hud-context {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+#parlor-hand-hud .parlor-cw-hud-name {
+    color: #fff0ca;
+    font-size: 0.95rem;
+    font-weight: 700;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#parlor-hand-hud .parlor-cw-hud-meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+#parlor-hand-hud .parlor-cw-hud-hint {
+    margin-top: 6px;
+    color: rgba(236, 224, 190, 0.7);
+    font-size: 0.76rem;
+    line-height: 1.45;
+}
+
+#parlor-hand-hud .parlor-cw-hud-betbox {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+#parlor-hand-hud .parlor-cw-hud-betbox #cw-hud-bet-input {
+    width: 92px;
+}
+
+#parlor-cw-settlement[data-cw-style="v14"] {
+    position: fixed;
+    inset: 0;
+    z-index: 2200;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,0,0,0.52);
+    backdrop-filter: blur(6px);
+}
+
+#parlor-cw-settlement[data-cw-style="v14"] .parlor-cw-settlement-box {
+    width: min(920px, calc(100vw - 32px));
+    max-height: min(78vh, 860px);
+    overflow: auto;
+    padding: 22px 24px 20px;
+    border-radius: 28px;
+    background:
+        linear-gradient(180deg, rgba(12,34,22,0.96), rgba(6,17,12,0.92)),
+        var(--parlor-felt-texture) center / 220px 220px repeat,
+        var(--parlor-rail-texture) center / 280px 280px repeat;
+    background-blend-mode: normal, multiply, normal;
+    border: 1px solid rgba(255,232,180,0.18);
+    box-shadow: 0 30px 50px rgba(0,0,0,0.36), inset 0 1px 0 rgba(255,255,255,0.08);
+    color: #f0e5c9;
+}
+
+#parlor-cw-settlement[data-cw-style="v14"] .settlement-title {
+    margin-bottom: 8px;
+    font-size: 1.16rem;
+    font-weight: 700;
+    color: #fff0c9;
+}
+
+#parlor-cw-settlement[data-cw-style="v14"] .settlement-sub {
+    margin-bottom: 14px;
+    color: rgba(240,229,201,0.72);
+}
+
+#parlor-cw-settlement[data-cw-style="v14"] .settlement-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#parlor-cw-settlement[data-cw-style="v14"] .settlement-table th,
+#parlor-cw-settlement[data-cw-style="v14"] .settlement-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid rgba(255,232,180,0.09);
+    text-align: left;
+}
+
+@media (max-width: 1360px) {
+    #parlor-cw-overlay[data-cw-style="v14"] {
+        --parlor-seat-column-min: 204px;
+    }
+
+    #parlor-cw-overlay[data-cw-style="v14"] .parlor-cw-layout {
+        grid-template-columns: 204px minmax(0, 1fr) 204px;
+    }
+
+    #parlor-cw-overlay[data-cw-style="v14"] .parlor-cw-stage {
+        padding-inline: 132px;
+    }
+}
+
+@media (max-width: 1080px) {
+    #parlor-cw-overlay[data-cw-style="v14"] {
+        --parlor-seat-column-min: 168px;
+        padding-bottom: 132px;
+    }
+
+    #parlor-cw-overlay[data-cw-style="v14"] .parlor-cw-layout {
+        grid-template-columns: 168px minmax(0, 1fr) 168px;
+        gap: 10px;
+    }
+
+    #parlor-cw-overlay[data-cw-style="v14"] .parlor-cw-stage {
+        padding-inline: 94px;
+        padding-top: 34px;
+    }
+
+    #parlor-cw-overlay[data-cw-style="v14"] .parlor-cw-dealer-main {
+        min-height: 186px;
+    }
+
+    #parlor-cw-overlay[data-cw-style="v14"] .parlor-cw-center {
+        width: min(100%, 460px);
+    }
+
+    #parlor-hand-hud .parlor-cw-hud-shell {
+        grid-template-columns: 1fr;
+    }
+
+    #parlor-hand-hud .parlor-cw-hud-betbox {
+        justify-content: center;
+    }
+}

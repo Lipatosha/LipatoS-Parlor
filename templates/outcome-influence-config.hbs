@@ -1,0 +1,159 @@
+<div class="parlor-appearance-shell parlor-outcome-shell">
+    <aside class="parlor-appearance-panel parlor-outcome-global">
+        <header class="parlor-appearance-panel-head">
+            <div class="parlor-appearance-title">{{localize "PARLOR.OutcomeInfluence.Panel.Title"}}</div>
+            <div class="parlor-appearance-sub">{{localize "PARLOR.OutcomeInfluence.Panel.Sub"}}</div>
+        </header>
+
+        <div class="parlor-outcome-global-body">
+            <label class="parlor-outcome-toggle">
+                <span>{{localize "PARLOR.OutcomeInfluence.Fields.Enabled"}}</span>
+                <input type="checkbox" data-outcome-field="enabled" {{#if config.enabled}}checked{{/if}}>
+            </label>
+
+            <div class="parlor-outcome-boundary-grid">
+                <label class="parlor-appearance-field">
+                    <span>{{localize "PARLOR.OutcomeInfluence.Fields.MinWinRate"}}</span>
+                    <input type="number" data-outcome-field="minWinRate" value="{{config.minWinRate}}" min="0" max="99" step="0.1">
+                </label>
+
+                <label class="parlor-appearance-field">
+                    <span>{{localize "PARLOR.OutcomeInfluence.Fields.MaxWinRate"}}</span>
+                    <input type="number" data-outcome-field="maxWinRate" value="{{config.maxWinRate}}" min="1" max="100" step="0.1">
+                </label>
+            </div>
+
+            <details class="parlor-outcome-help">
+                <summary><i class="fas fa-calculator"></i> {{localize "PARLOR.OutcomeInfluence.FormulaTitle"}}</summary>
+                <p>{{localize "PARLOR.OutcomeInfluence.Formula"}}</p>
+            </details>
+        </div>
+
+        <footer class="parlor-appearance-actions parlor-outcome-actions">
+            <button type="button" class="parlor-hud-action-btn" data-action="reset-defaults"><i class="fas fa-undo"></i> {{localize "PARLOR.OutcomeInfluence.Actions.Reset"}}</button>
+            <button type="button" class="parlor-hud-action-btn accent" data-action="save-outcome"><i class="fas fa-save"></i> {{localize "PARLOR.OutcomeInfluence.Actions.Save"}}</button>
+        </footer>
+    </aside>
+
+    <section class="parlor-appearance-preview parlor-outcome-preview">
+        <header class="parlor-appearance-preview-head">
+            <div class="parlor-appearance-title">{{localize "PARLOR.OutcomeInfluence.Games.Title"}}</div>
+            <div class="parlor-appearance-sub">{{localize "PARLOR.OutcomeInfluence.Games.Sub"}}</div>
+        </header>
+
+        <div class="parlor-outcome-scroll" data-outcome-scroll>
+            <div class="parlor-outcome-path-guide">
+                <i class="fas fa-dice-d20"></i>
+                <div>
+                    <strong>{{localize "PARLOR.OutcomeInfluence.Fields.AttributePath"}}</strong>
+                    <span>{{localize "PARLOR.OutcomeInfluence.Fields.AttributePathHint"}}</span>
+                </div>
+            </div>
+
+            <div class="parlor-outcome-game-grid">
+                {{#each rows}}
+                <article class="parlor-outcome-game-card" data-outcome-game="{{id}}">
+                    <header class="parlor-outcome-card-head">
+                        <h3>{{label}}</h3>
+                        <span>{{modeLabel}}</span>
+                    </header>
+
+                    <div class="parlor-outcome-metric-grid">
+                        <label class="parlor-appearance-field">
+                            <span>{{localize "PARLOR.OutcomeInfluence.Columns.BaseWinRate"}}</span>
+                            <input
+                                type="number"
+                                data-outcome-field="games.{{id}}.baseWinRate"
+                                value="{{baseWinRate}}"
+                                min="{{../config.minWinRate}}"
+                                max="{{../config.maxWinRate}}"
+                                step="0.1">
+                        </label>
+
+                        <label class="parlor-appearance-field">
+                            <span>{{localize "PARLOR.OutcomeInfluence.Columns.PointsPerWinRate"}}</span>
+                            <input
+                                type="number"
+                                data-outcome-field="games.{{id}}.pointsPerWinRate"
+                                value="{{pointsPerWinRate}}"
+                                min="0.1"
+                                step="0.1">
+                        </label>
+                    </div>
+
+                    <div class="parlor-outcome-path-field">
+                        <span>{{localize "PARLOR.OutcomeInfluence.Fields.AttributePath"}}</span>
+                        <div class="parlor-outcome-path-control">
+                            <input
+                                type="text"
+                                data-outcome-field="games.{{id}}.attributePath"
+                                value="{{attributePath}}"
+                                placeholder="skills.gam.total"
+                                aria-label='{{localize "PARLOR.OutcomeInfluence.Fields.AttributePath"}}'>
+                            <button
+                                type="button"
+                                class="parlor-hud-action-btn"
+                                data-action="detect-attribute"
+                                data-outcome-path-target="games.{{id}}.attributePath">
+                                <i class="fas fa-crosshairs"></i>
+                                <span>{{localize "PARLOR.OutcomeInfluence.Actions.Detect"}}</span>
+                            </button>
+                        </div>
+                    </div>
+                </article>
+                {{/each}}
+
+                <article class="parlor-outcome-game-card parlor-outcome-baccarat-card" data-outcome-game="baccarat">
+                    <header class="parlor-outcome-card-head">
+                        <h3>{{localize "PARLOR.Games.Baccarat.Name"}}</h3>
+                        <span>{{baccarat.modeLabel}}</span>
+                    </header>
+
+                    <p class="parlor-outcome-card-note">{{localize "PARLOR.OutcomeInfluence.BaccaratHint"}}</p>
+
+                    <div class="parlor-outcome-path-field">
+                        <span>{{localize "PARLOR.OutcomeInfluence.Fields.AttributePath"}}</span>
+                        <div class="parlor-outcome-path-control">
+                            <input
+                                type="text"
+                                data-outcome-field="baccarat.attributePath"
+                                value="{{baccarat.attributePath}}"
+                                placeholder="skills.gam.total"
+                                aria-label='{{localize "PARLOR.OutcomeInfluence.Fields.AttributePath"}}'>
+                            <button
+                                type="button"
+                                class="parlor-hud-action-btn"
+                                data-action="detect-attribute"
+                                data-outcome-path-target="baccarat.attributePath">
+                                <i class="fas fa-crosshairs"></i>
+                                <span>{{localize "PARLOR.OutcomeInfluence.Actions.Detect"}}</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="parlor-outcome-metric-grid parlor-outcome-baccarat-metrics">
+                        <label class="parlor-appearance-field">
+                            <span>{{localize "PARLOR.OutcomeInfluence.Fields.BaccaratLossReduction"}}</span>
+                            <input type="number" data-outcome-field="baccarat.lossReductionPercent" value="{{baccarat.lossReductionPercent}}" min="0" max="100" step="0.1">
+                        </label>
+
+                        <label class="parlor-appearance-field">
+                            <span>{{localize "PARLOR.OutcomeInfluence.Fields.BaccaratWinBoost"}}</span>
+                            <input type="number" data-outcome-field="baccarat.winBoostPercent" value="{{baccarat.winBoostPercent}}" min="0" max="100" step="0.1">
+                        </label>
+
+                        <label class="parlor-appearance-field parlor-outcome-metric-wide">
+                            <span>{{localize "PARLOR.OutcomeInfluence.Fields.BaccaratPointsPerPercent"}}</span>
+                            <input type="number" data-outcome-field="baccarat.pointsPerPercent" value="{{baccarat.pointsPerPercent}}" min="0.1" step="0.1">
+                        </label>
+                    </div>
+
+                    <details class="parlor-outcome-help parlor-outcome-card-help">
+                        <summary><i class="fas fa-calculator"></i> {{localize "PARLOR.OutcomeInfluence.FormulaTitle"}}</summary>
+                        <p>{{localize "PARLOR.OutcomeInfluence.BaccaratFormula"}}</p>
+                    </details>
+                </article>
+            </div>
+        </div>
+    </section>
+</div>

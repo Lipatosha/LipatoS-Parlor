@@ -1,0 +1,201 @@
+<div class="parlor-appearance-shell">
+    <section class="parlor-appearance-panel">
+        <header class="parlor-appearance-panel-head">
+            <div class="parlor-appearance-title">{{localize "PARLOR.Appearance.Panel.Title"}}</div>
+            <div class="parlor-appearance-sub">{{localize "PARLOR.Appearance.Panel.Sub"}}</div>
+        </header>
+
+        <div class="parlor-appearance-field-grid">
+            <label class="parlor-appearance-field">
+                <span>{{localize "PARLOR.Appearance.Fields.TableTheme"}}</span>
+                <select data-appearance-field="themeId">
+                    {{#each choices.themes}}
+                    <option value="{{id}}" {{#if (eq ../config.themeId id)}}selected{{/if}}>{{label}}</option>
+                    {{/each}}
+                </select>
+            </label>
+
+            <label class="parlor-appearance-field">
+                <span>{{localize "PARLOR.Appearance.Fields.TextFont"}}</span>
+                <select data-appearance-field="textFontId">
+                    {{#each choices.textFonts}}
+                    <option value="{{id}}" {{#if (eq ../config.textFontId id)}}selected{{/if}}>{{label}}</option>
+                    {{/each}}
+                </select>
+            </label>
+
+            <label class="parlor-appearance-field">
+                <span>{{localize "PARLOR.Appearance.Fields.CardFace"}}</span>
+                <select data-appearance-field="cardFaceId">
+                    {{#each choices.cardFaces}}
+                    <option value="{{id}}" {{#if (eq ../config.cardFaceId id)}}selected{{/if}}>{{label}}</option>
+                    {{/each}}
+                </select>
+            </label>
+
+            <div class="parlor-appearance-custom-box {{#if customFacesActive}}is-active{{/if}}" data-custom-card-face-box>
+                <div class="parlor-appearance-custom-head">
+                    <strong>{{localize "PARLOR.Appearance.Upload.FaceTitle"}}</strong>
+                    <span>{{localize "PARLOR.Appearance.Upload.FaceHint"}}</span>
+                </div>
+
+                <label class="parlor-appearance-field">
+                    <span>{{localize "PARLOR.Appearance.Fields.CustomFaceFallback"}}</span>
+                    <select data-appearance-field="customCardFaceFallbackId">
+                        {{#each builtInFaceChoices}}
+                        <option value="{{id}}" {{#if (eq ../config.customCardFaceFallbackId id)}}selected{{/if}}>{{label}}</option>
+                        {{/each}}
+                    </select>
+                </label>
+
+                <div class="parlor-appearance-custom-targets">
+                    <label class="parlor-appearance-field">
+                        <span>{{localize "PARLOR.Appearance.Upload.Rank"}}</span>
+                        <select data-custom-face-target-field="rank">
+                            {{#each customFaceTargetChoices.ranks}}
+                            <option value="{{id}}" {{#if (eq ../customFaceTarget.rank id)}}selected{{/if}}>{{label}}</option>
+                            {{/each}}
+                        </select>
+                    </label>
+                    <label class="parlor-appearance-field">
+                        <span>{{localize "PARLOR.Appearance.Upload.Suit"}}</span>
+                        <select data-custom-face-target-field="suit">
+                            {{#each customFaceTargetChoices.suits}}
+                            <option value="{{id}}" {{#if (eq ../customFaceTarget.suit id)}}selected{{/if}}>{{label}}</option>
+                            {{/each}}
+                        </select>
+                    </label>
+                </div>
+
+                <label class="parlor-appearance-field">
+                    <span>{{localize "PARLOR.Appearance.Fields.CustomFaceImage"}}</span>
+                    <input type="text" data-custom-card-face-path value="{{customFaceTargetPath}}" placeholder="{{localize 'PARLOR.Appearance.Upload.PathPlaceholder'}}" autocomplete="off" spellcheck="false">
+                </label>
+
+                <div class="parlor-appearance-custom-tools">
+                    <button type="button" class="parlor-hud-action-btn" data-action="pick-custom-card-face"><i class="fas fa-folder-open"></i> {{localize "PARLOR.Appearance.Upload.PickImage"}}</button>
+                    <button type="button" class="parlor-hud-action-btn" data-action="clear-custom-card-face"><i class="fas fa-times"></i> {{localize "PARLOR.Appearance.Upload.ClearImage"}}</button>
+                </div>
+
+                {{#if customFaceCount}}
+                <div class="parlor-appearance-custom-list">
+                    <span>{{localize "PARLOR.Appearance.Upload.ConfiguredFaces" count=customFaceCount}}</span>
+                    <div>
+                        {{#each customFaceConfiguredCards}}
+                        <button type="button" data-select-custom-card-face data-rank="{{rank}}" data-suit="{{suit}}" title="{{path}}">{{label}}</button>
+                        {{/each}}
+                    </div>
+                </div>
+                {{/if}}
+            </div>
+
+            <label class="parlor-appearance-field">
+                <span>{{localize "PARLOR.Appearance.Fields.CardBack"}}</span>
+                <select data-appearance-field="cardBackId">
+                    {{#each choices.cardBacks}}
+                    <option value="{{id}}" {{#if (eq ../config.cardBackId id)}}selected{{/if}}>{{label}}</option>
+                    {{/each}}
+                </select>
+            </label>
+
+            <div class="parlor-appearance-custom-box {{#if customBackActive}}is-active{{/if}}" data-custom-card-back-box>
+                <div class="parlor-appearance-custom-head">
+                    <strong>{{localize "PARLOR.Appearance.Upload.BackTitle"}}</strong>
+                    <span>{{localize "PARLOR.Appearance.Upload.BackHint"}}</span>
+                </div>
+
+                <label class="parlor-appearance-field">
+                    <span>{{localize "PARLOR.Appearance.Fields.CustomBackImage"}}</span>
+                    <input type="text" data-custom-card-back-path value="{{config.customCardBackPath}}" placeholder="{{localize 'PARLOR.Appearance.Upload.PathPlaceholder'}}" autocomplete="off" spellcheck="false">
+                </label>
+
+                <div class="parlor-appearance-custom-tools">
+                    <button type="button" class="parlor-hud-action-btn" data-action="pick-custom-card-back"><i class="fas fa-folder-open"></i> {{localize "PARLOR.Appearance.Upload.PickImage"}}</button>
+                    <button type="button" class="parlor-hud-action-btn" data-action="clear-custom-card-back"><i class="fas fa-times"></i> {{localize "PARLOR.Appearance.Upload.ClearImage"}}</button>
+                </div>
+            </div>
+
+            <div class="parlor-appearance-custom-box {{#if config.tableBackdropPath}}is-active{{/if}}" data-table-backdrop-box>
+                <div class="parlor-appearance-custom-head">
+                    <strong>{{localize "PARLOR.Appearance.Upload.BackdropTitle"}}</strong>
+                    <span>{{localize "PARLOR.Appearance.Upload.BackdropHint"}}</span>
+                </div>
+
+                <label class="parlor-appearance-field">
+                    <span>{{localize "PARLOR.Appearance.Fields.TableBackdrop"}}</span>
+                    <input type="text" data-table-backdrop-path value="{{config.tableBackdropPath}}" placeholder="{{localize 'PARLOR.Appearance.Upload.PathPlaceholder'}}" autocomplete="off" spellcheck="false">
+                </label>
+
+                <div class="parlor-appearance-custom-tools">
+                    <button type="button" class="parlor-hud-action-btn" data-action="pick-table-backdrop"><i class="fas fa-folder-open"></i> {{localize "PARLOR.Appearance.Upload.PickMedia"}}</button>
+                    <button type="button" class="parlor-hud-action-btn" data-action="clear-table-backdrop"><i class="fas fa-times"></i> {{localize "PARLOR.Appearance.Upload.ClearImage"}}</button>
+                </div>
+            </div>
+
+            <label class="parlor-appearance-field">
+                <span>{{localize "PARLOR.Appearance.Fields.SoundTheme"}}</span>
+                <select data-appearance-field="soundSetId">
+                    {{#each choices.sounds}}
+                    <option value="{{id}}" {{#if (eq ../config.soundSetId id)}}selected{{/if}}>{{label}}</option>
+                    {{/each}}
+                </select>
+            </label>
+
+            <label class="parlor-appearance-field parlor-appearance-field-check">
+                <span>{{localize "PARLOR.Appearance.Fields.EnableSound"}}</span>
+                <input type="checkbox" data-appearance-field="soundEnabled" {{#if config.soundEnabled}}checked{{/if}}>
+            </label>
+
+            <label class="parlor-appearance-field parlor-appearance-field-volume">
+                <span>{{localize "PARLOR.Appearance.Fields.Volume"}}</span>
+                <div class="parlor-appearance-volume-row">
+                    <input type="range" data-appearance-field="soundVolume" min="0" max="100" step="1" value="{{volumePercent}}">
+                    <strong data-volume-label>{{volumePercent}}%</strong>
+                </div>
+            </label>
+        </div>
+
+        <div class="parlor-appearance-audio-tools">
+            <button type="button" class="parlor-hud-action-btn" data-preview-sound="flip"><i class="fas fa-random"></i> {{localize "PARLOR.Appearance.AudioTools.Flip"}}</button>
+            <button type="button" class="parlor-hud-action-btn" data-preview-sound="placed"><i class="fas fa-clone"></i> {{localize "PARLOR.Appearance.AudioTools.Placed"}}</button>
+        </div>
+
+        <footer class="parlor-appearance-actions">
+            <button type="button" class="parlor-hud-action-btn" data-action="reset-defaults"><i class="fas fa-undo"></i> {{localize "PARLOR.Appearance.Actions.Reset"}}</button>
+            <button type="button" class="parlor-hud-action-btn accent" data-action="save-appearance"><i class="fas fa-save"></i> {{localize "PARLOR.Appearance.Actions.Save"}}</button>
+        </footer>
+    </section>
+
+    <section class="parlor-appearance-preview" data-appearance-preview>
+        <header class="parlor-appearance-preview-head">
+            <div>
+                <div class="parlor-appearance-title">{{localize "PARLOR.Appearance.Preview.Title"}}</div>
+                <div class="parlor-appearance-sub">{{localize "PARLOR.Appearance.Preview.Sub"}}</div>
+            </div>
+            <div class="parlor-appearance-pill-list">
+                <span class="parlor-appearance-pill"><strong>{{localize "PARLOR.Appearance.Preview.Font"}}</strong><em data-preview-font-label>{{textFontLabel}}</em></span>
+                <span class="parlor-appearance-pill"><strong>{{localize "PARLOR.Appearance.Preview.Face"}}</strong><em data-preview-face-label></em></span>
+                <span class="parlor-appearance-pill"><strong>{{localize "PARLOR.Appearance.Preview.Back"}}</strong><em data-preview-back-label></em></span>
+            </div>
+        </header>
+
+        <div class="parlor-appearance-stage">
+            <div class="parlor-appearance-table-preview">
+                <div class="parlor-appearance-table-inner">
+                    <div class="parlor-appearance-table-mark top">PARLOR</div>
+                    <div class="parlor-appearance-card-row">
+                        <div class="parlor-appearance-card-slot">
+                            <div class="parlor-appearance-card-label">{{localize "PARLOR.Appearance.Preview.CardFront"}}</div>
+                            <div data-preview-card-front></div>
+                        </div>
+                        <div class="parlor-appearance-card-slot">
+                            <div class="parlor-appearance-card-label">{{localize "PARLOR.Appearance.Preview.CardBack"}}</div>
+                            <div data-preview-card-back></div>
+                        </div>
+                    </div>
+                    <div class="parlor-appearance-table-mark bottom">TABLE PREVIEW</div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

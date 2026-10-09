@@ -1,0 +1,3106 @@
+{
+  "PARLOR": {
+    "OpenCasino": "打开 Parlor 游戏厅",
+    "Debug": {
+      "PresenterSmoke": "Presenter 冒烟测试",
+      "PresenterCrash": "Presenter 崩溃测试"
+    },
+    "Settings": {
+      "AppearanceMenu": {
+        "Name": "外观自定义",
+        "Label": "打开样式面板",
+        "Hint": "配置扑克牌牌面、牌背和发牌声音，并实时预览效果。"
+      },
+      "OutcomeInfluenceMenu": {
+        "Name": "属性影响牌局",
+        "Label": "打开属性影响配置",
+        "Hint": "为每个游戏分别检测或填写属性路径，再设置标准胜率。百家乐会单独控制输钱时少输、赢钱时多赢的幅度。"
+      },
+      "SlotMachineMenu": {
+        "Name": "老虎机设置",
+        "Label": "打开老虎机设置",
+        "Hint": "调整老虎机小奖、中奖、大奖出现率，以及每个图标的倍率。"
+      },
+      "AlwaysRevealHandHud": {
+        "Name": "手牌始终展示",
+        "Hint": "开启后，自己的手牌在底部 HUD 中会保持正面显示，不需要鼠标悬停。"
+      },
+      "DsnIntegration": {
+        "Name": "Dice So Nice 3D 骰子",
+        "Hint": "在骨骰二十一和说谎骰里播放 Dice So Nice 的 3D 骰子动画。仅本机生效，结果以服务端为准。",
+        "Auto": "自动（检测到 Dice So Nice 时启用）",
+        "On": "始终启用",
+        "Off": "禁用"
+      },
+      "BeetleRaceMenu": {
+        "Name": "甲虫赛事工坊",
+        "Label": "打开赛事工坊",
+        "Hint": "编辑甲虫名册、赛事卡、招式和气泡台词。"
+      },
+      "BeetleRaceSound": {
+        "Name": "甲虫赛跑音效",
+        "Hint": "GM 替全桌决定：关掉后所有人的甲虫赛跑都不出声。比赛桌上 GM 那个喇叭按钮改的也是这一项。"
+      },
+      "BeetleRaceCleanTable": {
+        "Name": "甲虫赛跑：纯净桌面",
+        "Hint": "GM 替全桌决定：勾上后比赛时先收起桌上的摆件（酒杯、牌堆这些会压到赛道）。只对带摆件的桌面皮肤有效；开桌对话里也能改。"
+      }
+    },
+    "SlotConfig": {
+      "WindowTitle": "老虎机设置",
+      "Saved": "老虎机设置已保存。",
+      "Rates": {
+        "Title": "中奖率",
+        "Sub": "按每一转抽奖级别：先判大奖，再判中奖，再判小奖；剩下就是未中奖。",
+        "Total": "总命中",
+        "Miss": "未中奖"
+      },
+      "Fields": {
+        "SmallRate": "小奖 %",
+        "MediumRate": "中奖 %",
+        "BigRate": "大奖 %"
+      },
+      "Paytable": {
+        "Title": "图标倍率",
+        "Sub": "普通图标按左起连续 3 / 4 / 5 列结算；Scatter 按全盘数量 3 / 4 / 5 个结算。"
+      },
+      "Columns": {
+        "Symbol": "图标"
+      },
+      "Actions": {
+        "Reset": "恢复默认",
+        "Save": "保存设置"
+      }
+    },
+    "Lobby": {
+      "Title": "游戏大厅",
+      "Subtitle": "选择一个游戏开始",
+      "StartGame": "开始游戏",
+      "Start": "开始",
+      "SelectPlayers": "选择玩家",
+      "StartWindowTitle": "开始 {game}",
+      "Errors": {
+        "NeedParticipant": "至少要有一位参赛角色。",
+        "NeedDealer": "这一局需要指定一个角色为庄家。",
+        "Bone21AnteShort": "{names} 筹码不够这一桌的 {amount} GP 底注——换个金额或者别勾这几个。",
+        "TexasHoldemNeedPlayers": "德州扑克需要 2 到 6 名参赛者。",
+        "TexasHoldemBuyInShort": "{names} 不够支付 {amount} 买入额——换个金额或者别勾这几个。",
+        "DuplicateActor": "这个角色已经在参赛名单里了。",
+        "MaxParticipants": "当前桌面建议最多 {maxCount} 名参赛者。",
+        "InvalidDroppedActor": "拖入的不是可用角色。",
+        "AllocationNoEffect": "筹码分配没有生效，请检查数量和目标。",
+        "CardLuckInvalid": "牌运设置无效，请重新选择。",
+        "CrazyEightsNeedPlayers": "疯狂八需要 {minCount} 到 {maxCount} 人。",
+        "CrazyEightsAnteShort": "底注 {amount} 不够付：{names}",
+        "BeetleRaceInvalid": "这张赛事卡上场的甲虫不足三只（可能有甲虫被删了），请换一张或去赛事工坊补上。"
+      },
+      "Toolbar": {
+        "ManageChips": "分配筹码",
+        "SettleChips": "查看/结算筹码",
+        "DndGoldTools": "D&D 金币",
+        "PromptExchange": "打开玩家兑换",
+        "PlayerExchange": "兑换金币/筹码"
+      },
+      "GameCard": {
+        "Play": "进入"
+      },
+      "GameGuide": {
+        "Button": "说明",
+        "WindowTitle": "{game}说明",
+        "More": "更多（英文 Wiki）",
+        "OverviewTitle": "玩法概览",
+        "FlowTitle": "基本流程",
+        "WinTitle": "输赢与判定",
+        "NoteTitle": "当前桌面的特别说明",
+        "Missing": "这一项暂时还没补说明。"
+      },
+      "Bank": {
+        "Title": "桌上筹码",
+        "Note": "赌场筹码独立于系统金币；NPC / 测试机器人默认无限筹码。",
+        "EmptyPlayers": "当前没有在线玩家。",
+        "GMTag": "GM"
+      },
+      "Setup": {
+        "ParticipantsTitle": "参赛角色",
+        "ParticipantsNote": "玩家默认使用自己绑定的角色；筹码也发到这个角色名下。",
+        "BlackjackParticipantsNote": "21 点允许玩家角色和 NPC 入座；NPC 会自动下注和行动，发牌仍由 DM 确认。若无人入座，会自动补 5 个测试机器人。",
+        "LiarsDiceParticipantsNote": "说谎骰不走下注；玩家、GM 和 NPC 都能入桌，NPC 会自动叫骰或开盅。若无人入座，会自动补 5 个测试机器人。",
+        "Bone21ParticipantsNote": "骨骰二十一没有庄家；玩家、GM 和 NPC 都能入桌。若 GM 参赛，会自动排在最后行动。",
+        "TexasHoldemParticipantsNote": "德州扑克 2 到 6 人入桌；普通玩家买入只在开桌时扣一次，GM 使用单独填写且不参与结算的本场 stack。",
+        "SlotParticipantsNote": "老虎机只允许玩家和 GM 本人加入，不开放 NPC；开局后只保留 1 位操作者。",
+        "PlayerOwner": "玩家 · {userName}",
+        "PlayerMissingCharacter": "这个玩家还没有绑定角色",
+        "PlayerMissingGoldActor": "金币结算需要先绑定角色卡。",
+        "NoOnlinePlayers": "当前没有在线玩家。",
+        "GMCharacter": "GM 绑定角色",
+        "TexasHoldemGMSeat": "GM 本场席位（不走筹码或金币结算）",
+        "NpcTitle": "NPC 参赛",
+        "NpcDropHint": "把角色从侧边栏拖到这里，加入为机器人席位",
+        "NpcNote": "拖入的 NPC 会作为机器人参赛，DM 不需要代操；每个机器人都能单独设为倾向赢、倾向输或随机。",
+        "NoNpc": "当前还没有 NPC。",
+        "NpcControlled": "机器人席位",
+        "BotModeLabel": "机器人倾向",
+        "BotMode": {
+          "random": "随机",
+          "win": "倾向赢",
+          "lose": "倾向输"
+        },
+        "CardLuck": {
+          "Label": "手气",
+          "CustomLabel": "定制牌型",
+          "OneShot": "一次性 · 下一手",
+          "Help": "只影响拿牌倾向，不保证最终输赢。",
+          "Transferred": "定制牌型已从 {from} 转移到 {to}。",
+          "Modes": {
+            "normal": "正常",
+            "good": "手气好",
+            "bad": "手气差"
+          },
+          "CustomHands": {
+            "none": "无",
+            "natural-blackjack": "自然 Blackjack",
+            "royal-flush": "皇家同花顺",
+            "straight-flush": "同花顺",
+            "full-house": "葫芦",
+            "three-kind": "三条",
+            "flush": "同花"
+          }
+        },
+        "RemoveNpc": "移除",
+        "DealerTitle": "庄家设置",
+        "DealerRequired": "这一局必须指定一个参赛角色为庄家。",
+        "DealerNeedParticipant": "先加入至少一个带角色的参赛者，才能指定庄家。",
+        "BlackjackDealerNote": "这一桌不再手动指定庄家，当前 DM 会默认以庄家身份参与并控庄。",
+        "DealerNotNeeded": "这一局无需庄家；开牌与流程推进由 DM 执行。",
+        "PublicToggle": "让所有人都看到游戏界面（观战）",
+        "ParticipantCount": "当前会加入 {count} 名参赛者",
+        "OverLimit": "，已超过建议上限 {maxCount}",
+        "AutoFillBots": "（没有角色时会自动补测试机器人）",
+        "SlotTitle": "老虎机设置",
+        "SlotNote": "开局后只保留 1 位操作者；这里设置默认投币额。",
+        "SlotOperator": "本局操作者",
+        "SlotNeedOperator": "先勾选至少一位玩家或 GM",
+        "SlotSpinCost": "默认投币额",
+        "SlotPublicNote": "建议保持公开桌面，这样其他玩家可以围观这台机。",
+        "SlotCountNote": "老虎机开局后只会带 1 名操作者入桌。",
+        "Bone21Title": "本桌底注",
+        "Bone21Note": "每一轮都按这个金额扣，NPC 不需要筹码。",
+        "Bone21Ante": "底注（GP）",
+        "TexasHoldemTitle": "德州扑克设置",
+        "TexasHoldemNote": "普通玩家的买入会在开桌时换成桌内筹码，散桌再退回剩余 stack；GM 的买入只在本场牌桌内流转。",
+        "TexasHoldemSmallBlind": "小盲",
+        "TexasHoldemBigBlind": "大盲",
+        "TexasHoldemBuyIn": "买入额",
+        "TexasHoldemBuyInHint": "每位玩家带上桌的本金，至少 {amount}（大盲的 10 倍）",
+        "TexasHoldemGMBuyIn": "GM 本场买入",
+        "TexasHoldemGMBuyInHint": "只作为 GM 的起始 stack，不查余额、不扣除，散桌时也不退回。",
+        "BetLimitsTitle": "下注限制",
+        "BetLimitsNote": "适用于这桌每次玩家下注；上限填 0 表示不限制。",
+        "BetLimitMin": "下注下限",
+        "BetLimitMaxNoLimit": "下注上限（0 = 不限制）",
+        "BetLimitsRange": "当前范围：{min} 到 {max} GP。",
+        "BetLimitsNoMax": "当前下限：{min} GP；没有上限。",
+        "SettlementTitle": "结算方式",
+        "SettlementNote": "选择这一桌的输赢要落到哪里。",
+        "SettlementChips": "以筹码结算",
+        "SettlementChipsHint": "继续使用 Parlor 独立筹码，不改角色卡金币。",
+        "SettlementGold": "以 D&D 金币结算",
+        "SettlementGoldHint": "赢会直接加到角色 GP，输了会直接从角色 GP 扣。",
+        "CrazyEightsParticipantsNote": "2 到 8 人。谁都不勾直接开始，就是 DM 自己带 3 个机器人试玩；也可以勾玩家、拖 NPC 进来。DM 席位不进账，想下多少下多少。6 人起自动用两副牌。",
+        "CrazyEightsTitle": "疯狂八桌规",
+        "CrazyEightsNote": "底注每人入池，赢家通吃；尾牌罚金按输家剩牌点数付给赢家，填 0 关闭。",
+        "CrazyEightsAnte": "底注",
+        "CrazyEightsPenaltyPerPoint": "尾牌罚金（每点）",
+        "CrazyEightsPenaltyHint": "8 算 50 点，J/Q/K 算 10，A 算 1，其余按面值；付到见底不欠账，NPC 不受限。",
+        "CrazyEightsDrawRule": "抽牌方式",
+        "CrazyEightsDrawRuleOne": "抽一张后，可出牌或过",
+        "CrazyEightsDrawRuleUntilPlayable": "抽到能出为止（上限三张）",
+        "CrazyEightsActionCards": "功能牌",
+        "CrazyEightsActionCardsTavern": "功能牌：8 换花色，2 罚抽，J 跳过，Q 反转",
+        "CrazyEightsActionCardsClassic": "经典：只有 8 是万能牌",
+        "CrazyEightsSelfTest": "（谁都没勾：DM 自己加 3 个机器人试玩）",
+        "BeetleRaceParticipantsNote": "勾选的人都能下注，也可以不下注只看。谁都不勾直接开桌，就是 DM 自己看甲虫、试作弊招（DM 的注不进账）。",
+        "BeetleRaceTitle": "赛事",
+        "BeetleRaceNote": "选一张 DM 配好的赛事卡：上场的甲虫、赔付倍率、赛程和下注时长都由它决定。",
+        "BeetleRaceCard": "赛事卡",
+        "BeetleRaceFactDuration": "赛程约 {seconds} 秒",
+        "BeetleRaceFactBetting": "下注 {seconds} 秒",
+        "BeetleRacePower": {
+          "number": "战力公开",
+          "stars": "战力显示为星级",
+          "hidden": "战力保密"
+        },
+        "BeetleRaceStudio": "管理赛事",
+        "BeetleRaceSound": "比赛音效（全桌一起；比赛中 GM 也能点喇叭临时关）",
+        "BeetleRaceCleanTable": "纯净桌面：比赛时收起桌上的摆件，赛道看得更清楚",
+        "BeetleRacePrefsHint": "这两项会记住，下次开甲虫赛跑沿用这次的选择。"
+      },
+      "ChipAllocation": {
+        "Title": "分配筹码",
+        "TargetRole": "目标角色",
+        "AllOnlineRoles": "全部在线角色",
+        "Mode": "操作",
+        "Amount": "数量",
+        "CurrentChips": "当前筹码",
+        "EmptyRoles": "暂无在线角色",
+        "NpcNote": "NPC / 测试机器人默认无限筹码，不在这里单独分配。",
+        "Apply": "应用",
+        "Updated": "筹码已更新。",
+        "Modes": {
+          "Grant": "发放",
+          "Deduct": "扣除",
+          "Set": "设为"
+        }
+      },
+      "ChipSettlement": {
+        "Title": "结算筹码",
+        "ConfirmText": "确认后会清零所有角色当前筹码，并把最后筹码发到聊天消息。",
+        "Role": "角色",
+        "CurrentChips": "当前筹码",
+        "Empty": "当前没有可结算的角色筹码。",
+        "Submit": "结算并清零",
+        "NothingToSettle": "当前没有需要结算的筹码。",
+        "Done": "筹码已结算并清零，结果已发送到聊天。"
+      },
+      "GoldExchange": {
+        "AdminTitle": "D&D 金币与筹码兑换",
+        "PlayerTitle": "金币与筹码兑换",
+        "AdminHint": "下面按角色填写要兑换的数量。这里只处理角色 GP 和 Parlor 筹码之间的转换。",
+        "LinkedActor": "已绑定角色卡",
+        "MissingActor": "需要先绑定角色卡",
+        "Character": "角色",
+        "Gold": "当前 GP",
+        "Chips": "当前筹码",
+        "GoldToChip": "将 GP 兑换为筹码",
+        "ChipToGold": "将筹码兑换为 GP",
+        "GoldToChipSelf": "用 GP 购买筹码",
+        "ChipToGoldSelf": "把筹码兑换成 GP",
+        "Amount": "数量",
+        "CurrentBalance": "{gold} GP · {chips} 筹码",
+        "RateNote": "兑换比例：1 GP = 1 筹码。",
+        "PlayerMacroTitle": "玩家自主兑换宏",
+        "PlayerMacroHint": "玩家可以把下面这行放进宏里，自己打开兑换窗口。",
+        "PlayerMacroCopy": "复制",
+        "PlayerMacroCopied": "宏代码已复制。",
+        "PlayerMacroCopyFailed": "复制失败，可以手动选中这行代码。",
+        "Apply": "应用兑换",
+        "Exchange": "兑换",
+        "NoPlayers": "当前没有可用的在线玩家角色。",
+        "NoEffect": "没有执行任何兑换。",
+        "Updated": "兑换完成：已将 {buy} GP 兑换为筹码，已将 {sell} 筹码兑换为 GP。",
+        "PromptedPlayers": "已为 {count} 名玩家打开兑换窗口。",
+        "PartialShort": "部分行因为角色 GP 或筹码不足而跳过。",
+        "PartialFailed": "部分角色写入失败，请检查对应角色卡。",
+        "Errors": {
+          "GMOnly": "只有 GM 可以管理玩家金币和筹码。",
+          "NeedDnd5e": "D&D 金币兑换只在 dnd5e 世界中可用。",
+          "MissingSelfActor": "你需要先绑定角色卡，才能兑换金币和筹码。",
+          "GMUnavailable": "当前没有可处理兑换的 GM。",
+          "Unknown": "兑换未能完成。"
+        }
+      }
+    },
+    "Games": {
+      "Roulette": {
+        "Name": "轮盘赌",
+        "Desc": "经典赌场之花，猜号码或颜色",
+        "BetDialog": {
+          "Title": "下注",
+          "Participant": "下注角色",
+          "Amount": "下注金额 ({gp})",
+          "Confirm": "确认下注",
+          "MissingParticipant": "你当前没有可下注的参赛角色。"
+        }
+      },
+      "Blackjack": {
+        "Name": "21 点",
+        "Desc": "经典纸牌对决，逼近 21 不爆牌",
+        "Rules": {
+          "NaturalShort": "满点",
+          "NaturalLong": "两张{threshold}点"
+        }
+      },
+      "DragonTiger": {
+        "Name": "龙虎斗",
+        "Desc": "多人同桌押龙、押虎或押和，一翻两张立见胜负"
+      },
+      "Baccarat": {
+        "Name": "百家乐",
+        "Desc": "多人同桌押庄、押闲或押和，按标准补牌规则统一开牌"
+      },
+      "ThreeCardPoker": {
+        "Name": "三张扑克",
+        "Desc": "多人同桌先压 Ante，可加 Pair Plus，再决定跟注 Play 还是弃牌"
+      },
+      "LiarsDice": {
+        "Name": "说谎骰",
+        "Desc": "经典说谎骰：每人摇杯藏五颗，轮流喊\"几个几\"，谁先憋不住就开盅，输的人掉一颗，最后剩骰子的赢"
+      },
+      "Bone21": {
+        "Name": "骨骰二十一",
+        "Desc": "酒馆骰局，没有庄家。开局三颗私骰只有自己看，之后一颗颗加，谁不爆且最接近 21 就赢走奖池"
+      },
+      "TexasHoldem": {
+        "Name": "德州扑克",
+        "Desc": "2 到 6 人现金桌，包含盲注、四轮下注、边池和私有底牌"
+      },
+      "SlotMachine": {
+        "Name": "水果老虎机",
+        "Desc": "单人操作、多人围观的 3x5 水果老虎机"
+      },
+      "CasinoWar": {
+        "Name": "赌场战争",
+        "Desc": "多人同桌与庄家比单张，平点则进入战争牌"
+      },
+      "CrazyEights": {
+        "Name": "疯狂八",
+        "Desc": "以率先出完手牌为目标的纸牌游戏，按花色或点数接续出牌，8 可指定花色。"
+      },
+      "BeetleRace": {
+        "Name": "甲虫赛跑",
+        "Desc": "DM 配好赛事，大家挑一只甲虫下注，然后一起看它们赛跑。"
+      }
+    },
+    "Roulette": {
+      "Status": {
+        "Betting": "下注阶段",
+        "Spinning": "旋转中"
+      },
+      "Actions": {
+        "Spin": "开始旋转"
+      }
+    },
+    "DragonTiger": {
+      "Action": {
+        "BetDragon": "押龙",
+        "BetTiger": "押虎",
+        "BetTie": "押和",
+        "DealByDM": "DM 开牌"
+      },
+      "Center": {
+        "BettingNoteGM": "确认大家都下注后，由 DM 点击开牌。",
+        "BettingNotePlayer": "先下注，等 DM 开牌。",
+        "BettingSubIdle": "还没下注时，可以直接在下方操作台押注。",
+        "BettingSubPlaced": "{name} 已押 {side} · {amount} GP",
+        "BettingTitleIdle": "选择你的下注区域",
+        "BettingTitlePlaced": "{name} 已押 {side}",
+        "CurrentIdentity": "当前身份",
+        "DealingNote": "两张牌会同时翻开，胜方区域会高亮。",
+        "DealingSub": "DM 正在开牌，请稍等。",
+        "DealingTitle": "正在开牌",
+        "Phase": {
+          "Betting": "下注",
+          "Dealing": "开牌",
+          "Ready": "准备",
+          "Resolving": "结算面板",
+          "Settle": "待结算",
+          "Showdown": "亮牌"
+        },
+        "ReadyNoteGM": "确认下注无误后，由 DM 开始这一轮。",
+        "ReadyNotePlayer": "所有下注已锁定，等待 DM 开牌。",
+        "ReadySub": "下注已经锁定，马上进入开牌。",
+        "ReadyTitleGM": "可以开牌了",
+        "ReadyTitlePlayer": "等待 DM 开牌",
+        "ResolvingNoteGM": "结算明细已经打开，可以结束或开下一轮。",
+        "ResolvingNotePlayer": "结算明细已经打开，等待 DM 继续流程。",
+        "ResolvingSubPlayer": "{name} 本轮 {result}",
+        "SettleNoteGM": "每个玩家卡上已经显示输赢，确认后进入结算页。",
+        "SettleNotePlayer": "本轮输赢已经显示在玩家卡上，等待 DM 打开结算。",
+        "SettleSubPlayer": "{name} 本轮 {result}",
+        "ShowdownNote": "胜负已出，准备展示每位参赛者的结果。",
+        "ShowdownSub": "龙与虎已经亮牌，结果马上展开。"
+      },
+      "Error": {
+        "InvalidSide": "下注区域无效。"
+      },
+      "Footer": {
+        "CurrentBet": "当前下注：{side} · {amount} GP",
+        "Dealing": "DM 正在开牌。",
+        "MultiControl": "你正在操作 {count} 个角色，已下注 {done} 个。",
+        "NotBetYet": "还没下注",
+        "OddsSummary": "龙/虎 1:1，和 8:1；遇和时龙、虎下注退回本金。",
+        "ReadyGM": "点击开牌后会同时翻出龙与虎。",
+        "ReadyPlayer": "等待 DM 开牌。",
+        "RoundEnd": "本轮结束",
+        "Showdown": "开牌完成，结果已展示。"
+      },
+      "Result": {
+        "Lose": "押 {side} 失败",
+        "Push": "押 {side} 走水",
+        "TieRefund": "押 {side} 遇到和局，退回本金",
+        "Win": "押 {side} 胜出"
+      },
+      "Seat": {
+        "StatusPlaced": "已押 {side}",
+        "StatusReady": "锁定 {side}"
+      },
+      "Settlement": {
+        "Net": "净输赢",
+        "Payout": "派彩",
+        "Result": "结果",
+        "Title": "{winner} 获胜"
+      },
+      "Side": {
+        "Dragon": "龙",
+        "Tiger": "虎",
+        "Tie": "和"
+      },
+      "Stat": {
+        "DragonPot": "龙区总注",
+        "TigerPot": "虎区总注",
+        "TiePot": "和区总注"
+      },
+      "Table": {
+        "TieOdds": "和 8 : 1",
+        "TieRefund": "龙虎遇和时，龙/虎下注退回本金"
+      }
+    },
+    "Baccarat": {
+      "Reason": {
+        "BankerConditional3": "庄 3 点：闲第三张不是 8 时补牌。",
+        "BankerConditional4": "庄 4 点：闲第三张为 2-7 时补牌。",
+        "BankerConditional5": "庄 5 点：闲第三张为 4-7 时补牌。",
+        "BankerConditional6": "庄 6 点：闲第三张为 6-7 时补牌。",
+        "BankerConditionalFallback": "庄首两张 {bankerTotal} 点，按标准补牌规则判断。",
+        "BankerDraw012": "庄 {bankerTotal} 点，直接补牌。",
+        "BankerDrawWhenPlayerStands": "闲停牌后，庄 {bankerTotal} 点，按规则补牌。",
+        "BankerStand7": "庄 7 点停牌。",
+        "BankerStandWhenPlayerStands": "闲停牌后，庄 {bankerTotal} 点，按规则停牌。",
+        "NaturalNoDraw": "出现天牌，本轮不补牌。",
+        "PlayerDraw05": "闲 {total} 点，按规则补牌。",
+        "PlayerNaturalStand": "闲 {total} 点天牌，停牌。",
+        "PlayerStand67": "闲 {total} 点，按规则停牌。",
+        "ResolvedBankerDrawAfterPlayerThird": "闲第三张为 {playerThirdValue}，庄 {bankerTotal} 点，按规则补牌。",
+        "ResolvedBankerDrawWhenPlayerStands": "闲未补牌，庄 {bankerTotal} 点，按规则补牌。",
+        "ResolvedBankerStandAfterPlayerThird": "闲第三张为 {playerThirdValue}，庄 {bankerTotal} 点，按规则停牌。",
+        "ResolvedBankerStandWhenPlayerStands": "闲未补牌，庄 {bankerTotal} 点，按规则停牌。"
+      },
+      "Action": {
+        "BetBanker": "押庄",
+        "BetPlayer": "押闲",
+        "BetTie": "押和",
+        "DealByDM": "DM 发牌"
+      },
+      "Center": {
+        "BettingNote": "先选下注区，等 DM 发首轮。",
+        "BettingSubIdle": "可押闲、庄或和。",
+        "BettingSubPlaced": "已押 {side} · {amount}",
+        "BettingTitleIdle": "选择本轮下注",
+        "BettingTitlePlaced": "本轮已押 {side}",
+        "DealingNote": "首轮各发两张，随后进入补牌判定。",
+        "DealingSub": "首轮发牌中。",
+        "DealingTitle": "正在发首轮",
+        "DrawingNote": "按标准百家乐规则执行补牌。",
+        "DrawingTitle": "执行补牌",
+        "DrawRulesNoteGM": "确认补牌说明后，由 DM 执行补牌。",
+        "DrawRulesNotePlayer": "补牌规则已展示，等待 DM 执行补牌。",
+        "FinalScore": "闲 {playerTotal} 点 · 庄 {bankerTotal} 点",
+        "FinalShowdownNote": "最终牌面已亮出，准备进入结算。",
+        "Phase": {
+          "Betting": "下注",
+          "Dealing": "发牌",
+          "Drawing": "补牌",
+          "DrawRules": "补牌规则",
+          "FinalShowdown": "最终亮牌",
+          "Ready": "准备",
+          "Resolving": "结算面板",
+          "Settle": "待结算",
+          "Showdown": "首轮亮牌"
+        },
+        "ReadyNote": "下注已锁定，等待首轮发牌。",
+        "ReadySub": "押注区已经关闭。",
+        "ReadyTitleGM": "可以发首轮了",
+        "ReadyTitlePlayer": "等待 DM 发首轮",
+        "ResolvingNoteGM": "结算明细已经打开，可以结束或开始下一轮。",
+        "ResolvingNotePlayer": "结算明细已经打开，等待 DM 继续流程。",
+        "SettleNoteGM": "每个玩家卡已显示输赢，确认后进入结算页。",
+        "SettleNotePlayer": "本轮输赢已显示在玩家卡上，等待 DM 打开结算。",
+        "ShowdownNote": "首轮点数已亮出，接下来判断是否补牌。",
+        "ShowdownSub": "先看首轮点数，再进入补牌规则。"
+      },
+      "DrawAction": {
+        "ConfirmNoDraw": "直接进入结果",
+        "ExecuteDraw": "执行补牌",
+        "GoToResult": "查看结果"
+      },
+      "DrawExecution": {
+        "BankerOnly": "仅庄补牌",
+        "Both": "庄闲都补牌",
+        "None": "双方都不补",
+        "PlayerOnly": "仅闲补牌"
+      },
+      "DrawTitle": {
+        "Natural": "天牌",
+        "NoThirdCard": "无需第三张",
+        "RuleBased": "按规则补牌"
+      },
+      "Error": {
+        "InvalidSide": "下注区域无效。"
+      },
+      "FinalNote": {
+        "BankerDrew": "庄补到 {value} 点牌。",
+        "Natural": "天牌，双方都不补牌。",
+        "PlayerDrew": "闲补到 {value} 点牌。",
+        "PlayerStand": "闲未补牌。"
+      },
+      "Footer": {
+        "CurrentBet": "当前下注：{side} · {amount}",
+        "Dealing": "首轮发牌中。",
+        "Drawing": "正在补牌。",
+        "DrawRules": "正在展示补牌规则。",
+        "MultiControl": "你正在操作 {count} 个角色，已下注 {done} 个。",
+        "NotBetYet": "还没下注",
+        "OddsSummary": "闲 1:1，庄 0.95:1，和 8:1",
+        "ReadyGM": "点击发牌后会先翻出首轮四张牌。",
+        "ReadyPlayer": "等待 DM 发首轮。",
+        "Showdown": "首轮亮牌完成"
+      },
+      "Result": {
+        "Lose": "押 {side} 失败",
+        "Push": "押 {side} 走水",
+        "TiePush": "押 {side} 遇和退回本金",
+        "Win": "押 {side} 胜出"
+      },
+      "Seat": {
+        "StatusDrawing": "补牌处理中",
+        "StatusPlaced": "已押 {side}",
+        "StatusReady": "锁定 {side}",
+        "StatusShowdown": "等待补牌判定"
+      },
+      "SeatResult": {
+        "Lose": "输 {amount}",
+        "Push": "走水",
+        "Win": "赢 {amount}"
+      },
+      "Settlement": {
+        "Net": "净输赢",
+        "Payout": "派彩",
+        "Result": "结果",
+        "Title": "{winner} 胜"
+      },
+      "Side": {
+        "Banker": "庄",
+        "Player": "闲",
+        "Tie": "和"
+      },
+      "Stat": {
+        "BankerHand": "庄牌数",
+        "BankerInitial": "庄首轮点数",
+        "BankerPoints": "庄最终点数",
+        "BankerPot": "庄区总注",
+        "Cards": "张",
+        "PlayerHand": "闲牌数",
+        "PlayerInitial": "闲首轮点数",
+        "PlayerPoints": "闲最终点数",
+        "PlayerPot": "闲区总注",
+        "TiePot": "和区总注"
+      },
+      "Table": {
+        "BankerOdds": "庄 {odds}",
+        "PlayerOdds": "闲 {odds}",
+        "TieOdds": "和 {odds}",
+        "TieRefund": "和局时，押庄/闲都会退回本金"
+      }
+    },
+    "ThreeCardPoker": {
+      "Action": {
+        "DealByDM": "DM 发牌",
+        "Fold": "弃牌",
+        "OpenSettle": "打开结算",
+        "Play": "跟注 Play",
+        "RevealByDM": "DM 亮庄牌"
+      },
+      "Badge": {
+        "DealerNotQualified": "庄家不合格",
+        "DealerQualified": "庄家合格"
+      },
+      "Center": {
+        "BettingNote": "先压 Ante，可选 Pair Plus；等全桌锁定后由 DM 发牌。",
+        "BettingSubIdle": "每位参赛者都先下底注，再决定要不要加 Pair Plus。",
+        "BettingSubPlaced": "本角色已下 {amount}",
+        "BettingTitleIdle": "先下本轮底注",
+        "BettingTitlePlaced": "底注已锁定",
+        "DealingNote": "每位参赛者与庄家各发三张，先只看自己的手牌。",
+        "DealingSub": "庄家与所有参赛者正在落三张牌。",
+        "DealingTitle": "正在发三张牌",
+        "DecisionNoteOther": "等所有还在局内的席位决定 Play 或 Fold。",
+        "DecisionNoteSelf": "看完自己手牌后，选择跟注同额 Play，或直接弃牌。",
+        "DecisionSubOther": "已决定 {done}/{total} 位",
+        "DecisionSubSelf": "你当前手牌：{hand}",
+        "DecisionTitleOther": "等待大家做决定",
+        "DecisionTitleSelf": "轮到你决定 Play 还是 Fold",
+        "Phase": {
+          "Betting": "下注",
+          "Dealing": "发牌",
+          "Decision": "决策",
+          "Ready": "准备",
+          "Resolving": "结算面板",
+          "RevealReady": "待亮牌",
+          "Settle": "待结算",
+          "Showdown": "亮牌"
+        },
+        "ReadyNoteGM": "确认所有 Ante / Pair Plus 无误后，由 DM 发牌。",
+        "ReadyNotePlayer": "所有底注已经锁定，等待 DM 发牌。",
+        "ReadySub": "这一轮只差发牌。",
+        "ReadyTitleGM": "可以发牌了",
+        "ReadyTitlePlayer": "等待 DM 发牌",
+        "ResolvingNoteGM": "结算明细已经打开，可以结束牌局或直接开下一轮。",
+        "ResolvingNotePlayer": "结算明细已经打开，等待 DM 继续。",
+        "ResolvingTitle": "结算面板已打开",
+        "RevealReadyNoteGM": "所有决策都已锁定，可以亮出庄家手牌并结算。",
+        "RevealReadyNotePlayer": "全桌决策已完成，等待 DM 亮庄牌。",
+        "RevealReadySub": "当前 Play 总注 {playPot} GP",
+        "RevealReadyTitleGM": "可以亮庄牌了",
+        "RevealReadyTitlePlayer": "等待 DM 亮庄牌",
+        "SettleNoteGM": "每个席位卡片上都已显示输赢，确认后可打开结算页。",
+        "SettleNotePlayer": "本轮输赢已经显示，等待 DM 打开结算。",
+        "SettleTitle": "本轮结果已展开",
+        "ShowdownNote": "庄家资格、主注输赢和奖励派彩都已经算好。",
+        "ShowdownSubSelected": "当前角色结果：{result}",
+        "ShowdownSubTable": "桌上结果已经亮出，稍后进入结算。",
+        "ShowdownTitleNotQualified": "庄家 {hand}，未达合格门槛",
+        "ShowdownTitleQualified": "庄家 {hand}，开始比牌"
+      },
+      "DealerNote": {
+        "Betting": "等待各席位先压 Ante。",
+        "Dealing": "三张牌发放中。",
+        "Decision": "大家正在决定是跟 Play 还是弃牌。",
+        "NotQualified": "庄家牌型 {hand}，未达 Q 高起比。",
+        "Qualified": "庄家牌型 {hand}，符合 Q 高起比规则。",
+        "Ready": "底注已锁定，可以开始发牌。",
+        "RevealReady": "所有决策都已锁定，等待亮庄牌。"
+      },
+      "Error": {
+        "DecisionClosed": "现在已经不能再决定 Play / Fold 了。",
+        "DecisionFailed": "操作没有成功，请再试一次。",
+        "DecisionLocked": "这个角色已经做过决定了。",
+        "InvalidAnte": "Ante 金额不合法。",
+        "InvalidDecision": "无效的决策。",
+        "InvalidPairPlus": "Pair Plus 金额不合法。",
+        "PlayChipsInsufficient": "筹码不够，无法补同额 Play。当前 {balance}。"
+      },
+      "Hand": {
+        "Flush": "同花",
+        "HighCard": "高牌",
+        "MiniRoyal": "迷你皇家同花顺",
+        "Pair": "对子",
+        "Straight": "顺子",
+        "StraightFlush": "同花顺",
+        "ThreeKind": "三条",
+        "Unknown": "未知牌型"
+      },
+      "Hud": {
+        "AnteLabel": "Ante",
+        "BettingSubIdle": "先输入 Ante，可选 Pair Plus。",
+        "BettingSubPlaced": "当前已下 {amount}",
+        "BettingTitle": "下注操作台",
+        "DealingTitle": "正在发牌",
+        "DecisionLocked": "决策已锁定",
+        "DecisionPending": "等待你做决定",
+        "DecisionSubLocked": "当前决定：{decision}",
+        "DecisionSubPending": "当前手牌：{hand}",
+        "DecisionTitle": "{name} 的决策",
+        "OpeningBetSub": "本轮底注：{amount}",
+        "PairPlusLabel": "Pair Plus",
+        "PlayBetTag": "Play {amount}",
+        "ReadyTitle": "等待发牌",
+        "ResultSub": "当前结果：{result}",
+        "ResultTitle": "结果已出",
+        "RevealReadyTitle": "等待亮庄牌",
+        "SettleTitle": "等待结算",
+        "ShowdownTitle": "庄家亮牌",
+        "WaitingSub": "等待流程推进",
+        "Strength": "牌力 · HAND"
+      },
+      "Result": {
+        "AnteBonusWin": "中 Ante Bonus",
+        "DealerNotQualified": "庄家不合格",
+        "Fold": "弃牌",
+        "Lose": "落败",
+        "PairPlusWin": "中 Pair Plus",
+        "Push": "和局退回",
+        "Win": "胜出"
+      },
+      "Seat": {
+        "NoteBetting": "本轮已下 {amount}",
+        "NoteDealing": "等待发完三张牌",
+        "NoteDecision": "手牌保密，等待决定",
+        "NoteFolded": "本轮已弃牌",
+        "NoteIdle": "还没下注",
+        "NotePlayLocked": "已补 Play {amount} GP",
+        "NoteReady": "底注已锁定 {amount}",
+        "NoteRevealReady": "已锁定决策，等待亮庄牌",
+        "StatusDealerNotQualified": "庄家不合格",
+        "StatusDealing": "发牌中",
+        "StatusDecision": "待决定",
+        "StatusFolded": "已弃牌",
+        "StatusPlaced": "已下底注",
+        "StatusPlayLocked": "Play 已跟",
+        "StatusReady": "等待发牌",
+        "StatusRevealReady": "待亮庄牌"
+      },
+      "Settlement": {
+        "Bet": "下注",
+        "Decision": "决策",
+        "Hand": "牌型",
+        "Net": "净输赢",
+        "Payout": "派彩",
+        "Reveal": "亮牌",
+        "Result": "结果",
+        "Title": "三张扑克结算"
+      },
+      "Stat": {
+        "AntePot": "Ante 总注",
+        "DealerHand": "庄家牌型",
+        "Decisions": "已决策",
+        "PairPlusPot": "Pair Plus 总注",
+        "PlayPot": "Play 总注",
+        "RoundPlayers": "本轮人数"
+      },
+      "Tag": {
+        "Ante": "Ante {amount}",
+        "PairPlus": "Pair Plus {amount}",
+        "Play": "Play {amount}"
+      }
+    },
+    "TexasHoldem": {
+      "Setup": {
+        "BuyInShortTitle": "买入失败"
+      },
+      "Table": {
+        "ToCall": "需跟 {amount}",
+        "CurrentBet": "当前注 {amount}",
+        "Pot": "底池 {amount}",
+        "Stack": "筹码 {amount}",
+        "StackShort": "筹码",
+        "InPot": "已入池 {amount}",
+        "InPotShort": "入池",
+        "Blinds": "盲注 {small}/{big}",
+        "CurrentTurn": "{name} 行动",
+        "WaitingStacks": "等待至少两位还有桌内筹码",
+        "Dealing": "发牌中"
+      },
+      "Action": {
+        "RaiseTo": "加注到",
+        "Check": "过牌",
+        "Call": "跟注",
+        "CallAmount": "跟 {amount}",
+        "Fold": "弃牌",
+        "Raise": "加注",
+        "AllIn": "全下",
+        "NextHand": "下一手",
+        "RaiseMin": "最小",
+        "RaiseHalfPot": "½ 池",
+        "RaisePot": "底池",
+        "RaiseMax": "最大"
+      },
+      "Seat": {
+        "WaitingHand": "等下一手",
+        "NoStack": "无筹码",
+        "Current": "行动中"
+      },
+      "Street": {
+        "Preflop": "翻牌前",
+        "Flop": "翻牌圈",
+        "Turn": "转牌圈",
+        "River": "河牌圈",
+        "Showdown": "摊牌",
+        "Waiting": "等待"
+      },
+      "Settlement": {
+        "Title": "德州扑克结算",
+        "PotIndex": "底池 {index}",
+        "NoPots": "暂无可显示的底池。",
+        "NoWinner": "无人获胜",
+        "Hand": "牌型",
+        "Net": "净变化",
+        "Uncontested": "{name} 未摊牌赢下 {amount}。",
+        "Waiting": "当前少于两位还有桌内筹码；可以散桌，或等后续 rebuy 流程。",
+        "TableSettled": "桌内剩余筹码已退回。",
+        "Showdown": "底池、牌型和桌内筹码变化都已结算。"
+      },
+      "Tag": {
+        "Dealer": "庄",
+        "SmallBlind": "小盲",
+        "BigBlind": "大盲"
+      },
+      "Hand": {
+        "HighCard": "高牌",
+        "Pair": "一对",
+        "TwoPair": "两对",
+        "ThreeKind": "三条",
+        "Straight": "顺子",
+        "Flush": "同花",
+        "FullHouse": "葫芦",
+        "FourKind": "四条",
+        "StraightFlush": "同花顺",
+        "RoyalFlush": "皇家同花顺"
+      },
+      "Result": {
+        "Fold": "已弃牌"
+      },
+      "Hud": {
+        "Strength": "牌力 · HAND"
+      }
+    },
+    "LiarsDice": {
+      "Action": {
+        "NewMatch": "重开",
+        "Open": "开盅"
+      },
+      "Center": {
+        "Phase": {
+          "Resolving": "结果",
+          "Rolling": "摇骰",
+          "Turns": "回合"
+        },
+        "ClaimedBy": "{name} 叫的",
+        "ClaimFailed": "实际只有 {count} 个，叫错了",
+        "ClaimHeld": "确实有 {count} 个，叫对了",
+        "MatchWinnerNoteGM": "可以散场，也可以重开一局。",
+        "MatchWinnerNotePlayer": "这一局结束了，等 DM 决定。",
+        "MatchWinnerSub": "桌上就剩这一位还有骰子。",
+        "MatchWinnerTitle": "{name} 笑到了最后",
+        "NoClaimYet": "还没人开口",
+        "OnesLockedBanner": "1 不能再当万能骰了",
+        "AutoNextRoundNoteGM": "结果出了，3 秒后自动开下一轮。",
+        "AutoNextRoundNotePlayer": "结果出了，3 秒后自动开下一轮。",
+        "AutoNextRoundSub": "3 秒后自动开下一轮。",
+        "ClaimantWasLying": "{name} 说谎",
+        "ClaimantWasTruthful": "{name} 是真的",
+        "ResolvingNoteGM": "结果出了，可以开下一轮或散场。",
+        "ResolvingNotePlayer": "结果出了，等 DM 开下一轮。",
+        "ResolvingSub": "系统按当前叫点判了输赢，输家少一颗骰子。",
+        "ResolvingTitle": "开盅",
+        "RollingSub": "都摇完了，你自己的骰子在下面。",
+        "RollingTitle": "摇杯到你手上",
+        "TurnsSubFirst": "填数量，再选点数，叫出第一口。",
+        "TurnsSubRespond": "继续加叫，或者直接开盅。",
+        "TurnsTitleFirst": "{name} 起手",
+        "TurnsTitleRespond": "{name} 要加还是开"
+      },
+      "Error": {
+        "ClaimTooLow": "这口得比上一口大。",
+        "InvalidClaim": "叫点不对。",
+        "NoClaimToOpen": "还没人叫，没法开盅。",
+        "NotYourTurn": "还没轮到这个席位。",
+        "RequestFailed": "操作没发出去，再试一次。",
+        "WrongPhase": "这个阶段做不了这个。"
+      },
+      "Footer": {
+        "ClaimCount": "数量",
+        "ClaimCountHint": "（滚轮可以加减）",
+        "CurrentTurnFirst": "你起手——叫出第一口。",
+        "CurrentTurnRespond": "继续加叫，或者直接开盅。",
+        "NoDice": "这些骰子你现在看不到。",
+        "OtherTurn": "看别人怎么叫。",
+        "Resolving": "结果出了，等 DM 开下一轮。",
+        "Rolling": "骰子正在派，马上轮到。",
+        "SelectRole": "看哪个席位",
+        "Spectating": "你在围观。"
+      },
+      "Label": {
+        "ActivePlayers": "剩余玩家",
+        "Claimant": "上一口",
+        "CurrentClaim": "当前叫点",
+        "OpenedBy": "谁开的",
+        "Result": "判定",
+        "RoundLoser": "输家",
+        "Starter": "起手",
+        "TableDice": "桌上骰数"
+      },
+      "Seat": {
+        "NoteCurrentFirst": "叫出第一口。",
+        "NoteCurrentRespond": "继续加叫，或者开盅。",
+        "NoteDiceLeft": "手里还有 {count} 颗",
+        "NoteLastClaim": "上一口叫的 {claim}",
+        "NoteOut": "骰子掉光了。",
+        "NotePenalty": "扣掉 {amount} 颗，还剩 {count} 颗。",
+        "NoteRolling": "正在摇。",
+        "NoteStarter": "这局这位起手。",
+        "NoteWinner": "撑到最后的就是这位。",
+        "StatusCurrent": "在叫",
+        "StatusOpened": "已开盅",
+        "StatusOut": "出局",
+        "StatusRolling": "摇骰",
+        "StatusWaiting": "等",
+        "StatusWinner": "赢家"
+      },
+      "Text": {
+        "ClaimFormat": "{quantity} 个 {face} 点"
+      }
+    },
+    "Bone21": {
+      "Action": {
+        "Roll": "再来一颗",
+        "StartRound": "开始本轮",
+        "SetAnte": "定注开局",
+        "Stand": "停 手"
+      },
+      "Center": {
+        "Phase": {
+          "Betting": "下注",
+          "Rolling": "起手",
+          "Turns": "回合",
+          "Resolving": "结算"
+        },
+        "BettingNote": "DM 定金额，桌上每个人都按这个数扣进奖池。",
+        "BettingTitleGM": "定个底注，开始这一轮",
+        "BettingSubGM": "填一个数，全桌按这个金额一起扣。",
+        "BettingTitlePlayer": "等 DM 开局",
+        "BettingSubPlayer": "DM 定好底注就直接开骰，不用自己下注。",
+        "PushSub": "没人守住 21 以内，奖池原样退回。",
+        "PushTitle": "全员爆了",
+        "ResolvingNoteGM": "结果都出来了，可以再开一轮或散场。",
+        "ResolvingNotePlayer": "等 DM 决定再开一轮还是收摊。",
+        "ResolvingTitle": "这一轮结果",
+        "RollingSub": "起手 3 颗只有自己看，开盅时一起翻。",
+        "RollingTitle": "起手骰摇好了",
+        "SplitSub": "都是 {total} 点，赢家分着拿，每人 {amount} GP。",
+        "TurnNote": "过 21 就爆，停手就锁住当前点数。",
+        "TurnSub": "{name} 决定再要一颗还是停。",
+        "TurnTitle": "轮到 {name}",
+        "WinnerTitle": "{name} 收走奖池",
+        "WinSub": "{total} 点最接近 21，赢家拿走 {amount} GP。"
+      },
+      "Error": {
+        "AnteShort": "{names} 筹码不够，换个金额或换个人再来。",
+        "NotYourTurn": "还没轮到这个席位。",
+        "RequestFailed": "操作没发出去，再试一次。",
+        "WrongPhase": "现在这个阶段做不了这个动作。"
+      },
+      "Footer": {
+        "OtherTurn": "看别人投。",
+        "Resolving": "这一轮已经结了，等 DM。",
+        "Rolling": "起手骰刚摇完。",
+        "Spectating": "你在围观。",
+        "WaitingForGM": "等 DM 开始这一轮。",
+        "YourTurn": "再来一颗，或者就此停手。"
+      },
+      "Label": {
+        "Ante": "底注",
+        "Target": "目标"
+      },
+      "Seat": {
+        "NoDice": "还没骰子",
+        "HiddenDice": "起手 3 颗是私骰",
+        "NoteBet": "押了 {amount} GP",
+        "NoteBust": "爆了。",
+        "NoteCurrent": "正在想下不下。",
+        "NoteSittingOut": "筹码不够，这局看。",
+        "NoteStand": "停在 {total} 点。",
+        "NoteTotal": "目前 {total} 点。",
+        "NoteWaitingBet": "等 DM 开局。",
+        "StatusCurrent": "在投",
+        "StatusPlaying": "在场",
+        "StatusSittingOut": "围观",
+        "StatusWinner": "赢家"
+      },
+      "Hud": {
+        "AnteLabel": "底注",
+        "PublicTotal": "公开",
+        "Strength": "点数 · TOTAL"
+      },
+      "Phase": {
+        "Betting": "定注",
+        "PlayerTurns": "行动轮",
+        "Resolving": "结算",
+        "Rolling": "掷骰"
+      }
+    },
+    "SlotMachine": {
+      "Action": {
+        "Spin": "开始旋转",
+        "SpinByDM": "DM 开转",
+        "SpinCost": "本次投币 {amount} GP",
+        "NeedChips": "筹码不足，这次至少要 {amount} GP"
+      },
+      "Center": {
+        "BettingDraftTotal": "本次总注 {amount} GP",
+        "BettingNote": "这台机现在改成 243 ways，不再看固定赔付线；只要从最左列连续连到 3 / 4 / 5 列就算。",
+        "BettingSubIdle": "这次输入的是整笔总注，不再拆成每线金额。",
+        "BettingSubPlaced": "本次总注 {totalBet} GP",
+        "BettingTitleIdle": "先锁定这一转下注",
+        "BettingTitlePlaced": "本轮已锁定 {amount} GP",
+        "Phase": {
+          "Betting": "下注",
+          "Ready": "待开转",
+          "Resolving": "结算",
+          "Spinning": "开转中"
+        },
+        "ReadyNoteGM": "所有下注都已锁定，由 DM 开转。",
+        "ReadyNotePlayer": "所有下注都已锁定，等待 DM 开转。",
+        "ReadySub": "243 ways 结算，5 列会从左到右停轮。",
+        "ReadyTitleGM": "可以开转了",
+        "ReadyTitlePlayer": "等待 DM 开转",
+        "ResolvingNoteGM": "结果面板已经打开，可以结束或开下一轮。",
+        "ResolvingNotePlayer": "结果面板已经打开，等待 DM 继续流程。",
+        "ResolvingTitleLose": "这一转没中",
+        "ResolvingTitleWin": "这一转中了",
+        "IdleHint": "待机中，拉到底就会开转。",
+        "LoseNote": "未命中，-{amount} GP。",
+        "SpinningNote": "5 列转轮会从左到右依次停下，全部停稳后按 243 ways 一次结算。",
+        "SpinningSub": "左起连到 3 / 4 / 5 列计奖；Wild 可替代，Scatter 全盘生效。",
+        "SpinningTitle": "转轮滚动中",
+        "WatchNote": "当前只有 1 位操作者，其他人默认观战。",
+        "WinNote": "命中 {ways} 组，派彩 {amount} GP。"
+      },
+      "Control": {
+        "BalanceNote": "输赢会在每轮停轮后自动结算到筹码里。",
+        "Cost": "本次投币 {amount} GP",
+        "LastResult": "最近结果",
+        "LastResultIdle": "还没有上一轮结果。",
+        "LastResultLose": "上一轮未命中。",
+        "LastResultWin": "上一轮命中 {ways} 组，派彩 {payout} GP。",
+        "Operator": "操作者 · {name}",
+        "SpinCost": "本次总注",
+        "SpinCostNote": "每次开转前都可以改，这次输入的就是整轮总注。",
+        "Stake": "本次投币",
+        "StakeHint": "整盘总注；每次增减 {step} GP。",
+        "Lever": "拉杆启动",
+        "LeverReady": "按住往下拉，拉到底就会开转。",
+        "LeverNeedChips": "筹码不够，这次至少需要 {amount} GP 才能拉杆。",
+        "LeverSpinning": "正在开转，等 5 列停稳后再拉。"
+      },
+      "ClosePrompt": {
+        "Title": "离开观战",
+        "WatchBody": "您将离开观战，当前老虎机不会结束。",
+        "WatchConfirm": "离开观战"
+      },
+      "Error": {
+        "SpinFailed": "这一转没有成功发出，请再试一次。"
+      },
+      "Header": {
+        "OperatorSelf": "你在操作",
+        "OperatorWatch": "当前观战",
+        "SpinCounter": "第 {round} 转"
+      },
+      "Marquee": {
+        "Betting": "锁定总注",
+        "NoWin": "没有可赔付组合",
+        "NoWinSub": "这轮未命中，等下一轮再来。",
+        "Ready": "准备开转",
+        "Spinning": "转轮滚动",
+        "Win": "派彩到手",
+        "WinSub": "本轮派彩 {amount} GP"
+      },
+      "Paytable": {
+        "Title": "赔付表",
+        "Summary": "这台机改成 243 ways，不再看固定线；只要从最左列连续连到 3 / 4 / 5 列，每一组 ways 都会按总注结算。",
+        "LinePayout": "左起连 3 / 4 / 5 列 · 每组 ways 赔 x{p3} / x{p4} / x{p5}",
+        "WildNote": "可代替普通图标",
+        "ScatterNote": "任意位置 3 / 4 / 5 个",
+        "Scatter": "任意位置凑到 3 / 4 / 5 个 · 按总注赔 x2 / x6 / x15",
+        "Rule": {
+          "Paylines": "243 Ways",
+          "LeftToRight": "左起连续",
+          "Wild": "Wild 替代",
+          "Scatter": "Scatter 任意位"
+        }
+      },
+      "Seat": {
+        "NoteBetting": "本次总注 {totalBet} GP",
+        "NoteIdle": "还没下注",
+        "NoteLose": "这轮没中，亏损 {amount} GP",
+        "NoteReady": "下注已锁定，等待开转。",
+        "NoteScatter": "含 Scatter {count} 个",
+        "NoteSpinning": "转轮滚动中。",
+        "NoteWin": "命中 {ways} 组 ways · 派彩 {amount} GP",
+        "StatusPlaced": "已下注",
+        "StatusReady": "锁定完成",
+        "StatusSpinning": "开转中"
+      },
+      "Settlement": {
+        "BoardTitle": "本轮盘面",
+        "BreakdownTitle": "赔付明细",
+        "Line": "组合 {index}",
+        "Net": "净输赢",
+        "NoLines": "这一转没有连成可赔付组合。",
+        "ScatterHit": "Scatter 命中 {count} 个，按总注追加 x{multiplier}。",
+        "Title": "水果老虎机结算"
+      },
+      "Stat": {
+        "HitLines": "中奖组数",
+        "LineBet": "单组倍率",
+        "Paylines": "Ways",
+        "Payout": "派彩",
+        "ScatterCount": "Scatter 数量",
+        "TotalBet": "总下注"
+      },
+      "Symbol": {
+        "Apple": "苹果",
+        "Banana": "香蕉",
+        "Bell": "铃铛",
+        "Lemon": "柠檬",
+        "Orange": "橙子",
+        "Pear": "梨",
+        "Plum": "李子",
+        "Scatter": "Scatter",
+        "Strawberry": "草莓",
+        "Seven": "7",
+        "Watermelon": "西瓜",
+        "Wild": "Wild"
+      },
+      "Tag": {
+        "LineBet": "组 {amount}",
+        "Payout": "赢 {amount}",
+        "TotalBet": "总 {amount}"
+      }
+    },
+    "CasinoWar": {
+      "Action": {
+        "DealByDM": "DM 开牌",
+        "OpenSettle": "打开结算",
+        "ResolveWar": "DM 发战争牌"
+      },
+      "Center": {
+        "BettingNote": "平点会进入战争，需要再压同额战争注。",
+        "BettingSubIdle": "每位参赛者先压一口主注，与庄家比单张大小。",
+        "BettingSubPlaced": "本角色本轮主注 {amount} GP",
+        "BettingTitleIdle": "先下主注",
+        "BettingTitlePlaced": "已下注 {amount} GP",
+        "DealingNote": "首轮先发一张，平点席位会进入战争。",
+        "DealingSub": "庄家与所有参赛者正在落第一张牌。",
+        "DealingTitle": "首轮发牌中",
+        "Phase": {
+          "Betting": "下注",
+          "Dealing": "发牌",
+          "Ready": "准备",
+          "Resolving": "结算面板",
+          "Settle": "待结算",
+          "Showdown": "首轮亮牌",
+          "War": "战争"
+        },
+        "ReadyNoteGM": "确认无误后，由 DM 点击开牌。",
+        "ReadyNotePlayer": "等待 DM 发出首轮明牌。",
+        "ReadySub": "所有主注已锁定，庄家与各席位各发一张。",
+        "ReadyTitleGM": "可以开首轮了",
+        "ReadyTitlePlayer": "等待 DM 开牌",
+        "ResolvingNoteGM": "可以结束牌局，或直接开下一轮。",
+        "ResolvingNotePlayer": "等待 DM 结束牌局或开始下一轮。",
+        "ResolvingTitle": "结算面板已打开",
+        "SettleNoteGM": "每个玩家面板都已显示结果，确认后可进入结算页。",
+        "SettleNotePlayer": "每个玩家面板都已显示结果，等待 DM 打开结算。",
+        "SettleTitle": "本轮结果已展开",
+        "ShowdownNoWarGM": "本轮没有平点，可直接打开结算。",
+        "ShowdownNoWarPlayer": "本轮没有平点，等待 DM 打开结算。",
+        "ShowdownNoteGM": "存在平点席位，由 DM 继续发战争牌。",
+        "ShowdownNotePlayer": "出现平点席位，等待 DM 处理战争牌。",
+        "ShowdownSummary": "胜 {wins} · 负 {losses} · 战争 {wars}",
+        "ShowdownTitle": "首轮胜负已出",
+        "ShowdownWarTitle": "{count} 个席位进入战争",
+        "WarNoteGM": "战争结果已经确定，可以继续打开结算。",
+        "WarNotePlayer": "战争结果已经确定，等待 DM 打开结算。",
+        "WarSummary": "战争胜 {wins} · 负 {losses} · 平 {pushes}",
+        "WarTitle": "战争牌已亮"
+      },
+      "DealerNote": {
+        "BettingGM": "等待各席位先压主注。",
+        "BettingPlayer": "先下注，等 DM 开牌。",
+        "Dealing": "首轮发牌中。",
+        "ReadyGM": "所有主注已锁定，可以发首轮。",
+        "ReadyPlayer": "等待 DM 发出首轮。",
+        "Resolving": "结算明细已打开。",
+        "Settle": "结果已展示，等待打开结算。",
+        "ShowdownClear": "首轮没有平点，可直接进入结算。",
+        "ShowdownWar": "出现 {count} 个平点席位，准备进入战争。",
+        "War": "战争牌已亮出，结果已确定。"
+      },
+      "Footer": {
+        "BetAny": "先压主注，平点时会自动进入战争。",
+        "CurrentBet": "当前主注：{amount} GP",
+        "Dealing": "首轮发牌中。",
+        "MultiControl": "你正在操作 {count} 个角色，已下注 {done} 个。",
+        "NotBetYet": "还没下注",
+        "ReadyGM": "点击开牌后，会先展示庄家和所有席位的首张牌。",
+        "ReadyPlayer": "等待 DM 开牌。",
+        "ResultOpen": "结算面板已打开",
+        "Settle": "等待打开结算面板",
+        "SettleGM": "每位参赛者的输赢已经算好，点击结算即可。",
+        "SettlePlayer": "每位参赛者的输赢已经算好，等待 DM 继续。",
+        "Showdown": "首轮亮牌完成。",
+        "ShowdownDone": "本轮没有平点，可直接进入结算。",
+        "ShowdownWar": "有平点席位，下一步进入战争牌。",
+        "War": "战争牌已亮出。",
+        "WarDone": "战争结果已出，下一步打开结算。"
+      },
+      "ResultLabel": {
+        "Lose": "首轮负",
+        "Surrender": "退半",
+        "War": "进入战争",
+        "WarLose": "战争负",
+        "WarPush": "战争平",
+        "WarWin": "战争胜",
+        "Win": "首轮胜"
+      },
+      "Seat": {
+        "NoteBetting": "本轮主注 {amount} GP",
+        "NoteDealing": "等待首轮亮牌",
+        "NoteIdle": "还没下注",
+        "NoteLose": "{player} 小于庄家 {dealer}",
+        "NoteReady": "主注已锁定 {amount} GP",
+        "NoteSurrender": "平点但筹码不足，按退半处理",
+        "NoteWar": "{player} 与庄家 {dealer} 平点",
+        "NoteWarLose": "战争牌 {player} 小于庄家 {dealer}",
+        "NoteWarPush": "战争牌 {player} 与庄家 {dealer} 平点",
+        "NoteWarWin": "战争牌 {player} 压过庄家 {dealer}",
+        "NoteWin": "{player} 压过庄家 {dealer}",
+        "StatusDealing": "正在发牌",
+        "StatusLose": "首轮负",
+        "StatusPlaced": "主注已下",
+        "StatusReady": "等待开牌",
+        "StatusSurrender": "退半",
+        "StatusWar": "进入战争",
+        "StatusWarLose": "战争负",
+        "StatusWarPush": "战争平",
+        "StatusWarWin": "战争胜",
+        "StatusWin": "首轮胜"
+      },
+      "Settlement": {
+        "Bet": "下注",
+        "Net": "净输赢",
+        "Payout": "派彩",
+        "Result": "结果",
+        "Reveal": "亮牌",
+        "RevealWar": "{main} → 战争 {war}",
+        "StakeWithWar": "主注 {bet} GP + 战争 {war} GP",
+        "Title": "赌场战争结算"
+      },
+      "Stat": {
+        "DealerCard": "庄家牌",
+        "Losses": "落败席位",
+        "Players": "参赛席位",
+        "WarSeats": "战争席位",
+        "Wins": "胜出席位"
+      }
+    },
+    "Blackjack": {
+      "Action": {
+        "DealerHit": "庄家要牌"
+      },
+      "Center": {
+        "Phase": {
+          "Betting": "下注",
+          "Dealing": "发牌",
+          "Action": "行动",
+          "Settle": "结算"
+        },
+        "BettingConfirmed": "下注已锁定，等待其他人。",
+        "BettingDealerControlled": "{dealer} 由你控制，等大家下注完再发牌。",
+        "BettingGMReady": "确认下注后，由你为 {dealer} 开局。",
+        "BettingTitle": "{betted}/{total} 位玩家已下注",
+        "DealingSub": "首轮手牌正在落桌，等动画走完就会自动进入玩家回合。",
+        "NoEligibleBettors": "当前没有玩家有足够筹码下注。",
+        "DealerActing": "庄家正在行动。",
+        "DealerBustSub": "庄家爆牌，总点数 {total}。",
+        "DealerBustTitle": "庄家爆牌",
+        "DealerCollecting": "庄家正在收取桌上牌。",
+        "DealerFinalTotal": "{dealer} 最终点数 {total}",
+        "DealerTurnTitle": "庄家回合",
+        "PendingHitDealingOther": "正在为 {name} 发补牌。",
+        "PendingHitDealingSelf": "正在为你发补牌。",
+        "PendingHitGM": "{name} 选择了要牌，等待你发牌。",
+        "PendingHitWaitingDM": "你已请求要牌，等待 DM 发牌。",
+        "PendingHitWaitingOther": "{name} 已请求要牌，等待 DM 发牌。",
+        "PlayerBust": "{name} 已爆牌",
+        "PlayerRequestedHit": "{name} 请求要牌",
+        "PlayerTurnSelf": "轮到你行动。",
+        "PlayerTurnTitle": "{name} 的回合",
+        "PlayerTurnWait": "等待 {name} 行动。",
+        "ReadyDealerReady": "{dealer} 已就位，可以开始发牌。",
+        "ReadyTitle": "准备发牌",
+        "ReadyWaitingDealer": "等待 DM 开始发牌。",
+        "ResolvingSub": "结算面板已打开。",
+        "ResolvingTitle": "结果已出",
+        "SettleTitle": "等待最终结算",
+        "SittingOutNoChips": "你的筹码不足，本轮会先旁观。",
+        "TableCardsCollectOther": "{name} 的桌牌已有 {count} 张，总点数 {total}，马上会自动收进手牌。",
+        "TableCardsCollectSelf": "桌牌已有 {count} 张，总点数 {total}，马上会自动收进手牌。",
+        "TableCardsWillBustOther": "{name} 的桌牌已有 {count} 张，总点数 {total}，自动收进手牌后会爆。",
+        "TableCardsWillBustSelf": "桌牌已有 {count} 张，总点数 {total}，自动收进手牌后会爆。",
+        "WaitingNextPlayer": "等待下一位玩家。",
+        "WaitingSettlementDM": "等待 DM 点击结算。"
+      },
+      "DealerHint": "你正在控庄，顶部桌面牌区已收起，请看下方操作条。",
+      "Hud": {
+        "BetsProgress": "{betted}/{total} 位玩家已下注",
+        "DealerAction": "庄家操作",
+        "DealerCollecting": "庄家正在整理桌牌。",
+        "DealingSub": "首轮发牌动画结束后，会自动进入玩家回合。",
+        "DealerDecision": "决定要牌还是停牌",
+        "DealerFinalPoints": "庄家最终点数 {total}",
+        "DealerPanel": "庄家操作台",
+        "DealerPoints": "庄家 {total} 点",
+        "DealerReady": "可以发牌",
+        "DealerReadySub": "所有下注已锁定，随时可以开始。",
+        "DealerWaiting": "等待进入庄家回合。",
+        "PhaseBetting": "下注阶段",
+        "PhaseDealerTurn": "庄家回合",
+        "PhasePlayerTurn": "玩家回合",
+        "PlayerHitRequested": "有玩家请求要牌",
+        "PlayerTurnSub": "等待玩家选择要牌或压手。",
+        "PlayerTurnTitle": "当前轮到 {name}",
+        "PointsPill": "{total} 点",
+        "ResultReady": "结算已打开",
+        "RoundDone": "本轮完成",
+        "SettleReady": "等待结算",
+        "WaitingBets": "等待下注",
+        "Strength": "点数 · TOTAL"
+      },
+      "PlayerHud": {
+        "ActionHint": "可以选择要牌，或直接压手。",
+        "BeforeSettlement": "等待庄家结算",
+        "BetLocked": "下注已锁定",
+        "BetPlacedWaiting": "已下注，等待发牌。",
+        "BetRequired": "{participant} 还没下注。",
+        "BetThisRound": "{participant} 本轮下注 {bet} GP",
+        "CurrentPoints": "当前 {total} 点",
+        "DealerActing": "庄家行动中",
+        "DealerTidying": "庄家正在准备发牌。",
+        "DealingSub": "首轮发牌中，等动画结束后就会轮到玩家行动。",
+        "DealerTurn": "庄家回合",
+        "FinalPoints": "最终 {total} 点",
+        "FinalPointsPill": "{total} 点",
+        "HitRequested": "已请求要牌",
+        "HitRequestedSub": "等待 DM 发出下一张牌。",
+        "NoBetYet": "还没下注",
+        "NotYourTurn": "暂时还没轮到你。",
+        "PlaceBetFirst": "先下注",
+        "ReadyPhase": "等待发牌",
+        "ResultOpen": "结果面板已打开",
+        "ResultSoon": "结果即将显示",
+        "RoundLose": "本轮失利",
+        "RoundTie": "本轮平手",
+        "RoundWin": "本轮获胜",
+        "SittingOutSub": "你可以继续观看，不会阻塞这桌继续下注。",
+        "SittingOutTitle": "旁观中",
+        "WaitDealerFinish": "等待庄家完成操作。",
+        "WaitingDealer": "等待庄家",
+        "WaitingOthers": "等待其他人下注",
+        "WaitingPlayer": "等待 {name}",
+        "WaitingStart": "等待开局",
+        "YourTurn": "轮到你了"
+      },
+      "Seat": {
+        "Acting": "行动中",
+        "AwaitingCollect": "自动收牌中",
+        "AwaitingDeal": "等待发牌",
+        "BetPlaced": "已下注",
+        "Playing": "进行中",
+        "Seated": "已入座"
+      },
+      "Settlement": {
+        "Points": "点数",
+        "Profit": "净输赢",
+        "Title": "21 点结算"
+      }
+    },
+    "Appearance": {
+      "WindowTitle": "Parlor 外观自定义",
+      "Saved": "Parlor 外观设置已保存。",
+      "Panel": {
+        "Title": "样式预设",
+        "Sub": "这里可以统一调整界面字体、扑克牌牌面、牌背和发牌声音；赌桌与玩家卡材质仍保持当前方案。"
+      },
+      "Fields": {
+        "TableTheme": "赌桌主题",
+        "TextFont": "界面字体",
+        "CardFace": "牌面主题",
+        "CardBack": "牌背主题",
+        "CustomFaceFallback": "缺图时使用",
+        "CustomFaceImage": "自定义牌面图片",
+        "CustomBackImage": "自定义牌背图片",
+        "TableBackdrop": "背景文件路径",
+        "SoundTheme": "声音主题",
+        "EnableSound": "启用卡牌声音",
+        "Volume": "音量"
+      },
+      "AudioTools": {
+        "Deal": "试听发牌",
+        "Flip": "试听翻牌",
+        "Placed": "试听落桌"
+      },
+      "Actions": {
+        "Reset": "恢复默认",
+        "Save": "保存样式"
+      },
+      "Upload": {
+        "FaceTitle": "上传自定义牌面",
+        "FaceHint": "先选点数和花色，再给这张牌指定图片。没单独上传的牌会自动使用下面的缺图主题。",
+        "BackTitle": "上传自定义牌背",
+        "BackHint": "背面只需要一张图。这里直接走 Foundry 原生文件选择器，可以上传或选已有图片。",
+        "BackdropTitle": "桌面背景（图片 / 视频）",
+        "BackdropHint": "传给呈现器主题使用的共用背景素材，支持图片和 webm/mp4 视频；经典原生桌面不会渲染它。",
+        "Rank": "点数",
+        "Suit": "花色",
+        "PathPlaceholder": "worlds/my-world/parlor/card.png",
+        "PickImage": "选择 / 上传",
+        "PickMedia": "选择 / 上传",
+        "ClearImage": "清除",
+        "ConfiguredFaces": "已配置牌面：{count}",
+        "FilePickerUnavailable": "当前界面找不到 Foundry 文件选择器。",
+        "InvalidImagePath": "请选择有效的图片文件。"
+      },
+      "Card": {
+        "Suits": {
+          "Spades": "黑桃",
+          "Hearts": "红桃",
+          "Diamonds": "方片",
+          "Clubs": "梅花"
+        }
+      },
+      "Preview": {
+        "Title": "实时预览",
+        "Sub": "预览只在这里即时刷新，保存后会同步到界面字体、牌面、牌背和发牌音效。",
+        "Font": "字体",
+        "Face": "牌面",
+        "Back": "牌背",
+        "CardFront": "牌面",
+        "CardBack": "牌背"
+      },
+      "Options": {
+        "Theme": {
+          "Classic": "经典原生桌面"
+        },
+        "TableFelt": {
+          "Fabric037": "毛毡 01 · 深绿织纹",
+          "Fabric040": "毛毡 02 · 细密绿纹"
+        },
+        "TableRail": {
+          "Wood013": "边缘 01 · 深色木纹",
+          "Wood070": "边缘 02 · 浅色木纹",
+          "Metal041A": "边缘 03 · 金属拉丝 A",
+          "Metal048A": "边缘 04 · 金属锻面 A",
+          "Metal048C": "边缘 05 · 金属锻面 C",
+          "Metal057C": "边缘 06 · 金属磨痕 C"
+        },
+        "CardFace": {
+          "CustomNewWhite": "牌面 01 · New White",
+          "Uploaded": "牌面 02 · 自定义上传",
+          "FvttLightSoft": "牌面 03 · FVTT Light Soft",
+          "FvttDarkGold": "牌面 04 · FVTT Dark Gold"
+        },
+        "CardBack": {
+          "CustomNewBlue": "牌背 01 · New Blue",
+          "CustomNewRed": "牌背 02 · New Red",
+          "Uploaded": "牌背 03 · 自定义上传",
+          "FvttLightSoft": "牌背 04 · FVTT Light Soft",
+          "FvttDarkGold": "牌背 05 · FVTT Dark Gold"
+        },
+        "TextFont": {
+          "Marcellus": "字体 01 · Marcellus",
+          "Forum": "字体 02 · Forum",
+          "CormorantSC": "字体 03 · Cormorant SC",
+          "CinzelDecorative": "字体 04 · Cinzel Decorative"
+        },
+        "Sound": {
+          "PlayingCards": "声音 01 · Playing Cards",
+          "None": "关闭声音"
+        }
+      }
+    },
+    "CardLuck": {
+      "CustomDeferred": "这手无法安全生成定制牌型，已延后到下一手。",
+      "PlanFallback": "牌运计划生成失败，本手改用普通随机发牌。"
+    },
+    "OutcomeInfluence": {
+      "WindowTitle": "Parlor 属性影响配置",
+      "Saved": "属性影响配置已保存。",
+      "Actor": {
+        "Menu": "Parlor 牌局熟练度",
+        "WindowTitle": "Parlor 牌局熟练度：{name}",
+        "Title": "{name} 的牌局熟练度",
+        "Sub": "人工值会覆盖当前游戏的自动属性；切回自动后会重新读取全局配置的路径。",
+        "GlobalDisabled": "全局“属性影响牌局”已关闭；这里的人工值会保留，但暂时不会生效。",
+        "AutomaticPath": "自动路径",
+        "NoPath": "未配置",
+        "AutomaticValue": "当前自动值",
+        "AutomaticUnavailable": "无法读取",
+        "Mode": "取值方式",
+        "Automatic": "自动",
+        "Manual": "人工覆盖",
+        "ManualValue": "能力 / 熟练度值",
+        "WinRatePreview": "当前有效胜率：{value}%",
+        "BaccaratPreview": "当前效果：少输 {loss}% · 多赢 {win}%",
+        "InvalidPreview": "请输入有效数字后再保存。",
+        "InvalidValue": "{game} 的人工熟练度不是有效数字。",
+        "Save": "保存角色设置",
+        "Saved": "已保存 {name} 的牌局熟练度。",
+        "SaveFailed": "保存失败：{message}"
+      },
+      "Panel": {
+        "Title": "全局设置",
+        "Sub": "这里只管全局开关和胜率边界；每个游戏在右侧单独设置。角色卡上的人工值优先于自动路径。"
+      },
+      "Fields": {
+        "Enabled": "启用属性影响",
+        "AttributePath": "属性路径",
+        "AttributePathHint": "可手动填写，也可用探针从人物卡掷骰中抓取；结果只会写入当前游戏。",
+        "MinWinRate": "最低胜率",
+        "MaxWinRate": "最高胜率",
+        "BaccaratLossReduction": "输钱时少输百分比",
+        "BaccaratWinBoost": "赢钱时多赢百分比",
+        "BaccaratPointsPerPercent": "每 +5% 所需属性"
+      },
+      "FormulaTitle": "查看换算规则",
+      "Formula": "牌局类公式：有效胜率 = 标准胜率 + （属性值 / 每 +5% 胜率所需属性）x 5，最后会限制在最低 / 最高胜率之间。",
+      "BaccaratFormula": "百家乐公式：有效少输% 与有效多赢% 都会在基础百分比上，再按“属性值 / 每 +5% 所需属性”每档同步加 5%。",
+      "Games": {
+        "Title": "各游戏设置",
+        "Sub": "每个游戏各用一条属性路径。德州和骨骰 21 只影响起手；德州的 DM 牌运设置优先。"
+      },
+      "Columns": {
+        "BaseWinRate": "标准胜率",
+        "PointsPerWinRate": "每 +5% 胜率所需属性"
+      },
+      "Actions": {
+        "Reset": "恢复默认",
+        "Save": "保存配置",
+        "Detect": "检测",
+        "DetectHint": "点击后从人物卡投一次目标检定，探针结果只会填入当前游戏。"
+      },
+      "Detection": {
+        "Name": "属性路径探针",
+        "Prompt": "为了准确检测属性路径，请先准备一个临时角色，把目标属性改成一个很容易辨认的独特数值，然后再从人物卡上投这项检定。",
+        "PromptHint": "像 999 这种不容易和别的字段撞上的数值，最适合拿来做探针。",
+        "Listening": "正在等待下一次人物卡掷骰……",
+        "NoRoll": "60 秒内没有检测到掷骰，请重试。",
+        "NoActor": "这次掷骰没有对应到角色，请先从人物卡上投。",
+        "Found": "检测到可用路径：{path}（修正值：{value}）。要把它填进当前配置吗？",
+        "FoundMultiple": "检测到多个可能路径（修正值：{value}），请选择一个最像你要的属性。",
+        "NoMatch": "没有找到和修正值 {value} 对上的路径。你可以在下面手动填写。",
+        "ManualHint": "如果你的系统比较特别，手动填 dot-path 也可以。",
+        "Applied": "已把探针结果填入当前游戏：{path}"
+      },
+      "GameMode": {
+        "HandBias": "发牌偏向",
+        "StartingHandBias": "起手牌偏向",
+        "DiceBias": "掷骰偏向",
+        "InitialDiceBias": "初始私骰偏向",
+        "PayoutSwing": "输赢幅度修正",
+        "HandAndDrawBias": "起手与抽牌偏向"
+      },
+      "BaccaratHint": "只调整输赢幅度，不改变公牌结果。"
+    },
+    "Participant": {
+      "UnnamedActor": "未命名角色",
+      "DealerFallback": "庄家",
+      "UnnamedParticipant": "未命名参赛者",
+      "Unnamed": "未命名",
+      "You": "你",
+      "NPCName": "NPC",
+      "DMOwner": "DM"
+    },
+    "ChipSettlementChat": {
+      "Title": "Parlor 筹码结算",
+      "Sub": "本次结算后，所有玩家筹码已清零。",
+      "Player": "玩家",
+      "FinalChips": "最后筹码"
+    },
+    "ClosePrompt": {
+      "Title": "确认关闭",
+      "GMBody": "要暂时离开这桌赌局，还是直接解散所有人的赌局？",
+      "PlayerBody": "你可以先离开桌面视图，赌局仍会继续运行，之后可通过悬浮窗回到桌面。",
+      "GMConfirm": "解散赌局",
+      "GMLeave": "暂离赌局",
+      "GMDisband": "解散赌局",
+      "PlayerConfirm": "离开赌局"
+    },
+    "Session": {
+      "AlreadyRunning": "已有 Parlor 赌局正在运行，请先回到当前赌局，再开始新的赌局。"
+    },
+    "SessionDock": {
+      "Title": "赌局仍在运行",
+      "Subtitle": "{game} · 第 {round} 轮",
+      "Return": "回到赌局",
+      "UnknownGame": "Parlor 赌局"
+    },
+    "ResultFx": {
+      "BustTitle": "爆牌",
+      "WinTitle": "赢下本轮",
+      "LoseTitle": "本轮失利",
+      "PushTitle": "平局"
+    },
+    "Common": {
+      "Bet": "下注",
+      "BetPlaced": "已下注",
+      "Amount": "金额",
+      "GP": "GP",
+      "Confirm": "确认",
+      "Cancel": "取消",
+      "Apply": "应用",
+      "Save": "保存",
+      "Reset": "恢复默认",
+      "Start": "开始",
+      "Finish": "结束",
+      "Close": "关闭",
+      "CloseResult": "关闭结果",
+      "NewRound": "新一轮",
+      "NextRound": "下一轮",
+      "Deal": "发牌",
+      "Settle": "结算",
+      "Hit": "要牌",
+      "Stand": "压手",
+      "ConfirmCollect": "确认收牌",
+      "Player": "玩家",
+      "Dealer": "庄家",
+      "GM": "GM",
+      "DM": "DM",
+      "NPC": "NPC",
+      "BOT": "测试机器人",
+      "You": "你",
+      "CurrentParticipant": "当前参赛者",
+      "CurrentRole": "当前角色",
+      "CurrentBetRole": "当前下注角色",
+      "YourRole": "你的角色",
+      "Spectating": "观战",
+      "AvailableChips": "可用筹码",
+      "TableProgress": "全桌进度",
+      "TablePot": "桌面总注",
+      "RoundPlayers": "本轮人数",
+      "ResultOnSeat": "每个玩家卡片上都已经显示输赢",
+      "ViewSettlementPanel": "看结算面板",
+      "SettlementOpen": "结算面板已经打开。",
+      "WinnerIs": "本轮胜方：{winner}",
+      "CurrentRoleResult": "当前角色结果：{result}",
+      "RoundCounter": "第 {round} 局",
+      "NoBet": "未下注",
+      "WaitingBet": "待下注",
+      "WaitingDeal": "等待发牌",
+      "WaitingSettlement": "等待结算",
+      "Waiting": "等待中",
+      "Unknown": "未知",
+      "Infinity": "∞",
+      "Chips": "筹码",
+      "ChipsInfinity": "筹码 ∞",
+      "Win": "赢",
+      "Lose": "输",
+      "Tie": "平局",
+      "Push": "走水",
+      "Bust": "爆牌",
+      "Ready": "准备完成",
+      "Dealing": "发牌中",
+      "BettingPanel": "下注操作台",
+      "AlreadyBet": "{name} 已下注",
+      "NoControlledParticipant": "你当前没有参赛角色",
+      "AutoAdvanceBet": "下注成功后会自动切到下一个未下注角色。",
+      "BetHint": "输入金额后，直接点右侧按钮下注。",
+      "BetAmountTooLow": "下注金额至少要大于 0。",
+      "BetFailed": "下注没有发出去，请再试一次。",
+      "BetFailedRetry": "下注没有成功，请再试一次。",
+      "BetInvalidAmount": "下注金额不合法。",
+      "BetBelowLimit": "下注不能低于 {min}。",
+      "BetAboveLimit": "下注不能高于 {max}。",
+      "BetNotInPhase": "现在已经不在下注阶段了。",
+      "BetNotParticipant": "这个角色当前不在本局参赛名单里。",
+      "BetSessionMissing": "这一局已经不存在了，请重新开局。",
+      "BetMissingParticipant": "你当前没有可下注的参赛角色。",
+      "ChipsInsufficient": "筹码不够。当前 {balance}，想押 {amount}。",
+      "CurrentTurn": "轮到 {name}"
+    },
+    "TableDecks": {
+      "GMOnly": "只有 DM 能修改赌桌预设",
+      "Unnamed": "未命名赌桌"
+    },
+    "CrazyEights": {
+      "Action": {
+        "Draw": "抽牌",
+        "Pass": "过",
+        "TakePenalty": "接罚抽 {count} 张",
+        "ChooseSuit": "指定花色"
+      },
+      "Suit": {
+        "hearts": "红桃",
+        "diamonds": "方块",
+        "clubs": "梅花",
+        "spades": "黑桃"
+      },
+      "Center": {
+        "Phase": {
+          "Idle": "等待开局",
+          "Dealing": "发牌",
+          "Turns": "出牌",
+          "Resolving": "结算"
+        },
+        "DealingTitle": "正在发牌",
+        "DealingSub": "看看手里的牌，马上开始。",
+        "TurnTitle": "轮到 {name}",
+        "ChooseSuitTitle": "{name} 出了 8，正在指定花色",
+        "PendingDrawTitle": "{name} 需接罚抽 {count} 张，或打出 2 叠加",
+        "WinnerTitle": "{name} 出完了！",
+        "WinSub": "赢家拿走 {amount} 筹码。",
+        "SplitTitle": "流局，平分底注",
+        "SplitSub": "剩牌点数最低的几位各拿 {amount}。",
+        "DeadTitle": "流局，{name} 剩牌点数最低",
+        "DeadSub": "牌堆抽空又没人能出，最低点数拿走 {amount}。",
+        "AbortedTitle": "本局未能开始",
+        "AbortedSub": "付得起底注的不足两人，DM 可以调整后再开。",
+        "ResolvingNoteGM": "本局结果如下。点「下一轮」结算并继续，或点「结束」结算并关闭牌桌。",
+        "ResolvingNotePlayer": "等 DM 开下一局。",
+        "CurrentSuit": "当前花色 {suit}",
+        "Stock": "牌堆 {count} 张",
+        "Direction": {
+          "Clockwise": "顺时针",
+          "CounterClockwise": "逆时针"
+        },
+        "LastAction": {
+          "Deal": "发牌，每人 {count} 张",
+          "Play": "{name} 打出 {card}",
+          "Wild": "{name} 出了 8",
+          "ChooseSuit": "{name} 指定 {suit}",
+          "Draw": "{name} 抽了 {count} 张",
+          "Pass": "{name} 过",
+          "Penalty": "{name} 被罚抽 {count} 张",
+          "Skip": "{name} 被跳过",
+          "Reverse": "{name} 反转了方向",
+          "Reshuffle": "弃牌堆洗回牌堆",
+          "Win": "{name} 出完了手牌",
+          "Dead": "没人能出，流局"
+        }
+      },
+      "Error": {
+        "NotYourTurn": "还没轮到你。",
+        "WrongPhase": "现在不能这么做。",
+        "NotPlayer": "你不在这一局里。",
+        "CardNotPlayable": "这张牌对不上花色或点数。",
+        "CardNotInHand": "手里没有这张牌。",
+        "InvalidCard": "牌不对。",
+        "MustChooseSuit": "先指定花色。",
+        "NoSuitNeeded": "现在不用选花色。",
+        "InvalidSuit": "花色不对。",
+        "PendingDraw": "头上压着罚抽，只能出 2 或接罚。",
+        "CannotDraw": "现在不能抽牌。",
+        "CannotPass": "现在不能过。",
+        "RequestFailed": "操作没发出去，再试一次。"
+      },
+      "Footer": {
+        "Spectating": "观战中",
+        "YourTurn": "轮到你：点一张能出的牌，或抽牌。",
+        "YourTurnAfterDraw": "抽到了：可以出，也可以过。",
+        "ChooseSuit": "8 已打出：请选择接下来的花色，选完轮到下一位。",
+        "PendingDraw": "压着 {count} 张罚抽：出 2 往下传，或接罚。",
+        "OtherTurn": "轮到 {name}。",
+        "Dealing": "发牌中……",
+        "Resolving": "本局结束。",
+        "MustPlayAfterDraw": "已抽到能出的牌，请出牌。"
+      },
+      "Label": {
+        "Stock": "牌堆",
+        "Discard": "弃牌堆",
+        "Suit": "当前花色",
+        "Direction": "出牌方向"
+      },
+      "Seat": {
+        "CardsLeft": "{count} 张",
+        "LastCard": "最后一张",
+        "StatusCurrent": "行动中",
+        "StatusWaiting": "等待",
+        "StatusSkipped": "被跳过",
+        "StatusWinner": "赢家",
+        "StatusSittingOut": "本局旁观",
+        "NotePoints": "剩 {points} 点"
+      },
+      "Hud": {
+        "HandSummary": "{count} 张 · {points} 点"
+      },
+      "Settlement": {
+        "Player": "玩家",
+        "Hand": "剩余手牌",
+        "CardsLeft": "张数",
+        "Points": "点数",
+        "Ante": "底注",
+        "Penalty": "罚金",
+        "Payout": "得款",
+        "Net": "净输赢"
+      },
+      "Order": {
+        "Label": "出牌顺序",
+        "Current": "当前",
+        "Next": "下一位"
+      }
+    },
+    "BeetleRace": {
+      "Action": {
+        "dash": {
+          "Name": "冲刺",
+          "Desc": "猛地加速一阵，身后扬尘。"
+        },
+        "fly": {
+          "Name": "起飞",
+          "Desc": "张开鞘翅飞一段，速度最快，谁都看得出不对劲。"
+        },
+        "hop": {
+          "Name": "蹦跳",
+          "Desc": "连跳几下往前窜。"
+        },
+        "blink": {
+          "Name": "闪现",
+          "Desc": "一团烟消失，前方另一团烟里冒出来。"
+        },
+        "jet": {
+          "Name": "喷气冲刺",
+          "Desc": "屁股后面一股绿烟，往前一窜。"
+        },
+        "brake": {
+          "Name": "急停",
+          "Desc": "猛地刹住，地上留两道刹车痕。"
+        },
+        "spin": {
+          "Name": "打滑转圈",
+          "Desc": "脚下一滑，原地转圈。"
+        },
+        "flip": {
+          "Name": "翻肚皮",
+          "Desc": "仰面朝天，六条腿乱蹬，好一会儿才翻回来。"
+        },
+        "snack": {
+          "Name": "啃面包屑",
+          "Desc": "停下来啃路边的面包屑。"
+        },
+        "nap": {
+          "Name": "打瞌睡",
+          "Desc": "跑着跑着睡着了，头上冒 Zzz。"
+        },
+        "moonwalk": {
+          "Name": "倒着走",
+          "Desc": "腿还在走，身子往后退。"
+        },
+        "wander": {
+          "Name": "走歪",
+          "Desc": "在道里左右乱晃，走得很慢。"
+        },
+        "trip": {
+          "Name": "绊一跤",
+          "Desc": "往前翻个跟头。"
+        },
+        "taunt": {
+          "Name": "回头挑衅",
+          "Desc": "转过身对后面的晃触角。"
+        },
+        "bow": {
+          "Name": "鞠躬",
+          "Desc": "停下来向观众鞠躬。"
+        },
+        "cheer": {
+          "Name": "蹦跶庆祝",
+          "Desc": "原地蹦跶，提前庆祝。"
+        },
+        "roll": {
+          "Name": "滚成球",
+          "Desc": "缩成一团往前骨碌碌地滚。"
+        },
+        "dig": {
+          "Name": "钻地",
+          "Desc": "钻进土里，一个土包往前拱，前面再冒出来。"
+        },
+        "sneeze": {
+          "Name": "打喷嚏",
+          "Desc": "憋一下，阿嚏一声，自己被崩退一截。"
+        },
+        "mud": {
+          "Name": "陷进泥坑",
+          "Desc": "腿在泥里空转，溅得到处是泥点。"
+        },
+        "dungball": {
+          "Name": "推粪球",
+          "Desc": "停下来推一个越滚越大的粪球，走得很慢。"
+        },
+        "dance": {
+          "Name": "跳舞",
+          "Desc": "原地转着小圈扭起来，冒音符。"
+        },
+        "haste": {
+          "Name": "加速术",
+          "Desc": "法术：身上一圈金光，腿快出残影。"
+        },
+        "enlarge": {
+          "Name": "巨化术",
+          "Desc": "法术：变成两倍大，大步流星。"
+        },
+        "freeze": {
+          "Name": "冰冻术",
+          "Desc": "法术：冻进一块冰里，过一会儿才碎开。"
+        },
+        "zap": {
+          "Name": "雷击",
+          "Desc": "法术：一道闪电劈下来，焦黑冒烟。"
+        },
+        "snail": {
+          "Name": "变蜗牛",
+          "Desc": "法术：变成一只蜗牛慢慢爬，一会儿再变回来。"
+        }
+      },
+      "Temperament": {
+        "steady": {
+          "Name": "稳重",
+          "Intro": "{name}跑得不快不慢，很少出岔子。"
+        },
+        "greedy": {
+          "Name": "贪吃",
+          "Intro": "{name}看见吃的就走不动道，比赛也不例外。"
+        },
+        "hothead": {
+          "Name": "暴躁",
+          "Intro": "{name}是出了名的急性子，一激动就猛冲，也常常把自己绊倒。"
+        },
+        "lazy": {
+          "Name": "懒散",
+          "Intro": "{name}总是慢半拍才起跑，跑着跑着还可能打个盹。"
+        },
+        "clumsy": {
+          "Name": "笨拙",
+          "Intro": "{name}热情有余，协调不足，打滑翻跟头是家常便饭。"
+        },
+        "showoff": {
+          "Name": "爱现",
+          "Intro": "{name}最在乎观众，跑着跑着就要回头摆个造型。"
+        },
+        "timid": {
+          "Name": "胆小",
+          "Intro": "{name}胆子小，一紧张就急刹车，甚至往回退。"
+        },
+        "sly": {
+          "Name": "狡猾",
+          "Intro": "{name}前半程不声不响，最后一段才露出真本事。"
+        }
+      },
+      "Beetle": {
+        "copper": {
+          "Name": "赤铜将军",
+          "Intro": "脾气跟壳一样红。起跑枪一响就收不住脚，常常把自己绊一跤。",
+          "Catchphrase": "冲啊！"
+        },
+        "jade": {
+          "Name": "翡翠寡妇",
+          "Intro": "前半程总在虫堆里慢悠悠地晃，没人记得她。直到最后一段。",
+          "Catchphrase": "让我先看看。"
+        },
+        "indigo": {
+          "Name": "靛夜游侠",
+          "Intro": "不快不慢，从不出错。押他的人很少发财，也很少破产。",
+          "Catchphrase": "稳住。"
+        },
+        "golden": {
+          "Name": "金角老爹",
+          "Intro": "赛道上最强壮的老家伙，前提是他醒着。起跑总要慢半拍。",
+          "Catchphrase": "谁叫我？"
+        },
+        "ash": {
+          "Name": "灰烬小鬼",
+          "Intro": "热情十足，协调为零。每场至少翻一次跟头，观众最爱他。",
+          "Catchphrase": "我能行！"
+        },
+        "amethyst": {
+          "Name": "紫晶公主",
+          "Intro": "比起冲线，她更在乎观众有没有在看她。",
+          "Catchphrase": "都看我！"
+        },
+        "crimson": {
+          "Name": "胭脂胖墩",
+          "Intro": "赛道上掉的每一粒面包屑，他都叫得出名字。",
+          "Catchphrase": "有吃的吗？"
+        },
+        "moss": {
+          "Name": "青苔隐士",
+          "Intro": "块头不小，胆子不大。旁边谁冲得猛一点，他就想往回缩。",
+          "Catchphrase": "别挤我……"
+        }
+      },
+      "Bubble": {
+        "dash1": "让开让开！",
+        "dash2": "风在耳边呼呼响～",
+        "fly1": "我会飞你们不知道吧？",
+        "fly2": "拜拜了您嘞！",
+        "hop1": "嘿！咻！哈！",
+        "blink1": "你看不见我～",
+        "blink2": "刚才发生了什么？",
+        "jet1": "失礼了……",
+        "jet2": "今天早饭吃多了。",
+        "brake1": "等等，我好像没关灶！",
+        "brake2": "前面有坑！",
+        "spin1": "哎哟哟哟——",
+        "spin2": "地板好滑！",
+        "flip1": "救命，翻不过来了！",
+        "flip2": "天花板真好看。",
+        "snack1": "面包屑！谁掉的！",
+        "snack2": "就吃一口，就一口。",
+        "nap1": "五分钟……就五分钟……",
+        "nap2": "昨晚没睡好。",
+        "moonwalk1": "倒着走也是走。",
+        "moonwalk2": "这叫战术后撤。",
+        "wander1": "终点在哪边来着？",
+        "wander2": "那朵花好香。",
+        "trip1": "谁绊我！",
+        "trip2": "哎呀！",
+        "taunt1": "来追我呀～",
+        "taunt2": "你们就这？",
+        "bow1": "感谢各位捧场。",
+        "cheer1": "我是第一！（大概）",
+        "cheer2": "耶——！",
+        "rigged1": "庄家让我今天必须赢。",
+        "rigged2": "有人往我嘴里塞了颗糖……",
+        "rigged3": "我什么都没看见。",
+        "sleepy1": "突然好困……",
+        "roll1": "骨碌碌——",
+        "dig1": "借个道！",
+        "dig2": "地道战！",
+        "sneeze1": "啊……啊……阿嚏！",
+        "mud1": "谁在这儿倒的泥！",
+        "dung1": "这个球是我的！",
+        "dance1": "音乐响起来～",
+        "haste1": "我感觉浑身是劲！",
+        "enlarge1": "我是不是长高了？",
+        "freeze1": "好……冷……",
+        "zap1": "谁、谁劈我？",
+        "snail1": "我怎么变慢了……",
+        "magic1": "（空气里一股魔法味）",
+        "hop2": "一跳，再一跳！",
+        "bow2": "承让，承让。",
+        "haste2": "腿快得停不下来！",
+        "freeze2": "谁把赛道冻住了？"
+      },
+      "Move": {
+        "dash": "猛冲",
+        "hop": "跳着走",
+        "jet": "放个气",
+        "brake": "急刹",
+        "spin": "打转",
+        "flip": "四脚朝天",
+        "snack": "顺路吃点",
+        "nap": "打个盹",
+        "moonwalk": "后撤步",
+        "wander": "走神",
+        "trip": "绊倒",
+        "taunt": "挑衅",
+        "bow": "谢幕",
+        "cheer": "提前庆祝",
+        "cheatFly": "腾空而起",
+        "cheatBlink": "凭空消失",
+        "cheatRocket": "糖果火箭",
+        "cheatDash": "内定冠军",
+        "cheatNap": "被下了药",
+        "cheatFlip": "被人推翻",
+        "cheatMoonwalk": "被人拽回去",
+        "roll": "滚球",
+        "dig": "钻地",
+        "sneeze": "阿嚏",
+        "mud": "泥坑",
+        "dungball": "捡了个球",
+        "dance": "来段舞",
+        "cheatTunnel": "地道战",
+        "spellHaste": "加速术",
+        "spellEnlarge": "巨化术",
+        "spellFreeze": "冰冻术",
+        "spellZap": "雷击",
+        "spellSnail": "变蜗牛"
+      },
+      "Race": {
+        "ravencup": "暮鸦杯"
+      },
+      "Studio": {
+        "GMOnly": "只有 DM 能修改甲虫赛事。",
+        "CopySuffix": "（副本）",
+        "ThisBeetle": "这只甲虫",
+        "Unnamed": "无名甲虫",
+        "PresetTag": "预制",
+        "UnnamedRace": "未命名赛事",
+        "Title": "甲虫赛事工坊",
+        "Tab": {
+          "race": "赛事卡",
+          "beetle": "甲虫",
+          "move": "招式",
+          "bubble": "气泡"
+        },
+        "New": {
+          "race": "新建赛事卡",
+          "beetle": "新建甲虫",
+          "move": "新建招式",
+          "bubble": "新建气泡"
+        },
+        "NewRaceName": "新赛事",
+        "NewBeetleName": "新甲虫",
+        "NewMoveName": "新招式",
+        "Empty": "这里还什么都没有。",
+        "RaceMeta": "{lanes} 只上场 · {seconds} 秒",
+        "BeetleMeta": "战力 {power} · {temperament}",
+        "Pool": {
+          "random": "随机招",
+          "cheat": "作弊招"
+        },
+        "PresetLocked": "预制内容不能直接改，复制一份再改。",
+        "PresetParametersLocked": "预制参数已锁定",
+        "Disabled": "已停用",
+        "RandomBubble": "每次随机一句",
+        "ChooseBubble": "选择已有台词…",
+        "AddBubble": "添加",
+        "RemoveBubble": "移除台词",
+        "MissingBubble": "（台词已删除）",
+        "Duplicate": "复制为自定义",
+        "Delete": "删除",
+        "Save": "保存",
+        "Saved": "已保存。",
+        "SaveFailed": "没存上：条目太多，或者你不是 DM。",
+        "Unsaved": "有改动没保存",
+        "DiscardTitle": "放弃改动？",
+        "DiscardBody": "当前条目有改动还没保存，离开就没了。",
+        "DeleteTitle": "删除条目",
+        "DeleteBody": "确定删除「{name}」？用到它的赛事卡和招式会自动跳过它。",
+        "Field": {
+          "Name": "名字",
+          "Power": "战力",
+          "Color": "颜色",
+          "Pattern": "花纹",
+          "Horn": "角",
+          "Temperament": "性格",
+          "Intro": "介绍",
+          "Catchphrase": "口头禅",
+          "Pool": "用法",
+          "Action": "动作",
+          "Duration": "时长",
+          "Strength": "强度",
+          "Bubble": "气泡台词",
+          "Enabled": "启用招式",
+          "NewBubble": "或者写一句新的",
+          "BubbleText": "台词",
+          "RaceName": "赛事名",
+          "Lanes": "上场甲虫（{min}–{max} 只，从上到下是 1 号道往后）",
+          "Multiplier": "默认倍率",
+          "RaceDuration": "赛程",
+          "BetSeconds": "下注时间",
+          "EventRate": "意外频率",
+          "MinBet": "单注下限",
+          "MaxBet": "单注上限",
+          "PowerDisplay": "战力怎么给玩家看",
+          "Parade": "开赛前先入场巡游"
+        },
+        "Hint": {
+          "Power": "战力越高，平时跑得越快。",
+          "Temperament": "只有 DM 看得见。决定它比赛中爱出哪类意外。",
+          "Intro": "巡游和下注时给玩家看的介绍。",
+          "Catchphrase": "巡游登场时冒出来的一句话。",
+          "Pool": {
+            "random": "比赛中按性格随机触发，DM 也能拿它当暗招手动点。",
+            "cheat": "只有 DM 在作弊面板上点了才会发动。"
+          },
+          "Duration": "默认 {seconds} 秒。拉长是让动作多持续一会儿，不是放慢。",
+          "Strength": "加减速的幅度。1 是默认。",
+          "NewBubble": "填了就会存成一条新气泡，挂到这个招式上。",
+          "BubbleText": "尽量短，一行十几个字最好看。",
+          "LaneOdds": "这只的倍率，空着用默认",
+          "Multiplier": "押中拿回注额 × 倍率（含本金）。{fair} 只上场时，公平倍率约为 ×{fair}。",
+          "MaxBet": "0 表示不设上限。"
+        },
+        "Pattern": {
+          "plain": "素色",
+          "spots": "斑点",
+          "stripes": "条纹",
+          "stars": "星星",
+          "bands": "横带"
+        },
+        "Horn": {
+          "none": "无角",
+          "rhino": "犀角",
+          "stag": "锹角"
+        },
+        "ActionGroup": {
+          "boost": "加速",
+          "stall": "拖慢",
+          "show": "表演",
+          "magic": "法术（一看就是作弊）"
+        },
+        "EventRate": {
+          "low": "少",
+          "normal": "正常",
+          "high": "多"
+        },
+        "IntroFromTemperament": "按性格生成",
+        "PreviewHint": "点一下让它演一段。",
+        "MovePreviewHint": "按当前时长和强度循环演示，点一下立刻重演。",
+        "FixedDuration": "固定 {seconds} 秒（加速类只调强度）",
+        "NoStrength": "这个动作没有强度可调",
+        "NoBubble": "（不说话）",
+        "NewBubblePlaceholder": "比如：看我的！",
+        "UsedBy": "用到这句的招式",
+        "UsedByNone": "暂时没有招式用它。",
+        "MissingBeetle": "（这只已被删除）",
+        "PowerShort": "战力 {power}",
+        "AddBeetle": "＋ 加一只上场…",
+        "TooFewLanes": "至少要 {min} 只能开赛。"
+      },
+      "Phase": {
+        "IDLE": "准备",
+        "PARADE": "入场",
+        "BETTING": "下注",
+        "COUNTDOWN": "封盘",
+        "RACING": "比赛中",
+        "RESOLVING": "结算"
+      },
+      "Place": {
+        "1": "壹",
+        "2": "贰",
+        "3": "叁",
+        "4": "肆",
+        "5": "伍",
+        "6": "陆",
+        "7": "柒",
+        "8": "捌"
+      },
+      "Head": {
+        "Round": "第 {round} 场",
+        "BettingLeft": "封盘还剩 {seconds} 秒",
+        "ParadeOf": "第 {index} / {total} 位登场"
+      },
+      "Herald": {
+        "Parade": "各位来宾，参赛选手入场！",
+        "Betting": "开盘了，看准了再押。",
+        "Closed": "封盘！各就各位——",
+        "Start": "开闸！",
+        "Action": "{name}：{action}",
+        "Lead": "{name} 冲到了最前面！",
+        "Half": "过半程了！",
+        "Final": "最后直道！",
+        "Finish": "{name} 撞线！",
+        "Photo": "只差一点点！{name} 屈居第二"
+      },
+      "Board": {
+        "Finish": "终点",
+        "Go": "起！",
+        "Pool": "本道 {amount}"
+      },
+      "Caption": {
+        "Prev": "上一只",
+        "Next": "下一只",
+        "PowerNumber": "战力 {power}",
+        "PowerHidden": "战力 ???",
+        "Stats": "{races} 战 {wins} 胜",
+        "Debut": "初次登场",
+        "Backers": "押它的人",
+        "NoBackers": "还没人押"
+      },
+      "Gm": {
+        "Tag": "DM",
+        "SkipParade": "跳过入场",
+        "CloseBetting": "封盘开跑",
+        "CheatHint": "点甲虫（或按 1–8）作弊"
+      },
+      "Cheat": {
+        "Blatant": "作弊招",
+        "None": "赛事里没有配作弊招",
+        "Natural": "自然动作",
+        "NaturalHint": "跟随机出状况一模一样，玩家看不出是你动的手",
+        "Bias": "暗调速度",
+        "BiasHint": "没有任何特效，悄悄生效",
+        "Slower": "慢",
+        "Faster": "快",
+        "Apply": "照这个速度跑",
+        "Reset": "恢复正常"
+      },
+      "Stands": {
+        "Label": "看台",
+        "Watching": "观望中"
+      },
+      "Hud": {
+        "Watching": "你在观战，这一场不押注。",
+        "GmWatching": "你是庄家，没坐进来押注。比赛中可以点甲虫作弊。",
+        "Balance": "余额 {amount}",
+        "Staked": "本场已押 {amount}",
+        "Ticket": "注单",
+        "NoBets": "还没押。用舞台两边的箭头挑一只，再定注额。",
+        "Remove": "撤掉这一注",
+        "Stake": "注额",
+        "Clear": "清零",
+        "Withdraw": "全部撤回",
+        "Bet": "押 {n} 号 {name}",
+        "Change": "改 {n} 号 {name} 的注",
+        "Returns": "中了拿回 {amount}",
+        "Locked": "已封盘，等着看结果。",
+        "NoBetThisRound": "这一场没押。",
+        "WaitParade": "选手正在入场，入场结束就开盘。",
+        "Won": "押中了！拿回 {amount}",
+        "Lost": "没押中，输了 {amount}"
+      },
+      "Settlement": {
+        "Winner": "{name} 夺魁！",
+        "Aborted": "比赛没能开跑",
+        "Player": "押注人",
+        "Bets": "下注",
+        "Payout": "派彩",
+        "Net": "输赢",
+        "NoBets": "这一场没人下注。",
+        "Next": "下一场"
+      },
+      "Error": {
+        "WrongPhase": "现在不能这么做。",
+        "NotPlayer": "你不在这一桌的押注名单上。",
+        "InvalidLane": "没有这条道。",
+        "InvalidAmount": "注额不对。",
+        "BelowMin": "单注最少 {min}。",
+        "AboveMax": "单注最多 {max}。",
+        "NotEnough": "余额不够（所有注加起来不能超过 {balance}）。",
+        "AlreadyFinished": "这只已经撞线了。",
+        "InvalidMove": "没有这个招式。",
+        "RequestFailed": "请求没发出去，稍后再试。"
+      },
+      "Sound": {
+        "On": "全桌音效：开（点一下全桌静音）",
+        "Off": "全桌音效：已静音（点一下打开）"
+      }
+    }
+  },
+  "PARLORTAVERN": {
+    "Name": "奇幻酒馆",
+    "Actions": {
+      "LeaveTable": "离席"
+    },
+    "Status": {
+      "Spectating": "观战中",
+      "You": "你",
+      "HandStrength": "牌力"
+    },
+    "Roster": {
+      "Title": "在座名录"
+    },
+    "Herald": {
+      "TableOpen": "牌桌已开,诸位请入座",
+      "Button": "{name} 坐庄",
+      "SmallBlind": "{name} 下小盲 {amount}",
+      "BigBlind": "{name} 下大盲 {amount}",
+      "Check": "{name} 过牌",
+      "Call": "{name} 跟注 {amount}",
+      "Bet": "{name} 下注 {amount}",
+      "RaiseTo": "{name} 加注到 {amount}",
+      "AllIn": "{name} 全下 {amount}",
+      "Fold": "{name} 弃牌",
+      "Win": "{name} 赢下 {amount}",
+      "Hit": "{name} 要牌",
+      "Draw": "{name} 补到一张",
+      "Stand": "{name} 停手",
+      "Bust": "{name} 爆牌",
+      "Natural": "{name} 天生黑杰克",
+      "BetSide": "{name} 押 {side} {amount}",
+      "SideWin": "{side} 胜",
+      "War": "{name} 与庄家打平,开战",
+      "Surrender": "{name} 投降",
+      "Beats": "{name} 赢过庄家",
+      "Beaten": "{name} 不敌庄家",
+      "Push": "{name} 走水",
+      "Play": "{name} 跟注",
+      "DealerHand": "{name} 亮 {hand}",
+      "DealerNotQualified": "{name} 未够格",
+      "Claim": "{name} 叫 {quantity} 个 {face} 点",
+      "Open": "{name} 开盅",
+      "ClaimTrue": "叫点属实 · 实际 {count} 个",
+      "ClaimFalse": "叫点为假 · 实际 {count} 个",
+      "LoseDie": "{name} 掉一颗骰",
+      "MatchWin": "{name} 赢下全场",
+      "Roll": "{name} 掷出 {value} 点",
+      "RoundWin": "{name} 赢下本轮",
+      "CrazyEights": {
+        "Deal": "发牌 · 每人 {count} 张",
+        "Play": "{name} 打出 {card}",
+        "Wild": "{name} 出了一张 8",
+        "Suit": "{name} 改叫 {suit}",
+        "Skip": "{name} 被跳过",
+        "Reverse": "出牌方向反转",
+        "DrawTwo": "{name} 罚抽 {count} 张",
+        "Draw": "{name} 抽了一张",
+        "Pass": "{name} 过",
+        "LastCard": "{name} 只剩最后一张！",
+        "Win": "{name} 出完手牌，赢下 {amount}",
+        "Dead": "牌堆耗尽，本局流局",
+        "Reshuffle": "弃牌堆洗回牌堆"
+      }
+    },
+    "Games": {
+      "Blackjack": "二十一点",
+      "Baccarat": "百家乐",
+      "DragonTiger": "龙虎斗",
+      "CasinoWar": "赌场战争",
+      "ThreeCardPoker": "三张扑克",
+      "TexasHoldem": "德州扑克",
+      "LiarsDice": "说谎骰",
+      "Bone21": "骨骰二十一",
+      "CrazyEights": "疯狂八",
+      "BeetleRace": "甲虫赛跑"
+    },
+    "Labels": {
+      "BaccaratPlayer": "闲 PLAYER",
+      "BaccaratBanker": "庄 BANKER",
+      "DealerMark": "庄",
+      "Dealer": "庄家",
+      "War": "开战",
+      "Dragon": "龙 DRAGON",
+      "Tiger": "虎 TIGER",
+      "Settlement": "结算",
+      "Bet": "底注",
+      "CurrentClaim": "当前叫点",
+      "NoClaimYet": "尚无叫点",
+      "TableDice": "桌上骰",
+      "DealerNotQualified": "未够格"
+    },
+    "Blackjack": {
+      "DealerSummary": "庄家 · 点"
+    },
+    "Table": {
+      "Pot": "底池 {amount}",
+      "CurrentBet": "当前注 {amount}"
+    },
+    "Workshop": {
+      "FeltColor": "毛毡颜色",
+      "FeltShown": "显 示",
+      "FeltHidden": "已隐藏",
+      "SurfaceStyle": "画风",
+      "StyleSemiReal": "半写实",
+      "StyleSemiRealHint": "保留真实木纹，压软细节并加入少量手绘刷痕",
+      "StyleHanddraw": "全手绘",
+      "StyleHanddrawHint": "木面与毛毡都使用手绘色面、刷痕和纸面颗粒",
+      "SurfaceMaterial": "木材",
+      "MaterialTavern": "酒馆橡木",
+      "MaterialWalnut": "烟熏胡桃",
+      "MaterialButcher": "拼木案台",
+      "MaterialMahogany": "桃花心红木",
+      "MaterialEbony": "乌木",
+      "MaterialDrift": "灰橡老木",
+      "MoveBackward": "后移",
+      "MoveForward": "前移",
+      "MoveBackwardHint": "向后移动一层",
+      "MoveForwardHint": "向前移动一层",
+      "PropTransformHint": "滚轮缩放 · Ctrl + 滚轮旋转",
+      "PropScaleHint": "滚轮缩放",
+      "EditTable": "编辑赌桌",
+      "TableName": "桌名",
+      "Corners": "桌角",
+      "CornerMetal": "金属",
+      "CornerFiligree": "花纹",
+      "CornerNone": "无",
+      "CornerColor": "金属色",
+      "Felt": "毛毡",
+      "Background": "背景",
+      "Save": "保存",
+      "Cancel": "取消",
+      "BackgroundSourcePlaceholder": "图片或视频路径(webm/mp4/jpg/png…)",
+      "Browse": "浏览",
+      "Clear": "清除",
+      "Blur": "模糊",
+      "Brightness": "亮度",
+      "Opacity": "透明度",
+      "RemoveProp": "删除",
+      "Rotation": "旋转",
+      "SymmetricNoRotation": "圆对称摆件无需旋转",
+      "Variants": "变体",
+      "LayerStatus": "层级 {current}/{total}"
+    },
+    "Lobby": {
+      "TonightDecks": "今夜赌桌",
+      "NewDeck": "新建赌桌",
+      "Active": "今夜",
+      "NoDecks": "还没有赌桌预设",
+      "Unnamed": "未命名赌桌",
+      "EditLook": "编辑外观",
+      "Delete": "删除赌桌",
+      "DeleteConfirm": "删除「{name}」?此操作不可恢复。",
+      "EditHint": "点调色盘进工坊摆桌;开桌后也可点 ⚒ 随时调整",
+      "NamePrompt": "赌桌名字",
+      "NameOk": "就叫这个",
+      "Rename": "改名"
+    },
+    "Props": {
+      "bottle-top": {
+        "Name": "直立单酒瓶",
+        "Parts": {
+          "glass": "瓶身玻璃",
+          "liquid": "酒液",
+          "cork": "瓶塞",
+          "seal": "封蜡",
+          "label": "酒标"
+        },
+        "Styles": {
+          "girth": {
+            "Label": "瓶径",
+            "Options": {
+              "std": "标准",
+              "stout": "矮胖"
+            }
+          },
+          "top": {
+            "Label": "瓶口",
+            "Options": {
+              "cork": "裸塞",
+              "wax": "蜡封"
+            }
+          }
+        },
+        "Variants": {
+          "Variant1": "绿瓶红酒",
+          "Variant2": "琥珀烈酒",
+          "Variant3": "蓝瓶私酿"
+        }
+      },
+      "bottle-pair": {
+        "Name": "椭圆酒具托盘",
+        "Parts": {
+          "glassA": "上瓶玻璃",
+          "glassB": "下瓶玻璃",
+          "liquidA": "上瓶酒液",
+          "liquidB": "下瓶酒液",
+          "cork": "软木塞",
+          "seal": "封蜡",
+          "tray": "木托盘",
+          "trim": "托盘饰边"
+        },
+        "Styles": {
+          "tray": {
+            "Label": "托盘",
+            "Options": {
+              "wood": "素木沿",
+              "brass": "铜饰沿"
+            }
+          },
+          "tops": {
+            "Label": "封口",
+            "Options": {
+              "mixed": "一蜡一塞",
+              "wax": "双蜡封",
+              "cork": "双软木"
+            }
+          }
+        },
+        "Variants": {
+          "Variant1": "地窖搭配",
+          "Variant2": "领主私酿",
+          "Variant3": "走私烈酒"
+        }
+      },
+      "wine-cup": {
+        "Name": "无柄酒杯",
+        "Parts": {
+          "glass": "杯身",
+          "wine": "酒液",
+          "rim": "杯沿"
+        },
+        "Styles": {
+          "fill": {
+            "Label": "酒量",
+            "Options": {
+              "full": "斟满",
+              "half": "半杯",
+              "empty": "空杯"
+            }
+          },
+          "shape": {
+            "Label": "杯型",
+            "Options": {
+              "wine": "葡萄酒杯",
+              "goblet": "厚壁酒杯"
+            }
+          }
+        },
+        "Variants": {
+          "Variant1": "酒红满杯",
+          "Variant2": "琥珀半杯",
+          "Variant3": "宴后空杯"
+        }
+      },
+      "bread-basket": {
+        "Name": "面包篮",
+        "Parts": {
+          "weave": "篮编",
+          "bread": "面包",
+          "liner": "垫布"
+        },
+        "Styles": {
+          "bread": {
+            "Label": "面包",
+            "Options": {
+              "rolls": "小圆包",
+              "loaf": "长面包"
+            }
+          },
+          "liner": {
+            "Label": "垫布",
+            "Options": {
+              "cloth": "铺布",
+              "bare": "裸篮"
+            }
+          }
+        },
+        "Variants": {
+          "Variant1": "红布圆包",
+          "Variant2": "黑麦长包",
+          "Variant3": "旅店早餐"
+        }
+      },
+      "roast-board": {
+        "Name": "烤肉砧板",
+        "Parts": {
+          "board": "砧板",
+          "roast": "烤肉",
+          "crust": "焦皮",
+          "herb": "香草"
+        },
+        "Styles": {
+          "cut": {
+            "Label": "切法",
+            "Options": {
+              "whole": "整块",
+              "sliced": "切片"
+            }
+          },
+          "garnish": {
+            "Label": "配菜",
+            "Options": {
+              "herbs": "香草",
+              "roots": "根茎"
+            }
+          }
+        },
+        "Variants": {
+          "Variant1": "迷迭香烤肉",
+          "Variant2": "宴席切片",
+          "Variant3": "猎人晚餐"
+        }
+      },
+      "sealed-letter": {
+        "Name": "封蜡信件",
+        "Parts": {
+          "paper": "信纸",
+          "seal": "封蜡",
+          "ink": "字迹"
+        },
+        "Styles": {
+          "fold": {
+            "Label": "折法",
+            "Options": {
+              "envelope": "信封",
+              "scroll": "折卷"
+            }
+          },
+          "crest": {
+            "Label": "印记",
+            "Options": {
+              "star": "星印",
+              "crown": "冠印",
+              "plain": "素印"
+            }
+          }
+        },
+        "Variants": {
+          "Variant1": "酒红密信",
+          "Variant2": "王室来函",
+          "Variant3": "旧账单"
+        }
+      },
+      "ink-quill": {
+        "Name": "墨水与羽笔",
+        "Parts": {
+          "feather": "羽毛",
+          "shaft": "羽轴",
+          "ink": "墨水",
+          "glass": "墨水瓶",
+          "nib": "笔尖"
+        },
+        "Styles": {
+          "feather": {
+            "Label": "羽形",
+            "Options": {
+              "broad": "宽羽",
+              "slim": "长羽"
+            }
+          },
+          "pot": {
+            "Label": "墨瓶",
+            "Options": {
+              "square": "方瓶",
+              "faceted": "多棱瓶"
+            }
+          }
+        },
+        "Variants": {
+          "Variant1": "书记官",
+          "Variant2": "渡鸦笔",
+          "Variant3": "宫廷抄本"
+        }
+      },
+      "herb-bundle": {
+        "Name": "香草束",
+        "Parts": {
+          "leaf": "叶片",
+          "stem": "茎",
+          "twine": "麻绳"
+        },
+        "Styles": {
+          "kind": {
+            "Label": "香草",
+            "Options": {
+              "sage": "鼠尾草",
+              "rosemary": "迷迭香",
+              "mixed": "混合香草"
+            }
+          }
+        },
+        "Variants": {
+          "Variant1": "鼠尾草束",
+          "Variant2": "迷迭香束",
+          "Variant3": "厨房混香"
+        }
+      },
+      "salt-cellar": {
+        "Name": "盐盅与盐勺",
+        "Parts": {
+          "bowl": "盅体",
+          "salt": "盐粒",
+          "trim": "沿口",
+          "spoon": "盐勺"
+        },
+        "Styles": {
+          "fill": {
+            "Label": "调料",
+            "Options": {
+              "salt": "粗盐",
+              "pepper": "黑胡椒",
+              "mixed": "香料盐"
+            }
+          },
+          "bowl": {
+            "Label": "盅形",
+            "Options": {
+              "metal": "金属圆盅",
+              "ceramic": "陶瓷花盅"
+            }
+          }
+        },
+        "Variants": {
+          "Variant1": "锡盅粗盐",
+          "Variant2": "黑陶胡椒",
+          "Variant3": "铜盅香料盐"
+        }
+      },
+      "candelabra": {
+        "Name": "烛台架",
+        "Parts": {
+          "frame": "架身",
+          "wax": "蜡",
+          "flame": "焰"
+        },
+        "Styles": {
+          "arms": {
+            "Label": "烛数",
+            "Options": {
+              "two": "双烛",
+              "three": "三烛"
+            }
+          }
+        },
+        "Variants": {
+          "Variant1": "黄铜厅堂",
+          "Variant2": "锻铁地窖",
+          "Variant3": "暗夜祭仪"
+        }
+      },
+      "keg": {
+        "Name": "小酒桶",
+        "Parts": {
+          "wood": "桶木",
+          "hoop": "铁箍",
+          "bung": "塞孔"
+        },
+        "Styles": {
+          "hoops": {
+            "Label": "箍环",
+            "Options": {
+              "double": "双箍",
+              "triple": "三箍"
+            }
+          },
+          "bung": {
+            "Label": "桶塞",
+            "Options": {
+              "plug": "木塞",
+              "open": "敞口"
+            }
+          }
+        },
+        "Variants": {
+          "Variant1": "麦酒桶",
+          "Variant2": "陈酿桶",
+          "Variant3": "取酒中"
+        }
+      },
+      "cardfan": {
+        "Name": "牌堆",
+        "Parts": {
+          "back": "牌背",
+          "trim": "纹饰",
+          "face": "明牌"
+        },
+        "Styles": {
+          "count": {
+            "Label": "张数",
+            "Options": {
+              "three": "三张",
+              "five": "五张"
+            }
+          },
+          "reveal": {
+            "Label": "翻面",
+            "Options": {
+              "none": "全扣",
+              "one": "翻一张"
+            }
+          }
+        },
+        "Variants": {
+          "Variant1": "酒馆红",
+          "Variant2": "午夜蓝",
+          "Variant3": "猎场绿"
+        }
+      },
+      "chipstack": {
+        "Name": "筹码堆",
+        "Parts": {
+          "chip": "主色",
+          "ring": "环纹",
+          "alt": "副色"
+        },
+        "Styles": {
+          "stacks": {
+            "Label": "叠数",
+            "Options": {
+              "two": "两叠",
+              "three": "三叠"
+            }
+          }
+        },
+        "Variants": {
+          "Variant1": "红绿场",
+          "Variant2": "蓝金场",
+          "Variant3": "墨玉场"
+        }
+      },
+      "dicecup": {
+        "Name": "皮骰盅",
+        "Parts": {
+          "leather": "皮身",
+          "stitch": "缝线",
+          "die": "骰子"
+        },
+        "Styles": {
+          "pose": {
+            "Label": "姿态",
+            "Options": {
+              "up": "立着",
+              "spill": "倒扣出骰"
+            }
+          }
+        },
+        "Variants": {
+          "Variant1": "老皮盅",
+          "Variant2": "开盅了",
+          "Variant3": "黑鸦盅"
+        }
+      },
+      "keyring": {
+        "Name": "钥匙串",
+        "Parts": {
+          "ring": "铁环",
+          "key": "钥匙"
+        },
+        "Styles": {
+          "count": {
+            "Label": "钥匙数",
+            "Options": {
+              "two": "两把",
+              "three": "三把"
+            }
+          },
+          "bow": {
+            "Label": "匙柄",
+            "Options": {
+              "round": "圆环",
+              "clover": "三叶"
+            }
+          }
+        },
+        "Variants": {
+          "Variant1": "店主串",
+          "Variant2": "地窖串",
+          "Variant3": "金库串"
+        }
+      },
+      "platter": {
+        "Name": "奶酪下酒盘",
+        "Parts": {
+          "board": "木盘",
+          "rind": "奶酪外皮",
+          "cheese": "奶酪",
+          "bread": "面包",
+          "garnish": "配菜"
+        },
+        "Styles": {
+          "spread": {
+            "Label": "摆盘",
+            "Options": {
+              "cheese": "奶酪与碎屑",
+              "full": "奶酪加面包",
+              "feast": "丰盛冷盘"
+            }
+          }
+        },
+        "Variants": {
+          "Variant1": "旅店待客",
+          "Variant2": "奶酪小食",
+          "Variant3": "猎人冷盘"
+        }
+      },
+      "compass": {
+        "Name": "黄铜罗盘",
+        "Parts": {
+          "case": "铜壳",
+          "face": "盘面",
+          "needle": "指针"
+        },
+        "Styles": {
+          "lid": {
+            "Label": "盖子",
+            "Options": {
+              "open": "开盖",
+              "shut": "合盖"
+            }
+          }
+        },
+        "Variants": {
+          "Variant1": "航海家",
+          "Variant2": "合上的",
+          "Variant3": "白银针"
+        }
+      },
+      "dagger": {
+        "Name": "匕首(平放)",
+        "Parts": {
+          "blade": "刃",
+          "guard": "护手",
+          "grip": "柄",
+          "pommel": "柄头"
+        },
+        "Styles": {},
+        "Variants": {
+          "Variant1": "铁卫",
+          "Variant2": "金饰",
+          "Variant3": "黑檀"
+        }
+      },
+      "tankard": {
+        "Name": "锡制酒盏",
+        "Parts": {
+          "body": "盏身",
+          "brew": "酒液",
+          "handle": "把手"
+        },
+        "Styles": {},
+        "Variants": {
+          "Variant1": "锡盏",
+          "Variant2": "铜盏",
+          "Variant3": "银盏"
+        }
+      },
+      "alemug": {
+        "Name": "麦酒杯",
+        "Parts": {
+          "wood": "杯体",
+          "ale": "麦酒",
+          "foam": "泡沫"
+        },
+        "Styles": {},
+        "Variants": {
+          "Variant1": "橡木",
+          "Variant2": "黑麦",
+          "Variant3": "蜜酒"
+        }
+      },
+      "dice": {
+        "Name": "骰子一对",
+        "Parts": {
+          "body": "骰体",
+          "pip": "点"
+        },
+        "Styles": {},
+        "Variants": {
+          "Variant1": "骨白",
+          "Variant2": "玛瑙",
+          "Variant3": "翡翠"
+        }
+      },
+      "coins": {
+        "Name": "金币堆",
+        "Parts": {
+          "coin": "币面",
+          "edge": "暗部"
+        },
+        "Styles": {},
+        "Variants": {
+          "Variant1": "金铸",
+          "Variant2": "银铸",
+          "Variant3": "铜铸"
+        }
+      },
+      "pouch": {
+        "Name": "钱袋",
+        "Parts": {
+          "cloth": "袋布",
+          "rope": "束绳",
+          "coin": "露币"
+        },
+        "Styles": {},
+        "Variants": {
+          "Variant1": "粗麻",
+          "Variant2": "绛红",
+          "Variant3": "墨青"
+        }
+      },
+      "pipe": {
+        "Name": "烟斗",
+        "Parts": {
+          "bowl": "斗钵",
+          "stem": "斗杆",
+          "ember": "火光"
+        },
+        "Styles": {},
+        "Variants": {
+          "Variant1": "石楠",
+          "Variant2": "乌木",
+          "Variant3": "海泡石"
+        }
+      },
+      "candle": {
+        "Name": "单烛台",
+        "Parts": {
+          "tray": "托盘",
+          "wax": "蜡",
+          "flame": "焰"
+        },
+        "Styles": {},
+        "Variants": {
+          "Variant1": "黄铜",
+          "Variant2": "锻铁",
+          "Variant3": "暗祭"
+        }
+      }
+    },
+    "CrazyEights": {
+      "Stock": "牌堆",
+      "Discard": "弃牌堆",
+      "CurrentSuit": "花色",
+      "Direction": "方向",
+      "ChooseSuit": "指定花色"
+    },
+    "Suits": {
+      "hearts": "红桃",
+      "diamonds": "方块",
+      "clubs": "梅花",
+      "spades": "黑桃"
+    },
+    "BeetleRace": {
+      "TotalPool": "总注 {amount}"
+    }
+  }
+}

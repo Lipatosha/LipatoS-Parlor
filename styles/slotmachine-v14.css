@@ -1,0 +1,1665 @@
+#parlor-slot-overlay[data-slot-style="v16"] {
+    --slot-font-display: var(--parlor-font-display, var(--parlor-font-ui, "Parlor Marcellus", "Noto Serif SC", "Source Han Serif SC", Georgia, serif));
+    --slot-font-body: var(--parlor-font-body, var(--parlor-font-ui, "Parlor Marcellus", "Noto Serif SC", "Source Han Serif SC", Georgia, serif));
+    --slot-reel-step: clamp(80px, 9.1vh, 104px);
+    --slot-wood-texture: var(--parlor-rail-texture, linear-gradient(180deg, rgba(201, 152, 89, 0.96), rgba(113, 72, 31, 0.98) 38%, rgba(55, 31, 10, 0.99) 100%));
+    --slot-felt-texture: var(--parlor-felt-texture, linear-gradient(180deg, rgba(26, 105, 79, 0.96), rgba(11, 56, 42, 0.98) 54%, rgba(6, 31, 24, 0.99) 100%));
+    --slot-metal-texture: linear-gradient(180deg, rgba(229, 214, 186, 0.92), rgba(140, 118, 85, 0.96) 46%, rgba(58, 44, 27, 0.98) 100%);
+    --slot-felt-tiling: 320px 320px;
+    --slot-night: #04120f;
+    --slot-deep: #0a1f1a;
+    --slot-pane: #12342b;
+    --slot-pane-soft: #1b493d;
+    --slot-brass: #c8a15d;
+    --slot-brass-soft: #efd8a7;
+    --slot-brass-deep: #73572a;
+    --slot-text-main: #f3ecd3;
+    --slot-text-soft: rgba(243, 236, 211, 0.78);
+    --slot-text-muted: rgba(226, 220, 196, 0.64);
+    --slot-cut-panel: polygon(14px 0, calc(100% - 10px) 0, 100% 12px, 100% calc(100% - 14px), calc(100% - 14px) 100%, 10px 100%, 0 calc(100% - 12px), 0 12px);
+    --slot-cut-tag: polygon(10px 0, 100% 0, calc(100% - 10px) 100%, 0 100%);
+    position: fixed;
+    inset: 0;
+    z-index: 2100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px;
+    box-sizing: border-box;
+    font-family: var(--slot-font-body);
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-backdrop {
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(circle at 50% 12%, rgba(126, 223, 186, 0.14), transparent 20%),
+        radial-gradient(circle at 24% 56%, rgba(20, 88, 67, 0.22), transparent 38%),
+        radial-gradient(circle at 78% 24%, rgba(221, 181, 104, 0.12), transparent 28%),
+        linear-gradient(180deg, rgba(5, 18, 15, 0.9), rgba(3, 9, 8, 0.98));
+    backdrop-filter: blur(12px) saturate(1.05);
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-shell {
+    position: relative;
+    z-index: 1;
+    width: min(1340px, calc(100vw - 18px));
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    overflow: visible;
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-marquee-shell {
+    position: relative;
+    height: 150px;
+    padding: 20px 24px 12px;
+    box-sizing: border-box;
+    border-radius: 24px 24px 18px 18px;
+    overflow: hidden;
+    background:
+        linear-gradient(180deg, rgba(17, 56, 45, 0.76), rgba(7, 24, 20, 0.9)),
+        radial-gradient(circle at 50% 0%, rgba(255, 243, 202, 0.16), transparent 40%),
+        var(--slot-wood-texture) center / 440px 440px repeat;
+    background-blend-mode: overlay, screen, multiply;
+    border: 1px solid rgba(239, 216, 167, 0.24);
+    box-shadow:
+        0 26px 44px rgba(0, 0, 0, 0.34),
+        inset 0 1px 0 rgba(255, 243, 218, 0.12),
+        inset 0 -20px 26px rgba(0, 0, 0, 0.18);
+    text-align: center;
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-marquee-shell::before,
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-marquee-shell::after {
+    content: "";
+    position: absolute;
+    bottom: 12px;
+    width: 18px;
+    height: 72px;
+    background:
+        linear-gradient(180deg, rgba(248, 231, 184, 0.92), rgba(133, 94, 44, 0.96) 52%, rgba(60, 39, 18, 0.98)),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0));
+    border: 1px solid rgba(239, 216, 167, 0.18);
+    box-shadow: inset 0 1px 0 rgba(255, 247, 223, 0.28);
+    z-index: 0;
+    pointer-events: none;
+    clip-path: polygon(0 0, 100% 12px, 100% calc(100% - 12px), 0 100%);
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-marquee-shell::before {
+    left: -1px;
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-marquee-shell::after {
+    right: -1px;
+    transform: scaleX(-1);
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-marquee-shell > * {
+    position: relative;
+    z-index: 1;
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-bulb-strip.top {
+    position: absolute;
+    left: 18px;
+    right: 18px;
+    top: 9px;
+    height: 14px;
+    border-radius: 999px;
+    background:
+        radial-gradient(circle, rgba(255, 244, 208, 0.98) 0 28%, rgba(255, 191, 73, 0.96) 29% 58%, rgba(121, 54, 7, 0.72) 59% 100%);
+    background-size: 30px 14px;
+    box-shadow: 0 0 16px rgba(255, 196, 79, 0.18);
+    opacity: 0.9;
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-brand-title {
+    color: var(--slot-text-main);
+    font-family: var(--slot-font-display);
+    font-size: clamp(1.56rem, 2.45vw, 2.46rem);
+    line-height: 1.05;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    text-shadow:
+        0 0 22px rgba(239, 216, 167, 0.16),
+        0 2px 0 rgba(16, 33, 28, 0.42);
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-marquee {
+    margin-top: 8px;
+    height: 54px;
+    padding: 8px 12px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 0;
+    clip-path: var(--slot-cut-panel);
+    background:
+        linear-gradient(180deg, rgba(9, 31, 26, 0.84), rgba(4, 14, 12, 0.9)),
+        linear-gradient(90deg, rgba(239, 216, 167, 0.16), rgba(239, 216, 167, 0.02) 52%, rgba(239, 216, 167, 0.12)),
+        var(--slot-felt-texture) center / var(--slot-felt-tiling) repeat;
+    background-blend-mode: normal, screen, multiply;
+    border: 1px solid rgba(239, 216, 167, 0.16);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 241, 208, 0.08),
+        inset 0 -12px 18px rgba(0, 0, 0, 0.18);
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-marquee-main {
+    color: var(--slot-text-main);
+    font-family: var(--slot-font-display);
+    font-size: clamp(0.98rem, 1.55vw, 1.34rem);
+    line-height: 1.15;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-marquee-sub {
+    margin-top: 3px;
+    color: var(--slot-text-soft);
+    font-size: 0.74rem;
+    line-height: 1.2;
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-cabinet {
+    position: relative;
+    padding: 12px 14px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    border-radius: 24px;
+    overflow: hidden;
+    background:
+        linear-gradient(180deg, rgba(16, 52, 42, 0.72), rgba(7, 22, 18, 0.9)),
+        radial-gradient(circle at 50% 0%, rgba(255, 229, 168, 0.08), transparent 30%),
+        var(--slot-wood-texture) center / 520px 520px repeat;
+    background-blend-mode: overlay, screen, multiply;
+    border: 1px solid rgba(239, 216, 167, 0.22);
+    box-shadow:
+        0 28px 54px rgba(0, 0, 0, 0.38),
+        inset 0 1px 0 rgba(255, 245, 220, 0.12),
+        inset 0 -26px 34px rgba(0, 0, 0, 0.2);
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-cabinet::before {
+    content: "";
+    position: absolute;
+    inset: 8px;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 231, 192, 0.08);
+    pointer-events: none;
+    z-index: 0;
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-cabinet::after {
+    content: "";
+    position: absolute;
+    left: 18px;
+    right: 18px;
+    top: 0;
+    height: 3px;
+    background: linear-gradient(90deg, rgba(239, 216, 167, 0.8), rgba(239, 216, 167, 0.18) 32%, rgba(122, 231, 194, 0.18) 68%, rgba(239, 216, 167, 0.58));
+    pointer-events: none;
+    z-index: 0;
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-cabinet > * {
+    position: relative;
+    z-index: 1;
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-head {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 8px;
+    margin-bottom: 12px;
+    padding: 8px 10px;
+    border-radius: 0;
+    clip-path: var(--slot-cut-panel);
+    overflow: hidden;
+    background:
+        linear-gradient(180deg, rgba(17, 43, 37, 0.96), rgba(4, 12, 11, 0.98)),
+        linear-gradient(90deg, rgba(239, 216, 167, 0.22), rgba(239, 216, 167, 0.03) 52%, rgba(239, 216, 167, 0.12)),
+        var(--slot-metal-texture) center / 280px 280px repeat;
+    background-blend-mode: normal, screen, multiply;
+    border: 1px solid rgba(239, 216, 167, 0.16);
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-head::before {
+    content: "";
+    position: absolute;
+    inset: 1px;
+    clip-path: var(--slot-cut-panel);
+    border: 1px solid rgba(255, 239, 201, 0.08);
+    pointer-events: none;
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-head > * {
+    position: relative;
+    z-index: 1;
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-head-chip {
+    min-height: 28px;
+    padding: 0 10px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0;
+    clip-path: var(--slot-cut-tag);
+    background:
+        linear-gradient(180deg, rgba(10, 28, 23, 0.94), rgba(3, 9, 8, 0.98)),
+        linear-gradient(90deg, rgba(239, 216, 167, 0.16), rgba(239, 216, 167, 0.02));
+    background-blend-mode: normal, screen;
+    border: 1px solid rgba(239, 216, 167, 0.16);
+    color: var(--slot-text-main);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-machine {
+    flex: 0 0 auto;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 248px;
+    gap: 12px;
+    align-items: stretch;
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-reels-shell,
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-console,
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-paytable {
+    position: relative;
+    border-radius: 18px;
+    overflow: hidden;
+    background:
+        linear-gradient(180deg, rgba(8, 25, 21, 0.95), rgba(4, 13, 11, 0.96)),
+        radial-gradient(circle at 50% 0%, rgba(255, 241, 208, 0.04), rgba(255, 241, 208, 0) 52%),
+        var(--slot-felt-texture) center / var(--slot-felt-tiling) repeat;
+    background-blend-mode: normal, screen, multiply;
+    border: 1px solid rgba(239, 216, 167, 0.14);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 240, 205, 0.08),
+        0 18px 30px rgba(0, 0, 0, 0.18);
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-reels-shell::before,
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-console::before,
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-paytable::before {
+    content: "";
+    position: absolute;
+    inset: 1px;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 239, 201, 0.08);
+    pointer-events: none;
+    z-index: 0;
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-reels-shell::after,
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-console::after,
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-paytable::after {
+    content: "";
+    position: absolute;
+    left: 16px;
+    right: 16px;
+    top: 0;
+    height: 2px;
+    background: linear-gradient(90deg, rgba(239, 216, 167, 0.7), rgba(239, 216, 167, 0.14) 34%, rgba(122, 231, 194, 0.14) 66%, rgba(239, 216, 167, 0.48));
+    pointer-events: none;
+    z-index: 0;
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-reels-shell > *,
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-console > *,
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-paytable > * {
+    position: relative;
+    z-index: 1;
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-reels-shell {
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    align-self: stretch;
+    min-height: 0;
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-glass-head {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 8px;
+    margin-bottom: 8px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid rgba(239, 216, 167, 0.1);
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-glass-title {
+    color: var(--slot-text-main);
+    font-family: var(--slot-font-display);
+    font-size: 0.92rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-board-wrap {
+    position: relative;
+    flex: 0 0 auto;
+    padding: 12px;
+    border-radius: 24px;
+    background:
+        radial-gradient(circle at 50% 18%, rgba(240, 255, 249, 0.08), transparent 28%),
+        linear-gradient(180deg, rgba(10, 29, 24, 0.9), rgba(3, 10, 9, 0.98)),
+        var(--slot-felt-texture) center / var(--slot-felt-tiling) repeat;
+    background-blend-mode: screen, normal, multiply;
+    border: 8px solid rgba(200, 161, 93, 0.94);
+    box-shadow:
+        inset 0 0 0 2px rgba(239, 216, 167, 0.28),
+        inset 0 12px 18px rgba(255, 244, 213, 0.04),
+        inset 0 -20px 28px rgba(0, 0, 0, 0.34);
+    overflow: hidden;
+    min-height: 0;
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-board-wrap::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 18px;
+    box-shadow:
+        inset 0 0 0 4px rgba(92, 71, 34, 0.46),
+        inset 0 0 40px rgba(112, 223, 186, 0.08);
+    pointer-events: none;
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-board-wrap.is-win::after {
+    content: "";
+    position: absolute;
+    inset: -18%;
+    background:
+        radial-gradient(circle at 50% 50%, rgba(255, 228, 138, 0.24), transparent 34%),
+        conic-gradient(from 180deg, rgba(255, 226, 140, 0), rgba(255, 226, 140, 0.22), rgba(255, 226, 140, 0));
+    animation: parlor-slot-win-sheen 1800ms ease-out both;
+    pointer-events: none;
+    z-index: 2;
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-centerline {
+    display: none;
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-board {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 10px;
+    height: calc(var(--slot-reel-step) * 3);
+    min-height: calc(var(--slot-reel-step) * 3);
+    overflow: hidden;
+    align-items: start;
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-winfx {
+    position: relative;
+    z-index: 1;
+    pointer-events: none;
+    display: flex;
+    align-items: stretch;
+    justify-content: stretch;
+    flex: 0 0 118px;
+    height: 118px;
+    min-height: 118px;
+    margin-top: 8px;
+    padding: 12px 0 0;
+    box-sizing: border-box;
+    border-top: 1px solid rgba(239, 216, 167, 0.1);
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-winfx:empty {
+    opacity: 0;
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-winflash {
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    padding: 18px 22px;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    border-radius: 0;
+    clip-path: var(--slot-cut-panel);
+    background:
+        radial-gradient(circle at 18% 0%, rgba(255, 249, 223, 0.3), transparent 48%),
+        linear-gradient(90deg, rgba(175, 60, 50, 0.95), rgba(116, 25, 22, 0.98) 46%, rgba(49, 12, 12, 0.98)),
+        linear-gradient(180deg, rgba(255, 238, 189, 0.12), rgba(255, 238, 189, 0));
+    background-blend-mode: screen, normal, screen;
+    border: 1px solid rgba(255, 232, 174, 0.34);
+    box-shadow:
+        0 16px 26px rgba(0, 0, 0, 0.22),
+        inset 0 1px 0 rgba(255, 242, 204, 0.16),
+        inset 0 -18px 28px rgba(29, 6, 6, 0.34),
+        0 0 24px rgba(255, 212, 100, 0.12);
+    /* 进场后接一个温和的呼吸脉动，保持视线滞留在中奖横幅上 */
+    animation:
+        parlor-slot-win-banner 560ms cubic-bezier(0.2, 0.9, 0.22, 1) both,
+        parlor-slot-win-pulse 1400ms ease-in-out 720ms infinite alternate;
+    text-align: left;
+    box-sizing: border-box;
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-winflash-title {
+    color: #fff4c7;
+    font-family: var(--slot-font-display);
+    font-size: clamp(1rem, 1.4vw, 1.34rem);
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-shadow: 0 2px 0 rgba(88, 15, 8, 0.5);
+    flex: 1 1 auto;
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-winflash-pills {
+    display: flex;
+    flex: 0 0 auto;
+    justify-content: flex-end;
+    gap: 10px;
+    flex-wrap: nowrap;
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-winflash-pill {
+    min-width: 126px;
+    min-height: 64px;
+    padding: 10px 14px;
+    display: inline-grid;
+    align-content: center;
+    justify-items: start;
+    gap: 2px;
+    border-radius: 12px;
+    background:
+        linear-gradient(180deg, rgba(255, 244, 213, 0.16), rgba(255, 244, 213, 0.06)),
+        rgba(66, 10, 10, 0.24);
+    border: 1px solid rgba(255, 236, 190, 0.18);
+    color: #fff4d4;
+    font-size: 0.66rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-winflash-pill.is-payout {
+    background:
+        linear-gradient(180deg, rgba(255, 232, 170, 0.22), rgba(255, 232, 170, 0.08)),
+        rgba(66, 10, 10, 0.26);
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-winflash-pill-label {
+    color: rgba(255, 238, 203, 0.82);
+    font-size: 0.62rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-winflash-pill-value {
+    color: #fff7de;
+    font-family: var(--slot-font-display);
+    font-size: 1rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-reel {
+    position: relative;
+    height: calc(var(--slot-reel-step) * 3);
+    min-height: 0;
+    max-height: calc(var(--slot-reel-step) * 3);
+    border-radius: 20px;
+    background:
+        linear-gradient(180deg, rgba(24, 31, 29, 0.96), rgba(9, 13, 12, 1)),
+        var(--slot-metal-texture) center / 320px 320px repeat;
+    background-blend-mode: normal, multiply;
+    border: 1px solid rgba(239, 216, 167, 0.12);
+    box-shadow:
+        inset 0 14px 16px rgba(255, 255, 255, 0.03),
+        inset 0 -16px 20px rgba(0, 0, 0, 0.32),
+        0 8px 20px rgba(0, 0, 0, 0.22);
+    overflow: hidden;
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-reel::before,
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-reel::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 36px;
+    z-index: 3;
+    pointer-events: none;
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-reel::before {
+    top: 0;
+    background: linear-gradient(180deg, rgba(5, 8, 12, 0.88), rgba(5, 8, 12, 0));
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-reel::after {
+    bottom: 0;
+    background: linear-gradient(180deg, rgba(5, 8, 12, 0), rgba(5, 8, 12, 0.92));
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-reel.is-spinning {
+    box-shadow:
+        inset 0 14px 16px rgba(255, 255, 255, 0.04),
+        inset 0 -16px 20px rgba(0, 0, 0, 0.32),
+        0 0 24px rgba(108, 220, 184, 0.12);
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-reel-track {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-height: 0;
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-reel-track.is-static {
+    inset: 0;
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-reel-track.is-animating {
+    will-change: transform;
+    animation: parlor-slot-reel-spin var(--slot-spin-duration) linear both;
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-window-cell {
+    position: relative;
+    flex: 0 0 var(--slot-reel-step);
+    height: var(--slot-reel-step);
+    box-sizing: border-box;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition:
+        filter 220ms ease,
+        opacity 220ms ease,
+        transform 220ms ease;
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-window-cell + .parlor-slot-window-cell {
+    border-top: 1px solid rgba(239, 216, 167, 0.08);
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-window-cell.is-hit::before {
+    content: "";
+    position: absolute;
+    inset: 6px;
+    border-radius: 20px;
+    border: 1px solid rgba(218, 244, 228, 0.64);
+    box-shadow:
+        0 0 18px rgba(122, 231, 194, 0.18),
+        0 0 30px rgba(255, 223, 128, 0.08),
+        inset 0 0 22px rgba(255, 236, 173, 0.1);
+    animation: parlor-slot-hit-pulse 1120ms cubic-bezier(0.22, 0.72, 0.2, 1) infinite;
+    animation-delay: calc(var(--slot-hit-order, 0) * 90ms);
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-window-cell.is-hit::after {
+    content: "";
+    position: absolute;
+    inset: 10px;
+    border-radius: 18px;
+    background:
+        radial-gradient(circle at 50% 22%, rgba(255, 242, 191, 0.24), transparent 42%),
+        linear-gradient(135deg, rgba(122, 231, 194, 0.08), rgba(255, 220, 112, 0.18), rgba(122, 231, 194, 0.08));
+    mix-blend-mode: screen;
+    opacity: 0;
+    pointer-events: none;
+    animation: parlor-slot-hit-sheen 1120ms ease-in-out infinite;
+    animation-delay: calc(var(--slot-hit-order, 0) * 90ms);
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-window-cell.is-rolling {
+    filter: saturate(1.08) brightness(1.03);
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-window-cell.is-final .parlor-slot-symbol-face {
+    animation: parlor-slot-final-settle 320ms cubic-bezier(0.22, 0.86, 0.24, 1) var(--slot-settle-delay, 0ms) both;
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-window-cell.is-hit .parlor-slot-symbol-face {
+    animation: parlor-slot-hit-symbol 1120ms cubic-bezier(0.22, 0.72, 0.2, 1) infinite;
+    animation-delay: calc(var(--slot-hit-order, 0) * 90ms);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 250, 233, 0.16),
+        inset 0 -14px 18px rgba(0, 0, 0, 0.24),
+        0 10px 16px rgba(0, 0, 0, 0.22),
+        0 0 24px rgba(255, 220, 112, 0.16);
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-symbol,
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-symbol-empty {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-symbol-face {
+    width: 100%;
+    height: 100%;
+    max-width: min(132px, calc(100% - 4px));
+    max-height: calc(100% - 4px);
+    aspect-ratio: 1 / 1;
+    position: relative;
+    border-radius: 24px;
+    background:
+        radial-gradient(circle at 50% 18%, rgba(255, 255, 255, 0.18), transparent 34%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0)),
+        linear-gradient(180deg, rgba(23, 34, 31, 0.98), rgba(10, 14, 13, 1));
+    border: 1px solid rgba(239, 216, 167, 0.1);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 250, 233, 0.08),
+        inset 0 -14px 18px rgba(0, 0, 0, 0.26),
+        0 10px 16px rgba(0, 0, 0, 0.22);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    transition:
+        filter 220ms ease,
+        opacity 220ms ease,
+        box-shadow 220ms ease,
+        transform 220ms ease;
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-symbol-face::before {
+    content: "";
+    position: absolute;
+    inset: 7px;
+    border-radius: 18px;
+    border: 1px solid rgba(255, 240, 209, 0.04);
+    pointer-events: none;
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-symbol.is-compact .parlor-slot-symbol-face {
+    max-width: 64px;
+    border-radius: 18px;
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-symbol-emblem {
+    width: 78%;
+    height: 66%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    color: var(--slot-symbol-main);
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-symbol-sprite {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    filter: drop-shadow(0 12px 16px rgba(0, 0, 0, 0.32));
+    transform: translateZ(0);
+    transition:
+        filter 220ms ease,
+        opacity 220ms ease,
+        transform 220ms ease;
+}
+
+/* 程序化 SVG 符号：撑满格子居中。形体自带留白，命中发光交给外层 wrapper 的 drop-shadow，
+   所以这层别再 overflow:hidden，否则会把光晕裁掉。 */
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-symbol-glyph {
+    width: 100%;
+    height: 100%;
+    display: block;
+    overflow: visible;
+    user-select: none;
+    pointer-events: none;
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-symbol-banner {
+    min-height: 22px;
+    padding: 0 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0;
+    clip-path: var(--slot-cut-tag);
+    background:
+        linear-gradient(180deg, rgba(255, 247, 219, 0.96), rgba(232, 193, 96, 0.94)),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0));
+    background-blend-mode: normal, screen;
+    color: var(--slot-symbol-ink);
+    font-family: var(--slot-font-display);
+    font-size: 0.66rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.32),
+        0 2px 6px rgba(0, 0, 0, 0.12);
+    transition:
+        filter 220ms ease,
+        opacity 220ms ease,
+        transform 220ms ease,
+        box-shadow 220ms ease,
+        background 220ms ease;
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-symbol.is-compact .parlor-slot-symbol-banner {
+    min-height: 18px;
+    padding: 0 7px;
+    font-size: 0.52rem;
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-symbol.is-highlighted .parlor-slot-symbol-face {
+    background:
+        radial-gradient(circle at 50% 14%, rgba(255, 240, 193, 0.26), transparent 36%),
+        linear-gradient(180deg, rgba(255, 219, 122, 0.12), rgba(255, 255, 255, 0)),
+        linear-gradient(180deg, rgba(23, 34, 31, 0.98), rgba(10, 14, 13, 1));
+    border-color: rgba(255, 229, 160, 0.28);
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-symbol.is-rolling .parlor-slot-symbol-face {
+    filter: saturate(1.08) brightness(1.04);
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-symbol.is-rolling .parlor-slot-symbol-sprite {
+    filter: drop-shadow(0 12px 16px rgba(0, 0, 0, 0.24)) saturate(1.06);
+}
+
+/* 滚动时给符号本体一点纵向拉伸 + 模糊，冒充运动残影（旧方案是换一张 blur 贴图，现在纯 CSS 搞定） */
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-symbol.is-rolling .parlor-slot-symbol-glyph {
+    filter: blur(1.1px);
+    transform: scaleY(1.06);
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-symbol.is-highlighted .parlor-slot-symbol-sprite {
+    filter:
+        drop-shadow(0 0 20px rgba(255, 220, 112, 0.5))
+        drop-shadow(0 14px 18px rgba(0, 0, 0, 0.24));
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-board-wrap.is-win .parlor-slot-window-cell:not(.is-hit) .parlor-slot-symbol-face {
+    opacity: 0.68;
+    filter: saturate(0.82) brightness(0.88);
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-board-wrap.is-win .parlor-slot-window-cell:not(.is-hit) .parlor-slot-symbol-sprite {
+    opacity: 0.8;
+    filter:
+        drop-shadow(0 10px 16px rgba(0, 0, 0, 0.22))
+        saturate(0.84);
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-window-cell.is-hit .parlor-slot-symbol-sprite {
+    animation: parlor-slot-hit-emblem 1120ms ease-in-out infinite;
+    animation-delay: calc(var(--slot-hit-order, 0) * 90ms);
+    filter:
+        drop-shadow(0 0 22px rgba(255, 218, 118, 0.38))
+        drop-shadow(0 14px 18px rgba(0, 0, 0, 0.28));
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-window-cell.is-hit .parlor-slot-symbol-banner {
+    animation: parlor-slot-hit-banner 1120ms ease-in-out infinite;
+    animation-delay: calc(var(--slot-hit-order, 0) * 90ms);
+    background:
+        linear-gradient(180deg, rgba(255, 248, 226, 0.98), rgba(236, 204, 118, 0.96)),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0));
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.36),
+        0 4px 12px rgba(0, 0, 0, 0.16),
+        0 0 16px rgba(255, 223, 128, 0.16);
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-statusbar {
+    margin-top: 12px;
+    flex: 0 0 66px;
+    height: 66px;
+    min-height: 66px;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 8px;
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-statuscell,
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-console-card,
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-console-strip,
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-watch-box {
+    position: relative;
+    border-radius: 0;
+    clip-path: var(--slot-cut-panel);
+    overflow: hidden;
+    background:
+        linear-gradient(180deg, rgba(11, 31, 26, 0.94), rgba(3, 11, 9, 0.96)),
+        linear-gradient(90deg, rgba(239, 216, 167, 0.16), rgba(239, 216, 167, 0.02) 38%, rgba(122, 231, 194, 0.04) 72%, rgba(239, 216, 167, 0.12)),
+        rgba(8, 26, 21, 0.68);
+    border: 1px solid rgba(239, 216, 167, 0.1);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 240, 205, 0.05),
+        inset 0 -18px 24px rgba(0, 0, 0, 0.18);
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-statuscell::before,
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-console-card::before,
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-console-strip::before,
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-watch-box::before {
+    content: "";
+    position: absolute;
+    inset: 1px;
+    clip-path: var(--slot-cut-panel);
+    border: 1px solid rgba(255, 239, 201, 0.08);
+    pointer-events: none;
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-statuscell > *,
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-console-card > *,
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-console-strip > *,
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-watch-box > * {
+    position: relative;
+    z-index: 1;
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-statuscell {
+    min-height: 66px;
+    padding: 10px 12px;
+    box-sizing: border-box;
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-statuscell.is-win,
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-console-card.tone-win,
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-console-strip.is-win {
+    background:
+        linear-gradient(180deg, rgba(122, 231, 194, 0.14), rgba(8, 26, 21, 0.78)),
+        linear-gradient(90deg, rgba(239, 216, 167, 0.16), rgba(122, 231, 194, 0.08) 62%, rgba(239, 216, 167, 0.08)),
+        rgba(8, 26, 21, 0.68);
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-statuslabel,
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-console-label,
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-playerkicker,
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-paytable-title {
+    color: var(--slot-text-muted);
+    font-size: 0.66rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-statusvalue,
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-console-value {
+    display: block;
+    margin-top: 4px;
+    color: var(--slot-text-main);
+    font-size: 0.96rem;
+    font-weight: 800;
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-console {
+    padding: 12px 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-console-card {
+    padding: 12px;
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-console-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-playerhead {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-playeravatar {
+    width: 46px;
+    height: 46px;
+    border-radius: 14px;
+    clip-path: polygon(18% 0, 82% 0, 100% 18%, 100% 82%, 82% 100%, 18% 100%, 0 82%, 0 18%);
+    overflow: hidden;
+    background:
+        linear-gradient(180deg, rgba(13, 39, 33, 0.96), rgba(5, 16, 13, 0.96)),
+        var(--slot-metal-texture) center / 260px 260px repeat;
+    background-blend-mode: normal, multiply;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff1c6;
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-playeravatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-playername {
+    margin-top: 3px;
+    color: var(--slot-text-main);
+    font-size: 0.94rem;
+    font-weight: 700;
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-watch-note,
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-console-strip-sub {
+    margin-top: 4px;
+    color: var(--slot-text-soft);
+    font-size: 0.76rem;
+    line-height: 1.35;
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-control-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-console-card.stake {
+    padding-bottom: 12px;
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-stake-row {
+    margin-top: 8px;
+    display: grid;
+    grid-template-columns: 58px minmax(0, 1fr) 58px;
+    gap: 6px;
+    align-items: center;
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-stake-btn,
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-stake-input {
+    min-height: 38px;
+    border-radius: 0;
+    clip-path: var(--slot-cut-panel);
+    border: 1px solid rgba(239, 216, 167, 0.14);
+    background:
+        linear-gradient(180deg, rgba(10, 31, 26, 0.92), rgba(4, 13, 11, 0.94)),
+        var(--slot-metal-texture) center / 240px 240px repeat;
+    background-blend-mode: normal, multiply;
+    color: var(--slot-text-main);
+    box-sizing: border-box;
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-stake-btn {
+    font-family: var(--slot-font-display);
+    font-size: 0.86rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-stake-input {
+    width: 100%;
+    padding: 0 10px;
+    text-align: center;
+    font-size: 0.92rem;
+    font-weight: 800;
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-stake-btn:disabled,
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-stake-input:disabled {
+    opacity: 0.54;
+    cursor: default;
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-stake-btn,
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-gm-btn,
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-lever-knob {
+    transition: transform 120ms ease, filter 120ms ease, opacity 120ms ease;
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-watch-box {
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-watch-title,
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-console-strip-title {
+    color: var(--slot-text-main);
+    font-family: var(--slot-font-display);
+    font-size: 0.92rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-console-card.lever-card {
+    padding-bottom: 12px;
+    text-align: center;
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-console-card.lever-card.is-disabled {
+    opacity: 0.82;
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-lever-stage {
+    --slot-lever-travel: 82px;
+    position: relative;
+    width: 100%;
+    min-height: 138px;
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    touch-action: none;
+    user-select: none;
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-lever-lane {
+    position: absolute;
+    top: 10px;
+    bottom: 10px;
+    width: 18px;
+    border-radius: 999px;
+    background:
+        linear-gradient(180deg, rgba(247, 219, 121, 0.16), rgba(115, 78, 31, 0.08)),
+        rgba(8, 23, 19, 0.78);
+    border: 1px solid rgba(239, 216, 167, 0.14);
+    box-shadow:
+        inset 0 0 0 1px rgba(255, 240, 205, 0.05),
+        0 0 20px rgba(0, 0, 0, 0.16);
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-lever-rod {
+    position: absolute;
+    top: 16px;
+    width: 8px;
+    height: calc(42px + (var(--slot-lever-pull, 0) * var(--slot-lever-travel)));
+    border-radius: 999px;
+    background: linear-gradient(180deg, #f6d26e, #aa631d);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 246, 223, 0.38),
+        0 0 12px rgba(255, 202, 94, 0.14);
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-lever-knob {
+    position: absolute;
+    top: calc(8px + (var(--slot-lever-pull, 0) * var(--slot-lever-travel)));
+    width: 42px;
+    height: 42px;
+    border: none;
+    border-radius: 999px;
+    background:
+        radial-gradient(circle at 35% 35%, rgba(255, 255, 255, 0.46), transparent 38%),
+        linear-gradient(180deg, #f2ddb1, #b88c4f);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 247, 223, 0.46),
+        0 10px 16px rgba(0, 0, 0, 0.28);
+    cursor: grab;
+    transition: top 140ms ease, filter 140ms ease, transform 140ms ease;
+}
+
+/* 拉到一半松手回弹：用弹簧曲线 + 略长时间，模拟金属拉杆的物理感。
+   拖拽中（is-dragging）和已拉到底进入旋转（is-pulled）时保留默认 140ms，避免破坏跟手反馈和旋转时序 */
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-lever-stage:not(.is-dragging):not(.is-pulled) .parlor-slot-lever-knob,
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-lever-stage:not(.is-dragging):not(.is-pulled) .parlor-slot-lever-rod {
+    transition:
+        top 420ms cubic-bezier(0.34, 1.56, 0.64, 1),
+        height 420ms cubic-bezier(0.34, 1.56, 0.64, 1),
+        filter 140ms ease,
+        transform 140ms ease;
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-lever-stage.is-dragging .parlor-slot-lever-knob,
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-lever-knob.is-dragging {
+    cursor: grabbing;
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-lever-stage.is-pulled .parlor-slot-lever-knob {
+    filter: brightness(1.04);
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-console-card.lever-card.is-disabled .parlor-slot-lever-stage,
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-console-card.lever-card.is-disabled .parlor-slot-lever-knob {
+    cursor: default;
+    opacity: 0.72;
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-console-strip {
+    min-height: 62px;
+    padding: 12px;
+    box-sizing: border-box;
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-gm-btn {
+    min-height: 40px;
+    padding: 0 12px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border-radius: 0;
+    clip-path: var(--slot-cut-panel);
+    background:
+        linear-gradient(180deg, rgba(17, 43, 37, 0.96), rgba(4, 12, 11, 0.98)),
+        linear-gradient(90deg, rgba(239, 216, 167, 0.22), rgba(239, 216, 167, 0.04) 52%, rgba(239, 216, 167, 0.16)),
+        var(--slot-metal-texture) center / 260px 260px repeat;
+    background-blend-mode: normal, screen, multiply;
+    color: var(--slot-text-main);
+    border: 1px solid rgba(239, 216, 167, 0.14);
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-gm-btn:hover:not(:disabled),
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-stake-btn:hover:not(:disabled),
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-lever-knob:hover:not(:disabled) {
+    transform: translateY(-1px);
+    filter: brightness(1.04);
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-gm-btn:disabled {
+    cursor: default;
+    opacity: 0.6;
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-paytable {
+    flex: 0 0 380px;
+    height: 380px;
+    min-height: 380px;
+    margin-top: 0;
+    padding: 10px 12px 14px;
+    box-sizing: border-box;
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-paytable-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 10px 12px;
+    flex-wrap: wrap;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(239, 216, 167, 0.12);
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-paytable-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-paytable-pill {
+    min-height: 24px;
+    padding: 0 9px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    background:
+        linear-gradient(180deg, rgba(12, 34, 28, 0.92), rgba(4, 12, 11, 0.96)),
+        linear-gradient(90deg, rgba(239, 216, 167, 0.16), rgba(239, 216, 167, 0.04));
+    border: 1px solid rgba(239, 216, 167, 0.12);
+    box-shadow: inset 0 1px 0 rgba(255, 239, 201, 0.08);
+    color: var(--slot-text-soft);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-paytable-track {
+    margin-top: 12px;
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    grid-template-rows: repeat(2, 1fr);
+    gap: 10px;
+    align-items: stretch;
+    height: 304px;
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-paytable-item {
+    position: relative;
+    min-height: 0;
+    height: 100%;
+    padding: 12px 10px 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 8px;
+    text-align: center;
+    border-radius: 12px;
+    clip-path: none;
+    overflow: hidden;
+    background:
+        linear-gradient(180deg, rgba(12, 34, 28, 0.92), rgba(4, 12, 11, 0.98)),
+        radial-gradient(circle at 50% 0%, rgba(255, 242, 208, 0.08), rgba(255, 242, 208, 0) 52%);
+    border: 1px solid rgba(239, 216, 167, 0.12);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 240, 205, 0.06),
+        inset 0 -16px 22px rgba(0, 0, 0, 0.16);
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-paytable-item::before {
+    content: "";
+    position: absolute;
+    inset: 1px;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 239, 201, 0.08);
+    pointer-events: none;
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-paytable-item > * {
+    position: relative;
+    z-index: 1;
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-paytable-item.is-special {
+    padding-top: 36px;
+    background:
+        linear-gradient(180deg, rgba(239, 216, 167, 0.12), rgba(10, 29, 24, 0.92) 24%, rgba(3, 10, 9, 0.98)),
+        radial-gradient(circle at 50% 0%, rgba(255, 241, 208, 0.1), rgba(255, 241, 208, 0) 56%);
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-paytable-item.is-highlighted {
+    border-color: rgba(239, 216, 167, 0.28);
+    background:
+        linear-gradient(180deg, rgba(122, 231, 194, 0.12), rgba(12, 34, 28, 0.92) 34%, rgba(4, 12, 11, 0.98)),
+        radial-gradient(circle at 50% 0%, rgba(255, 241, 208, 0.12), rgba(255, 241, 208, 0) 56%);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 240, 205, 0.08),
+        inset 0 -16px 22px rgba(0, 0, 0, 0.16),
+        0 0 0 1px rgba(122, 231, 194, 0.12),
+        0 0 22px rgba(255, 220, 112, 0.1);
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-paytable-item.is-highlighted::before {
+    border-color: rgba(255, 239, 201, 0.16);
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-paytable-item.is-special::after {
+    content: "";
+    position: absolute;
+    left: 16px;
+    right: 16px;
+    top: 0;
+    height: 2px;
+    background: linear-gradient(90deg, rgba(239, 216, 167, 0.76), rgba(239, 216, 167, 0.12));
+    pointer-events: none;
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-paytable-symbol {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 58px;
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-paytable-item.is-highlighted .parlor-slot-symbol-face {
+    box-shadow:
+        inset 0 1px 0 rgba(255, 250, 233, 0.14),
+        inset 0 -14px 18px rgba(0, 0, 0, 0.26),
+        0 10px 16px rgba(0, 0, 0, 0.22),
+        0 0 20px rgba(255, 220, 112, 0.14);
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-paytable-symbol .parlor-slot-symbol-banner {
+    min-height: 18px;
+    padding: 0 8px;
+    border-radius: 6px;
+    clip-path: none;
+    letter-spacing: 0.04em;
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-paytable-values {
+    width: 100%;
+    margin-top: auto;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 6px;
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-paytable-rate {
+    min-height: 24px;
+    padding: 0 6px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    background:
+        linear-gradient(180deg, rgba(8, 14, 13, 0.98), rgba(2, 5, 5, 0.98)),
+        linear-gradient(180deg, rgba(255, 223, 129, 0.14), rgba(255, 223, 129, 0));
+    border: 1px solid rgba(239, 216, 167, 0.18);
+    box-shadow: inset 0 1px 0 rgba(255, 239, 201, 0.08);
+    color: #f7e6b2;
+    font-family: var(--slot-font-display);
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-shadow: 0 0 12px rgba(255, 215, 112, 0.14);
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-paytable-item.is-highlighted .parlor-slot-paytable-rate {
+    background:
+        linear-gradient(180deg, rgba(24, 39, 35, 0.98), rgba(6, 10, 10, 0.98)),
+        linear-gradient(180deg, rgba(255, 223, 129, 0.18), rgba(255, 223, 129, 0.02));
+    border-color: rgba(239, 216, 167, 0.26);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 239, 201, 0.12),
+        0 0 14px rgba(255, 220, 112, 0.08);
+}
+
+#parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-paytable-note {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    max-width: none;
+    min-height: 20px;
+    padding: 0 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    background:
+        linear-gradient(180deg, rgba(255, 240, 201, 0.12), rgba(255, 240, 201, 0.04)),
+        rgba(13, 28, 24, 0.78);
+    border: 1px solid rgba(239, 216, 167, 0.12);
+    color: var(--slot-text-soft);
+    font-size: 0.6rem;
+    line-height: 1;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+@keyframes parlor-slot-reel-spin {
+    from {
+        transform: translateY(0);
+        filter: blur(0.72px) saturate(1.08);
+    }
+    56% {
+        transform: translateY(calc(-1 * var(--slot-coast-steps) * var(--slot-reel-step)));
+        filter: blur(0.96px) saturate(1.12);
+    }
+    84% {
+        transform: translateY(calc(-1 * var(--slot-brake-steps) * var(--slot-reel-step)));
+        filter: blur(0.42px) saturate(1.06);
+    }
+    94% {
+        transform: translateY(calc(-1 * var(--slot-overshoot-steps) * var(--slot-reel-step)));
+        filter: blur(0.08px) saturate(1.02);
+    }
+    to {
+        transform: translateY(calc(-1 * var(--slot-stop-steps) * var(--slot-reel-step)));
+        filter: none;
+    }
+}
+
+@keyframes parlor-slot-hit-pulse {
+    0%,
+    100% {
+        opacity: 0.42;
+        transform: scale(0.985);
+        box-shadow:
+            0 0 16px rgba(122, 231, 194, 0.12),
+            0 0 26px rgba(255, 223, 128, 0.05),
+            inset 0 0 16px rgba(255, 236, 173, 0.06);
+    }
+    40% {
+        opacity: 1;
+        transform: scale(1.02);
+        box-shadow:
+            0 0 24px rgba(122, 231, 194, 0.22),
+            0 0 34px rgba(255, 223, 128, 0.14),
+            inset 0 0 22px rgba(255, 236, 173, 0.12);
+    }
+    72% {
+        opacity: 0.82;
+        transform: scale(1.008);
+    }
+}
+
+@keyframes parlor-slot-hit-sheen {
+    0%,
+    100% {
+        opacity: 0;
+        transform: translateX(-10%) scale(0.96);
+    }
+    34% {
+        opacity: 0.76;
+    }
+    68% {
+        opacity: 0.12;
+        transform: translateX(8%) scale(1.03);
+    }
+}
+
+@keyframes parlor-slot-hit-symbol {
+    0%,
+    100% {
+        transform: translateY(0) scale(1);
+        filter: brightness(1) saturate(1);
+    }
+    34% {
+        transform: translateY(-2px) scale(1.035);
+        filter: brightness(1.18) saturate(1.12);
+    }
+    68% {
+        transform: translateY(0) scale(1.015);
+        filter: brightness(1.06) saturate(1.06);
+    }
+}
+
+@keyframes parlor-slot-hit-emblem {
+    0%,
+    100% {
+        transform: translateY(0) scale(1);
+    }
+    40% {
+        transform: translateY(-3px) scale(1.08);
+    }
+    72% {
+        transform: translateY(0) scale(1.03);
+    }
+}
+
+@keyframes parlor-slot-hit-banner {
+    0%,
+    100% {
+        transform: translateY(0);
+        filter: brightness(1);
+    }
+    38% {
+        transform: translateY(-1px);
+        filter: brightness(1.1);
+    }
+    72% {
+        transform: translateY(0);
+        filter: brightness(1.04);
+    }
+}
+
+@keyframes parlor-slot-final-settle {
+    0% {
+        transform: translateY(-10px) scale(0.95);
+        filter: brightness(1.18);
+    }
+    68% {
+        transform: translateY(5px) scale(1.02);
+        filter: brightness(1.04);
+    }
+    100% {
+        transform: translateY(0) scale(1);
+        filter: none;
+    }
+}
+
+@keyframes parlor-slot-win-banner {
+    0% {
+        opacity: 0;
+        transform: translateY(10px) scale(0.96);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* 中奖横幅持续呼吸：轻微缩放 + 暖色光晕浮现，避免 560ms 进场后画面静止 */
+@keyframes parlor-slot-win-pulse {
+    0% {
+        transform: scale(1);
+        box-shadow:
+            0 16px 26px rgba(0, 0, 0, 0.22),
+            inset 0 1px 0 rgba(255, 242, 204, 0.16),
+            inset 0 -18px 28px rgba(29, 6, 6, 0.34),
+            0 0 24px rgba(255, 212, 100, 0.12);
+    }
+    100% {
+        transform: scale(1.018);
+        box-shadow:
+            0 18px 30px rgba(0, 0, 0, 0.26),
+            inset 0 1px 0 rgba(255, 246, 214, 0.22),
+            inset 0 -18px 32px rgba(29, 6, 6, 0.36),
+            0 0 36px rgba(255, 212, 100, 0.26);
+    }
+}
+
+@keyframes parlor-slot-win-sheen {
+    0% {
+        opacity: 0;
+        transform: translateX(-8%) rotate(-8deg);
+    }
+    25% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        transform: translateX(10%) rotate(8deg);
+    }
+}
+
+@media (max-width: 1180px) {
+    #parlor-slot-overlay[data-slot-style="v16"] {
+        --slot-reel-step: clamp(74px, 8.3vh, 92px);
+    }
+
+    #parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-machine {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    #parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-winflash {
+        width: 100%;
+    }
+
+    #parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-paytable-track {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+}
+
+@media (max-height: 980px) {
+    #parlor-slot-overlay[data-slot-style="v16"] {
+        --slot-reel-step: clamp(72px, 8vh, 88px);
+        padding: 10px;
+    }
+
+    #parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-shell {
+        width: min(1280px, calc(100vw - 16px));
+        gap: 10px;
+    }
+
+    #parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-marquee-shell {
+        height: 132px;
+        padding-top: 16px;
+    }
+
+    #parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-marquee-sub {
+        font-size: 0.72rem;
+    }
+
+    #parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-paytable-note {
+        font-size: 0.56rem;
+    }
+
+    #parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-paytable {
+        flex-basis: 350px;
+        height: 350px;
+        min-height: 350px;
+    }
+
+    #parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-paytable-track {
+        height: 276px;
+    }
+
+    #parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-console {
+        gap: 8px;
+    }
+
+    #parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-lever-stage {
+        min-height: 126px;
+    }
+}
+
+@media (max-width: 820px) {
+    #parlor-slot-overlay[data-slot-style="v16"] {
+        --slot-reel-step: 68px;
+        padding: 10px;
+    }
+
+    #parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-shell {
+        width: min(100vw - 8px, 100%);
+        max-height: calc(100vh - 8px);
+        gap: 12px;
+    }
+
+    #parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-marquee-shell,
+    #parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-cabinet {
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+
+    #parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-glass-head {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    #parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-statusbar,
+    #parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-console-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    #parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-paytable {
+        height: auto;
+        min-height: 0;
+        flex-basis: auto;
+    }
+
+    #parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-paytable-track {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-rows: none;
+        height: auto;
+    }
+
+    #parlor-slot-overlay[data-slot-style="v16"] .parlor-slot-lever-stage {
+        min-height: 148px;
+    }
+}

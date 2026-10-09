@@ -1,0 +1,87 @@
+<div class="parlor-actor-outcome-shell">
+    <header class="parlor-actor-outcome-head">
+        <div>
+            <div class="parlor-appearance-title">{{localize "PARLOR.OutcomeInfluence.Actor.Title" name=actor.name}}</div>
+            <div class="parlor-appearance-sub">{{localize "PARLOR.OutcomeInfluence.Actor.Sub"}}</div>
+        </div>
+        <div class="parlor-actor-outcome-actor">
+            <i class="fas fa-user"></i>
+            <span>{{actor.name}}</span>
+        </div>
+    </header>
+
+    {{#unless enabled}}
+    <div class="parlor-actor-outcome-disabled">
+        <i class="fas fa-power-off"></i>
+        <span>{{localize "PARLOR.OutcomeInfluence.Actor.GlobalDisabled"}}</span>
+    </div>
+    {{/unless}}
+
+    <div class="parlor-actor-outcome-list">
+        {{#each rows}}
+        <article
+            class="parlor-outcome-game-card parlor-actor-outcome-card {{#if isManual}}is-manual{{/if}}"
+            data-actor-outcome-game="{{id}}"
+            data-automatic-value="{{automaticDataValue}}">
+            <header class="parlor-outcome-card-head">
+                <h3>{{label}}</h3>
+                <span>{{modeLabel}}</span>
+            </header>
+
+            <div class="parlor-actor-outcome-source">
+                <div>
+                    <span>{{localize "PARLOR.OutcomeInfluence.Actor.AutomaticPath"}}</span>
+                    {{#if hasAttributePath}}
+                    <code>{{attributePath}}</code>
+                    {{else}}
+                    <strong>{{localize "PARLOR.OutcomeInfluence.Actor.NoPath"}}</strong>
+                    {{/if}}
+                </div>
+                <div>
+                    <span>{{localize "PARLOR.OutcomeInfluence.Actor.AutomaticValue"}}</span>
+                    {{#if hasAutomaticValue}}
+                    <strong>{{automaticValue}}</strong>
+                    {{else}}
+                    <strong>{{localize "PARLOR.OutcomeInfluence.Actor.AutomaticUnavailable"}}</strong>
+                    {{/if}}
+                </div>
+            </div>
+
+            <div class="parlor-actor-outcome-controls">
+                <label class="parlor-appearance-field">
+                    <span>{{localize "PARLOR.OutcomeInfluence.Actor.Mode"}}</span>
+                    <select data-actor-outcome-mode>
+                        <option value="automatic" {{#unless isManual}}selected{{/unless}}>{{localize "PARLOR.OutcomeInfluence.Actor.Automatic"}}</option>
+                        <option value="manual" {{#if isManual}}selected{{/if}}>{{localize "PARLOR.OutcomeInfluence.Actor.Manual"}}</option>
+                    </select>
+                </label>
+
+                <label class="parlor-appearance-field">
+                    <span>{{localize "PARLOR.OutcomeInfluence.Actor.ManualValue"}}</span>
+                    <input
+                        type="number"
+                        step="any"
+                        value="{{inputValue}}"
+                        data-actor-outcome-value
+                        {{#unless isManual}}disabled{{/unless}}>
+                </label>
+            </div>
+
+            <div class="parlor-actor-outcome-preview" data-actor-outcome-preview>
+                <i class="fas fa-chart-line"></i>
+                <span>{{preview}}</span>
+            </div>
+        </article>
+        {{/each}}
+    </div>
+
+    <footer class="parlor-appearance-actions parlor-actor-outcome-actions">
+        <button type="button" class="parlor-hud-action-btn" data-action="close-actor-outcomes">
+            {{localize "PARLOR.Common.Cancel"}}
+        </button>
+        <button type="button" class="parlor-hud-action-btn accent" data-action="save-actor-outcomes">
+            <i class="fas fa-save"></i>
+            {{localize "PARLOR.OutcomeInfluence.Actor.Save"}}
+        </button>
+    </footer>
+</div>

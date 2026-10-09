@@ -1,0 +1,320 @@
+{{!-- 轮盘赌 — 完整赌桌 SVG（箭头指针版） --}}
+<svg viewBox="0 0 1200 650" class="parlor-table-svg" preserveAspectRatio="xMidYMid meet">
+    <defs>
+        {{!-- ═══ 1. 滤镜 ═══ --}}
+        <filter id="feltNoise" x="0%" y="0%" width="100%" height="100%">
+            <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="4" seed="42" stitchTiles="stitch" result="noise"/>
+            <feColorMatrix type="saturate" values="0" in="noise" result="grayNoise"/>
+            <feBlend in="SourceGraphic" in2="grayNoise" mode="multiply" result="textured"/>
+            <feComponentTransfer in="textured"><feFuncA type="linear" slope="1"/></feComponentTransfer>
+        </filter>
+        <filter id="woodNoise" x="0%" y="0%" width="100%" height="100%">
+            <feTurbulence type="fractalNoise" baseFrequency="0.04 0.4" numOctaves="5" seed="7" stitchTiles="stitch" result="woodGrain"/>
+            <feColorMatrix type="saturate" values="0" in="woodGrain" result="grayWood"/>
+            <feBlend in="SourceGraphic" in2="grayWood" mode="soft-light"/>
+        </filter>
+        <filter id="wheelRecess" x="-10%" y="-10%" width="120%" height="120%">
+            <feFlood flood-color="#000" flood-opacity="0.5"/><feComposite in2="SourceAlpha" operator="in"/>
+            <feGaussianBlur stdDeviation="8"/><feComposite in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1"/>
+            <feComposite operator="in" in2="SourceAlpha"/>
+            <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <filter id="feltInset" x="-5%" y="-5%" width="110%" height="110%">
+            <feFlood flood-color="#000" flood-opacity="0.2"/><feComposite in2="SourceAlpha" operator="in"/>
+            <feGaussianBlur stdDeviation="6"/><feComposite in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1"/>
+            <feComposite operator="in" in2="SourceAlpha"/>
+            <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <filter id="tableDropShadow"><feDropShadow dx="0" dy="8" stdDeviation="20" flood-color="#000" flood-opacity="0.7"/></filter>
+        <filter id="goldGlow"><feGaussianBlur stdDeviation="2" result="g"/><feMerge><feMergeNode in="g"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        <filter id="textShadow"><feDropShadow dx="0" dy="0.5" stdDeviation="0.4" flood-color="#000" flood-opacity="0.6"/></filter>
+
+        {{!-- ═══ 2. 渐变 ═══ --}}
+        <linearGradient id="woodRail" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#8a6a3a"/><stop offset="3%" stop-color="#c9a86c"/>
+            <stop offset="6%" stop-color="#7a5a2a"/><stop offset="25%" stop-color="#6a4a1a"/>
+            <stop offset="50%" stop-color="#5a3818"/><stop offset="75%" stop-color="#4a2a0a"/>
+            <stop offset="94%" stop-color="#3a1f08"/><stop offset="97%" stop-color="#1a0f04"/>
+            <stop offset="100%" stop-color="#2a1a0a"/>
+        </linearGradient>
+        <linearGradient id="woodRailH" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="rgba(0,0,0,0.3)"/><stop offset="15%" stop-color="rgba(0,0,0,0)"/>
+            <stop offset="85%" stop-color="rgba(0,0,0,0)"/><stop offset="100%" stop-color="rgba(0,0,0,0.3)"/>
+        </linearGradient>
+        <radialGradient id="feltGrad" cx="45%" cy="42%" r="58%" fx="40%" fy="35%">
+            <stop offset="0%" stop-color="#1f7a3e"/><stop offset="30%" stop-color="#1a6b34"/>
+            <stop offset="65%" stop-color="#14582a"/><stop offset="100%" stop-color="#0c3a1a"/>
+        </radialGradient>
+        <radialGradient id="spotlight" cx="35%" cy="40%" r="45%" fx="30%" fy="35%">
+            <stop offset="0%" stop-color="rgba(255,255,240,0.07)"/><stop offset="100%" stop-color="rgba(0,0,0,0)"/>
+        </radialGradient>
+        <radialGradient id="wheelBg" cx="50%" cy="48%" r="52%">
+            <stop offset="0%" stop-color="#5a4a38"/><stop offset="60%" stop-color="#3a2a1a"/>
+            <stop offset="85%" stop-color="#2a1808"/><stop offset="100%" stop-color="#1a0e04"/>
+        </radialGradient>
+        <radialGradient id="wheelCenter" cx="40%" cy="35%" r="60%">
+            <stop offset="0%" stop-color="#ffe88a"/><stop offset="30%" stop-color="#ddb84c"/>
+            <stop offset="65%" stop-color="#b8923a"/><stop offset="100%" stop-color="#7a5a1c"/>
+        </radialGradient>
+        <linearGradient id="metalRing" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#e8c86c"/><stop offset="20%" stop-color="#c9a84c"/>
+            <stop offset="50%" stop-color="#8a6a2c"/><stop offset="80%" stop-color="#c9a84c"/>
+            <stop offset="100%" stop-color="#e8c86c"/>
+        </linearGradient>
+        <radialGradient id="studGrad" cx="35%" cy="30%" r="65%">
+            <stop offset="0%" stop-color="#e8d08c"/><stop offset="60%" stop-color="#8a6a2c"/>
+            <stop offset="100%" stop-color="#5a3a0a"/>
+        </radialGradient>
+        <linearGradient id="redCellGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#d43030"/><stop offset="100%" stop-color="#9a1818"/>
+        </linearGradient>
+        <linearGradient id="blackCellGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#2a2a2a"/><stop offset="100%" stop-color="#0e0e0e"/>
+        </linearGradient>
+        <linearGradient id="greenCellGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#388e3c"/><stop offset="100%" stop-color="#1b5e20"/>
+        </linearGradient>
+        <radialGradient id="vignette" cx="50%" cy="50%" r="55%">
+            <stop offset="0%" stop-color="rgba(0,0,0,0)"/><stop offset="60%" stop-color="rgba(0,0,0,0)"/>
+            <stop offset="85%" stop-color="rgba(0,0,0,0.35)"/><stop offset="100%" stop-color="rgba(0,0,0,0.75)"/>
+        </radialGradient>
+        <pattern id="parlorRouletteRailTexture" patternUnits="userSpaceOnUse" width="360" height="360" patternTransform="rotate(8)">
+            <image href="{{railTexturePath}}" x="0" y="0" width="360" height="360" preserveAspectRatio="xMidYMid slice"/>
+        </pattern>
+        <pattern id="parlorRouletteFeltTexture" patternUnits="userSpaceOnUse" width="320" height="320">
+            <image href="{{feltTexturePath}}" x="0" y="0" width="320" height="320" preserveAspectRatio="xMidYMid slice"/>
+        </pattern>
+
+        {{!-- ═══ 3. 裁剪路径 ═══ --}}
+        <clipPath id="railClip"><path d="M280,40 L880,40 Q1140,40 1140,325 Q1140,610 880,610 L280,610 Q60,610 60,325 Q60,40 280,40 Z"/></clipPath>
+        <clipPath id="feltClip"><path d="M280,54 L880,54 Q1126,54 1126,325 Q1126,596 880,596 L280,596 Q74,596 74,325 Q74,54 280,54 Z"/></clipPath>
+        <clipPath id="wheelClip"><circle cx="240" cy="325" r="195"/></clipPath>
+        <clipPath id="wheelDiskClip"><circle cx="0" cy="0" r="180"/></clipPath>
+    </defs>
+
+    {{!-- ═══ 桌面：跑道形 ═══ --}}
+    <path d="M280,40 L880,40 Q1140,40 1140,325 Q1140,610 880,610 L280,610 Q60,610 60,325 Q60,40 280,40 Z"
+        fill="url(#woodRail)" stroke="#a8883c" stroke-width="1.5" filter="url(#tableDropShadow)"/>
+    <path d="M280,40 L880,40 Q1140,40 1140,325 Q1140,610 880,610 L280,610 Q60,610 60,325 Q60,40 280,40 Z"
+        fill="url(#parlorRouletteRailTexture)" filter="url(#woodNoise)" opacity="0.68" clip-path="url(#railClip)"/>
+    <path d="M280,40 L880,40 Q1140,40 1140,325 Q1140,610 880,610 L280,610 Q60,610 60,325 Q60,40 280,40 Z"
+        fill="url(#woodRailH)" clip-path="url(#railClip)"/>
+
+    {{!-- 铜钉装饰 --}}
+    <g class="parlor-brass-studs">
+        <circle cx="1050" cy="120" r="3.5" fill="url(#studGrad)" stroke="#5a3a0a" stroke-width="0.5"/><circle cx="1049" cy="119" r="1.2" fill="rgba(255,240,200,0.4)"/>
+        <circle cx="1110" cy="200" r="3.5" fill="url(#studGrad)" stroke="#5a3a0a" stroke-width="0.5"/><circle cx="1109" cy="199" r="1.2" fill="rgba(255,240,200,0.4)"/>
+        <circle cx="1135" cy="300" r="3.5" fill="url(#studGrad)" stroke="#5a3a0a" stroke-width="0.5"/><circle cx="1134" cy="299" r="1.2" fill="rgba(255,240,200,0.4)"/>
+        <circle cx="1135" cy="400" r="3.5" fill="url(#studGrad)" stroke="#5a3a0a" stroke-width="0.5"/><circle cx="1134" cy="399" r="1.2" fill="rgba(255,240,200,0.4)"/>
+        <circle cx="1110" cy="480" r="3.5" fill="url(#studGrad)" stroke="#5a3a0a" stroke-width="0.5"/><circle cx="1109" cy="479" r="1.2" fill="rgba(255,240,200,0.4)"/>
+        <circle cx="1050" cy="545" r="3.5" fill="url(#studGrad)" stroke="#5a3a0a" stroke-width="0.5"/><circle cx="1049" cy="544" r="1.2" fill="rgba(255,240,200,0.4)"/>
+        <circle cx="500" cy="44" r="3.5" fill="url(#studGrad)" stroke="#5a3a0a" stroke-width="0.5"/><circle cx="499" cy="43" r="1.2" fill="rgba(255,240,200,0.4)"/>
+        <circle cx="700" cy="44" r="3.5" fill="url(#studGrad)" stroke="#5a3a0a" stroke-width="0.5"/><circle cx="699" cy="43" r="1.2" fill="rgba(255,240,200,0.4)"/>
+        <circle cx="900" cy="48" r="3.5" fill="url(#studGrad)" stroke="#5a3a0a" stroke-width="0.5"/><circle cx="899" cy="47" r="1.2" fill="rgba(255,240,200,0.4)"/>
+        <circle cx="500" cy="606" r="3.5" fill="url(#studGrad)" stroke="#5a3a0a" stroke-width="0.5"/><circle cx="499" cy="605" r="1.2" fill="rgba(255,240,200,0.4)"/>
+        <circle cx="700" cy="606" r="3.5" fill="url(#studGrad)" stroke="#5a3a0a" stroke-width="0.5"/><circle cx="699" cy="605" r="1.2" fill="rgba(255,240,200,0.4)"/>
+        <circle cx="900" cy="602" r="3.5" fill="url(#studGrad)" stroke="#5a3a0a" stroke-width="0.5"/><circle cx="899" cy="601" r="1.2" fill="rgba(255,240,200,0.4)"/>
+    </g>
+
+    {{!-- 金属镶边 --}}
+    <path d="M280,46 L880,46 Q1134,46 1134,325 Q1134,604 880,604 L280,604 Q66,604 66,325 Q66,46 280,46 Z" fill="none" stroke="url(#metalRing)" stroke-width="2"/>
+    <path d="M280,48 L880,48 Q1132,48 1132,325 Q1132,602 880,602 L280,602 Q68,602 68,325 Q68,48 280,48 Z" fill="none" stroke="rgba(255,230,180,0.15)" stroke-width="0.5"/>
+
+    {{!-- 绿毡面 --}}
+    <path d="M280,54 L880,54 Q1126,54 1126,325 Q1126,596 880,596 L280,596 Q74,596 74,325 Q74,54 280,54 Z" fill="url(#feltGrad)" stroke="#5a4018" stroke-width="0.8"/>
+    <path d="M280,54 L880,54 Q1126,54 1126,325 Q1126,596 880,596 L280,596 Q74,596 74,325 Q74,54 280,54 Z" fill="url(#feltGrad)" filter="url(#feltNoise)" opacity="0.35" clip-path="url(#feltClip)"/>
+    <path d="M280,54 L880,54 Q1126,54 1126,325 Q1126,596 880,596 L280,596 Q74,596 74,325 Q74,54 280,54 Z" fill="url(#parlorRouletteFeltTexture)" opacity="0.22" clip-path="url(#feltClip)"/>
+    <path d="M280,54 L880,54 Q1126,54 1126,325 Q1126,596 880,596 L280,596 Q74,596 74,325 Q74,54 280,54 Z" fill="url(#feltGrad)" filter="url(#feltInset)" opacity="0.5" clip-path="url(#feltClip)"/>
+    <path d="M280,54 L880,54 Q1126,54 1126,325 Q1126,596 880,596 L280,596 Q74,596 74,325 Q74,54 280,54 Z" fill="url(#spotlight)" clip-path="url(#feltClip)" pointer-events="none"/>
+
+    {{!-- ═══ 左：轮盘凹槽 ═══ --}}
+    <circle cx="240" cy="325" r="198" fill="#0a0604" stroke="#3a2a1a" stroke-width="1"/>
+    <circle cx="240" cy="325" r="195" fill="#120c06" filter="url(#wheelRecess)" clip-path="url(#wheelClip)"/>
+    <circle cx="240" cy="325" r="190" fill="none" stroke="url(#metalRing)" stroke-width="1.5"/>
+    <circle cx="240" cy="325" r="188" fill="#1a1208" stroke="rgba(201,168,76,0.2)" stroke-width="0.5"/>
+
+    {{!-- ★ 固定箭头指针（在轮盘上方，不随轮盘旋转） --}}
+    <g class="parlor-arrow-pointer">
+        <polygon points="240,128 232,112 248,112" fill="#ffd700" stroke="#8a6a2c" stroke-width="1.2"
+            filter="url(#goldGlow)"/>
+    </g>
+
+    {{!-- 转轮（旋转部分） --}}
+    <g transform="translate(240, 325)">
+        <g class="parlor-roulette-wheel">
+            <circle cx="0" cy="0" r="180" fill="url(#wheelBg)" stroke="#c9a84c" stroke-width="0.8"/>
+            <circle cx="0" cy="0" r="180" fill="url(#wheelBg)" filter="url(#woodNoise)" opacity="0.3" clip-path="url(#wheelDiskClip)"/>
+            {{!-- 弧形扇区数字槽 --}}
+            {{#each wheelSlots}}
+            <path d="{{this.arcPath}}"
+                fill="{{#if (eq this.color 'red')}}#c62828{{else if (eq this.color 'black')}}#1a1a1a{{else}}#2e7d32{{/if}}"
+                stroke="rgba(201,168,76,0.5)" stroke-width="0.3"
+                class="{{#if this.isWinner}}parlor-winner-slot{{/if}}"/>
+            <text x="{{this.textX}}" y="{{this.textY}}" text-anchor="middle" dominant-baseline="central" fill="#f0e6d0"
+                font-size="10" font-family="serif" font-weight="bold"
+                transform="rotate({{this.midAngle}}, {{this.textX}}, {{this.textY}})" filter="url(#textShadow)">{{this.number}}</text>
+            {{/each}}
+            {{!-- 球道凹槽 --}}
+            <circle cx="0" cy="0" r="178" fill="none" stroke="#0a0604" stroke-width="4"/>
+            <circle cx="0" cy="0" r="178" fill="none" stroke="rgba(201,168,76,0.12)" stroke-width="0.5"/>
+            {{!-- 同心环纹 --}}
+            <circle cx="0" cy="0" r="123" fill="none" stroke="rgba(201,168,76,0.08)" stroke-width="0.5"/>
+            <circle cx="0" cy="0" r="105" fill="none" stroke="rgba(201,168,76,0.05)" stroke-width="0.5"/>
+            <circle cx="0" cy="0" r="85" fill="none" stroke="rgba(201,168,76,0.03)" stroke-width="0.5"/>
+            {{!-- 金属环 --}}
+            <circle cx="0" cy="0" r="122" fill="none" stroke="url(#metalRing)" stroke-width="1.2"/>
+            <circle cx="0" cy="0" r="120" fill="none" stroke="rgba(201,168,76,0.2)" stroke-width="0.5"/>
+            {{!-- 中心装饰 --}}
+            <circle cx="0" cy="0" r="62" fill="url(#wheelCenter)" stroke="url(#metalRing)" stroke-width="2.5"/>
+            <circle cx="0" cy="0" r="44" fill="#2a1a0a" stroke="url(#metalRing)" stroke-width="1.5"/>
+            <path d="M-25,-30 A40,40 0 0,1 25,-30" fill="none" stroke="rgba(255,240,200,0.15)" stroke-width="8" stroke-linecap="round"/>
+            <text x="0" y="-4" text-anchor="middle" fill="#c9a84c" font-size="11" font-family="serif" letter-spacing="3" filter="url(#goldGlow)">PARLOR</text>
+            <text x="0" y="10" text-anchor="middle" fill="#8a6a2c" font-size="7" font-family="serif" letter-spacing="2">CASINO</text>
+        </g>
+    </g>
+
+    {{!-- ═══ 右：下注布局（带 data-bet-type 用于 GP 下注弹窗） ═══ --}}
+
+    {{!-- 零号 --}}
+    <g data-bet-area="0" data-bet-type="straight" data-bet-number="0" class="parlor-bet-cell" cursor="pointer">
+        <rect x="470" y="80" width="42" height="396" rx="4" fill="url(#greenCellGrad)" stroke="rgba(201,168,76,0.6)" stroke-width="1"/>
+        <line x1="472" y1="82" x2="510" y2="82" stroke="rgba(255,255,255,0.12)" stroke-width="0.5"/>
+        <line x1="472" y1="474" x2="510" y2="474" stroke="rgba(0,0,0,0.2)" stroke-width="0.5"/>
+        <text x="491" y="285" text-anchor="middle" fill="#f0e6d0" font-size="24" font-family="serif" font-weight="bold"
+            writing-mode="tb" filter="url(#textShadow)">0</text>
+    </g>
+
+    {{!-- 数字格: 12行 × 3列（浮雕立体效果） --}}
+    {{#each numberGrid}}
+    {{#each this}}
+    <g data-bet-area="{{this.number}}" data-bet-type="straight" data-bet-number="{{this.number}}" class="parlor-bet-cell" cursor="pointer">
+        <rect x="{{sum 518 (multiply @index 140)}}" y="{{sum 80 (multiply @../index 33)}}" width="136" height="30"
+            rx="2" fill="{{#if (eq this.color 'red')}}#7a1010{{else}}#080808{{/if}}"/>
+        <rect x="{{sum 518 (multiply @index 140)}}" y="{{sum 80 (multiply @../index 33)}}" width="136" height="30"
+            rx="2" fill="{{#if (eq this.color 'red')}}url(#redCellGrad){{else}}url(#blackCellGrad){{/if}}"
+            stroke="rgba(201,168,76,0.4)" stroke-width="0.6"/>
+        <line x1="{{sum 520 (multiply @index 140)}}" y1="{{sum 81 (multiply @../index 33)}}" x2="{{sum 652 (multiply @index 140)}}" y2="{{sum 81 (multiply @../index 33)}}" stroke="rgba(255,255,255,0.12)" stroke-width="0.5"/>
+        <line x1="{{sum 520 (multiply @index 140)}}" y1="{{sum 109 (multiply @../index 33)}}" x2="{{sum 652 (multiply @index 140)}}" y2="{{sum 109 (multiply @../index 33)}}" stroke="rgba(0,0,0,0.25)" stroke-width="0.5"/>
+        <text x="{{sum 586 (multiply @index 140)}}" y="{{sum 101 (multiply @../index 33)}}" text-anchor="middle"
+            fill="#f0e6d0" font-size="16" font-family="serif" font-weight="bold" filter="url(#textShadow)">{{this.number}}</text>
+        {{#if this.hasBets}}
+        <circle cx="{{sum 625 (multiply @index 140)}}" cy="{{sum 90 (multiply @../index 33)}}" r="8" fill="#ffd700"
+            stroke="#8a6a2c" stroke-width="1.2" class="parlor-chip-marker"/>
+        <text x="{{sum 625 (multiply @index 140)}}" y="{{sum 94 (multiply @../index 33)}}" text-anchor="middle"
+            fill="#1a1a1a" font-size="7" font-weight="bold">{{this.totalBet}}</text>
+        {{/if}}
+    </g>
+    {{/each}}
+    {{/each}}
+
+    {{!-- 分隔线 --}}
+    <line x1="460" y1="90" x2="460" y2="555" stroke="rgba(201,168,76,0.2)" stroke-width="0.8" stroke-dasharray="6,4"/>
+
+    {{!-- Dozens --}}
+    <line x1="518" y1="478" x2="938" y2="478" stroke="rgba(201,168,76,0.2)" stroke-width="0.5"/>
+    <g data-bet-area="1st12" data-bet-type="dozen_1" class="parlor-bet-cell" cursor="pointer">
+        <rect x="518" y="484" width="140" height="28" rx="2" fill="rgba(255,255,255,0.03)" stroke="rgba(201,168,76,0.5)" stroke-width="0.8"/>
+        <line x1="520" y1="485" x2="656" y2="485" stroke="rgba(255,255,255,0.08)" stroke-width="0.5"/>
+        <text x="588" y="503" text-anchor="middle" fill="#c9a84c" font-size="11" font-family="serif" font-weight="bold">1st 12</text>
+    </g>
+    <g data-bet-area="2nd12" data-bet-type="dozen_2" class="parlor-bet-cell" cursor="pointer">
+        <rect x="658" y="484" width="140" height="28" rx="2" fill="rgba(255,255,255,0.03)" stroke="rgba(201,168,76,0.5)" stroke-width="0.8"/>
+        <line x1="660" y1="485" x2="796" y2="485" stroke="rgba(255,255,255,0.08)" stroke-width="0.5"/>
+        <text x="728" y="503" text-anchor="middle" fill="#c9a84c" font-size="11" font-family="serif" font-weight="bold">2nd 12</text>
+    </g>
+    <g data-bet-area="3rd12" data-bet-type="dozen_3" class="parlor-bet-cell" cursor="pointer">
+        <rect x="798" y="484" width="140" height="28" rx="2" fill="rgba(255,255,255,0.03)" stroke="rgba(201,168,76,0.5)" stroke-width="0.8"/>
+        <line x1="800" y1="485" x2="936" y2="485" stroke="rgba(255,255,255,0.08)" stroke-width="0.5"/>
+        <text x="868" y="503" text-anchor="middle" fill="#c9a84c" font-size="11" font-family="serif" font-weight="bold">3rd 12</text>
+    </g>
+
+    {{!-- 外注 --}}
+    <g data-bet-area="1-18" data-bet-type="low" class="parlor-bet-cell" cursor="pointer">
+        <rect x="518" y="518" width="70" height="28" rx="2" fill="rgba(255,255,255,0.03)" stroke="rgba(201,168,76,0.5)" stroke-width="0.8"/>
+        <text x="553" y="537" text-anchor="middle" fill="#c9a84c" font-size="10" font-family="serif">1-18</text>
+    </g>
+    <g data-bet-area="EVEN" data-bet-type="even" class="parlor-bet-cell" cursor="pointer">
+        <rect x="588" y="518" width="70" height="28" rx="2" fill="rgba(255,255,255,0.03)" stroke="rgba(201,168,76,0.5)" stroke-width="0.8"/>
+        <text x="623" y="537" text-anchor="middle" fill="#c9a84c" font-size="10" font-family="serif">EVEN</text>
+    </g>
+    <g data-bet-area="RED" data-bet-type="red" class="parlor-bet-cell" cursor="pointer">
+        <rect x="658" y="518" width="70" height="28" rx="2" fill="url(#redCellGrad)" stroke="rgba(201,168,76,0.5)" stroke-width="0.8"/>
+        <text x="693" y="537" text-anchor="middle" fill="#f0e6d0" font-size="10" font-family="serif" font-weight="bold">RED</text>
+    </g>
+    <g data-bet-area="BLACK" data-bet-type="black" class="parlor-bet-cell" cursor="pointer">
+        <rect x="728" y="518" width="70" height="28" rx="2" fill="url(#blackCellGrad)" stroke="rgba(201,168,76,0.5)" stroke-width="0.8"/>
+        <text x="763" y="537" text-anchor="middle" fill="#f0e6d0" font-size="10" font-family="serif" font-weight="bold">BLACK</text>
+    </g>
+    <g data-bet-area="ODD" data-bet-type="odd" class="parlor-bet-cell" cursor="pointer">
+        <rect x="798" y="518" width="70" height="28" rx="2" fill="rgba(255,255,255,0.03)" stroke="rgba(201,168,76,0.5)" stroke-width="0.8"/>
+        <text x="833" y="537" text-anchor="middle" fill="#c9a84c" font-size="10" font-family="serif">ODD</text>
+    </g>
+    <g data-bet-area="19-36" data-bet-type="high" class="parlor-bet-cell" cursor="pointer">
+        <rect x="868" y="518" width="70" height="28" rx="2" fill="rgba(255,255,255,0.03)" stroke="rgba(201,168,76,0.5)" stroke-width="0.8"/>
+        <text x="903" y="537" text-anchor="middle" fill="#c9a84c" font-size="10" font-family="serif">19-36</text>
+    </g>
+
+    {{!-- ═══ 结果覆盖层（带射线爆发） ═══ --}}
+    {{#if isResolving}}
+    <g class="parlor-result-overlay" transform="translate(240, 325)">
+        <g class="parlor-result-rays">
+            <line x1="0" y1="0" x2="0" y2="-120" stroke="rgba(255,215,0,0.15)" stroke-width="8"/>
+            <line x1="0" y1="0" x2="104" y2="-60" stroke="rgba(255,215,0,0.12)" stroke-width="6"/>
+            <line x1="0" y1="0" x2="104" y2="60" stroke="rgba(255,215,0,0.15)" stroke-width="8"/>
+            <line x1="0" y1="0" x2="0" y2="120" stroke="rgba(255,215,0,0.12)" stroke-width="6"/>
+            <line x1="0" y1="0" x2="-104" y2="60" stroke="rgba(255,215,0,0.15)" stroke-width="8"/>
+            <line x1="0" y1="0" x2="-104" y2="-60" stroke="rgba(255,215,0,0.12)" stroke-width="6"/>
+            <line x1="0" y1="0" x2="60" y2="-104" stroke="rgba(255,215,0,0.10)" stroke-width="5"/>
+            <line x1="0" y1="0" x2="120" y2="0" stroke="rgba(255,215,0,0.10)" stroke-width="5"/>
+            <line x1="0" y1="0" x2="60" y2="104" stroke="rgba(255,215,0,0.10)" stroke-width="5"/>
+            <line x1="0" y1="0" x2="-60" y2="104" stroke="rgba(255,215,0,0.10)" stroke-width="5"/>
+            <line x1="0" y1="0" x2="-120" y2="0" stroke="rgba(255,215,0,0.10)" stroke-width="5"/>
+            <line x1="0" y1="0" x2="-60" y2="-104" stroke="rgba(255,215,0,0.10)" stroke-width="5"/>
+        </g>
+        <circle r="90" fill="none" stroke="rgba(255,215,0,0.2)" stroke-width="1.5" class="parlor-result-ring parlor-result-ring-1"/>
+        <circle r="70" fill="none" stroke="rgba(255,215,0,0.15)" stroke-width="1" class="parlor-result-ring parlor-result-ring-2"/>
+        <circle r="50" fill="none" stroke="rgba(255,215,0,0.1)" stroke-width="0.8" class="parlor-result-ring parlor-result-ring-3"/>
+        <circle r="100" fill="rgba(0,0,0,0.75)" stroke="url(#metalRing)" stroke-width="2.5"/>
+        <circle r="44" fill="{{#if (eq winningColor 'red')}}#c62828{{else if (eq winningColor 'black')}}#1a1a1a{{else}}#2e7d32{{/if}}"
+            stroke="#ffd700" stroke-width="3"/>
+        <text x="0" y="8" text-anchor="middle" fill="#f0e6d0" font-size="30" font-family="serif" font-weight="bold"
+            class="parlor-result-number">{{winningNumber}}</text>
+        {{#if (gt myNet 0)}}
+        <text x="0" y="78" text-anchor="middle" fill="#69f0ae" font-size="16" font-family="serif" font-weight="bold"
+            filter="url(#goldGlow)" class="parlor-result-payout">+{{myNet}} GP</text>
+        {{/if}}
+    </g>
+    {{/if}}
+
+    {{!-- 阶段 & GM 控制（SVG 内嵌） --}}
+    {{#if isBetting}}
+    <text x="240" y="560" text-anchor="middle" fill="#69f0ae" font-size="14" font-family="serif" font-weight="bold">💰 {{localize "PARLOR.Roulette.Status.Betting"}}</text>
+    {{/if}}
+    {{#if isSpinning}}
+    <text x="240" y="560" text-anchor="middle" fill="#ffcc80" font-size="14" font-family="serif" font-weight="bold">🎡 {{localize "PARLOR.Roulette.Status.Spinning"}}</text>
+    {{/if}}
+
+    {{!-- GM 旋转按钮 --}}
+    {{#if isGM}}
+    {{#if isBetting}}
+    <g class="parlor-spin-btn" cursor="pointer">
+        <rect x="170" y="572" width="140" height="30" rx="15" fill="rgba(251,192,45,0.9)" stroke="#8a6a2c" stroke-width="1"/>
+        <text x="240" y="592" text-anchor="middle" fill="#1a1a1a" font-size="12" font-family="serif" font-weight="bold">🎡 {{localize "PARLOR.Roulette.Actions.Spin"}}</text>
+    </g>
+    {{/if}}
+    {{#if isResolving}}
+    <g class="parlor-finish-btn" cursor="pointer">
+        <rect x="98" y="572" width="68" height="30" rx="15" fill="rgba(255,224,178,0.85)" stroke="#8a6a2c" stroke-width="1"/>
+        <text x="132" y="592" text-anchor="middle" fill="#1a1a1a" font-size="12" font-family="serif" font-weight="bold">{{localize "PARLOR.Common.Finish"}}</text>
+    </g>
+    <g class="parlor-newround-btn" cursor="pointer">
+        <rect x="170" y="572" width="140" height="30" rx="15" fill="rgba(105,240,174,0.8)" stroke="#2e7d32" stroke-width="1"/>
+        <text x="240" y="592" text-anchor="middle" fill="#1a1a1a" font-size="12" font-family="serif" font-weight="bold">🔄 {{localize "PARLOR.Common.NewRound"}}</text>
+    </g>
+    {{/if}}
+    {{/if}}
+
+    {{!-- 暗角覆盖 --}}
+    <path d="M280,40 L880,40 Q1140,40 1140,325 Q1140,610 880,610 L280,610 Q60,610 60,325 Q60,40 280,40 Z"
+        fill="url(#vignette)" pointer-events="none"/>
+</svg>

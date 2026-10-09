@@ -1,0 +1,67 @@
+<div class="parlor-appearance-shell parlor-slot-config-shell">
+    <section class="parlor-appearance-panel">
+        <header class="parlor-appearance-panel-head">
+            <div class="parlor-appearance-title">{{localize "PARLOR.SlotConfig.Rates.Title"}}</div>
+            <div class="parlor-appearance-sub">{{localize "PARLOR.SlotConfig.Rates.Sub"}}</div>
+        </header>
+
+        <div class="parlor-appearance-field-grid parlor-slot-rate-grid">
+            <label class="parlor-appearance-field">
+                <span>{{localize "PARLOR.SlotConfig.Fields.SmallRate"}}</span>
+                <input type="number" data-slot-config-field="prizeRates.small" value="{{config.prizeRates.small}}" min="0" max="100" step="0.1">
+            </label>
+            <label class="parlor-appearance-field">
+                <span>{{localize "PARLOR.SlotConfig.Fields.MediumRate"}}</span>
+                <input type="number" data-slot-config-field="prizeRates.medium" value="{{config.prizeRates.medium}}" min="0" max="100" step="0.1">
+            </label>
+            <label class="parlor-appearance-field">
+                <span>{{localize "PARLOR.SlotConfig.Fields.BigRate"}}</span>
+                <input type="number" data-slot-config-field="prizeRates.big" value="{{config.prizeRates.big}}" min="0" max="100" step="0.1">
+            </label>
+        </div>
+
+        <div class="parlor-outcome-formula">
+            {{localize "PARLOR.SlotConfig.Rates.Total"}} {{totalRate}}% · {{localize "PARLOR.SlotConfig.Rates.Miss"}} {{missRate}}%
+        </div>
+    </section>
+
+    <section class="parlor-appearance-preview parlor-slot-pay-config">
+        <header class="parlor-appearance-preview-head">
+            <div>
+                <div class="parlor-appearance-title">{{localize "PARLOR.SlotConfig.Paytable.Title"}}</div>
+                <div class="parlor-appearance-sub">{{localize "PARLOR.SlotConfig.Paytable.Sub"}}</div>
+            </div>
+        </header>
+
+        <div class="parlor-outcome-table-wrap">
+            <table class="parlor-outcome-table">
+                <thead>
+                    <tr>
+                        <th>{{localize "PARLOR.SlotConfig.Columns.Symbol"}}</th>
+                        <th>x3</th>
+                        <th>x4</th>
+                        <th>x5</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each symbolRows}}
+                    <tr>
+                        <td class="parlor-outcome-cell-game">
+                            {{label}}
+                            {{#if isScatter}}<span class="parlor-slot-config-tag">Scatter</span>{{/if}}
+                        </td>
+                        <td><input type="number" data-slot-config-field="symbolPays.{{id}}.3" value="{{p3}}" min="0" max="999" step="0.01"></td>
+                        <td><input type="number" data-slot-config-field="symbolPays.{{id}}.4" value="{{p4}}" min="0" max="999" step="0.01"></td>
+                        <td><input type="number" data-slot-config-field="symbolPays.{{id}}.5" value="{{p5}}" min="0" max="999" step="0.01"></td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+
+        <footer class="parlor-appearance-actions">
+            <button type="button" class="parlor-hud-action-btn" data-action="reset-slot-config"><i class="fas fa-undo"></i> {{localize "PARLOR.SlotConfig.Actions.Reset"}}</button>
+            <button type="button" class="parlor-hud-action-btn accent" data-action="save-slot-config"><i class="fas fa-save"></i> {{localize "PARLOR.SlotConfig.Actions.Save"}}</button>
+        </footer>
+    </section>
+</div>

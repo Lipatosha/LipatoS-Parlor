@@ -1,0 +1,633 @@
+#parlor-b21-overlay {
+    --b21-felt: var(--parlor-felt-texture, linear-gradient(180deg, rgba(39, 95, 74, 0.98), rgba(11, 42, 34, 0.98)));
+    --b21-rail: var(--parlor-rail-texture, linear-gradient(180deg, rgba(174, 120, 61, 0.98), rgba(67, 36, 16, 0.98)));
+    /* 纹理叠加用的暗角层（参考 LiarsDice 的 --ld-felt-ao），让 repeat 后的 felt 不再像马赛克 */
+    --b21-felt-ao: radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0.16), transparent 72%);
+    position: fixed;
+    inset: 0;
+    z-index: 2100;
+    color: #f4e7c5;
+    font-family: var(--parlor-font-ui, "Parlor Marcellus", "Noto Serif SC", "Source Han Serif SC", Georgia, serif);
+}
+
+.parlor-b21-backdrop {
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(circle at 24% 18%, rgba(221, 178, 94, 0.18), transparent 24%),
+        radial-gradient(circle at 76% 78%, rgba(73, 128, 104, 0.18), transparent 30%),
+        linear-gradient(180deg, rgba(5, 8, 7, 0.74), rgba(2, 3, 3, 0.84));
+    backdrop-filter: blur(6px);
+}
+
+.parlor-b21-layout {
+    position: relative;
+    z-index: 1;
+    width: min(1680px, 100vw);
+    min-height: 100vh;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: minmax(216px, 260px) minmax(0, 1fr) minmax(216px, 260px);
+    gap: 24px;
+    align-items: center;
+    padding: 28px 22px 22px;
+    box-sizing: border-box;
+}
+
+.parlor-b21-scene,
+.parlor-b21-table {
+    min-width: 0;
+}
+
+.parlor-b21-table-shell {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    min-height: 620px;
+    padding: 82px 28px 24px;
+    border-radius: 40px;
+    /* 外壳（rail）改成多层木纹：暖光高光 + 暗角纹理 repeat + 底色，blend mode 营造木纹质感
+       参考 LiarsDice 桌布的多层处理。原来只有 1 层 linear-gradient，看着像平涂的塑料 */
+    background:
+        radial-gradient(circle at 50% 0%, rgba(255, 232, 174, 0.18), transparent 36%),
+        linear-gradient(180deg, rgba(255, 235, 184, 0.10), rgba(0, 0, 0, 0.22)),
+        var(--b21-felt-ao) center / 280px 280px repeat,
+        var(--b21-rail) center / 320px 320px repeat,
+        linear-gradient(180deg, rgba(120, 80, 38, 0.96), rgba(52, 28, 10, 0.98));
+    background-blend-mode: screen, soft-light, multiply, normal, normal;
+    border: 1px solid rgba(255, 227, 168, 0.24);
+    box-shadow:
+        0 34px 54px rgba(0, 0, 0, 0.34),
+        inset 0 1px 0 rgba(255, 244, 214, 0.12),
+        inset 0 -24px 42px rgba(0, 0, 0, 0.26);
+    overflow: hidden;
+}
+
+.parlor-b21-table-shell::before {
+    content: "";
+    position: absolute;
+    inset: 30px;
+    border-radius: 28px;
+    /* 内层 felt 改成 5 层混合，跟 LiarsDice 同款配方：顶部光晕 + 暖光 + 暗角纹理 +
+       表面纹理 + 底色。blend mode 让 repeat 不再像马赛克拼接 */
+    background:
+        radial-gradient(circle at 50% 0%, rgba(248, 227, 165, 0.18), transparent 26%),
+        linear-gradient(180deg, rgba(39, 120, 81, 0.32), rgba(7, 36, 23, 0.22)),
+        var(--b21-felt-ao) center / 240px 240px repeat,
+        var(--b21-felt) center / 230px 230px repeat,
+        linear-gradient(180deg, rgba(20, 74, 49, 0.98), rgba(8, 31, 21, 0.98));
+    background-blend-mode: screen, soft-light, multiply, normal, normal;
+    border: 1px solid rgba(255, 236, 184, 0.12);
+    z-index: 0;
+}
+
+/* 桌面氛围层：矩形版本（不同于 5 个椭圆桌面的 stadium 形状）。
+   位置跟 ::before 内 felt 完全重合（inset 30px / border-radius 28px），叠加在 felt 之上、
+   stage 内容之下。z-index: 0 跟 ::before 同级，pointer-events:none 保证不挡操作 */
+.parlor-b21-table-shell::after {
+    content: "";
+    position: absolute;
+    inset: 30px;
+    border-radius: 28px;
+    pointer-events: none;
+    z-index: 0;
+    background:
+        /* 顶部吊灯聚光（暖金 radial-gradient，椭圆比例匹配矩形宽长比） */
+        radial-gradient(ellipse 58% 30% at 50% 4%, rgba(255, 242, 200, 0.34), rgba(255, 242, 200, 0) 70%);
+    box-shadow:
+        /* 矩形内描金 2px + 软晕，桌内有清晰的金边 */
+        inset 0 0 0 2px rgba(255, 219, 148, 0.42),
+        inset 0 0 16px 0 rgba(255, 219, 148, 0.20),
+        /* 桌缘暗角，把视线收向中央 */
+        inset 0 0 120px 16px rgba(0, 0, 0, 0.55);
+}
+
+.parlor-b21-badge,
+.parlor-b21-center,
+.parlor-b21-footer-wrap {
+    position: relative;
+    z-index: 1;
+}
+
+.parlor-b21-badge {
+    position: absolute;
+    top: 22px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 10px 20px;
+    border-radius: 999px;
+    background: linear-gradient(180deg, rgba(20, 30, 25, 0.96), rgba(6, 10, 8, 0.94));
+    border: 1px solid rgba(255, 236, 184, 0.16);
+    color: #fff0c9;
+    font-size: 0.94rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    box-shadow: 0 14px 24px rgba(0, 0, 0, 0.22);
+}
+
+.parlor-b21-badge i {
+    margin-right: 8px;
+    color: #e8c46d;
+}
+
+/* 注意：.parlor-b21-seat 已经接入 .parlor-seat-card 基类（在 parlor.css 中），
+   所以这里只给 panel / footer 套深绿玻璃面板风格，座位卡用基类的金色 rail + 内层 felt */
+.parlor-b21-panel,
+.parlor-b21-footer {
+    background:
+        radial-gradient(circle at 50% 0%, rgba(255, 236, 184, 0.08), transparent 38%),
+        linear-gradient(180deg, rgba(11, 36, 28, 0.74), rgba(4, 13, 10, 0.82));
+    border: 1px solid rgba(255, 236, 184, 0.12);
+    box-shadow:
+        0 20px 34px rgba(0, 0, 0, 0.24),
+        inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(2px);
+}
+
+.parlor-b21-panel {
+    width: min(980px, 100%);
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 24px 28px;
+    border-radius: 28px;
+}
+
+.parlor-b21-panel-head,
+.parlor-b21-footer-head,
+.parlor-b21-seat-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.parlor-b21-panel-phase {
+    color: #f1ce7d;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.parlor-b21-panel-round,
+.parlor-b21-panel-sub,
+.parlor-b21-panel-note,
+.parlor-b21-footer-note,
+.parlor-b21-seat-note,
+.parlor-b21-seat-owner {
+    color: rgba(244, 231, 197, 0.72);
+}
+
+.parlor-b21-panel-title {
+    color: #fff2cd;
+    font-size: clamp(1.55rem, 2.1vw, 2.15rem);
+    font-weight: 700;
+    text-align: center;
+}
+
+.parlor-b21-panel-sub,
+.parlor-b21-panel-note,
+.parlor-b21-footer-note {
+    line-height: 1.5;
+    text-align: center;
+}
+
+.parlor-b21-score-strip {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+}
+
+.parlor-b21-score-goal {
+    flex: 0 0 auto;
+    min-width: 76px;
+    padding: 10px 12px;
+    border-radius: 16px;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 236, 184, 0.1);
+}
+
+.parlor-b21-score-goal span,
+.parlor-b21-stat span,
+.parlor-b21-result-cell span,
+.parlor-b21-footer-head span,
+.parlor-b21-bet-field span {
+    display: block;
+    color: rgba(244, 231, 197, 0.66);
+    font-size: 0.74rem;
+    letter-spacing: 0.04em;
+}
+
+.parlor-b21-score-goal strong {
+    display: block;
+    margin-top: 4px;
+    color: #fff0c9;
+    font-size: 1.3rem;
+}
+
+.parlor-b21-order {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.parlor-b21-order-pill {
+    /* 原 max-width 140px 让 5 个 pill 并排时长名字被强制省略号截断。去掉 max-width 后
+       靠 .parlor-b21-order 的 flex-wrap 自然换行；保留 white-space:nowrap 让单 pill 不会
+       自己内部折行（避免一个名字撑成多行歪掉） */
+    padding: 7px 12px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 236, 184, 0.08);
+    color: rgba(244, 231, 197, 0.82);
+    white-space: nowrap;
+}
+
+.parlor-b21-order-pill.is-current {
+    color: #20160a;
+    background: linear-gradient(180deg, #ffd887, #d99a3e);
+}
+
+.parlor-b21-order-pill.is-bust {
+    opacity: 0.58;
+    text-decoration: line-through;
+}
+
+.parlor-b21-order-pill.is-stand {
+    border-color: rgba(118, 202, 150, 0.34);
+}
+
+.parlor-b21-panel-stats {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.parlor-b21-stat {
+    padding: 12px 14px;
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 236, 184, 0.08);
+    text-align: center;
+}
+
+/* "当前参赛者"列加金色强调：背景偏暖 + 金边 + 微光晕 + 字色更亮，跟另外两列拉开层级 */
+.parlor-b21-stat.is-current {
+    background:
+        linear-gradient(180deg, rgba(167, 115, 34, 0.32), rgba(110, 69, 18, 0.20)),
+        rgba(255, 255, 255, 0.04);
+    border-color: rgba(255, 219, 148, 0.40);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 244, 214, 0.18),
+        0 6px 16px rgba(0, 0, 0, 0.22),
+        0 0 14px rgba(255, 219, 148, 0.10);
+}
+
+.parlor-b21-stat.is-current strong {
+    color: #fff4d2;
+}
+
+.parlor-b21-stat strong {
+    display: block;
+    margin-top: 6px;
+    color: #fff0c9;
+    font-size: 1.02rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.parlor-b21-resolution {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.parlor-b21-resolution-title {
+    color: #fff2cd;
+    text-align: center;
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+.parlor-b21-resolution-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(116px, 1fr));
+    gap: 10px;
+}
+
+.parlor-b21-result-cell {
+    padding: 10px 12px;
+    border-radius: 16px;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 236, 184, 0.08);
+}
+
+.parlor-b21-result-cell.is-winner {
+    border-color: rgba(255, 216, 135, 0.36);
+    background: rgba(255, 216, 135, 0.12);
+}
+
+.parlor-b21-result-cell strong,
+.parlor-b21-result-cell em {
+    display: block;
+    color: #fff0c9;
+    font-style: normal;
+}
+
+.parlor-b21-result-cell strong {
+    margin-top: 4px;
+    font-size: 1.28rem;
+}
+
+.parlor-b21-center-actions,
+.parlor-b21-footer-actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.parlor-b21-seat-column {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* 座位卡：继承 .parlor-seat-card 的金色外壳 + 内层 felt，这里只调内部布局让 bone21
+   的"avatar 行 + 状态行 + 骰子行 + 注记行"四段纵向堆叠（基类默认是 row flex，要覆盖） */
+.parlor-b21-seat {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    /* 让 .is-bust / .is-winner 的 border-color 修饰还能生效（基类没定义这些状态） */
+}
+
+.parlor-b21-seat.is-bust {
+    border-color: rgba(205, 82, 66, 0.32);
+}
+
+.parlor-b21-seat.is-winner {
+    border-color: rgba(255, 216, 135, 0.42);
+}
+/* .is-current 状态的金色脉动外环由 parlor.css 中的基类规则提供，这里不再单独覆盖 */
+
+.parlor-b21-avatar {
+    width: 44px;
+    height: 44px;
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.07);
+    font-size: 1.3rem;
+}
+
+.parlor-b21-avatar img {
+    width: 44px;
+    height: 44px;
+    object-fit: cover;
+}
+
+.parlor-b21-seat-main {
+    min-width: 0;
+    flex: 1;
+}
+
+.parlor-b21-seat-name {
+    color: #fff1cc;
+    font-weight: 700;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.parlor-b21-seat-owner,
+.parlor-b21-seat-status,
+.parlor-b21-seat-note {
+    font-size: 0.78rem;
+}
+
+.parlor-b21-seat-total {
+    min-width: 42px;
+    color: #fff0c9;
+    font-size: 1.35rem;
+    font-weight: 800;
+    text-align: right;
+}
+
+.parlor-b21-seat-status {
+    margin: 8px 0;
+    color: #f1ce7d;
+}
+
+.parlor-b21-seat-dice,
+.parlor-b21-footer-dice {
+    min-height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+/* footer 显示的是 normal-size 骰子（46×46），原 min-height 42px 容不下；提到 76px 让一行
+   骰子有完整呼吸空间。gap 也加大到 10px，跟 normal 骰子尺寸匹配。
+   加 padding 让骰子在容器内不贴边 */
+.parlor-b21-footer-dice {
+    min-height: 76px;
+    gap: 10px;
+    padding: 8px 0;
+}
+
+.parlor-b21-footer {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: min(760px, 100%);
+    margin: 0 auto;
+    padding: 16px 18px;
+    border-radius: 22px;
+}
+
+.parlor-b21-footer-head strong {
+    display: block;
+    margin-top: 4px;
+    color: #fff0c9;
+}
+
+/* select 默认在 Foundry 内是紫色 outline + 浅底，跟金色调违和。
+   appearance: none 去掉系统默认样式，深底 + 金边 + 自定义 caret 箭头（SVG data URI 内嵌） */
+.parlor-b21-footer-head select {
+    min-width: 180px;
+    max-width: 260px;
+    padding: 8px 32px 8px 12px;
+    border-radius: 12px;
+    background:
+        url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8' fill='none'><path d='M1 1.5l5 5 5-5' stroke='%23f2e6c6' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/></svg>") right 12px center / 10px no-repeat,
+        rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 235, 184, 0.18);
+    color: #f2e6c6;
+    appearance: none;
+    -webkit-appearance: none;
+    cursor: pointer;
+}
+
+.parlor-b21-footer-head select:focus {
+    outline: 2px solid rgba(255, 224, 148, 0.6);
+    outline-offset: 1px;
+}
+
+.parlor-b21-bet-field {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    min-width: 136px;
+}
+
+.parlor-b21-bet-field input {
+    width: 100%;
+    padding: 8px 10px;
+    border-radius: 10px;
+}
+
+.parlor-b21-locked-bet,
+.parlor-b21-dice-placeholder {
+    color: rgba(244, 231, 197, 0.7);
+}
+
+/* 骨骰二十一骰子：原本是 CSS Grid 3x3 + 奶黄色，跟 LiarsDice 风格割裂。
+   重写为跟 LiarsDice 同款：象牙白渐变 + 黑点 + 绝对定位 pip。
+   DOM 不变（9 个 span，pip-1 ~ pip-9 + is-on），尺寸 46px/32px 保留 */
+.parlor-b21-die {
+    position: relative;
+    width: 46px;
+    height: 46px;
+    border-radius: 14px;
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(222, 213, 191, 0.96));
+    border: 1px solid rgba(17, 29, 22, 0.18);
+    box-shadow:
+        0 8px 14px rgba(0, 0, 0, 0.22),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8),
+        inset 0 -8px 12px rgba(0, 0, 0, 0.08);
+}
+
+.parlor-b21-die.is-small {
+    width: 32px;
+    height: 32px;
+    border-radius: 10px;
+}
+
+.parlor-b21-pip {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    border-radius: 999px;
+    background: #18231b;
+    opacity: 0;
+    transform: translate(-50%, -50%);
+}
+
+.parlor-b21-die.is-small .parlor-b21-pip {
+    width: 5px;
+    height: 5px;
+}
+
+.parlor-b21-pip.is-on {
+    opacity: 1;
+}
+
+/* 9 个 pip 位置（百分比，跟 LiarsDice 同位） */
+.parlor-b21-pip.pip-1 { top: 24%; left: 24%; }
+.parlor-b21-pip.pip-2 { top: 24%; left: 50%; }
+.parlor-b21-pip.pip-3 { top: 24%; left: 76%; }
+.parlor-b21-pip.pip-4 { top: 50%; left: 24%; }
+.parlor-b21-pip.pip-5 { top: 50%; left: 50%; }
+.parlor-b21-pip.pip-6 { top: 50%; left: 76%; }
+.parlor-b21-pip.pip-7 { top: 76%; left: 24%; }
+.parlor-b21-pip.pip-8 { top: 76%; left: 50%; }
+.parlor-b21-pip.pip-9 { top: 76%; left: 76%; }
+
+.parlor-b21-close-btn {
+    position: absolute;
+    z-index: 2;
+    top: 18px;
+    right: 18px;
+    width: 38px;
+    height: 38px;
+    border: 1px solid rgba(255, 236, 184, 0.2);
+    border-radius: 50%;
+    color: #fff0c9;
+    background: rgba(10, 12, 10, 0.86);
+    box-shadow: 0 12px 22px rgba(0, 0, 0, 0.28);
+}
+
+@media (max-width: 1180px) {
+    .parlor-b21-layout {
+        grid-template-columns: minmax(0, 1fr);
+        align-items: start;
+        overflow-y: auto;
+    }
+
+    .parlor-b21-seat-column {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    }
+
+    .parlor-b21-scene {
+        order: -1;
+    }
+}
+
+@media (max-width: 720px) {
+    .parlor-b21-layout {
+        padding: 64px 12px 16px;
+        gap: 14px;
+    }
+
+    .parlor-b21-table-shell {
+        min-height: 0;
+        padding: 72px 14px 18px;
+        border-radius: 28px;
+    }
+
+    .parlor-b21-table-shell::before {
+        inset: 18px;
+        border-radius: 22px;
+    }
+
+    .parlor-b21-panel,
+    .parlor-b21-footer {
+        padding: 16px;
+    }
+
+    .parlor-b21-panel-stats,
+    .parlor-b21-resolution-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .parlor-b21-score-strip,
+    .parlor-b21-footer-head {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .parlor-b21-footer-head select {
+        max-width: none;
+        width: 100%;
+    }
+}

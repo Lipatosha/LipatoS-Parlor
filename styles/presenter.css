@@ -1,0 +1,5 @@
+.parlor-presenter-root {
+    position: fixed;
+    inset: 0;
+    z-index: 3000;
+}

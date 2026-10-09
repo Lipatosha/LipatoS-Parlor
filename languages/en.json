@@ -1,0 +1,3106 @@
+{
+  "PARLOR": {
+    "OpenCasino": "Open Parlor Casino",
+    "Debug": {
+      "PresenterSmoke": "Presenter smoke test",
+      "PresenterCrash": "Presenter crash test"
+    },
+    "Settings": {
+      "AppearanceMenu": {
+        "Name": "Appearance",
+        "Label": "Open style panel",
+        "Hint": "Pick the UI font, card faces, card backs, and deal sounds."
+      },
+      "OutcomeInfluenceMenu": {
+        "Name": "Outcome Bias",
+        "Label": "Open outcome bias settings",
+        "Hint": "Choose an attribute path for each game, then tune its base win rate. Baccarat has separate loss and win swing settings."
+      },
+      "SlotMachineMenu": {
+        "Name": "Slot Machine",
+        "Label": "Open slot machine settings",
+        "Hint": "Tune small, medium, and big prize rates plus per-symbol payout multipliers."
+      },
+      "AlwaysRevealHandHud": {
+        "Name": "Always Show Hand",
+        "Hint": "Keep your bottom hand HUD face-up without hovering over the cards."
+      },
+      "DsnIntegration": {
+        "Name": "Dice So Nice 3D Dice",
+        "Hint": "Play 3D dice animations from Dice So Nice in Bone21 and Liar's Dice. Local visual only; results are authoritative on the server.",
+        "Auto": "Auto (enabled when Dice So Nice is detected)",
+        "On": "Always on",
+        "Off": "Disabled"
+      },
+      "BeetleRaceMenu": {
+        "Name": "Beetle Derby Studio",
+        "Label": "Open Race Studio",
+        "Hint": "Edit the beetle roster, race cards, moves and speech bubbles."
+      },
+      "BeetleRaceSound": {
+        "Name": "Beetle Derby sound",
+        "Hint": "The GM decides for the whole table: turn it off and the race is silent for everyone. The GM’s speaker button on the race table flips the same setting."
+      },
+      "BeetleRaceCleanTable": {
+        "Name": "Beetle Derby: clear table",
+        "Hint": "The GM decides for the whole table: put the table decorations away during the race so cups and card piles don’t cover the lanes. Only affects table skins that have decorations; also set in the start dialog."
+      }
+    },
+    "SlotConfig": {
+      "WindowTitle": "Slot Machine Settings",
+      "Saved": "Slot machine settings saved.",
+      "Rates": {
+        "Title": "Prize Rates",
+        "Sub": "Each spin picks a prize tier: big first, then medium, then small. The remainder is a miss.",
+        "Total": "Total hit",
+        "Miss": "Miss"
+      },
+      "Fields": {
+        "SmallRate": "Small %",
+        "MediumRate": "Medium %",
+        "BigRate": "Big %"
+      },
+      "Paytable": {
+        "Title": "Symbol Multipliers",
+        "Sub": "Regular symbols pay on 3 / 4 / 5 left-connected reels. Scatter pays on 3 / 4 / 5 anywhere."
+      },
+      "Columns": {
+        "Symbol": "Symbol"
+      },
+      "Actions": {
+        "Reset": "Reset Defaults",
+        "Save": "Save Settings"
+      }
+    },
+    "Lobby": {
+      "Title": "Game Lobby",
+      "Subtitle": "Choose a game to play",
+      "StartGame": "Start Game",
+      "Start": "Start",
+      "SelectPlayers": "Select Players",
+      "StartWindowTitle": "Start {game}",
+      "Errors": {
+        "NeedParticipant": "At least one participant is required.",
+        "NeedDealer": "This game requires one participant to be assigned as the dealer.",
+        "Bone21AnteShort": "{names} can't cover the {amount} GP ante — change the amount or unselect them.",
+        "TexasHoldemNeedPlayers": "Texas Hold'em needs 2 to 6 participants.",
+        "TexasHoldemBuyInShort": "{names} can't cover the {amount} buy-in - change the amount or unselect them.",
+        "DuplicateActor": "That character is already in the participant list.",
+        "MaxParticipants": "This table is recommended for at most {maxCount} participants.",
+        "InvalidDroppedActor": "The dropped item is not a usable actor.",
+        "AllocationNoEffect": "Chip allocation had no effect. Check the amount and targets.",
+        "CardLuckInvalid": "The card luck setup is invalid. Please choose it again.",
+        "CrazyEightsNeedPlayers": "Crazy Eights needs {minCount} to {maxCount} players.",
+        "CrazyEightsAnteShort": "Cannot cover the ante of {amount}: {names}",
+        "BeetleRaceInvalid": "This race card has fewer than three runners (some beetles may have been deleted). Pick another card or fix it in the Race Studio."
+      },
+      "Toolbar": {
+        "ManageChips": "Allocate Chips",
+        "SettleChips": "View / Settle Chips",
+        "DndGoldTools": "D&D Gold",
+        "PromptExchange": "Open Player Exchange",
+        "PlayerExchange": "Exchange Gold / Chips"
+      },
+      "GameCard": {
+        "Play": "Enter"
+      },
+      "GameGuide": {
+        "Button": "Guide",
+        "WindowTitle": "{game} Guide",
+        "More": "More on Wikipedia",
+        "OverviewTitle": "Overview",
+        "FlowTitle": "How to Play",
+        "WinTitle": "Payouts and Results",
+        "NoteTitle": "Notes",
+        "Missing": "No guide text yet."
+      },
+      "Bank": {
+        "Title": "Table Chips",
+        "Note": "Casino chips are tracked separately. NPCs and test bots have unlimited chips.",
+        "EmptyPlayers": "No online players right now.",
+        "GMTag": "GM"
+      },
+      "Setup": {
+        "ParticipantsTitle": "Participants",
+        "ParticipantsNote": "Players use their assigned character, and chips stay on that character.",
+        "BlackjackParticipantsNote": "Blackjack seats player characters and NPCs. NPCs bet and play automatically, while the DM still confirms each deal. If nobody joins, 5 test bots are added.",
+        "LiarsDiceParticipantsNote": "Liar's Dice has no betting. Players, the GM, and NPCs can all join, and NPCs call or challenge automatically. If nobody joins, 5 test bots are added.",
+        "Bone21ParticipantsNote": "Bones Twenty-One has no dealer. Players, the GM, and NPC seats can all join. If the GM joins, that seat acts last.",
+        "TexasHoldemParticipantsNote": "Texas Hold'em seats 2 to 6 players. Regular players pay once at table start; the GM uses a separate session stack that is never settled.",
+        "SlotParticipantsNote": "Only players and the GM can join this table. NPC seats are disabled, and the table keeps one active operator.",
+        "PlayerOwner": "Player · {userName}",
+        "PlayerMissingCharacter": "This player does not have an assigned character.",
+        "PlayerMissingGoldActor": "Gold settlement needs an assigned character.",
+        "NoOnlinePlayers": "No online players right now.",
+        "GMCharacter": "GM assigned character",
+        "TexasHoldemGMSeat": "GM table seat (not settled to chips or gold)",
+        "NpcTitle": "NPC Participants",
+        "NpcDropHint": "Drag an actor here to add a bot seat",
+        "NpcNote": "Dropped NPCs join as bot seats. The DM does not control them directly. Each bot can be set to win bias, lose bias, or random.",
+        "NoNpc": "There are no NPC participants yet.",
+        "NpcControlled": "Bot seat",
+        "BotModeLabel": "Bot tendency",
+        "BotMode": {
+          "random": "Random",
+          "win": "Win Bias",
+          "lose": "Lose Bias"
+        },
+        "CardLuck": {
+          "Label": "Hand Luck",
+          "CustomLabel": "Custom Hand",
+          "OneShot": "One shot · Next hand",
+          "Help": "Changes the odds of the cards you receive. It does not guarantee a win or loss.",
+          "Transferred": "Custom hand moved from {from} to {to}.",
+          "Modes": {
+            "normal": "Normal",
+            "good": "Favorable Hand",
+            "bad": "Unfavorable Hand"
+          },
+          "CustomHands": {
+            "none": "None",
+            "natural-blackjack": "Natural Blackjack",
+            "royal-flush": "Royal Flush",
+            "straight-flush": "Straight Flush",
+            "full-house": "Full House",
+            "three-kind": "Three of a Kind",
+            "flush": "Flush"
+          }
+        },
+        "RemoveNpc": "Remove",
+        "DealerTitle": "Dealer Setup",
+        "DealerRequired": "This game requires one participant to be assigned as the dealer.",
+        "DealerNeedParticipant": "Add at least one participant with an actor before choosing a dealer.",
+        "BlackjackDealerNote": "Blackjack uses the current DM as dealer by default.",
+        "DealerNotNeeded": "This game has no separate dealer. The DM handles reveals and phase flow.",
+        "PublicToggle": "Show the game UI to everyone as spectators",
+        "ParticipantCount": "{count} participants will join this round",
+        "OverLimit": ", which is above the recommended limit of {maxCount}",
+        "AutoFillBots": " (test bots will be added automatically when no characters are selected)",
+        "SlotTitle": "Slot Setup",
+        "SlotNote": "Only one operator stays active. Set the default stake here.",
+        "SlotOperator": "Active operator",
+        "SlotNeedOperator": "Select at least one player or the GM first",
+        "SlotSpinCost": "Default stake",
+        "SlotPublicNote": "Public is usually best so everyone can watch.",
+        "SlotCountNote": "The slot starts with exactly one active operator.",
+        "Bone21Title": "Table Ante",
+        "Bone21Note": "Every round deducts this amount; NPCs don't need chips.",
+        "Bone21Ante": "Ante (GP)",
+        "TexasHoldemTitle": "Texas Hold'em Setup",
+        "TexasHoldemNote": "Regular player buy-ins become table stacks and are returned when the table closes. The GM buy-in only moves inside this table.",
+        "TexasHoldemSmallBlind": "Small blind",
+        "TexasHoldemBigBlind": "Big blind",
+        "TexasHoldemBuyIn": "Buy-in",
+        "TexasHoldemBuyInHint": "Each player's stake; at least {amount} (10x the big blind)",
+        "TexasHoldemGMBuyIn": "GM table buy-in",
+        "TexasHoldemGMBuyInHint": "Sets the GM's starting stack only. No balance check, deduction, or cash-out is applied.",
+        "BetLimitsTitle": "Bet Limits",
+        "BetLimitsNote": "Applies to each player bet on this table. Use 0 for no upper limit.",
+        "BetLimitMin": "Minimum bet",
+        "BetLimitMaxNoLimit": "Maximum bet (0 = no limit)",
+        "BetLimitsRange": "Current range: {min} to {max} GP.",
+        "BetLimitsNoMax": "Current minimum: {min} GP. There is no upper limit.",
+        "SettlementTitle": "Settlement",
+        "SettlementNote": "Choose how wins and losses are paid for this table.",
+        "SettlementChips": "Settle with chips",
+        "SettlementChipsHint": "Uses Parlor's separate chip balance and leaves character gold untouched.",
+        "SettlementGold": "Settle with D&D gold",
+        "SettlementGoldHint": "Wins and losses update each selected character's GP directly.",
+        "CrazyEightsParticipantsNote": "2 to 8 players. Start with nobody ticked and the DM plays a test round against 3 bots; or tick players and drag NPCs in. The DM seat never pays or collects. From 6 players two decks are used.",
+        "CrazyEightsTitle": "Crazy Eights table rules",
+        "CrazyEightsNote": "Everyone antes into the pot for the winner; the leftover penalty pays the winner per point left in losing hands, 0 turns it off.",
+        "CrazyEightsAnte": "Ante",
+        "CrazyEightsPenaltyPerPoint": "Leftover penalty (per point)",
+        "CrazyEightsPenaltyHint": "Eights count 50, J/Q/K 10, aces 1, others face value. Capped at each balance; NPCs are exempt.",
+        "CrazyEightsDrawRule": "Draw rule",
+        "CrazyEightsDrawRuleOne": "Draw one, then play or pass",
+        "CrazyEightsDrawRuleUntilPlayable": "Draw until playable (max three)",
+        "CrazyEightsActionCards": "Action cards",
+        "CrazyEightsActionCardsTavern": "Action cards: 8 changes suit, 2 draws, J skips, Q reverses",
+        "CrazyEightsActionCardsClassic": "Classic: only eights are wild",
+        "CrazyEightsSelfTest": "(Nobody seated: the DM plays a test round against 3 bots)",
+        "BeetleRaceParticipantsNote": "Everyone checked may bet, or just watch. Start with nobody checked and it's a DM test run: watch the beetles and try out cheats (the DM's bets don't touch any balance).",
+        "BeetleRaceTitle": "Race",
+        "BeetleRaceNote": "Pick a race card the DM prepared. It sets the runners, payout multipliers, race length and betting time.",
+        "BeetleRaceCard": "Race card",
+        "BeetleRaceFactDuration": "Race about {seconds}s",
+        "BeetleRaceFactBetting": "Betting {seconds}s",
+        "BeetleRacePower": {
+          "number": "Power shown",
+          "stars": "Power shown as stars",
+          "hidden": "Power hidden"
+        },
+        "BeetleRaceStudio": "Manage races",
+        "BeetleRaceSound": "Race sound (whole table; the GM can also mute it mid-race)",
+        "BeetleRaceCleanTable": "Clear table: put the decorations away so the lanes stay in view",
+        "BeetleRacePrefsHint": "Both choices are remembered and used the next time you start a Beetle Derby."
+      },
+      "ChipAllocation": {
+        "Title": "Allocate Chips",
+        "TargetRole": "Target character",
+        "AllOnlineRoles": "All online characters",
+        "Mode": "Operation",
+        "Amount": "Amount",
+        "CurrentChips": "Current chips",
+        "EmptyRoles": "No online characters",
+        "NpcNote": "NPCs and test bots have unlimited chips and are not managed here.",
+        "Apply": "Apply",
+        "Updated": "Chips updated.",
+        "Modes": {
+          "Grant": "Grant",
+          "Deduct": "Deduct",
+          "Set": "Set"
+        }
+      },
+      "ChipSettlement": {
+        "Title": "Settle Chips",
+        "ConfirmText": "Clear current character chips and post the final totals to chat?",
+        "Role": "Character",
+        "CurrentChips": "Current chips",
+        "Empty": "There are no character chips to settle right now.",
+        "Submit": "Settle and reset",
+        "NothingToSettle": "There are no chips to settle right now.",
+        "Done": "Chips were settled, reset to zero, and posted to chat."
+      },
+      "GoldExchange": {
+        "AdminTitle": "D&D Gold and Chip Exchange",
+        "PlayerTitle": "Gold and Chip Exchange",
+        "AdminHint": "Enter the amount to exchange for each character. This panel only converts between character GP and Parlor chips.",
+        "LinkedActor": "Assigned character",
+        "MissingActor": "Needs an assigned character",
+        "Character": "Character",
+        "Gold": "Current GP",
+        "Chips": "Current chips",
+        "GoldToChip": "Convert GP to chips",
+        "ChipToGold": "Convert chips to GP",
+        "GoldToChipSelf": "Spend GP to buy chips",
+        "ChipToGoldSelf": "Redeem chips for GP",
+        "Amount": "Amount",
+        "CurrentBalance": "{gold} GP · {chips} chips",
+        "RateNote": "Exchange rate: 1 GP = 1 chip.",
+        "PlayerMacroTitle": "Player self-exchange macro",
+        "PlayerMacroHint": "Players can put this line into a macro to open their own exchange window.",
+        "PlayerMacroCopy": "Copy",
+        "PlayerMacroCopied": "Macro code copied.",
+        "PlayerMacroCopyFailed": "Copy failed. You can select the code manually.",
+        "Apply": "Apply exchange",
+        "Exchange": "Exchange",
+        "NoPlayers": "No online player characters are available.",
+        "NoEffect": "No exchange was applied.",
+        "Updated": "Exchange complete. Converted {buy} GP to chips and {sell} chips to GP.",
+        "PromptedPlayers": "Opened exchange windows for {count} players.",
+        "PartialShort": "Some rows were skipped because the character did not have enough GP or chips.",
+        "PartialFailed": "Some character updates failed. Check the affected sheets.",
+        "Errors": {
+          "GMOnly": "Only the GM can manage player gold and chips.",
+          "NeedDnd5e": "D&D gold exchange is only available in dnd5e worlds.",
+          "MissingSelfActor": "You need an assigned character before exchanging gold and chips.",
+          "GMUnavailable": "The GM is not available to process the exchange.",
+          "Unknown": "The exchange could not be completed."
+        }
+      }
+    },
+    "Games": {
+      "Roulette": {
+        "Name": "Roulette",
+        "Desc": "Classic casino wheel, bet on numbers or colors",
+        "BetDialog": {
+          "Title": "Place Bet",
+          "Participant": "Betting character",
+          "Amount": "Bet amount ({gp})",
+          "Confirm": "Confirm Bet",
+          "MissingParticipant": "You do not currently control a participant who can bet."
+        }
+      },
+      "Blackjack": {
+        "Name": "Blackjack",
+        "Desc": "Hit or stand, get close to 21 without busting",
+        "Rules": {
+          "NaturalShort": "Max",
+          "NaturalLong": "Two-card {threshold}"
+        }
+      },
+      "DragonTiger": {
+        "Name": "Dragon Tiger",
+        "Desc": "Fast table betting on Dragon, Tiger, or Tie"
+      },
+      "Baccarat": {
+        "Name": "Baccarat",
+        "Desc": "Bet on Player, Banker, or Tie with standard baccarat rules"
+      },
+      "ThreeCardPoker": {
+        "Name": "Three Card Poker",
+        "Desc": "Ante, optional Pair Plus, then Play or Fold"
+      },
+      "LiarsDice": {
+        "Name": "Liar's Dice",
+        "Desc": "Classic Liar's Dice: each player hides five under a cup, take turns calling \"N of a kind\", whoever can't bluff anymore opens — loser drops a die, last with dice wins"
+      },
+      "Bone21": {
+        "Name": "Bones Twenty-One",
+        "Desc": "Tavern dice with no dealer. Your opening three stay private; add dice one at a time. Whoever lands closest to 21 without busting takes the pot"
+      },
+      "TexasHoldem": {
+        "Name": "Texas Hold'em",
+        "Desc": "2-6 player cash table with blinds, four betting streets, side pots, and private hole cards"
+      },
+      "SlotMachine": {
+        "Name": "Fruit Slot",
+        "Desc": "Classic 3x5 fruit slot with one active operator and spectators"
+      },
+      "CasinoWar": {
+        "Name": "Casino War",
+        "Desc": "Everyone plays the dealer, and ties go to war"
+      },
+      "CrazyEights": {
+        "Name": "Crazy Eights",
+        "Desc": "A card game in which players match suit or rank to empty their hands, with eights used to name a suit."
+      },
+      "BeetleRace": {
+        "Name": "Beetle Derby",
+        "Desc": "The DM sets up a race, everyone backs a beetle, and the whole table watches them run."
+      }
+    },
+    "Roulette": {
+      "Status": {
+        "Betting": "Betting Open",
+        "Spinning": "Wheel Spinning"
+      },
+      "Actions": {
+        "Spin": "Spin Wheel"
+      }
+    },
+    "DragonTiger": {
+      "Action": {
+        "BetDragon": "Bet Dragon",
+        "BetTiger": "Bet Tiger",
+        "BetTie": "Bet Tie",
+        "DealByDM": "DM Reveal"
+      },
+      "Center": {
+        "BettingNoteGM": "Once everyone is in, the DM can reveal the cards.",
+        "BettingNotePlayer": "Place your bet, then wait for the DM to reveal.",
+        "BettingSubIdle": "Use the footer to pick a side and place a bet.",
+        "BettingSubPlaced": "{name} bet {side} for {amount} GP",
+        "BettingTitleIdle": "Choose a side to bet on",
+        "BettingTitlePlaced": "{name} bet {side}",
+        "CurrentIdentity": "Current identity",
+        "DealingNote": "Both cards flip together and the winning side lights up.",
+        "DealingSub": "The DM is revealing the cards.",
+        "DealingTitle": "Revealing cards",
+        "Phase": {
+          "Betting": "Betting",
+          "Dealing": "Reveal",
+          "Ready": "Ready",
+          "Resolving": "Settlement",
+          "Settle": "Awaiting Settlement",
+          "Showdown": "Showdown"
+        },
+        "ReadyNoteGM": "Check the bets, then reveal the cards.",
+        "ReadyNotePlayer": "All bets are locked in. Waiting for the DM to reveal.",
+        "ReadySub": "Betting is locked and the reveal is next.",
+        "ReadyTitleGM": "Ready to reveal",
+        "ReadyTitlePlayer": "Waiting for DM reveal",
+        "ResolvingNoteGM": "Settlement is open. Finish the round or start the next one.",
+        "ResolvingNotePlayer": "Settlement is open. Waiting for the DM.",
+        "ResolvingSubPlayer": "{name} finished this round at {result}",
+        "SettleNoteGM": "Results are already on the player cards. Open settlement when ready.",
+        "SettleNotePlayer": "Results are already on the player cards. Waiting for the DM.",
+        "SettleSubPlayer": "{name} finished this round at {result}",
+        "ShowdownNote": "The winner is set. Personal results are next.",
+        "ShowdownSub": "Dragon and Tiger are face up. Results are next."
+      },
+      "Error": {
+        "InvalidSide": "Invalid betting side."
+      },
+      "Footer": {
+        "CurrentBet": "Current bet: {side} · {amount} GP",
+        "Dealing": "The DM is revealing the cards.",
+        "MultiControl": "You are controlling {count} characters, and {done} already placed bets.",
+        "NotBetYet": "No bet yet",
+        "OddsSummary": "Dragon/Tiger pay 1:1, Tie pays 8:1, and Dragon/Tiger bets are refunded on a tie.",
+        "ReadyGM": "Click reveal to flip Dragon and Tiger at the same time.",
+        "ReadyPlayer": "Waiting for the DM to reveal.",
+        "RoundEnd": "Round complete",
+        "Showdown": "Reveal complete. Results are on the table."
+      },
+      "Result": {
+        "Lose": "{side} loses",
+        "Push": "{side} pushes",
+        "TieRefund": "{side} is refunded on the tie",
+        "Win": "{side} wins"
+      },
+      "Seat": {
+        "StatusPlaced": "Bet on {side}",
+        "StatusReady": "Locked on {side}"
+      },
+      "Settlement": {
+        "Net": "Net",
+        "Payout": "Payout",
+        "Result": "Result",
+        "Title": "{winner} Wins"
+      },
+      "Side": {
+        "Dragon": "Dragon",
+        "Tiger": "Tiger",
+        "Tie": "Tie"
+      },
+      "Stat": {
+        "DragonPot": "Dragon Pot",
+        "TigerPot": "Tiger Pot",
+        "TiePot": "Tie Pot"
+      },
+      "Table": {
+        "TieOdds": "Tie 8 : 1",
+        "TieRefund": "Dragon and Tiger bets are refunded when the round ties"
+      }
+    },
+    "Baccarat": {
+      "Reason": {
+        "BankerConditional3": "Banker on 3: draw unless Player's third card is 8.",
+        "BankerConditional4": "Banker on 4: draw if Player's third card is 2-7.",
+        "BankerConditional5": "Banker on 5: draw if Player's third card is 4-7.",
+        "BankerConditional6": "Banker on 6: draw if Player's third card is 6-7.",
+        "BankerConditionalFallback": "Banker has {bankerTotal}; follow the standard draw rule.",
+        "BankerDraw012": "Banker on {bankerTotal} draws automatically.",
+        "BankerDrawWhenPlayerStands": "Player stands, so Banker on {bankerTotal} draws by rule.",
+        "BankerStand7": "Banker stands on 7.",
+        "BankerStandWhenPlayerStands": "Player stands, so Banker on {bankerTotal} stands by rule.",
+        "NaturalNoDraw": "Natural hand. No third-card draw this round.",
+        "PlayerDraw05": "Player on {total} draws by rule.",
+        "PlayerNaturalStand": "Player has a natural {total}. No draw.",
+        "PlayerStand67": "Player on {total} stands by rule.",
+        "ResolvedBankerDrawAfterPlayerThird": "Player's third card is {playerThirdValue}; Banker on {bankerTotal} draws by rule.",
+        "ResolvedBankerDrawWhenPlayerStands": "Player did not draw; Banker on {bankerTotal} draws by rule.",
+        "ResolvedBankerStandAfterPlayerThird": "Player's third card is {playerThirdValue}; Banker on {bankerTotal} stands by rule.",
+        "ResolvedBankerStandWhenPlayerStands": "Player did not draw; Banker on {bankerTotal} stands by rule."
+      },
+      "Action": {
+        "BetBanker": "Bet Banker",
+        "BetPlayer": "Bet Player",
+        "BetTie": "Bet Tie",
+        "DealByDM": "DM Deal"
+      },
+      "Center": {
+        "BettingNote": "Choose a side now, then wait for the DM to deal the opening cards.",
+        "BettingSubIdle": "You can bet on Player, Banker, or Tie.",
+        "BettingSubPlaced": "Bet on {side} · {amount}",
+        "BettingTitleIdle": "Choose this round's bet",
+        "BettingTitlePlaced": "Bet locked on {side}",
+        "DealingNote": "Each side receives two cards before the draw check.",
+        "DealingSub": "Opening cards are being dealt.",
+        "DealingTitle": "Opening Deal",
+        "DrawingNote": "Third cards are resolved with standard baccarat rules.",
+        "DrawingTitle": "Resolving Draws",
+        "DrawRulesNoteGM": "Check the draw summary, then run the draw.",
+        "DrawRulesNotePlayer": "The draw summary is on screen. Waiting for the DM.",
+        "FinalScore": "Player {playerTotal} · Banker {bankerTotal}",
+        "FinalShowdownNote": "Full reveal. Settlement is next.",
+        "Phase": {
+          "Betting": "Betting",
+          "Dealing": "Dealing",
+          "Drawing": "Drawing",
+          "DrawRules": "Draw Rules",
+          "FinalShowdown": "Final Reveal",
+          "Ready": "Ready",
+          "Resolving": "Settlement",
+          "Settle": "Awaiting Settlement",
+          "Showdown": "Opening Reveal"
+        },
+        "ReadyNote": "All bets are locked. Waiting for the opening deal.",
+        "ReadySub": "Betting is closed.",
+        "ReadyTitleGM": "Ready for opening deal",
+        "ReadyTitlePlayer": "Waiting for DM",
+        "ResolvingNoteGM": "Settlement is open. Finish the round or start the next one.",
+        "ResolvingNotePlayer": "Settlement is open. Waiting for the DM.",
+        "SettleNoteGM": "Results are already on the player cards. Open settlement when ready.",
+        "SettleNotePlayer": "Results are already on the player cards. Waiting for the DM.",
+        "ShowdownNote": "Opening totals are revealed. Third-card rules are next.",
+        "ShowdownSub": "Check the opening totals before the draw."
+      },
+      "DrawAction": {
+        "ConfirmNoDraw": "Confirm No Draw",
+        "ExecuteDraw": "Execute Draw",
+        "GoToResult": "Go To Result"
+      },
+      "DrawExecution": {
+        "BankerOnly": "Banker draws only",
+        "Both": "Both sides draw",
+        "None": "No side draws",
+        "PlayerOnly": "Player draws only"
+      },
+      "DrawTitle": {
+        "Natural": "Natural",
+        "NoThirdCard": "No Third Card",
+        "RuleBased": "Rule-Based Draw"
+      },
+      "Error": {
+        "InvalidSide": "Invalid betting side."
+      },
+      "FinalNote": {
+        "BankerDrew": "Banker drew a {value}.",
+        "Natural": "Natural hand, so neither side draws.",
+        "PlayerDrew": "Player drew a {value}.",
+        "PlayerStand": "Player stood on the opening hand."
+      },
+      "Footer": {
+        "CurrentBet": "Current bet: {side} · {amount}",
+        "Dealing": "Opening cards are being dealt.",
+        "Drawing": "Third-card draw in progress.",
+        "DrawRules": "Showing the draw rules.",
+        "MultiControl": "You are controlling {count} characters, and {done} already placed bets.",
+        "NotBetYet": "No bet yet",
+        "OddsSummary": "Player 1:1, Banker 0.95:1, Tie 8:1",
+        "ReadyGM": "The opening deal will reveal the first four cards.",
+        "ReadyPlayer": "Waiting for the DM to deal.",
+        "Showdown": "Opening reveal complete"
+      },
+      "Result": {
+        "Lose": "{side} loses",
+        "Push": "{side} pushes",
+        "TiePush": "{side} is refunded on the tie",
+        "Win": "{side} wins"
+      },
+      "Seat": {
+        "StatusDrawing": "Resolving draw",
+        "StatusPlaced": "Bet on {side}",
+        "StatusReady": "Locked on {side}",
+        "StatusShowdown": "Waiting for draw ruling"
+      },
+      "SeatResult": {
+        "Lose": "Lose {amount}",
+        "Push": "Push",
+        "Win": "Win {amount}"
+      },
+      "Settlement": {
+        "Net": "Net",
+        "Payout": "Payout",
+        "Result": "Result",
+        "Title": "{winner} Wins"
+      },
+      "Side": {
+        "Banker": "Banker",
+        "Player": "Player",
+        "Tie": "Tie"
+      },
+      "Stat": {
+        "BankerHand": "Banker Cards",
+        "BankerInitial": "Banker Opening Total",
+        "BankerPoints": "Banker Final Total",
+        "BankerPot": "Banker Pot",
+        "Cards": "cards",
+        "PlayerHand": "Player Cards",
+        "PlayerInitial": "Player Opening Total",
+        "PlayerPoints": "Player Final Total",
+        "PlayerPot": "Player Pot",
+        "TiePot": "Tie Pot"
+      },
+      "Table": {
+        "BankerOdds": "Banker {odds}",
+        "PlayerOdds": "Player {odds}",
+        "TieOdds": "Tie {odds}",
+        "TieRefund": "Player and Banker bets are refunded when the round ties"
+      }
+    },
+    "ThreeCardPoker": {
+      "Action": {
+        "DealByDM": "DM Deal",
+        "Fold": "Fold",
+        "OpenSettle": "Open Settlement",
+        "Play": "Play",
+        "RevealByDM": "DM Reveal Dealer"
+      },
+      "Badge": {
+        "DealerNotQualified": "Dealer Does Not Qualify",
+        "DealerQualified": "Dealer Qualifies"
+      },
+      "Center": {
+        "BettingNote": "Start with Ante, add Pair Plus if you want, then wait for the DM.",
+        "BettingSubIdle": "Each seat opens with an Ante and may add Pair Plus.",
+        "BettingSubPlaced": "Opening bet locked: {amount}",
+        "BettingTitleIdle": "Place the opening bet",
+        "BettingTitlePlaced": "Opening bet locked",
+        "DealingNote": "Everyone gets three cards. Only your own hand matters for the decision.",
+        "DealingSub": "Three-card hands are being dealt.",
+        "DealingTitle": "Dealing three cards",
+        "DecisionNoteOther": "Waiting for all live seats to choose Play or Fold.",
+        "DecisionNoteSelf": "Review your hand, then either match the Ante with Play or fold.",
+        "DecisionSubOther": "{done}/{total} decisions locked",
+        "DecisionSubSelf": "Your hand is {hand}",
+        "DecisionTitleOther": "Waiting for table decisions",
+        "DecisionTitleSelf": "Choose Play or Fold",
+        "Phase": {
+          "Betting": "Betting",
+          "Dealing": "Dealing",
+          "Decision": "Decision",
+          "Ready": "Ready",
+          "Resolving": "Settlement",
+          "RevealReady": "Reveal Ready",
+          "Settle": "Awaiting Settlement",
+          "Showdown": "Showdown"
+        },
+        "ReadyNoteGM": "Check the bets, then deal.",
+        "ReadyNotePlayer": "All opening bets are locked. Waiting for the DM to deal.",
+        "ReadySub": "The round is ready for the three-card deal.",
+        "ReadyTitleGM": "Ready to deal",
+        "ReadyTitlePlayer": "Waiting for DM",
+        "ResolvingNoteGM": "Settlement is open. Finish the round or start the next one.",
+        "ResolvingNotePlayer": "Settlement is open. Waiting for the DM.",
+        "ResolvingTitle": "Settlement open",
+        "RevealReadyNoteGM": "Every decision is locked. You can reveal the dealer hand now.",
+        "RevealReadyNotePlayer": "All decisions are in. Waiting for the DM.",
+        "RevealReadySub": "Current Play pot: {playPot} GP",
+        "RevealReadyTitleGM": "Ready to reveal dealer",
+        "RevealReadyTitlePlayer": "Waiting for dealer reveal",
+        "SettleNoteGM": "Results are already on the seat cards. Open settlement when ready.",
+        "SettleNotePlayer": "Results are already on the seat cards. Waiting for the DM.",
+        "SettleTitle": "Results on table",
+        "ShowdownNote": "Dealer qualification, main bets, and bonuses are resolved.",
+        "ShowdownSubSelected": "Current result: {result}",
+        "ShowdownSubTable": "Table result is revealed. Settlement is next.",
+        "ShowdownTitleNotQualified": "Dealer shows {hand} and does not qualify",
+        "ShowdownTitleQualified": "Dealer shows {hand}"
+      },
+      "DealerNote": {
+        "Betting": "Waiting for the table to place Ante bets.",
+        "Dealing": "Three-card hands are being dealt.",
+        "Decision": "Players are choosing whether to Play or Fold.",
+        "NotQualified": "Dealer has {hand} and does not qualify.",
+        "Qualified": "Dealer has {hand} and qualifies at Q-high or better.",
+        "Ready": "Opening bets are locked. Ready to deal.",
+        "RevealReady": "All decisions are locked. Ready to reveal the dealer."
+      },
+      "Error": {
+        "DecisionClosed": "The Play or Fold window is closed.",
+        "DecisionFailed": "That action failed. Please try again.",
+        "DecisionLocked": "This character has already decided.",
+        "InvalidAnte": "Invalid Ante amount.",
+        "InvalidDecision": "Invalid decision.",
+        "InvalidPairPlus": "Invalid Pair Plus amount.",
+        "PlayChipsInsufficient": "Not enough chips to match the Play bet. Current balance: {balance}."
+      },
+      "Hand": {
+        "Flush": "Flush",
+        "HighCard": "High Card",
+        "MiniRoyal": "Mini Royal",
+        "Pair": "Pair",
+        "Straight": "Straight",
+        "StraightFlush": "Straight Flush",
+        "ThreeKind": "Three of a Kind",
+        "Unknown": "Unknown Hand"
+      },
+      "Hud": {
+        "AnteLabel": "Ante",
+        "BettingSubIdle": "Enter the Ante and add Pair Plus if you want.",
+        "BettingSubPlaced": "Opening bet locked: {amount}",
+        "BettingTitle": "Betting",
+        "DealingTitle": "Dealing",
+        "DecisionLocked": "Decision locked",
+        "DecisionPending": "Decision pending",
+        "DecisionSubLocked": "Current decision: {decision}",
+        "DecisionSubPending": "Current hand: {hand}",
+        "DecisionTitle": "{name}'s Decision",
+        "OpeningBetSub": "Opening bet: {amount}",
+        "PairPlusLabel": "Pair Plus",
+        "PlayBetTag": "Play {amount}",
+        "ReadyTitle": "Waiting for deal",
+        "ResultSub": "Current result: {result}",
+        "ResultTitle": "Result",
+        "RevealReadyTitle": "Waiting for dealer reveal",
+        "SettleTitle": "Waiting for settlement",
+        "ShowdownTitle": "Dealer revealed",
+        "WaitingSub": "Waiting on the round",
+        "Strength": "Hand Strength"
+      },
+      "Result": {
+        "AnteBonusWin": "Ante Bonus",
+        "DealerNotQualified": "Dealer does not qualify",
+        "Fold": "Folded",
+        "Lose": "Lose",
+        "PairPlusWin": "Pair Plus hits",
+        "Push": "Push",
+        "Win": "Win"
+      },
+      "Seat": {
+        "NoteBetting": "Opening bet {amount}",
+        "NoteDealing": "Waiting for the three-card hand",
+        "NoteDecision": "Private hand, waiting on the decision",
+        "NoteFolded": "Folded this round",
+        "NoteIdle": "No bet yet",
+        "NotePlayLocked": "Play locked for {amount} GP",
+        "NoteReady": "Opening bet locked at {amount}",
+        "NoteRevealReady": "Decision locked, waiting for dealer reveal",
+        "StatusDealerNotQualified": "Dealer not qualified",
+        "StatusDealing": "Dealing",
+        "StatusDecision": "Decision",
+        "StatusFolded": "Folded",
+        "StatusPlaced": "Ante placed",
+        "StatusPlayLocked": "Play locked",
+        "StatusReady": "Waiting",
+        "StatusRevealReady": "Reveal ready"
+      },
+      "Settlement": {
+        "Bet": "Bet",
+        "Decision": "Decision",
+        "Hand": "Hand",
+        "Net": "Net",
+        "Payout": "Payout",
+        "Reveal": "Reveal",
+        "Result": "Result",
+        "Title": "Three Card Poker Settlement"
+      },
+      "Stat": {
+        "AntePot": "Ante Pot",
+        "DealerHand": "Dealer Hand",
+        "Decisions": "Decisions",
+        "PairPlusPot": "Pair Plus Pot",
+        "PlayPot": "Play Pot",
+        "RoundPlayers": "Players"
+      },
+      "Tag": {
+        "Ante": "Ante {amount}",
+        "PairPlus": "Pair Plus {amount}",
+        "Play": "Play {amount}"
+      }
+    },
+    "TexasHoldem": {
+      "Setup": {
+        "BuyInShortTitle": "Buy-in failed"
+      },
+      "Table": {
+        "ToCall": "To call {amount}",
+        "CurrentBet": "Current bet {amount}",
+        "Pot": "Pot {amount}",
+        "Stack": "Stack {amount}",
+        "StackShort": "Stack",
+        "InPot": "In pot {amount}",
+        "InPotShort": "In Pot",
+        "Blinds": "Blinds {small}/{big}",
+        "CurrentTurn": "{name} to act",
+        "WaitingStacks": "Waiting for two seats with chips",
+        "Dealing": "Dealing"
+      },
+      "Action": {
+        "RaiseTo": "Raise to",
+        "Check": "Check",
+        "Call": "Call",
+        "CallAmount": "Call {amount}",
+        "Fold": "Fold",
+        "Raise": "Raise",
+        "AllIn": "All-in",
+        "NextHand": "Next Hand",
+        "RaiseMin": "Min",
+        "RaiseHalfPot": "½ Pot",
+        "RaisePot": "Pot",
+        "RaiseMax": "Max"
+      },
+      "Seat": {
+        "WaitingHand": "Waiting for next hand",
+        "NoStack": "No stack",
+        "Current": "Acting"
+      },
+      "Street": {
+        "Preflop": "Preflop",
+        "Flop": "Flop",
+        "Turn": "Turn",
+        "River": "River",
+        "Showdown": "Showdown",
+        "Waiting": "Waiting"
+      },
+      "Settlement": {
+        "Title": "Texas Hold'em Settlement",
+        "PotIndex": "Pot {index}",
+        "NoPots": "No pots to show.",
+        "NoWinner": "No winner",
+        "Hand": "Hand",
+        "Net": "Net",
+        "Uncontested": "{name} wins {amount} without showdown.",
+        "Waiting": "Not enough seats have table stacks. Finish the table or wait for a future rebuy flow.",
+        "TableSettled": "Table stacks have been returned.",
+        "Showdown": "Pots, hand ranks, and stack changes are settled."
+      },
+      "Tag": {
+        "Dealer": "D",
+        "SmallBlind": "SB",
+        "BigBlind": "BB"
+      },
+      "Hand": {
+        "HighCard": "High Card",
+        "Pair": "Pair",
+        "TwoPair": "Two Pair",
+        "ThreeKind": "Three of a Kind",
+        "Straight": "Straight",
+        "Flush": "Flush",
+        "FullHouse": "Full House",
+        "FourKind": "Four of a Kind",
+        "StraightFlush": "Straight Flush",
+        "RoyalFlush": "Royal Flush"
+      },
+      "Result": {
+        "Fold": "Folded"
+      },
+      "Hud": {
+        "Strength": "Hand Strength"
+      }
+    },
+    "LiarsDice": {
+      "Action": {
+        "NewMatch": "Restart",
+        "Open": "Open"
+      },
+      "Center": {
+        "Phase": {
+          "Resolving": "Result",
+          "Rolling": "Rolling",
+          "Turns": "Turns"
+        },
+        "ClaimedBy": "called by {name}",
+        "ClaimFailed": "Only {count} on the table — claim busted",
+        "ClaimHeld": "{count} on the table — claim held",
+        "MatchWinnerNoteGM": "Wrap the table or restart a fresh match.",
+        "MatchWinnerNotePlayer": "Match is over. Waiting on the DM.",
+        "MatchWinnerSub": "Only one seat still has dice.",
+        "MatchWinnerTitle": "{name} takes the match",
+        "NoClaimYet": "No one has called yet",
+        "OnesLockedBanner": "1s no longer count as wild",
+        "AutoNextRoundNoteGM": "Result is in — next round in 3s.",
+        "AutoNextRoundNotePlayer": "Result is in — next round in 3s.",
+        "AutoNextRoundSub": "Next round in 3 seconds.",
+        "ClaimantWasLying": "{name} was lying",
+        "ClaimantWasTruthful": "{name} was telling the truth",
+        "ResolvingNoteGM": "Result is in — start the next round or wrap the table.",
+        "ResolvingNotePlayer": "Result is in — waiting on the DM.",
+        "ResolvingSub": "The table checked the claim and clipped one die from the loser.",
+        "ResolvingTitle": "Open",
+        "RollingSub": "Everyone rolled — your dice are below.",
+        "RollingTitle": "Cups in hand",
+        "TurnsSubFirst": "Pick a quantity, then a face to open the round.",
+        "TurnsSubRespond": "Raise it, or call open.",
+        "TurnsTitleFirst": "{name} opens",
+        "TurnsTitleRespond": "{name} — raise or open?"
+      },
+      "Error": {
+        "ClaimTooLow": "Has to be higher than the last call.",
+        "InvalidClaim": "That call isn't valid.",
+        "NoClaimToOpen": "No one's called yet — nothing to open.",
+        "NotYourTurn": "Not this seat's turn.",
+        "RequestFailed": "Action didn't go through — try again.",
+        "WrongPhase": "Can't do that in this phase."
+      },
+      "Footer": {
+        "ClaimCount": "Quantity",
+        "ClaimCountHint": "(Mouse wheel to adjust)",
+        "CurrentTurnFirst": "You're opening — make the first call.",
+        "CurrentTurnRespond": "Raise it, or call open.",
+        "NoDice": "These dice are hidden to you.",
+        "OtherTurn": "Watching the table.",
+        "Resolving": "Result is in — waiting on the DM.",
+        "Rolling": "Dice are landing — your turn soon.",
+        "SelectRole": "Viewing seat",
+        "Spectating": "You're watching."
+      },
+      "Label": {
+        "ActivePlayers": "Players Left",
+        "Claimant": "Last call",
+        "CurrentClaim": "Current call",
+        "OpenedBy": "Opened by",
+        "Result": "Verdict",
+        "RoundLoser": "Loser",
+        "Starter": "Opener",
+        "TableDice": "Dice on table"
+      },
+      "Seat": {
+        "NoteCurrentFirst": "Make the first call.",
+        "NoteCurrentRespond": "Raise it, or call open.",
+        "NoteDiceLeft": "{count} dice left",
+        "NoteLastClaim": "Last called {claim}",
+        "NoteOut": "Out of dice.",
+        "NotePenalty": "Lost {amount} — {count} left.",
+        "NoteRolling": "Still rolling.",
+        "NoteStarter": "This seat opens the round.",
+        "NoteWinner": "Last seat standing.",
+        "StatusCurrent": "Calling",
+        "StatusOpened": "Open",
+        "StatusOut": "Out",
+        "StatusRolling": "Rolling",
+        "StatusWaiting": "Waiting",
+        "StatusWinner": "Winner"
+      },
+      "Text": {
+        "ClaimFormat": "{quantity} x {face}s"
+      }
+    },
+    "Bone21": {
+      "Action": {
+        "Roll": "One More",
+        "StartRound": "Start Round",
+        "SetAnte": "Set Ante & Start",
+        "Stand": "Stand"
+      },
+      "Center": {
+        "Phase": {
+          "Betting": "Ante",
+          "Rolling": "Opening Roll",
+          "Turns": "Turns",
+          "Resolving": "Settlement"
+        },
+        "BettingNote": "The DM picks one number — everyone pays the same into the pot.",
+        "BettingTitleGM": "Set the ante and start the round",
+        "BettingSubGM": "Pick a number — the whole table pays it in.",
+        "BettingTitlePlayer": "Waiting on the DM",
+        "BettingSubPlayer": "DM sets the ante and the round starts.",
+        "PushSub": "No one stayed under 21 — antes go back.",
+        "PushTitle": "Everyone busted",
+        "ResolvingNoteGM": "Result is in — start the next round or wrap the table.",
+        "ResolvingNotePlayer": "Waiting on the DM to deal again or call it.",
+        "ResolvingTitle": "Round result",
+        "RollingSub": "Opening 3 are private — they reveal on open.",
+        "RollingTitle": "Opening dice rolled",
+        "SplitSub": "Tied at {total} — winners split, {amount} GP each.",
+        "TurnNote": "Over 21 and you bust; stand to lock the total.",
+        "TurnSub": "{name} — one more, or stand.",
+        "TurnTitle": "{name}'s turn",
+        "WinnerTitle": "{name} takes the pot",
+        "WinSub": "{total} is closest to 21 — winner takes {amount} GP."
+      },
+      "Error": {
+        "AnteShort": "{names} can't cover the ante — change the amount or skip them.",
+        "NotYourTurn": "Not this seat's turn.",
+        "RequestFailed": "Action didn't go through — try again.",
+        "WrongPhase": "Can't do that in this phase."
+      },
+      "Footer": {
+        "OtherTurn": "Watching the table.",
+        "Resolving": "Round's done — waiting on the DM.",
+        "Rolling": "Opening roll's done.",
+        "Spectating": "You're watching.",
+        "WaitingForGM": "Waiting on the DM to start.",
+        "YourTurn": "One more, or stand here."
+      },
+      "Label": {
+        "Ante": "Ante",
+        "Target": "Target"
+      },
+      "Seat": {
+        "NoDice": "No dice yet",
+        "HiddenDice": "Opening 3 are private",
+        "NoteBet": "Ante {amount} GP",
+        "NoteBust": "Busted.",
+        "NoteCurrent": "Deciding.",
+        "NoteSittingOut": "Out of chips this round.",
+        "NoteStand": "Standing on {total}.",
+        "NoteTotal": "At {total}.",
+        "NoteWaitingBet": "Waiting on the DM.",
+        "StatusCurrent": "Rolling",
+        "StatusPlaying": "In",
+        "StatusSittingOut": "Sitting out",
+        "StatusWinner": "Winner"
+      },
+      "Hud": {
+        "AnteLabel": "Ante",
+        "PublicTotal": "Public",
+        "Strength": "Dice Total"
+      },
+      "Phase": {
+        "Betting": "Ante",
+        "PlayerTurns": "Player Turns",
+        "Resolving": "Resolving",
+        "Rolling": "Rolling"
+      }
+    },
+    "SlotMachine": {
+      "Action": {
+        "Spin": "Spin",
+        "SpinByDM": "DM Spin",
+        "SpinCost": "Stake {amount} GP",
+        "NeedChips": "Not enough chips for a {amount} GP stake"
+      },
+      "Center": {
+        "BettingDraftTotal": "Total stake {amount} GP",
+        "BettingNote": "This machine pays on 243 ways. Any 3 / 4 / 5 match from the left can win.",
+        "BettingSubIdle": "This is the total stake for the spin.",
+        "BettingSubPlaced": "Total stake {totalBet} GP",
+        "BettingTitleIdle": "Lock in this spin",
+        "BettingTitlePlaced": "Stake locked at {amount} GP",
+        "Phase": {
+          "Betting": "Betting",
+          "Ready": "Ready",
+          "Resolving": "Result",
+          "Spinning": "Spinning"
+        },
+        "ReadyNoteGM": "All bets are locked. The DM can spin the reels now.",
+        "ReadyNotePlayer": "All bets are locked. Waiting for the DM to spin.",
+        "ReadySub": "243 ways. Five reels stop from left to right.",
+        "ReadyTitleGM": "Ready to spin",
+        "ReadyTitlePlayer": "Waiting for the spin",
+        "ResolvingNoteGM": "Results are in. Finish the round or start the next one.",
+        "ResolvingNotePlayer": "Results are in. Waiting for the DM.",
+        "ResolvingTitleLose": "No win this spin",
+        "ResolvingTitleWin": "This spin paid out",
+        "IdleHint": "Idle. Pull all the way down to spin.",
+        "LoseNote": "No hit. -{amount} GP.",
+        "SpinningNote": "The reels stop left to right, then the board pays on 243 ways.",
+        "SpinningSub": "Left 3 / 4 / 5 reels pay. Wild substitutes. Scatter pays anywhere.",
+        "SpinningTitle": "Reels in motion",
+        "WatchNote": "Only one operator is active. Everyone else watches.",
+        "WinNote": "Hit {ways} ways · Paid {amount} GP."
+      },
+      "Control": {
+        "BalanceNote": "Chips settle automatically when the spin ends.",
+        "Cost": "Stake {amount} GP",
+        "LastResult": "Last result",
+        "LastResultIdle": "No previous result yet.",
+        "LastResultLose": "Previous spin missed.",
+        "LastResultWin": "Previous spin hit {ways} ways · Paid {payout} GP.",
+        "Operator": "Operator · {name}",
+        "SpinCost": "Total stake",
+        "SpinCostNote": "You can change it before each pull. This is the total stake.",
+        "Stake": "Stake",
+        "StakeHint": "Whole-board stake in {step} GP steps.",
+        "Lever": "Lever",
+        "LeverReady": "Hold, pull down, and spin at the bottom.",
+        "LeverNeedChips": "You need at least {amount} GP for this pull.",
+        "LeverSpinning": "Spin in progress. Wait for all five reels."
+      },
+      "ClosePrompt": {
+        "Title": "Leave Spectating",
+        "WatchBody": "You will leave spectating. The slot machine will keep running.",
+        "WatchConfirm": "Leave Spectating"
+      },
+      "Error": {
+        "SpinFailed": "The spin failed. Please try again."
+      },
+      "Header": {
+        "OperatorSelf": "You are operating",
+        "OperatorWatch": "Watching",
+        "SpinCounter": "Spin {round}"
+      },
+      "Marquee": {
+        "Betting": "SET YOUR STAKE",
+        "NoWin": "NO PAYING WAY",
+        "NoWinSub": "No hit this spin. Try the next one.",
+        "Ready": "READY TO SPIN",
+        "Spinning": "REELS IN MOTION",
+        "Win": "YOU WIN",
+        "WinSub": "Paid {amount} GP"
+      },
+      "Paytable": {
+        "Title": "Paytable",
+        "Summary": "243 ways. Matching symbols from the left pay on every 3 / 4 / 5-reel path.",
+        "LinePayout": "3 / 4 / 5 reels from the left · pays x{p3} / x{p4} / x{p5} per winning way",
+        "WildNote": "Wild substitutes for regular symbols",
+        "ScatterNote": "3 / 4 / 5 anywhere",
+        "Scatter": "3 / 4 / 5 anywhere · pays x2 / x6 / x15 on the total bet",
+        "Rule": {
+          "Paylines": "243 Ways",
+          "LeftToRight": "left only",
+          "Wild": "Wild subs",
+          "Scatter": "Scatter anywhere"
+        }
+      },
+      "Seat": {
+        "NoteBetting": "Total stake {totalBet} GP",
+        "NoteIdle": "No bet yet",
+        "NoteLose": "This spin missed and lost {amount} GP",
+        "NoteReady": "Bet locked. Waiting for the spin.",
+        "NoteScatter": "Includes {count} Scatter",
+        "NoteSpinning": "Reels are still spinning.",
+        "NoteWin": "Hit {ways} winning ways · Paid {amount} GP",
+        "StatusPlaced": "Bet Placed",
+        "StatusReady": "Locked",
+        "StatusSpinning": "Spinning"
+      },
+      "Settlement": {
+        "BoardTitle": "Board",
+        "BreakdownTitle": "Payout Breakdown",
+        "Line": "Way {index}",
+        "Net": "Net",
+        "NoLines": "This spin did not connect any paying way.",
+        "ScatterHit": "Scatter hit {count} times and added x{multiplier} to the total bet.",
+        "Title": "Fruit Slot Settlement"
+      },
+      "Stat": {
+        "HitLines": "Winning Ways",
+        "LineBet": "Per-Way Mult",
+        "Paylines": "Ways",
+        "Payout": "Payout",
+        "ScatterCount": "Scatter Count",
+        "TotalBet": "Total Bet"
+      },
+      "Symbol": {
+        "Apple": "Apple",
+        "Banana": "Banana",
+        "Bell": "Bell",
+        "Lemon": "Lemon",
+        "Orange": "Orange",
+        "Pear": "Pear",
+        "Plum": "Plum",
+        "Scatter": "Scatter",
+        "Strawberry": "Strawberry",
+        "Seven": "Seven",
+        "Watermelon": "Watermelon",
+        "Wild": "Wild"
+      },
+      "Tag": {
+        "LineBet": "Way {amount}",
+        "Payout": "Win {amount}",
+        "TotalBet": "Total {amount}"
+      }
+    },
+    "CasinoWar": {
+      "Action": {
+        "DealByDM": "DM Deal",
+        "OpenSettle": "Open Settlement",
+        "ResolveWar": "DM Resolve War"
+      },
+      "Center": {
+        "BettingNote": "Ties go to war and require a matching war stake.",
+        "BettingSubIdle": "Each participant opens with one main bet against the dealer.",
+        "BettingSubPlaced": "This role is in for {amount} GP",
+        "BettingTitleIdle": "Place the opening bet",
+        "BettingTitlePlaced": "Bet locked at {amount} GP",
+        "DealingNote": "Everyone gets one card first. Tied seats move into war.",
+        "DealingSub": "The dealer and every participant are receiving their opening card.",
+        "DealingTitle": "Opening Deal",
+        "Phase": {
+          "Betting": "Betting",
+          "Dealing": "Dealing",
+          "Ready": "Ready",
+          "Resolving": "Settlement",
+          "Settle": "Awaiting Settlement",
+          "Showdown": "Opening Reveal",
+          "War": "War"
+        },
+        "ReadyNoteGM": "Once the table looks right, the DM can deal the opening cards.",
+        "ReadyNotePlayer": "Waiting for the DM to reveal the opening cards.",
+        "ReadySub": "All opening bets are locked. The dealer and every seat get one card.",
+        "ReadyTitleGM": "Ready for the opening deal",
+        "ReadyTitlePlayer": "Waiting for DM deal",
+        "ResolvingNoteGM": "You can finish the table or roll straight into the next round.",
+        "ResolvingNotePlayer": "Waiting for the DM to finish the table or start another round.",
+        "ResolvingTitle": "Settlement open",
+        "SettleNoteGM": "Results are already on the player panels. Open settlement when ready.",
+        "SettleNotePlayer": "Results are already on the player panels. Waiting for the DM.",
+        "SettleTitle": "Results on table",
+        "ShowdownNoWarGM": "No ties this round. You can go straight to settlement.",
+        "ShowdownNoWarPlayer": "No ties this round. Waiting for the DM to open settlement.",
+        "ShowdownNoteGM": "Tied seats are waiting for the DM to deal the war cards.",
+        "ShowdownNotePlayer": "Some seats tied. Waiting for the DM to resolve the war cards.",
+        "ShowdownSummary": "Wins {wins} · Losses {losses} · Wars {wars}",
+        "ShowdownTitle": "Opening reveal complete",
+        "ShowdownWarTitle": "{count} seats go to war",
+        "WarNoteGM": "War results are set. You can move on to settlement.",
+        "WarNotePlayer": "War results are set. Waiting for the DM to open settlement.",
+        "WarSummary": "War wins {wins} · Losses {losses} · Pushes {pushes}",
+        "WarTitle": "War cards revealed"
+      },
+      "DealerNote": {
+        "BettingGM": "Waiting for every seat to place its opening bet.",
+        "BettingPlayer": "Place the opening bet, then wait for the DM.",
+        "Dealing": "Opening cards are being dealt.",
+        "ReadyGM": "All opening bets are locked. You can deal now.",
+        "ReadyPlayer": "Waiting for the DM to deal the opening cards.",
+        "Resolving": "Settlement details are already open.",
+        "Settle": "Results are shown. Waiting to open settlement.",
+        "ShowdownClear": "No tied seats this round. Settlement can open now.",
+        "ShowdownWar": "{count} tied seats are heading into war.",
+        "War": "War cards are face up and the results are set."
+      },
+      "Footer": {
+        "BetAny": "Place the opening bet first. Matching cards automatically go to war.",
+        "CurrentBet": "Opening bet: {amount} GP",
+        "Dealing": "Opening deal in progress.",
+        "MultiControl": "You are controlling {count} characters, and {done} already placed bets.",
+        "NotBetYet": "No bet yet",
+        "ReadyGM": "Deal once to reveal the dealer card and every opening card.",
+        "ReadyPlayer": "Waiting for the DM to deal.",
+        "ResultOpen": "Settlement open",
+        "Settle": "Waiting to open settlement",
+        "SettleGM": "Every participant result is ready. Open settlement when you want.",
+        "SettlePlayer": "Every participant result is ready. Waiting for the DM to continue.",
+        "Showdown": "Opening reveal complete.",
+        "ShowdownDone": "No ties this round. Settlement can open now.",
+        "ShowdownWar": "There are ties on the table. War comes next.",
+        "War": "War cards are now face up.",
+        "WarDone": "War results are in. Settlement is next."
+      },
+      "ResultLabel": {
+        "Lose": "Opening loss",
+        "Surrender": "Surrender",
+        "War": "To War",
+        "WarLose": "War Loss",
+        "WarPush": "War Push",
+        "WarWin": "War Win",
+        "Win": "Opening win"
+      },
+      "Seat": {
+        "NoteBetting": "Opening bet {amount} GP",
+        "NoteDealing": "Waiting for the opening reveal",
+        "NoteIdle": "No bet yet",
+        "NoteLose": "{player} loses to dealer {dealer}",
+        "NoteReady": "Opening bet locked at {amount} GP",
+        "NoteSurrender": "Tie with no chips left for war, so the seat surrenders.",
+        "NoteWar": "{player} ties dealer {dealer}",
+        "NoteWarLose": "War card {player} loses to dealer {dealer}",
+        "NoteWarPush": "War card {player} ties dealer {dealer}",
+        "NoteWarWin": "War card {player} beats dealer {dealer}",
+        "NoteWin": "{player} beats dealer {dealer}",
+        "StatusDealing": "Dealing",
+        "StatusLose": "Opening Loss",
+        "StatusPlaced": "Bet Placed",
+        "StatusReady": "Waiting",
+        "StatusSurrender": "Surrender",
+        "StatusWar": "To War",
+        "StatusWarLose": "War Loss",
+        "StatusWarPush": "War Push",
+        "StatusWarWin": "War Win",
+        "StatusWin": "Opening Win"
+      },
+      "Settlement": {
+        "Bet": "Stake",
+        "Net": "Net",
+        "Payout": "Payout",
+        "Result": "Result",
+        "Reveal": "Reveal",
+        "RevealWar": "{main} -> War {war}",
+        "StakeWithWar": "{bet} GP + War {war} GP",
+        "Title": "Casino War Settlement"
+      },
+      "Stat": {
+        "DealerCard": "Dealer Card",
+        "Losses": "Losing Seats",
+        "Players": "Seats",
+        "WarSeats": "War Seats",
+        "Wins": "Winning Seats"
+      }
+    },
+    "Blackjack": {
+      "Action": {
+        "DealerHit": "Dealer Hit"
+      },
+      "Center": {
+        "Phase": {
+          "Betting": "Betting",
+          "Dealing": "Dealing",
+          "Action": "Action",
+          "Settle": "Settlement"
+        },
+        "BettingConfirmed": "Your bet is locked. Waiting for the rest of the table.",
+        "BettingDealerControlled": "{dealer} is under your control. Wait for the table before dealing.",
+        "BettingGMReady": "Once betting is done, you can start the round for {dealer}.",
+        "BettingTitle": "{betted}/{total} players have bet",
+        "DealingSub": "The opening hands are being dealt. Player turns will begin once the animation finishes.",
+        "NoEligibleBettors": "No seated player has enough chips to place the minimum bet.",
+        "DealerActing": "The dealer is taking their turn.",
+        "DealerBustSub": "The dealer busted with {total}.",
+        "DealerBustTitle": "Dealer Bust",
+        "DealerCollecting": "The dealer is collecting table cards.",
+        "DealerFinalTotal": "{dealer} finishes on {total}",
+        "DealerTurnTitle": "Dealer Turn",
+        "PendingHitDealingOther": "Dealing the hit card to {name}.",
+        "PendingHitDealingSelf": "Dealing your hit card now.",
+        "PendingHitGM": "{name} requested a hit. Waiting for you to deal it.",
+        "PendingHitWaitingDM": "You requested a hit. Waiting for the DM to deal.",
+        "PendingHitWaitingOther": "{name} requested a hit. Waiting for the DM to deal.",
+        "PlayerBust": "{name} busted",
+        "PlayerRequestedHit": "{name} requested a hit",
+        "PlayerTurnSelf": "It is your turn.",
+        "PlayerTurnTitle": "{name}'s Turn",
+        "PlayerTurnWait": "Waiting for {name}.",
+        "ReadyDealerReady": "{dealer} is ready to deal.",
+        "ReadyTitle": "Ready to deal",
+        "ReadyWaitingDealer": "Waiting for the DM to start the deal.",
+        "ResolvingSub": "Settlement is already open.",
+        "ResolvingTitle": "Round result",
+        "SettleTitle": "Ready for settlement",
+        "SittingOutNoChips": "You do not have enough chips to join this round.",
+        "TableCardsCollectOther": "{name} has {count} table cards totaling {total}; they will be collected automatically.",
+        "TableCardsCollectSelf": "You have {count} table cards totaling {total}; they will be collected automatically.",
+        "TableCardsWillBustOther": "{name} has {count} table cards totaling {total}; auto-collecting will bust.",
+        "TableCardsWillBustSelf": "You have {count} table cards totaling {total}; auto-collecting will bust.",
+        "WaitingNextPlayer": "Waiting for the next player.",
+        "WaitingSettlementDM": "Waiting for the DM to settle the round."
+      },
+      "DealerHint": "You control the dealer. Use the bottom control bar.",
+      "Hud": {
+        "BetsProgress": "{betted}/{total} players have bet",
+        "DealerAction": "Dealer Action",
+        "DealerCollecting": "The dealer is clearing the table cards.",
+        "DealingSub": "The opening deal is still playing out. Player turns will start automatically after it finishes.",
+        "DealerDecision": "Choose whether the dealer hits or stands",
+        "DealerFinalPoints": "Dealer final total {total}",
+        "DealerPanel": "Dealer Panel",
+        "DealerPoints": "Dealer {total}",
+        "DealerReady": "Ready to deal",
+        "DealerReadySub": "All bets are locked. You can start any time.",
+        "DealerWaiting": "Waiting to reach the dealer phase.",
+        "PhaseBetting": "Betting",
+        "PhaseDealerTurn": "Dealer Turn",
+        "PhasePlayerTurn": "Player Turn",
+        "PlayerHitRequested": "A player requested a hit",
+        "PlayerTurnSub": "Waiting for the player to hit or stand.",
+        "PlayerTurnTitle": "Current turn: {name}",
+        "PointsPill": "{total} pts",
+        "ResultReady": "Settlement Open",
+        "RoundDone": "Round Complete",
+        "SettleReady": "Ready to settle",
+        "WaitingBets": "Waiting for bets",
+        "Strength": "Hand Total"
+      },
+      "PlayerHud": {
+        "ActionHint": "You can hit or stand.",
+        "BeforeSettlement": "Waiting for dealer settlement",
+        "BetLocked": "Bet Locked",
+        "BetPlacedWaiting": "Bet placed. Waiting for the deal.",
+        "BetRequired": "{participant} still needs a bet.",
+        "BetThisRound": "{participant} bet {bet} GP this round",
+        "CurrentPoints": "{total} pts",
+        "DealerActing": "Dealer acting",
+        "DealerTidying": "The dealer is clearing the table.",
+        "DealingSub": "The opening deal is in progress. Your actions will unlock when the animation finishes.",
+        "DealerTurn": "Dealer Turn",
+        "FinalPoints": "Final total {total}",
+        "FinalPointsPill": "{total} pts",
+        "HitRequested": "Hit Requested",
+        "HitRequestedSub": "Waiting for the DM to send the next card.",
+        "NoBetYet": "No bet yet",
+        "NotYourTurn": "It is not your turn yet.",
+        "PlaceBetFirst": "Place a bet first",
+        "ReadyPhase": "Waiting for the deal",
+        "ResultOpen": "Result ready",
+        "ResultSoon": "Result coming up",
+        "RoundLose": "Round Lost",
+        "RoundTie": "Round Tied",
+        "RoundWin": "Round Won",
+        "SittingOutSub": "You will keep watching and will not block the table.",
+        "SittingOutTitle": "Sitting Out",
+        "WaitDealerFinish": "Waiting for the dealer to finish.",
+        "WaitingDealer": "Waiting for dealer",
+        "WaitingOthers": "Waiting for other bets",
+        "WaitingPlayer": "Waiting for {name}",
+        "WaitingStart": "Waiting to start",
+        "YourTurn": "Your Turn"
+      },
+      "Seat": {
+        "Acting": "Acting",
+        "AwaitingCollect": "Auto Collecting",
+        "AwaitingDeal": "Awaiting Deal",
+        "BetPlaced": "Bet Placed",
+        "Playing": "Playing",
+        "Seated": "Seated"
+      },
+      "Settlement": {
+        "Points": "Points",
+        "Profit": "Net",
+        "Title": "Blackjack Settlement"
+      }
+    },
+    "Appearance": {
+      "WindowTitle": "Parlor Appearance",
+      "Saved": "Parlor appearance settings saved.",
+      "Panel": {
+        "Title": "Style Preset",
+        "Sub": "Set the UI font, card faces, card backs, and deal sounds here."
+      },
+      "Fields": {
+        "TableTheme": "Table theme",
+        "TextFont": "UI font",
+        "CardFace": "Card face theme",
+        "CardBack": "Card back theme",
+        "CustomFaceFallback": "Fallback face theme",
+        "CustomFaceImage": "Custom face image",
+        "CustomBackImage": "Custom back image",
+        "TableBackdrop": "Backdrop file path",
+        "SoundTheme": "Sound theme",
+        "EnableSound": "Enable card sounds",
+        "Volume": "Volume"
+      },
+      "AudioTools": {
+        "Deal": "Preview deal",
+        "Flip": "Preview flip",
+        "Placed": "Preview placed"
+      },
+      "Actions": {
+        "Reset": "Restore defaults",
+        "Save": "Save style"
+      },
+      "Upload": {
+        "FaceTitle": "Uploaded card faces",
+        "FaceHint": "Pick a rank and suit, then choose an image. Cards without an uploaded image use the fallback theme.",
+        "BackTitle": "Uploaded card back",
+        "BackHint": "Use one image for face-down cards. Foundry's file picker can upload or choose an existing image.",
+        "BackdropTitle": "Table backdrop (image / video)",
+        "BackdropHint": "Shared media passed to presenter themes. Supports images and webm/mp4 video; classic native tables do not render it.",
+        "Rank": "Rank",
+        "Suit": "Suit",
+        "PathPlaceholder": "worlds/my-world/parlor/card.png",
+        "PickImage": "Choose / Upload",
+        "PickMedia": "Choose / Upload",
+        "ClearImage": "Clear",
+        "ConfiguredFaces": "Configured faces: {count}",
+        "FilePickerUnavailable": "Foundry's file picker is not available in this view.",
+        "InvalidImagePath": "Choose a valid image file."
+      },
+      "Card": {
+        "Suits": {
+          "Spades": "Spades",
+          "Hearts": "Hearts",
+          "Diamonds": "Diamonds",
+          "Clubs": "Clubs"
+        }
+      },
+      "Preview": {
+        "Title": "Live Preview",
+        "Sub": "Changes show up here right away. Save to apply them.",
+        "Font": "Font",
+        "Face": "Face",
+        "Back": "Back",
+        "CardFront": "Front",
+        "CardBack": "Back"
+      },
+      "Options": {
+        "Theme": {
+          "Classic": "Classic native table"
+        },
+        "TableFelt": {
+          "Fabric037": "Felt 01 · Deep Green Weave",
+          "Fabric040": "Felt 02 · Fine Green Grain"
+        },
+        "TableRail": {
+          "Wood013": "Rail 01 · Dark Wood",
+          "Wood070": "Rail 02 · Light Wood",
+          "Metal041A": "Rail 03 · Brushed Metal A",
+          "Metal048A": "Rail 04 · Forged Metal A",
+          "Metal048C": "Rail 05 · Forged Metal C",
+          "Metal057C": "Rail 06 · Worn Metal C"
+        },
+        "CardFace": {
+          "CustomNewWhite": "Face 01 · New White",
+          "Uploaded": "Face 02 · Uploaded Images",
+          "FvttLightSoft": "Face 03 · FVTT Light Soft",
+          "FvttDarkGold": "Face 04 · FVTT Dark Gold"
+        },
+        "CardBack": {
+          "CustomNewBlue": "Back 01 · New Blue",
+          "CustomNewRed": "Back 02 · New Red",
+          "Uploaded": "Back 03 · Uploaded Image",
+          "FvttLightSoft": "Back 04 · FVTT Light Soft",
+          "FvttDarkGold": "Back 05 · FVTT Dark Gold"
+        },
+        "TextFont": {
+          "Marcellus": "Font 01 · Marcellus",
+          "Forum": "Font 02 · Forum",
+          "CormorantSC": "Font 03 · Cormorant SC",
+          "CinzelDecorative": "Font 04 · Cinzel Decorative"
+        },
+        "Sound": {
+          "PlayingCards": "Sound 01 · Playing Cards",
+          "None": "Mute"
+        }
+      }
+    },
+    "CardLuck": {
+      "CustomDeferred": "The custom hand could not be generated safely and will be retried next hand.",
+      "PlanFallback": "The card luck plan failed, so this hand will use a normal random deal."
+    },
+    "OutcomeInfluence": {
+      "WindowTitle": "Parlor Outcome Bias",
+      "Saved": "Outcome bias settings saved.",
+      "Actor": {
+        "Menu": "Parlor Game Proficiency",
+        "WindowTitle": "Parlor Game Proficiency: {name}",
+        "Title": "Game Proficiency for {name}",
+        "Sub": "A manual value overrides this game's automatic attribute. Switch back to Automatic to read the global path again.",
+        "GlobalDisabled": "Global outcome bias is disabled. Manual values stay saved, but do not apply until it is enabled.",
+        "AutomaticPath": "Automatic path",
+        "NoPath": "Not configured",
+        "AutomaticValue": "Current automatic value",
+        "AutomaticUnavailable": "Unavailable",
+        "Mode": "Value source",
+        "Automatic": "Automatic",
+        "Manual": "Manual override",
+        "ManualValue": "Ability / proficiency value",
+        "WinRatePreview": "Current effective win rate: {value}%",
+        "BaccaratPreview": "Current effect: lose {loss}% less · win {win}% more",
+        "InvalidPreview": "Enter a valid number before saving.",
+        "InvalidValue": "The manual proficiency for {game} is not a valid number.",
+        "Save": "Save actor settings",
+        "Saved": "Saved game proficiency for {name}.",
+        "SaveFailed": "Save failed: {message}"
+      },
+      "Panel": {
+        "Title": "Global Setup",
+        "Sub": "Set the global switch and win-rate bounds here. Configure each game on the right. Manual actor values take priority over automatic paths."
+      },
+      "Fields": {
+        "Enabled": "Enable outcome bias",
+        "AttributePath": "Attribute path",
+        "AttributePathHint": "Enter it manually or use the detector with a roll from a character sheet. The result applies only to this game.",
+        "MinWinRate": "Minimum win rate",
+        "MaxWinRate": "Maximum win rate",
+        "BaccaratLossReduction": "Loss reduction %",
+        "BaccaratWinBoost": "Win boost %",
+        "BaccaratPointsPerPercent": "Attribute points for +5%"
+      },
+      "FormulaTitle": "View conversion rule",
+      "Formula": "For the card and dice games: effective win rate = base win rate + (attribute value / attribute points for each +5%) x 5, then clamped between the minimum and maximum.",
+      "BaccaratFormula": "For Baccarat: both effective loss reduction % and effective win boost % start from the base values, then each full conversion step adds 5% to both.",
+      "Games": {
+        "Title": "Per-Game Setup",
+        "Sub": "Each game uses its own attribute path. Texas Hold'em and Bones Twenty-One affect the opening only; GM Texas luck settings take priority."
+      },
+      "Columns": {
+        "BaseWinRate": "Base win rate",
+        "PointsPerWinRate": "Attribute points for +5%"
+      },
+      "Actions": {
+        "Reset": "Restore defaults",
+        "Save": "Save settings",
+        "Detect": "Detect",
+        "DetectHint": "Roll the target check from a character sheet. The result is applied only to the current game."
+      },
+      "Detection": {
+        "Name": "Attribute Path Detector",
+        "Prompt": "To detect the attribute path cleanly, set the target stat on a temporary character to a distinctive number, then roll that check from the character sheet.",
+        "PromptHint": "A unique value like 999 makes it much easier to find the right path across different game systems.",
+        "Listening": "Waiting for the next character-sheet roll...",
+        "NoRoll": "No roll was detected within 60 seconds. Please try again.",
+        "NoActor": "That roll could not be tied to an actor. Roll directly from the character sheet.",
+        "Found": "Detected a usable path: {path} (modifier: {value}). Apply it to the current config?",
+        "FoundMultiple": "Several possible paths matched modifier {value}. Pick the one that looks right.",
+        "NoMatch": "No matching path was found for modifier {value}. You can enter one manually below.",
+        "ManualHint": "If your system is unusual, it is fine to type the dot-path yourself.",
+        "Applied": "The detected path was added to this game: {path}"
+      },
+      "GameMode": {
+        "HandBias": "Card bias",
+        "StartingHandBias": "Starting hand bias",
+        "DiceBias": "Dice bias",
+        "InitialDiceBias": "Initial private dice bias",
+        "PayoutSwing": "Payout swing",
+        "HandAndDrawBias": "Starting hand and draw bias"
+      },
+      "BaccaratHint": "Adjusts payout size only; it does not change the shared card result."
+    },
+    "Participant": {
+      "UnnamedActor": "Unnamed character",
+      "DealerFallback": "Dealer",
+      "UnnamedParticipant": "Unnamed participant",
+      "Unnamed": "Unnamed",
+      "You": "You",
+      "NPCName": "NPC",
+      "DMOwner": "DM"
+    },
+    "ChipSettlementChat": {
+      "Title": "Parlor Chip Settlement",
+      "Sub": "All player chips were reset to zero after settlement.",
+      "Player": "Player",
+      "FinalChips": "Final chips"
+    },
+    "ClosePrompt": {
+      "Title": "Confirm Close",
+      "GMBody": "Do you want to step away from this table or disband it for everyone?",
+      "PlayerBody": "You can leave the table view for now and return while the table is still running.",
+      "GMConfirm": "Disband Table",
+      "GMLeave": "Step Away",
+      "GMDisband": "Disband Table",
+      "PlayerConfirm": "Leave Table"
+    },
+    "Session": {
+      "AlreadyRunning": "A Parlor table is already running. Return to it before starting another one."
+    },
+    "SessionDock": {
+      "Title": "Table still running",
+      "Subtitle": "{game} · Round {round}",
+      "Return": "Return",
+      "UnknownGame": "Parlor Table"
+    },
+    "ResultFx": {
+      "BustTitle": "Bust",
+      "WinTitle": "Round Won",
+      "LoseTitle": "Round Lost",
+      "PushTitle": "Push"
+    },
+    "Common": {
+      "Bet": "Bet",
+      "BetPlaced": "Bet placed",
+      "Amount": "Amount",
+      "GP": "GP",
+      "Confirm": "Confirm",
+      "Cancel": "Cancel",
+      "Apply": "Apply",
+      "Save": "Save",
+      "Reset": "Restore defaults",
+      "Start": "Start",
+      "Finish": "Finish",
+      "Close": "Close",
+      "CloseResult": "Close Result",
+      "NewRound": "New Round",
+      "NextRound": "Next Round",
+      "Deal": "Deal",
+      "Settle": "Settle",
+      "Hit": "Hit",
+      "Stand": "Stand",
+      "ConfirmCollect": "Confirm Collect",
+      "Player": "Player",
+      "Dealer": "Dealer",
+      "GM": "GM",
+      "DM": "DM",
+      "NPC": "NPC",
+      "BOT": "Test Bot",
+      "You": "You",
+      "CurrentParticipant": "Current participant",
+      "CurrentRole": "Current role",
+      "CurrentBetRole": "Current betting seat",
+      "YourRole": "Your character",
+      "Spectating": "Spectating",
+      "AvailableChips": "Available chips",
+      "TableProgress": "Table progress",
+      "TablePot": "Total pot",
+      "RoundPlayers": "Players this round",
+      "ResultOnSeat": "Results are already on the player cards",
+      "ViewSettlementPanel": "Open settlement",
+      "SettlementOpen": "Settlement is already open.",
+      "WinnerIs": "Winner: {winner}",
+      "CurrentRoleResult": "Current role result: {result}",
+      "RoundCounter": "Round {round}",
+      "NoBet": "No bet",
+      "WaitingBet": "Waiting to bet",
+      "WaitingDeal": "Waiting for deal",
+      "WaitingSettlement": "Waiting for settlement",
+      "Waiting": "Waiting",
+      "Unknown": "Unknown",
+      "Infinity": "∞",
+      "Chips": "Chips",
+      "ChipsInfinity": "Chips ∞",
+      "Win": "Win",
+      "Lose": "Lose",
+      "Tie": "Tie",
+      "Push": "Push",
+      "Bust": "Bust",
+      "Ready": "Ready",
+      "Dealing": "Dealing",
+      "BettingPanel": "Betting",
+      "AlreadyBet": "{name} has already bet",
+      "NoControlledParticipant": "You do not control a participating character right now.",
+      "AutoAdvanceBet": "After you bet, the UI jumps to the next character who still needs one.",
+      "BetHint": "Enter an amount, then click the button on the right.",
+      "BetAmountTooLow": "Bet amount must be greater than 0.",
+      "BetFailed": "The bet failed. Please try again.",
+      "BetFailedRetry": "Bet failed. Please try again.",
+      "BetInvalidAmount": "Invalid bet amount.",
+      "BetBelowLimit": "Minimum bet is {min}.",
+      "BetAboveLimit": "Maximum bet is {max}.",
+      "BetNotInPhase": "Betting is no longer open.",
+      "BetNotParticipant": "That character is not in the participant list for this round.",
+      "BetSessionMissing": "This session no longer exists. Please start a new round.",
+      "BetMissingParticipant": "You do not control a participant who can bet right now.",
+      "ChipsInsufficient": "Not enough chips. You have {balance} and tried to bet {amount}.",
+      "CurrentTurn": "{name}'s Turn"
+    },
+    "TableDecks": {
+      "GMOnly": "Only the GM can modify table decks",
+      "Unnamed": "Unnamed Deck"
+    },
+    "CrazyEights": {
+      "Action": {
+        "Draw": "Draw",
+        "Pass": "Pass",
+        "TakePenalty": "Take the {count}-card penalty",
+        "ChooseSuit": "Choose a suit"
+      },
+      "Suit": {
+        "hearts": "Hearts",
+        "diamonds": "Diamonds",
+        "clubs": "Clubs",
+        "spades": "Spades"
+      },
+      "Center": {
+        "Phase": {
+          "Idle": "Waiting",
+          "Dealing": "Dealing",
+          "Turns": "Turns",
+          "Resolving": "Settlement"
+        },
+        "DealingTitle": "Dealing the cards",
+        "DealingSub": "Take a look at your hand, play starts in a moment.",
+        "TurnTitle": "{name}'s turn",
+        "ChooseSuitTitle": "{name} played an eight and is calling a suit",
+        "PendingDrawTitle": "{name}: draw {count} penalty cards or stack a 2",
+        "WinnerTitle": "{name} is out!",
+        "WinSub": "The winner takes {amount} chips.",
+        "SplitTitle": "Dead round, pot split",
+        "SplitSub": "The lowest hands each take {amount}.",
+        "DeadTitle": "Blocked round: {name} has the fewest points",
+        "DeadSub": "Stock gone and nobody could play; lowest points takes {amount}.",
+        "AbortedTitle": "Round could not start",
+        "AbortedSub": "Fewer than two seats could cover the ante. The DM can adjust and restart.",
+        "ResolvingNoteGM": "Review the results below. Next Round settles this round and deals again; Finish settles and closes the table.",
+        "ResolvingNotePlayer": "Waiting for the DM to start the next round.",
+        "CurrentSuit": "Suit {suit}",
+        "Stock": "Stock {count}",
+        "Direction": {
+          "Clockwise": "Clockwise",
+          "CounterClockwise": "Counterclockwise"
+        },
+        "LastAction": {
+          "Deal": "Dealt {count} cards each",
+          "Play": "{name} plays {card}",
+          "Wild": "{name} plays an eight",
+          "ChooseSuit": "{name} calls {suit}",
+          "Draw": "{name} draws {count}",
+          "Pass": "{name} passes",
+          "Penalty": "{name} is dealt a {count}-card penalty",
+          "Skip": "{name} is skipped",
+          "Reverse": "{name} reverses play",
+          "Reshuffle": "Discards reshuffled into the stock",
+          "Win": "{name} goes out",
+          "Dead": "Nobody could play, dead round"
+        }
+      },
+      "Error": {
+        "NotYourTurn": "Not your turn.",
+        "WrongPhase": "Not right now.",
+        "NotPlayer": "You are not in this round.",
+        "CardNotPlayable": "That card does not match the suit or rank.",
+        "CardNotInHand": "That card is not in your hand.",
+        "InvalidCard": "Invalid card.",
+        "MustChooseSuit": "Choose a suit first.",
+        "NoSuitNeeded": "No suit to choose right now.",
+        "InvalidSuit": "Invalid suit.",
+        "PendingDraw": "A penalty is pending: play a 2 or take the cards.",
+        "CannotDraw": "You cannot draw right now.",
+        "CannotPass": "You cannot pass right now.",
+        "RequestFailed": "The request failed, try again."
+      },
+      "Footer": {
+        "Spectating": "Spectating",
+        "YourTurn": "Your turn: click a playable card or draw.",
+        "YourTurnAfterDraw": "You drew: play a card or pass.",
+        "ChooseSuit": "Your eight is played. Choose the next suit to finish your turn.",
+        "PendingDraw": "{count}-card penalty pending: play a 2 to pass it on, or take it.",
+        "OtherTurn": "{name}'s turn.",
+        "Dealing": "Dealing...",
+        "Resolving": "Round over.",
+        "MustPlayAfterDraw": "You drew a playable card. Play a card to continue."
+      },
+      "Label": {
+        "Stock": "Stock",
+        "Discard": "Discard",
+        "Suit": "Current suit",
+        "Direction": "Direction"
+      },
+      "Seat": {
+        "CardsLeft": "{count} cards",
+        "LastCard": "Last card",
+        "StatusCurrent": "Playing",
+        "StatusWaiting": "Waiting",
+        "StatusSkipped": "Skipped",
+        "StatusWinner": "Winner",
+        "StatusSittingOut": "Sitting out",
+        "NotePoints": "{points} points left"
+      },
+      "Hud": {
+        "HandSummary": "{count} cards · {points} pts"
+      },
+      "Settlement": {
+        "Player": "Player",
+        "Hand": "Remaining hand",
+        "CardsLeft": "Cards",
+        "Points": "Points",
+        "Ante": "Ante",
+        "Penalty": "Penalty",
+        "Payout": "Payout",
+        "Net": "Net"
+      },
+      "Order": {
+        "Label": "Turn order",
+        "Current": "Current",
+        "Next": "Next"
+      }
+    },
+    "BeetleRace": {
+      "Action": {
+        "dash": {
+          "Name": "Dash",
+          "Desc": "A sudden burst of speed with a trail of dust."
+        },
+        "fly": {
+          "Name": "Take Flight",
+          "Desc": "Opens its wing cases and flies. The fastest move, and obviously fishy."
+        },
+        "hop": {
+          "Name": "Hop",
+          "Desc": "Bounces forward a few times."
+        },
+        "blink": {
+          "Name": "Blink",
+          "Desc": "Vanishes in a puff of smoke and pops out further ahead."
+        },
+        "jet": {
+          "Name": "Gas Boost",
+          "Desc": "A green puff out the back and a lurch forward."
+        },
+        "brake": {
+          "Name": "Slam Brakes",
+          "Desc": "Stops dead, leaving two skid marks."
+        },
+        "spin": {
+          "Name": "Spin Out",
+          "Desc": "Slips and spins on the spot."
+        },
+        "flip": {
+          "Name": "Belly Up",
+          "Desc": "Flips onto its back, legs kicking, and takes a while to right itself."
+        },
+        "snack": {
+          "Name": "Snack Break",
+          "Desc": "Stops to nibble a crumb on the track."
+        },
+        "nap": {
+          "Name": "Doze Off",
+          "Desc": "Falls asleep mid-race, Zzz and all."
+        },
+        "moonwalk": {
+          "Name": "Moonwalk",
+          "Desc": "Legs keep walking while the body slides backwards."
+        },
+        "wander": {
+          "Name": "Wander",
+          "Desc": "Weaves from side to side and barely moves forward."
+        },
+        "trip": {
+          "Name": "Trip",
+          "Desc": "Tumbles head over heels."
+        },
+        "taunt": {
+          "Name": "Taunt",
+          "Desc": "Turns around and waves its antennae at the others."
+        },
+        "bow": {
+          "Name": "Bow",
+          "Desc": "Stops to bow to the crowd."
+        },
+        "cheer": {
+          "Name": "Celebrate",
+          "Desc": "Hops on the spot, celebrating early."
+        },
+        "roll": {
+          "Name": "Roll Up",
+          "Desc": "Curls into a ball and rolls forward."
+        },
+        "dig": {
+          "Name": "Burrow",
+          "Desc": "Digs in, pushes a mound of earth forward and pops out ahead."
+        },
+        "sneeze": {
+          "Name": "Sneeze",
+          "Desc": "Holds it in, then ACHOO! and gets blown back a little."
+        },
+        "mud": {
+          "Name": "Mud Trap",
+          "Desc": "Legs spin uselessly in the mud, splattering everywhere."
+        },
+        "dungball": {
+          "Name": "Dung Ball",
+          "Desc": "Stops to push a ball that keeps getting bigger. Very slow going."
+        },
+        "dance": {
+          "Name": "Dance",
+          "Desc": "Wiggles in little circles with music notes popping out."
+        },
+        "haste": {
+          "Name": "Haste",
+          "Desc": "Spell: a golden glow, and legs moving so fast they blur."
+        },
+        "enlarge": {
+          "Name": "Enlarge",
+          "Desc": "Spell: grows to twice its size and takes huge strides."
+        },
+        "freeze": {
+          "Name": "Freeze",
+          "Desc": "Spell: frozen in a block of ice until it shatters."
+        },
+        "zap": {
+          "Name": "Lightning Strike",
+          "Desc": "Spell: a bolt from above leaves it charred and smoking."
+        },
+        "snail": {
+          "Name": "Snailify",
+          "Desc": "Spell: turned into a snail for a while, crawling slowly."
+        }
+      },
+      "Temperament": {
+        "steady": {
+          "Name": "Steady",
+          "Intro": "{name} runs at an even pace and rarely gets into trouble."
+        },
+        "greedy": {
+          "Name": "Greedy",
+          "Intro": "{name} can't walk past food, race or no race."
+        },
+        "hothead": {
+          "Name": "Hothead",
+          "Intro": "{name} is famously hot-headed: surges when excited, and trips just as often."
+        },
+        "lazy": {
+          "Name": "Lazy",
+          "Intro": "{name} is always slow off the line and might nod off halfway."
+        },
+        "clumsy": {
+          "Name": "Clumsy",
+          "Intro": "{name} has more enthusiasm than coordination; slips and tumbles are routine."
+        },
+        "showoff": {
+          "Name": "Show-off",
+          "Intro": "{name} lives for the crowd and will stop mid-race to strike a pose."
+        },
+        "timid": {
+          "Name": "Timid",
+          "Intro": "{name} spooks easily: slams the brakes when nervous, even backs up."
+        },
+        "sly": {
+          "Name": "Sly",
+          "Intro": "{name} stays quiet for most of the race and shows its hand only at the end."
+        }
+      },
+      "Beetle": {
+        "copper": {
+          "Name": "Copper General",
+          "Intro": "Temper as red as his shell. Can't hold back once the gun fires, and often trips over his own feet.",
+          "Catchphrase": "Charge!"
+        },
+        "jade": {
+          "Name": "Jade Widow",
+          "Intro": "Idles in the pack for most of the race and nobody remembers she's there. Until the last stretch.",
+          "Catchphrase": "Let's see how this goes."
+        },
+        "indigo": {
+          "Name": "Indigo Ranger",
+          "Intro": "Neither fast nor slow, never makes a mistake. His backers rarely get rich and rarely go broke.",
+          "Catchphrase": "Steady now."
+        },
+        "golden": {
+          "Name": "Old Goldhorn",
+          "Intro": "The strongest old-timer on the track, provided he's awake. Always half a beat late off the line.",
+          "Catchphrase": "Who's calling?"
+        },
+        "ash": {
+          "Name": "Ash Imp",
+          "Intro": "All enthusiasm, zero coordination. Flips over at least once a race. The crowd adores him.",
+          "Catchphrase": "I got this!"
+        },
+        "amethyst": {
+          "Name": "Amethyst Princess",
+          "Intro": "Cares more about whether the crowd is watching than about the finish line.",
+          "Catchphrase": "Eyes on me!"
+        },
+        "crimson": {
+          "Name": "Rosy Butterball",
+          "Intro": "Knows every breadcrumb on the track by name.",
+          "Catchphrase": "Anything to eat?"
+        },
+        "moss": {
+          "Name": "Moss Hermit",
+          "Intro": "Big body, small nerve. When anyone next to him surges, he wants to back off.",
+          "Catchphrase": "Don't crowd me..."
+        }
+      },
+      "Bubble": {
+        "dash1": "Out of my way!",
+        "dash2": "Hear that wind!",
+        "fly1": "Didn't know I could fly, did you?",
+        "fly2": "Toodle-oo!",
+        "hop1": "Hup! Hup! Ha!",
+        "blink1": "You can't see me~",
+        "blink2": "What just happened?",
+        "jet1": "Pardon me...",
+        "jet2": "Too much breakfast.",
+        "brake1": "Wait, did I leave the stove on?",
+        "brake2": "Pothole!",
+        "spin1": "Whoa-oa-oa—",
+        "spin2": "Slippery floor!",
+        "flip1": "Help, I'm stuck!",
+        "flip2": "Nice ceiling.",
+        "snack1": "Crumbs! Whose are these?",
+        "snack2": "Just one bite. Just one.",
+        "nap1": "Five more minutes...",
+        "nap2": "Didn't sleep well last night.",
+        "moonwalk1": "Backwards still counts.",
+        "moonwalk2": "Tactical retreat.",
+        "wander1": "Which way was the finish?",
+        "wander2": "Ooh, a flower.",
+        "trip1": "Who tripped me?!",
+        "trip2": "Oops!",
+        "taunt1": "Catch me if you can~",
+        "taunt2": "Is that all you've got?",
+        "bow1": "Thank you, thank you.",
+        "cheer1": "I'm winning! (Probably.)",
+        "cheer2": "Wheee!",
+        "rigged1": "The house says I win today.",
+        "rigged2": "Someone slipped me a candy...",
+        "rigged3": "I didn't see anything.",
+        "sleepy1": "So... sleepy...",
+        "roll1": "Roll, roll, roll—",
+        "dig1": "Coming through below!",
+        "dig2": "Tunnel time!",
+        "sneeze1": "Ah... ah... ACHOO!",
+        "mud1": "Who left this mud here?!",
+        "dung1": "This ball is mine!",
+        "dance1": "Hit the music~",
+        "haste1": "I feel... FAST!",
+        "enlarge1": "Did I get taller?",
+        "freeze1": "So... cold...",
+        "zap1": "W-who zapped me?",
+        "snail1": "Why am I so slow...",
+        "magic1": "(Something smells like magic.)",
+        "hop2": "One hop, then another!",
+        "bow2": "You're too kind.",
+        "haste2": "My legs won't stop!",
+        "freeze2": "Who froze the track?"
+      },
+      "Move": {
+        "dash": "Surge",
+        "hop": "Hopping",
+        "jet": "Gas",
+        "brake": "Screech",
+        "spin": "Spin",
+        "flip": "Belly Up",
+        "snack": "Snack",
+        "nap": "Nap",
+        "moonwalk": "Step Back",
+        "wander": "Daydream",
+        "trip": "Trip",
+        "taunt": "Taunt",
+        "bow": "Curtsy",
+        "cheer": "Early Celebration",
+        "cheatFly": "Liftoff",
+        "cheatBlink": "Vanish",
+        "cheatRocket": "Candy Rocket",
+        "cheatDash": "Fixed Winner",
+        "cheatNap": "Drugged Nap",
+        "cheatFlip": "Knocked Over",
+        "cheatMoonwalk": "Pulled Back",
+        "roll": "Roll",
+        "dig": "Burrow",
+        "sneeze": "Achoo",
+        "mud": "Mud Pit",
+        "dungball": "Found a Ball",
+        "dance": "Dance Break",
+        "cheatTunnel": "Secret Tunnel",
+        "spellHaste": "Haste",
+        "spellEnlarge": "Enlarge",
+        "spellFreeze": "Freeze",
+        "spellZap": "Lightning",
+        "spellSnail": "Snailify"
+      },
+      "Race": {
+        "ravencup": "Raven Cup"
+      },
+      "Studio": {
+        "GMOnly": "Only the DM can change beetle races.",
+        "CopySuffix": " (copy)",
+        "ThisBeetle": "This beetle",
+        "Unnamed": "Nameless beetle",
+        "PresetTag": "preset",
+        "UnnamedRace": "Untitled race",
+        "Title": "Beetle Derby Studio",
+        "Tab": {
+          "race": "Race cards",
+          "beetle": "Beetles",
+          "move": "Moves",
+          "bubble": "Bubbles"
+        },
+        "New": {
+          "race": "New race card",
+          "beetle": "New beetle",
+          "move": "New move",
+          "bubble": "New bubble"
+        },
+        "NewRaceName": "New race",
+        "NewBeetleName": "New beetle",
+        "NewMoveName": "New move",
+        "Empty": "Nothing here yet.",
+        "RaceMeta": "{lanes} beetles · {seconds}s",
+        "BeetleMeta": "Power {power} · {temperament}",
+        "Pool": {
+          "random": "Random",
+          "cheat": "Cheat"
+        },
+        "PresetLocked": "Presets are read-only. Make a copy to change it.",
+        "PresetParametersLocked": "Preset parameters are locked",
+        "Disabled": "Disabled",
+        "RandomBubble": "One random line each time",
+        "ChooseBubble": "Choose an existing line…",
+        "AddBubble": "Add",
+        "RemoveBubble": "Remove line",
+        "MissingBubble": "(line deleted)",
+        "Duplicate": "Copy as custom",
+        "Delete": "Delete",
+        "Save": "Save",
+        "Saved": "Saved.",
+        "SaveFailed": "Not saved: too many entries, or you are not the GM.",
+        "Unsaved": "Unsaved changes",
+        "DiscardTitle": "Discard changes?",
+        "DiscardBody": "This entry has unsaved changes. Leave and they're gone.",
+        "DeleteTitle": "Delete entry",
+        "DeleteBody": "Delete \"{name}\"? Race cards and moves that use it will skip it.",
+        "Field": {
+          "Name": "Name",
+          "Power": "Power",
+          "Color": "Colour",
+          "Pattern": "Pattern",
+          "Horn": "Horn",
+          "Temperament": "Temperament",
+          "Intro": "Intro",
+          "Catchphrase": "Catchphrase",
+          "Pool": "Use as",
+          "Action": "Action",
+          "Duration": "Duration",
+          "Strength": "Strength",
+          "Bubble": "Speech bubble",
+          "Enabled": "Enable move",
+          "NewBubble": "Or write a new line",
+          "BubbleText": "Line",
+          "RaceName": "Race name",
+          "Lanes": "Starting beetles ({min}–{max}, top row is lane 1)",
+          "Multiplier": "Default payout",
+          "RaceDuration": "Race length",
+          "BetSeconds": "Betting time",
+          "EventRate": "Mishaps",
+          "MinBet": "Minimum bet",
+          "MaxBet": "Maximum bet",
+          "PowerDisplay": "How players see power",
+          "Parade": "Parade the beetles before betting"
+        },
+        "Hint": {
+          "Power": "Higher power runs faster on an ordinary day.",
+          "Temperament": "GM only. Decides which mishaps it tends to have.",
+          "Intro": "Shown to players during the parade and betting.",
+          "Catchphrase": "Pops up when it walks on in the parade.",
+          "Pool": {
+            "random": "Fires at random during the race, weighted by temperament. The GM can also trigger it as a quiet cheat.",
+            "cheat": "Only fires when the GM clicks it on the cheat panel."
+          },
+          "Duration": "Default {seconds}s. Longer means the action holds longer, not slow motion.",
+          "Strength": "How hard it speeds up or slows down. 1 is the default.",
+          "NewBubble": "Saved as a new bubble and attached to this move.",
+          "BubbleText": "Keep it short; a few words read best.",
+          "LaneOdds": "Payout for this beetle; blank uses the default",
+          "Multiplier": "A win returns stake × payout, stake included. With {fair} beetles, a fair payout is about ×{fair}.",
+          "MaxBet": "0 means no limit."
+        },
+        "Pattern": {
+          "plain": "Plain",
+          "spots": "Spots",
+          "stripes": "Stripes",
+          "stars": "Stars",
+          "bands": "Bands"
+        },
+        "Horn": {
+          "none": "No horn",
+          "rhino": "Rhino horn",
+          "stag": "Stag jaws"
+        },
+        "ActionGroup": {
+          "boost": "Speed up",
+          "stall": "Slow down",
+          "show": "Showing off",
+          "magic": "Spells (obvious cheats)"
+        },
+        "EventRate": {
+          "low": "Few",
+          "normal": "Normal",
+          "high": "Many"
+        },
+        "IntroFromTemperament": "Write from temperament",
+        "PreviewHint": "Click to make it perform.",
+        "MovePreviewHint": "Loops at the current duration and strength. Click to replay now.",
+        "FixedDuration": "Fixed {seconds}s (speed-ups only take strength)",
+        "NoStrength": "This action has no strength setting",
+        "NoBubble": "(says nothing)",
+        "NewBubblePlaceholder": "e.g. Watch this!",
+        "UsedBy": "Moves using this line",
+        "UsedByNone": "No move uses it yet.",
+        "MissingBeetle": "(this beetle was deleted)",
+        "PowerShort": "Power {power}",
+        "AddBeetle": "+ Add a beetle…",
+        "TooFewLanes": "Needs at least {min} beetles to race."
+      },
+      "Phase": {
+        "IDLE": "Setup",
+        "PARADE": "Parade",
+        "BETTING": "Betting",
+        "COUNTDOWN": "Closed",
+        "RACING": "Racing",
+        "RESOLVING": "Results"
+      },
+      "Place": {
+        "1": "1st",
+        "2": "2nd",
+        "3": "3rd",
+        "4": "4th",
+        "5": "5th",
+        "6": "6th",
+        "7": "7th",
+        "8": "8th"
+      },
+      "Head": {
+        "Round": "Race {round}",
+        "BettingLeft": "Betting closes in {seconds}s",
+        "ParadeOf": "Runner {index} of {total}"
+      },
+      "Herald": {
+        "Parade": "Ladies and gentlemen, the runners!",
+        "Betting": "Betting is open. Choose wisely.",
+        "Closed": "Betting closed! On your marks—",
+        "Start": "And they're off!",
+        "Action": "{name}: {action}",
+        "Lead": "{name} takes the lead!",
+        "Half": "Halfway there!",
+        "Final": "Final stretch!",
+        "Finish": "{name} crosses the line!",
+        "Photo": "By a whisker! {name} takes second"
+      },
+      "Board": {
+        "Finish": "FINISH",
+        "Go": "GO!",
+        "Pool": "Pot {amount}"
+      },
+      "Caption": {
+        "Prev": "Previous beetle",
+        "Next": "Next beetle",
+        "PowerNumber": "Power {power}",
+        "PowerHidden": "Power ???",
+        "Stats": "{wins} wins in {races} races",
+        "Debut": "First race",
+        "Backers": "Backed by",
+        "NoBackers": "No backers yet"
+      },
+      "Gm": {
+        "Tag": "DM",
+        "SkipParade": "Skip parade",
+        "CloseBetting": "Close betting & start",
+        "CheatHint": "Click a beetle (or press 1–8) to cheat"
+      },
+      "Cheat": {
+        "Blatant": "Cheats",
+        "None": "This race card has no cheat moves",
+        "Natural": "Natural moves",
+        "NaturalHint": "Identical to random incidents; nobody can tell it was you",
+        "Bias": "Secret speed",
+        "BiasHint": "No effects at all, takes hold quietly",
+        "Slower": "Slow",
+        "Faster": "Fast",
+        "Apply": "Run at this speed",
+        "Reset": "Back to normal"
+      },
+      "Stands": {
+        "Label": "STANDS",
+        "Watching": "watching"
+      },
+      "Hud": {
+        "Watching": "You're watching this race without betting.",
+        "GmWatching": "You're the house and not seated as a bettor. During the race, click a beetle to cheat.",
+        "Balance": "Balance {amount}",
+        "Staked": "Staked this race: {amount}",
+        "Ticket": "BET SLIP",
+        "NoBets": "No bets yet. Use the arrows on the stage to pick a beetle, then set a stake.",
+        "Remove": "Remove this bet",
+        "Stake": "STAKE",
+        "Clear": "Clear",
+        "Withdraw": "Withdraw all",
+        "Bet": "Back #{n} {name}",
+        "Change": "Change bet on #{n} {name}",
+        "Returns": "Pays {amount} if it wins",
+        "Locked": "Betting is closed. Enjoy the race.",
+        "NoBetThisRound": "No bet this race.",
+        "WaitParade": "The runners are parading. Betting opens right after.",
+        "Won": "Winner! You collect {amount}",
+        "Lost": "No luck. You lost {amount}"
+      },
+      "Settlement": {
+        "Winner": "{name} wins!",
+        "Aborted": "The race couldn't start",
+        "Player": "Bettor",
+        "Bets": "Bets",
+        "Payout": "Payout",
+        "Net": "Net",
+        "NoBets": "Nobody bet on this race.",
+        "Next": "Next race"
+      },
+      "Error": {
+        "WrongPhase": "You can't do that right now.",
+        "NotPlayer": "You're not on this table's list of bettors.",
+        "InvalidLane": "There's no such lane.",
+        "InvalidAmount": "That stake isn't valid.",
+        "BelowMin": "The minimum stake is {min}.",
+        "AboveMax": "The maximum stake is {max}.",
+        "NotEnough": "Not enough balance (all your bets together can't exceed {balance}).",
+        "AlreadyFinished": "That beetle has already finished.",
+        "InvalidMove": "No such move.",
+        "RequestFailed": "The request didn't go through. Try again shortly."
+      },
+      "Sound": {
+        "On": "Table sound on (click to mute everyone)",
+        "Off": "Table sound muted (click to turn it on)"
+      }
+    }
+  },
+  "PARLORTAVERN": {
+    "Name": "Fantasy Tavern",
+    "Actions": {
+      "LeaveTable": "Leave Table"
+    },
+    "Status": {
+      "Spectating": "Spectating",
+      "You": "You",
+      "HandStrength": "Hand Strength"
+    },
+    "Roster": {
+      "Title": "At the Table"
+    },
+    "Herald": {
+      "TableOpen": "The table is open — take your seats",
+      "Button": "{name} takes the button",
+      "SmallBlind": "{name} posts small blind {amount}",
+      "BigBlind": "{name} posts big blind {amount}",
+      "Check": "{name} checks",
+      "Call": "{name} calls {amount}",
+      "Bet": "{name} bets {amount}",
+      "RaiseTo": "{name} raises to {amount}",
+      "AllIn": "{name} is all in for {amount}",
+      "Fold": "{name} folds",
+      "Win": "{name} wins {amount}",
+      "Hit": "{name} asks for a card",
+      "Draw": "{name} draws one",
+      "Stand": "{name} stands",
+      "Bust": "{name} busts",
+      "Natural": "{name} has blackjack",
+      "BetSide": "{name} backs {side} for {amount}",
+      "SideWin": "{side} takes it",
+      "War": "{name} ties the dealer — war",
+      "Surrender": "{name} surrenders",
+      "Beats": "{name} beats the dealer",
+      "Beaten": "{name} loses to the dealer",
+      "Push": "{name} pushes",
+      "Play": "{name} plays",
+      "DealerHand": "{name} shows {hand}",
+      "DealerNotQualified": "{name} does not qualify",
+      "Claim": "{name} calls {quantity} × {face}",
+      "Open": "{name} opens the cups",
+      "ClaimTrue": "The call holds — {count} on the table",
+      "ClaimFalse": "The call is a lie — only {count}",
+      "LoseDie": "{name} loses a die",
+      "MatchWin": "{name} takes the match",
+      "Roll": "{name} rolls a {value}",
+      "RoundWin": "{name} takes the round",
+      "CrazyEights": {
+        "Deal": "Dealt — {count} each",
+        "Play": "{name} plays {card}",
+        "Wild": "{name} plays an eight",
+        "Suit": "{name} calls {suit}",
+        "Skip": "{name} is skipped",
+        "Reverse": "Play reverses",
+        "DrawTwo": "{name} draws {count} as penalty",
+        "Draw": "{name} draws a card",
+        "Pass": "{name} passes",
+        "LastCard": "{name} — last card!",
+        "Win": "{name} goes out and takes {amount}",
+        "Dead": "Stock exhausted — dead round",
+        "Reshuffle": "Discards shuffled back into the stock"
+      }
+    },
+    "Games": {
+      "Blackjack": "Blackjack",
+      "Baccarat": "Baccarat",
+      "DragonTiger": "Dragon Tiger",
+      "CasinoWar": "Casino War",
+      "ThreeCardPoker": "Three Card Poker",
+      "TexasHoldem": "Texas Hold'em",
+      "LiarsDice": "Liar's Dice",
+      "Bone21": "Bones Twenty-One",
+      "CrazyEights": "Crazy Eights",
+      "BeetleRace": "Beetle Derby"
+    },
+    "Labels": {
+      "BaccaratPlayer": "PLAYER",
+      "BaccaratBanker": "BANKER",
+      "DealerMark": "D",
+      "Dealer": "Dealer",
+      "War": "War",
+      "Dragon": "DRAGON",
+      "Tiger": "TIGER",
+      "Settlement": "Settlement",
+      "Bet": "Ante",
+      "CurrentClaim": "Current Call",
+      "NoClaimYet": "No Calls Yet",
+      "TableDice": "Dice on Table",
+      "DealerNotQualified": "Not Qualified"
+    },
+    "Blackjack": {
+      "DealerSummary": "Dealer · points"
+    },
+    "Table": {
+      "Pot": "Pot {amount}",
+      "CurrentBet": "Current Bet {amount}"
+    },
+    "Workshop": {
+      "FeltColor": "Felt Color",
+      "FeltShown": "Shown",
+      "FeltHidden": "Hidden",
+      "SurfaceStyle": "Style",
+      "StyleSemiReal": "Semi-real",
+      "StyleSemiRealHint": "Keep the real wood grain while softening it with sparse painted marks",
+      "StyleHanddraw": "Hand-drawn",
+      "StyleHanddrawHint": "Render both wood and felt with painted color, brush marks, and paper grain",
+      "SurfaceMaterial": "Wood",
+      "MaterialTavern": "Tavern Oak",
+      "MaterialWalnut": "Smoked Walnut",
+      "MaterialButcher": "Butcher Block",
+      "MaterialMahogany": "Red Mahogany",
+      "MaterialEbony": "Ebony",
+      "MaterialDrift": "Weathered Oak",
+      "MoveBackward": "Back",
+      "MoveForward": "Forward",
+      "MoveBackwardHint": "Move back one layer",
+      "MoveForwardHint": "Move forward one layer",
+      "PropTransformHint": "Wheel to scale · Ctrl + wheel to rotate",
+      "PropScaleHint": "Wheel to scale",
+      "EditTable": "Edit Table",
+      "TableName": "Table Name",
+      "Corners": "Corners",
+      "CornerMetal": "Metal",
+      "CornerFiligree": "Filigree",
+      "CornerNone": "None",
+      "CornerColor": "Metal Color",
+      "Felt": "Felt",
+      "Background": "Backdrop",
+      "Save": "Save",
+      "Cancel": "Cancel",
+      "BackgroundSourcePlaceholder": "Image or video path (webm/mp4/jpg/png…)",
+      "Browse": "Browse",
+      "Clear": "Clear",
+      "Blur": "Blur",
+      "Brightness": "Brightness",
+      "Opacity": "Opacity",
+      "RemoveProp": "Remove",
+      "Rotation": "Rotation",
+      "SymmetricNoRotation": "This symmetrical prop does not need rotation",
+      "Variants": "Variants",
+      "LayerStatus": "Layer {current} of {total}"
+    },
+    "Lobby": {
+      "TonightDecks": "Tonight’s Table",
+      "NewDeck": "New Deck",
+      "Active": "Tonight",
+      "NoDecks": "No table decks yet",
+      "Unnamed": "Unnamed Deck",
+      "EditLook": "Edit Look",
+      "Delete": "Delete Deck",
+      "DeleteConfirm": "Delete “{name}”? This cannot be undone.",
+      "EditHint": "Hit the palette to dress the table; ⚒ at any open table works too",
+      "NamePrompt": "Deck Name",
+      "NameOk": "Name It",
+      "Rename": "Rename"
+    },
+    "Props": {
+      "bottle-top": {
+        "Name": "Upright Bottle",
+        "Parts": {
+          "glass": "Bottle Glass",
+          "liquid": "Drink",
+          "cork": "Cork",
+          "seal": "Wax Seal",
+          "label": "Label"
+        },
+        "Styles": {
+          "girth": {
+            "Label": "Bottle Shape",
+            "Options": {
+              "std": "Standard",
+              "stout": "Stout"
+            }
+          },
+          "top": {
+            "Label": "Bottle Top",
+            "Options": {
+              "cork": "Bare Cork",
+              "wax": "Wax-Sealed"
+            }
+          }
+        },
+        "Variants": {
+          "Variant1": "Green Wine Bottle",
+          "Variant2": "Amber Spirits",
+          "Variant3": "Blue Private Reserve"
+        }
+      },
+      "bottle-pair": {
+        "Name": "Oval Bottle Tray",
+        "Parts": {
+          "glassA": "Upper Bottle Glass",
+          "glassB": "Lower Bottle Glass",
+          "liquidA": "Upper Bottle Drink",
+          "liquidB": "Lower Bottle Drink",
+          "cork": "Cork",
+          "seal": "Wax Seal",
+          "tray": "Wooden Tray",
+          "trim": "Tray Trim"
+        },
+        "Styles": {
+          "tray": {
+            "Label": "Tray Trim",
+            "Options": {
+              "wood": "Plain Wood",
+              "brass": "Brass Trim"
+            }
+          },
+          "tops": {
+            "Label": "Bottle Tops",
+            "Options": {
+              "mixed": "Wax and Cork",
+              "wax": "Two Wax Seals",
+              "cork": "Two Corks"
+            }
+          }
+        },
+        "Variants": {
+          "Variant1": "Cellar Selection",
+          "Variant2": "Lord's Private Reserve",
+          "Variant3": "Smuggler's Spirits"
+        }
+      },
+      "wine-cup": {
+        "Name": "Stemless Wine Cup",
+        "Parts": {
+          "glass": "Cup",
+          "wine": "Wine",
+          "rim": "Rim"
+        },
+        "Styles": {
+          "fill": {
+            "Label": "Fill",
+            "Options": {
+              "full": "Full",
+              "half": "Half Full",
+              "empty": "Empty"
+            }
+          },
+          "shape": {
+            "Label": "Cup Shape",
+            "Options": {
+              "wine": "Wine Cup",
+              "goblet": "Thick Goblet"
+            }
+          }
+        },
+        "Variants": {
+          "Variant1": "Full Red Wine",
+          "Variant2": "Half Amber Wine",
+          "Variant3": "After-Dinner Empty"
+        }
+      },
+      "bread-basket": {
+        "Name": "Bread Basket",
+        "Parts": {
+          "weave": "Basket Weave",
+          "bread": "Bread",
+          "liner": "Liner"
+        },
+        "Styles": {
+          "bread": {
+            "Label": "Bread",
+            "Options": {
+              "rolls": "Small Rolls",
+              "loaf": "Long Loaf"
+            }
+          },
+          "liner": {
+            "Label": "Liner",
+            "Options": {
+              "cloth": "Cloth-Lined",
+              "bare": "Bare Basket"
+            }
+          }
+        },
+        "Variants": {
+          "Variant1": "Red-Lined Rolls",
+          "Variant2": "Rye Loaf",
+          "Variant3": "Inn Breakfast"
+        }
+      },
+      "roast-board": {
+        "Name": "Roast Board",
+        "Parts": {
+          "board": "Cutting Board",
+          "roast": "Roast",
+          "crust": "Charred Crust",
+          "herb": "Herbs"
+        },
+        "Styles": {
+          "cut": {
+            "Label": "Serving",
+            "Options": {
+              "whole": "Whole",
+              "sliced": "Sliced"
+            }
+          },
+          "garnish": {
+            "Label": "Garnish",
+            "Options": {
+              "herbs": "Herbs",
+              "roots": "Root Vegetables"
+            }
+          }
+        },
+        "Variants": {
+          "Variant1": "Rosemary Roast",
+          "Variant2": "Banquet Slices",
+          "Variant3": "Hunter's Supper"
+        }
+      },
+      "sealed-letter": {
+        "Name": "Wax-Sealed Letter",
+        "Parts": {
+          "paper": "Letter",
+          "seal": "Wax Seal",
+          "ink": "Writing"
+        },
+        "Styles": {
+          "fold": {
+            "Label": "Form",
+            "Options": {
+              "envelope": "Envelope",
+              "scroll": "Folded Note"
+            }
+          },
+          "crest": {
+            "Label": "Seal Mark",
+            "Options": {
+              "star": "Star",
+              "crown": "Crown",
+              "plain": "Plain"
+            }
+          }
+        },
+        "Variants": {
+          "Variant1": "Burgundy Secret",
+          "Variant2": "Royal Dispatch",
+          "Variant3": "Old Account"
+        }
+      },
+      "ink-quill": {
+        "Name": "Ink and Quill",
+        "Parts": {
+          "feather": "Feather",
+          "shaft": "Quill Shaft",
+          "ink": "Ink",
+          "glass": "Ink Bottle",
+          "nib": "Nib"
+        },
+        "Styles": {
+          "feather": {
+            "Label": "Quill Shape",
+            "Options": {
+              "broad": "Broad Feather",
+              "slim": "Long Feather"
+            }
+          },
+          "pot": {
+            "Label": "Ink Bottle",
+            "Options": {
+              "square": "Square Bottle",
+              "faceted": "Faceted Bottle"
+            }
+          }
+        },
+        "Variants": {
+          "Variant1": "Scribe's Set",
+          "Variant2": "Raven Quill",
+          "Variant3": "Court Manuscript"
+        }
+      },
+      "herb-bundle": {
+        "Name": "Herb Bundle",
+        "Parts": {
+          "leaf": "Leaves",
+          "stem": "Stems",
+          "twine": "Twine"
+        },
+        "Styles": {
+          "kind": {
+            "Label": "Herb",
+            "Options": {
+              "sage": "Sage",
+              "rosemary": "Rosemary",
+              "mixed": "Mixed Herbs"
+            }
+          }
+        },
+        "Variants": {
+          "Variant1": "Sage Bundle",
+          "Variant2": "Rosemary Bundle",
+          "Variant3": "Kitchen Herbs"
+        }
+      },
+      "salt-cellar": {
+        "Name": "Salt Cellar and Spoon",
+        "Parts": {
+          "bowl": "Cellar",
+          "salt": "Salt",
+          "trim": "Rim",
+          "spoon": "Salt Spoon"
+        },
+        "Styles": {
+          "fill": {
+            "Label": "Seasoning",
+            "Options": {
+              "salt": "Coarse Salt",
+              "pepper": "Black Pepper",
+              "mixed": "Seasoned Salt"
+            }
+          },
+          "bowl": {
+            "Label": "Cellar Shape",
+            "Options": {
+              "metal": "Round Metal",
+              "ceramic": "Painted Ceramic"
+            }
+          }
+        },
+        "Variants": {
+          "Variant1": "Pewter Salt",
+          "Variant2": "Blackware Pepper",
+          "Variant3": "Copper Seasoned Salt"
+        }
+      },
+      "candelabra": {
+        "Name": "Candelabra",
+        "Parts": {
+          "frame": "Frame",
+          "wax": "Wax",
+          "flame": "Flame"
+        },
+        "Styles": {
+          "arms": {
+            "Label": "Candles",
+            "Options": {
+              "two": "Two Candles",
+              "three": "Three Candles"
+            }
+          }
+        },
+        "Variants": {
+          "Variant1": "Brass Hall",
+          "Variant2": "Wrought-Iron Cellar",
+          "Variant3": "Midnight Rite"
+        }
+      },
+      "keg": {
+        "Name": "Small Keg",
+        "Parts": {
+          "wood": "Staves",
+          "hoop": "Iron Hoops",
+          "bung": "Bung Hole"
+        },
+        "Styles": {
+          "hoops": {
+            "Label": "Hoops",
+            "Options": {
+              "double": "Two Hoops",
+              "triple": "Three Hoops"
+            }
+          },
+          "bung": {
+            "Label": "Bung",
+            "Options": {
+              "plug": "Wooden Bung",
+              "open": "Open"
+            }
+          }
+        },
+        "Variants": {
+          "Variant1": "Ale Keg",
+          "Variant2": "Aged Cask",
+          "Variant3": "On Tap"
+        }
+      },
+      "cardfan": {
+        "Name": "Card Stack",
+        "Parts": {
+          "back": "Card Back",
+          "trim": "Ornament",
+          "face": "Face Card"
+        },
+        "Styles": {
+          "count": {
+            "Label": "Cards",
+            "Options": {
+              "three": "Three Cards",
+              "five": "Five Cards"
+            }
+          },
+          "reveal": {
+            "Label": "Face Up",
+            "Options": {
+              "none": "Face Down",
+              "one": "One Revealed"
+            }
+          }
+        },
+        "Variants": {
+          "Variant1": "Tavern Red",
+          "Variant2": "Midnight Blue",
+          "Variant3": "Hunting Green"
+        }
+      },
+      "chipstack": {
+        "Name": "Chip Stacks",
+        "Parts": {
+          "chip": "Main Color",
+          "ring": "Ring",
+          "alt": "Accent Color"
+        },
+        "Styles": {
+          "stacks": {
+            "Label": "Stacks",
+            "Options": {
+              "two": "Two Stacks",
+              "three": "Three Stacks"
+            }
+          }
+        },
+        "Variants": {
+          "Variant1": "Red and Green",
+          "Variant2": "Blue and Gold",
+          "Variant3": "Jade and Black"
+        }
+      },
+      "dicecup": {
+        "Name": "Leather Dice Cup",
+        "Parts": {
+          "leather": "Leather",
+          "stitch": "Stitching",
+          "die": "Dice"
+        },
+        "Styles": {
+          "pose": {
+            "Label": "Pose",
+            "Options": {
+              "up": "Upright",
+              "spill": "Spilled Dice"
+            }
+          }
+        },
+        "Variants": {
+          "Variant1": "Aged Leather",
+          "Variant2": "Cup Opened",
+          "Variant3": "Black Raven"
+        }
+      },
+      "keyring": {
+        "Name": "Key Ring",
+        "Parts": {
+          "ring": "Iron Ring",
+          "key": "Keys"
+        },
+        "Styles": {
+          "count": {
+            "Label": "Keys",
+            "Options": {
+              "two": "Two Keys",
+              "three": "Three Keys"
+            }
+          },
+          "bow": {
+            "Label": "Key Bow",
+            "Options": {
+              "round": "Round",
+              "clover": "Trefoil"
+            }
+          }
+        },
+        "Variants": {
+          "Variant1": "Innkeeper's Keys",
+          "Variant2": "Cellar Keys",
+          "Variant3": "Vault Keys"
+        }
+      },
+      "platter": {
+        "Name": "Cheese Platter",
+        "Parts": {
+          "board": "Wooden Board",
+          "rind": "Cheese Rind",
+          "cheese": "Cheese",
+          "bread": "Bread",
+          "garnish": "Garnish"
+        },
+        "Styles": {
+          "spread": {
+            "Label": "Platter",
+            "Options": {
+              "cheese": "Cheese and Crumbs",
+              "full": "Cheese and Bread",
+              "feast": "Full Cold Platter"
+            }
+          }
+        },
+        "Variants": {
+          "Variant1": "Innkeeper's Welcome",
+          "Variant2": "Cheese Snack",
+          "Variant3": "Hunter's Platter"
+        }
+      },
+      "compass": {
+        "Name": "Brass Compass",
+        "Parts": {
+          "case": "Brass Case",
+          "face": "Dial",
+          "needle": "Needle"
+        },
+        "Styles": {
+          "lid": {
+            "Label": "Lid",
+            "Options": {
+              "open": "Open",
+              "shut": "Closed"
+            }
+          }
+        },
+        "Variants": {
+          "Variant1": "Navigator's Compass",
+          "Variant2": "Closed Compass",
+          "Variant3": "Silver Needle"
+        }
+      },
+      "dagger": {
+        "Name": "Dagger (Flat)",
+        "Parts": {
+          "blade": "Blade",
+          "guard": "Guard",
+          "grip": "Grip",
+          "pommel": "Pommel"
+        },
+        "Styles": {},
+        "Variants": {
+          "Variant1": "Iron Guard",
+          "Variant2": "Gilded",
+          "Variant3": "Ebony"
+        }
+      },
+      "tankard": {
+        "Name": "Pewter Tankard",
+        "Parts": {
+          "body": "Body",
+          "brew": "Drink",
+          "handle": "Handle"
+        },
+        "Styles": {},
+        "Variants": {
+          "Variant1": "Pewter",
+          "Variant2": "Copper",
+          "Variant3": "Silver"
+        }
+      },
+      "alemug": {
+        "Name": "Ale Mug",
+        "Parts": {
+          "wood": "Wooden Mug",
+          "ale": "Ale",
+          "foam": "Foam"
+        },
+        "Styles": {},
+        "Variants": {
+          "Variant1": "Oak",
+          "Variant2": "Dark Rye Ale",
+          "Variant3": "Mead"
+        }
+      },
+      "dice": {
+        "Name": "Pair of Dice",
+        "Parts": {
+          "body": "Dice",
+          "pip": "Pips"
+        },
+        "Styles": {},
+        "Variants": {
+          "Variant1": "Bone",
+          "Variant2": "Onyx",
+          "Variant3": "Jade"
+        }
+      },
+      "coins": {
+        "Name": "Pile of Coins",
+        "Parts": {
+          "coin": "Coin Face",
+          "edge": "Shading"
+        },
+        "Styles": {},
+        "Variants": {
+          "Variant1": "Gold",
+          "Variant2": "Silver",
+          "Variant3": "Copper"
+        }
+      },
+      "pouch": {
+        "Name": "Coin Pouch",
+        "Parts": {
+          "cloth": "Cloth",
+          "rope": "Drawstring",
+          "coin": "Coins"
+        },
+        "Styles": {},
+        "Variants": {
+          "Variant1": "Burlap",
+          "Variant2": "Crimson",
+          "Variant3": "Deep Teal"
+        }
+      },
+      "pipe": {
+        "Name": "Smoking Pipe",
+        "Parts": {
+          "bowl": "Pipe Bowl",
+          "stem": "Stem",
+          "ember": "Ember"
+        },
+        "Styles": {},
+        "Variants": {
+          "Variant1": "Briar",
+          "Variant2": "Ebony",
+          "Variant3": "Meerschaum"
+        }
+      },
+      "candle": {
+        "Name": "Single Candlestick",
+        "Parts": {
+          "tray": "Drip Tray",
+          "wax": "Wax",
+          "flame": "Flame"
+        },
+        "Styles": {},
+        "Variants": {
+          "Variant1": "Brass",
+          "Variant2": "Wrought Iron",
+          "Variant3": "Dark Rite"
+        }
+      }
+    },
+    "CrazyEights": {
+      "Stock": "Stock",
+      "Discard": "Discard",
+      "CurrentSuit": "Suit",
+      "Direction": "Direction",
+      "ChooseSuit": "Choose a suit"
+    },
+    "Suits": {
+      "hearts": "Hearts",
+      "diamonds": "Diamonds",
+      "clubs": "Clubs",
+      "spades": "Spades"
+    },
+    "BeetleRace": {
+      "TotalPool": "Total staked {amount}"
+    }
+  }
+}
