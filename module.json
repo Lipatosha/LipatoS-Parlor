@@ -1,8 +1,8 @@
 {
   "id": "parlor",
   "title": "LipatoS — Parlor",
-  "description": "Полностью русифицированный модуль казино и фэнтезийной таверны с карточными играми, ставками, жучиными бегами и оформлением игровых столов для Foundry VTT.",
-  "version": "1.5.0",
+  "description": "Казино и фэнтезийная таверна с полностью русским интерфейсом и правилами всех игр для Foundry VTT.",
+  "version": "1.5.1",
   "manifest": "https://github.com/Lipatosha/LipatoS-Parlor/releases/latest/download/module.json",
   "url": "https://github.com/Lipatosha/LipatoS-Parlor",
   "compatibility": {
@@ -51,5 +51,5 @@
       "path": "languages/ru.json"
     }
   ],
-  "download": "https://github.com/Lipatosha/LipatoS-Parlor/releases/download/v1.5.0/lipatos-parlor-v1.5.0.zip"
+  "download": "https://github.com/Lipatosha/LipatoS-Parlor/releases/download/v1.5.1/lipatos-parlor-v1.5.1.zip"
 }

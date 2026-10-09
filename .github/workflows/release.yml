@@ -2,7 +2,13 @@ name: Publish Foundry module
 on:
   push:
     branches: [main]
-    paths: ['lipatos-parlor-v1.4.0.zip', '.github/workflows/release.yml', 'module.json', 'languages/ru.json']
+    paths:
+      - module.json
+      - languages/**
+      - scripts/core/GameRegistry.js
+      - scripts/core/GameGuideRu.js
+      - tests/game-guide-ru.test.mjs
+      - .github/workflows/release.yml
     tags: ['v*']
   workflow_dispatch:
 permissions:
@@ -18,25 +24,6 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '24'
-      - name: Expand staged sources
-        run: |
-          python3 - <<'PY'
-          import pathlib, zipfile, hashlib
-          archive = pathlib.Path('lipatos-parlor-v1.4.0.zip')
-          if archive.is_file():
-              assert hashlib.sha256(archive.read_bytes()).hexdigest() == '2f01b3dea04822977650a8b35515aa77bb27ba1f7c0ce5b83cb51f0058cea895'
-              with zipfile.ZipFile(archive) as z:
-                  assert z.testzip() is None
-                  for entry in z.infolist():
-                      p = pathlib.PurePosixPath(entry.filename)
-                      assert p.parts[0] == 'parlor' and '..' not in p.parts
-                      if entry.is_dir():
-                          continue
-                      target = pathlib.Path(*p.parts[1:])
-                      assert target.parts and not any(x.startswith('.') for x in target.parts)
-                      target.parent.mkdir(parents=True, exist_ok=True)
-                      target.write_bytes(z.read(entry))
-          PY
       - name: Run module tests
         run: node --test tests/*.test.mjs
       - name: Validate manifest and build installable ZIP
@@ -44,7 +31,7 @@ jobs:
           python3 - <<'PY'
           import json, pathlib, zipfile, os
           root = pathlib.Path('.')
-          m = json.loads((root/'module.json').read_text())
+          m = json.loads((root/'module.json').read_text(encoding='utf-8'))
           tag = 'v'+m['version']
           if os.environ['GITHUB_REF_TYPE'] == 'tag':
               assert os.environ['GITHUB_REF_NAME'] == tag
@@ -54,9 +41,11 @@ jobs:
           assert m['download'] == f'https://github.com/Lipatosha/LipatoS-Parlor/releases/download/{tag}/{name}'
           for p in m.get('esmodules', [])+m.get('styles', [])+[x['path'] for x in m.get('languages', [])]:
               assert (root/p).is_file(), p
+          assert any(x.get('lang') == 'ru' and x.get('path') == 'languages/ru.json' for x in m.get('languages', []))
+          assert (root/'scripts/core/GameGuideRu.js').is_file()
           for p in root.rglob('*.json'):
               if not any(x.startswith('.') for x in p.parts):
-                  json.loads(p.read_text())
+                  json.loads(p.read_text(encoding='utf-8'))
           files = [p for p in sorted(root.rglob('*')) if p.is_file() and not any(x.startswith('.') for x in p.parts) and p.suffix != '.zip']
           with zipfile.ZipFile(name+'.tmp', 'w', zipfile.ZIP_DEFLATED) as z:
               for p in files:
@@ -65,19 +54,9 @@ jobs:
           with zipfile.ZipFile(name) as z:
               assert z.testzip() is None
               assert json.loads(z.read('parlor/module.json')) == m
+              assert 'parlor/scripts/core/GameGuideRu.js' in z.namelist()
               print(f'Validated {len(z.namelist())} package files')
           PY
-      - name: Commit full sources to main
-        if: github.ref == 'refs/heads/main'
-        run: |
-          git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git rm --cached --ignore-unmatch lipatos-parlor-v1.4.0.zip
-          git add README.md ASSET_LICENSES.md module.json assets languages scripts styles templates tests tools
-          if ! git diff --cached --quiet; then
-            git commit -m 'Publish complete unified Parlor v1.4.0 sources'
-            git push origin HEAD:main
-          fi
       - name: Publish versioned release and assets
         env:
           GH_TOKEN: ${{ github.token }}
@@ -85,6 +64,6 @@ jobs:
           VERSION=$(node -p "JSON.parse(require('fs').readFileSync('module.json')).version")
           TAG="v$VERSION"
           if ! gh release view "$TAG" >/dev/null 2>&1; then
-            gh release create "$TAG" --target "$(git rev-parse HEAD)" --title "LipatoS — Parlor $TAG" --notes "Unified Parlor Casino Simulator and Fantasy Tavern. Install using https://github.com/Lipatosha/LipatoS-Parlor/releases/latest/download/module.json . Includes all sources and assets. Automated tests pass. In-world Foundry VTT testing remains required." --latest
+            gh release create "$TAG" --target "$(git rev-parse HEAD)" --title "LipatoS — Parlor $TAG" --notes "Полный ручной русский перевод интерфейса и правил 12 игр, включая правила добора в баккаре. Сохранены английский и китайский языки. Манифест: https://github.com/Lipatosha/LipatoS-Parlor/releases/latest/download/module.json . Автоматические тесты пройдены; проверка в запущенном Foundry VTT остаётся необходимой." --latest
           fi
           gh release upload "$TAG" module.json "lipatos-parlor-$TAG.zip" --clobber
