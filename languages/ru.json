@@ -601,6 +601,244 @@
         "TieOdds": "Ничья {odds}",
         "TieRefund": "При ничьей ставки на игрока и банкира возвращаются"
       }
+    },
+    "ThreeCardPoker": {
+      "Action": {
+        "DealByDM": "Мастер раздаёт карты",
+        "Fold": "Сбросить карты",
+        "OpenSettle": "Открыть расчёт",
+        "Play": "Играть",
+        "RevealByDM": "Мастер открывает карты дилера"
+      },
+      "Badge": {
+        "DealerNotQualified": "Дилер не прошёл отбор",
+        "DealerQualified": "Дилер прошёл отбор"
+      },
+      "Center": {
+        "BettingNote": "Сначала внесите анте, по желанию добавьте ставку «Пара плюс», затем ждите мастера.",
+        "BettingSubIdle": "Каждый участник начинает с анте и может добавить ставку «Пара плюс».",
+        "BettingSubPlaced": "Начальная ставка принята: {amount}",
+        "BettingTitleIdle": "Сделайте начальную ставку",
+        "BettingTitlePlaced": "Начальная ставка принята",
+        "DealingNote": "Каждому раздают три карты. Решение принимается только по собственной руке.",
+        "DealingSub": "Раздаются трёхкарточные руки.",
+        "DealingTitle": "Раздача трёх карт",
+        "DecisionNoteOther": "Ожидаем, пока все участники выберут «Играть» или «Сбросить».",
+        "DecisionNoteSelf": "Посмотрите на свои карты и либо поддержите анте ставкой «Играть», либо сбросьте руку.",
+        "DecisionSubOther": "Решений принято: {done}/{total}",
+        "DecisionSubSelf": "Ваша рука: {hand}",
+        "DecisionTitleOther": "Ожидаем решения всех участников",
+        "DecisionTitleSelf": "Играть или сбросить",
+        "Phase": {
+          "Betting": "Приём ставок",
+          "Dealing": "Раздача",
+          "Decision": "Выбор",
+          "Ready": "Готово",
+          "Resolving": "Расчёт",
+          "RevealReady": "Готово к открытию",
+          "Settle": "Ожидание расчёта",
+          "Showdown": "Вскрытие"
+        },
+        "ReadyNoteGM": "Проверьте ставки, затем сдайте карты.",
+        "ReadyNotePlayer": "Все начальные ставки приняты. Ожидаем раздачи мастера.",
+        "ReadySub": "Раунд готов к раздаче трёх карт.",
+        "ReadyTitleGM": "Готово к раздаче",
+        "ReadyTitlePlayer": "Ожидание мастера",
+        "ResolvingNoteGM": "Можно завершить раунд или начать следующий.",
+        "ResolvingNotePlayer": "Расчёт открыт. Ожидаем мастера.",
+        "ResolvingTitle": "Расчёт открыт.",
+        "RevealReadyNoteGM": "Все игроки приняли решения. Теперь можно открыть руку дилера.",
+        "RevealReadyNotePlayer": "Все решения приняты. Ожидаем мастера.",
+        "RevealReadySub": "Текущий банк ставок «Играть»: {playPot} зм",
+        "RevealReadyTitleGM": "Готово к открытию карт дилера",
+        "RevealReadyTitlePlayer": "Ожидание открытия карт дилера",
+        "SettleNoteGM": "Результаты уже показаны на карточках участников. Откройте расчёт, когда будете готовы.",
+        "SettleNotePlayer": "Результаты уже показаны на карточках участников. Ожидаем мастера.",
+        "SettleTitle": "Результаты показаны на столе",
+        "ShowdownNote": "Отбор дилера, основные ставки и бонусы рассчитаны.",
+        "ShowdownSubSelected": "Текущий результат: {result}",
+        "ShowdownSubTable": "Результат за столом открыт. Далее расчёт.",
+        "ShowdownTitleNotQualified": "Рука дилера: {hand}. Дилер не прошёл отбор.",
+        "ShowdownTitleQualified": "Рука дилера: {hand}"
+      },
+      "DealerNote": {
+        "Betting": "Ожидаем начальные ставки анте.",
+        "Dealing": "Раздаются трёхкарточные руки.",
+        "Decision": "Игроки выбирают, играть или сбросить.",
+        "NotQualified": "Рука дилера {hand}: отбор не пройден.",
+        "Qualified": "Рука дилера {hand}: отбор пройден (дама старшая или выше).",
+        "Ready": "Начальные ставки приняты. Готово к раздаче.",
+        "RevealReady": "Все решения приняты. Готово к открытию карт дилера."
+      },
+      "Error": {
+        "DecisionClosed": "Время выбора «Играть» или «Сбросить» закончилось.",
+        "DecisionFailed": "Не удалось выполнить действие. Повторите попытку.",
+        "DecisionLocked": "Этот персонаж уже принял решение.",
+        "InvalidAnte": "Недопустимая сумма анте.",
+        "InvalidDecision": "Недопустимое решение.",
+        "InvalidPairPlus": "Недопустимая сумма ставки «Пара плюс».",
+        "PlayChipsInsufficient": "Не хватает фишек для ставки «Играть». Текущий баланс: {balance}."
+      },
+      "Hand": {
+        "Flush": "Флеш",
+        "HighCard": "Старшая карта",
+        "MiniRoyal": "Мини-роял",
+        "Pair": "Пара",
+        "Straight": "Стрит",
+        "StraightFlush": "Стрит-флеш",
+        "ThreeKind": "Тройка",
+        "Unknown": "Неизвестная комбинация"
+      },
+      "Hud": {
+        "AnteLabel": "Анте",
+        "BettingSubIdle": "Укажите анте и при желании добавьте ставку «Пара плюс».",
+        "BettingSubPlaced": "Начальная ставка принята: {amount}",
+        "BettingTitle": "Приём ставок",
+        "DealingTitle": "Раздача",
+        "DecisionLocked": "Решение принято",
+        "DecisionPending": "Ожидание решения",
+        "DecisionSubLocked": "Выбрано: {decision}",
+        "DecisionSubPending": "Ваша рука: {hand}",
+        "DecisionTitle": "Решение игрока {name}",
+        "OpeningBetSub": "Начальная ставка: {amount}",
+        "PairPlusLabel": "Пара плюс",
+        "PlayBetTag": "Играть: {amount}",
+        "ReadyTitle": "Ожидание раздачи",
+        "ResultSub": "Текущий результат: {result}",
+        "ResultTitle": "Результат",
+        "RevealReadyTitle": "Ожидание открытия дилера",
+        "SettleTitle": "Ожидание расчёта",
+        "ShowdownTitle": "Карты дилера открыты",
+        "WaitingSub": "Ожидание хода раунда",
+        "Strength": "Сила комбинации"
+      },
+      "Result": {
+        "AnteBonusWin": "Бонус анте",
+        "DealerNotQualified": "Дилер не прошёл отбор",
+        "Fold": "Сбросил",
+        "Lose": "Проигрыш",
+        "PairPlusWin": "Победа по ставке «Пара плюс»",
+        "Push": "Возврат ставки",
+        "Win": "Победа"
+      },
+      "Seat": {
+        "NoteBetting": "Начальная ставка: {amount}",
+        "NoteDealing": "Ожидание трёх карт",
+        "NoteDecision": "Скрытая рука; ожидается решение",
+        "NoteFolded": "Сбросил карты в этом раунде",
+        "NoteIdle": "Пока нет ставки",
+        "NotePlayLocked": "Ставка «Играть» принята: {amount} зм",
+        "NoteReady": "Начальная ставка принята: {amount}",
+        "NoteRevealReady": "Решение принято. Ожидание открытия дилера",
+        "StatusDealerNotQualified": "Дилер не прошёл отбор",
+        "StatusDealing": "Раздача",
+        "StatusDecision": "Выбор",
+        "StatusFolded": "Сбросил",
+        "StatusPlaced": "Анте поставлено",
+        "StatusPlayLocked": "Ставка «Играть» принята",
+        "StatusReady": "Ожидание",
+        "StatusRevealReady": "Готово к открытию"
+      },
+      "Settlement": {
+        "Bet": "Ставка",
+        "Decision": "Решение",
+        "Hand": "Рука",
+        "Net": "Чистый выигрыш",
+        "Payout": "Выплата",
+        "Reveal": "Открыть",
+        "Result": "Результат",
+        "Title": "Расчёт трёхкарточного покера"
+      },
+      "Stat": {
+        "AntePot": "Банк анте",
+        "DealerHand": "Рука дилера",
+        "Decisions": "Решения",
+        "PairPlusPot": "Банк ставок «Пара плюс»",
+        "PlayPot": "Банк ставок «Играть»",
+        "RoundPlayers": "Игроки"
+      },
+      "Tag": {
+        "Ante": "Анте: {amount}",
+        "PairPlus": "Пара плюс: {amount}",
+        "Play": "Играть: {amount}"
+      }
+    },
+    "TexasHoldem": {
+      "Setup": {
+        "BuyInShortTitle": "Не удалось внести бай-ин"
+      },
+      "Table": {
+        "ToCall": "Уравнять: {amount}",
+        "CurrentBet": "Текущая ставка: {amount}",
+        "Pot": "Банк: {amount}",
+        "Stack": "Стек: {amount}",
+        "StackShort": "Стек",
+        "InPot": "В банке: {amount}",
+        "InPotShort": "В банке",
+        "Blinds": "Блайнды: {small}/{big}",
+        "CurrentTurn": "Ход игрока {name}",
+        "WaitingStacks": "Ожидание двух игроков с фишками",
+        "Dealing": "Раздача"
+      },
+      "Action": {
+        "RaiseTo": "Повысить до",
+        "Check": "Чек",
+        "Call": "Колл",
+        "CallAmount": "Колл: {amount}",
+        "Fold": "Фолд",
+        "Raise": "Рейз",
+        "AllIn": "Ва-банк",
+        "NextHand": "Следующая раздача",
+        "RaiseMin": "Мин.",
+        "RaiseHalfPot": "½ банка",
+        "RaisePot": "Банк",
+        "RaiseMax": "Макс."
+      },
+      "Seat": {
+        "WaitingHand": "Ожидание следующей раздачи",
+        "NoStack": "Нет фишек",
+        "Current": "Ходит"
+      },
+      "Street": {
+        "Preflop": "Префлоп",
+        "Flop": "Флоп",
+        "Turn": "Тёрн",
+        "River": "Ривер",
+        "Showdown": "Вскрытие",
+        "Waiting": "Ожидание"
+      },
+      "Settlement": {
+        "Title": "Расчёт техасского холдема",
+        "PotIndex": "Банк {index}",
+        "NoPots": "Нет банков для отображения.",
+        "NoWinner": "Победителя нет",
+        "Hand": "Комбинация",
+        "Net": "Чистый выигрыш",
+        "Uncontested": "{name} выигрывает {amount} без вскрытия.",
+        "Waiting": "Недостаточно участников со стеками. Завершите игру за столом или дождитесь пополнения фишек.",
+        "TableSettled": "Фишки возвращены игрокам.",
+        "Showdown": "Банки, комбинации и изменения стеков рассчитаны."
+      },
+      "Tag": {
+        "Dealer": "Д",
+        "SmallBlind": "МБ",
+        "BigBlind": "ББ"
+      },
+      "Hand": {
+        "HighCard": "Старшая карта",
+        "Pair": "Пара",
+        "TwoPair": "Две пары",
+        "ThreeKind": "Тройка",
+        "Straight": "Стрит",
+        "Flush": "Флеш",
+        "FullHouse": "Фулл-хаус",
+        "FourKind": "Каре",
+        "StraightFlush": "Стрит-флеш",
+        "RoyalFlush": "Роял-флеш"
+      },
+      "Result": {
+        "Fold": "Сбросил"
+      }
     }
   }
 }
