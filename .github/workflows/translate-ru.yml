@@ -1,0 +1,42 @@
+name: Russian localization
+on:
+  push:
+    branches: [main]
+    paths: ['tools/translate_ru.py', '.github/workflows/translate-ru.yml']
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  translate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 70
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Translate every localization entry
+        run: python tools/translate_ru.py
+      - name: Set Russian language and bump version
+        run: |
+          python - <<'PY'
+          import json, pathlib
+          p=pathlib.Path("module.json")
+          d=json.loads(p.read_text())
+          d["version"]="1.5.0"
+          d["download"]="https://github.com/Lipatosha/LipatoS-Parlor/releases/download/v1.5.0/lipatos-parlor-v1.5.0.zip"
+          d["languages"]=[x for x in d["languages"] if x["lang"]!="ru"]
+          d["languages"].append({"lang":"ru","name":"Русский","path":"languages/ru.json"})
+          p.write_text(json.dumps(d,ensure_ascii=False,indent=2)+"\n")
+          PY
+      - name: Commit localization sources
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add module.json languages/ru.json
+          git commit -m 'i18n: translate Parlor UI into Russian (v1.5.0)'
+          git push origin HEAD:main
+      - name: Trigger release pipeline
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run release.yml --ref main
