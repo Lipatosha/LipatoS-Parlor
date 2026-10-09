@@ -4,6 +4,7 @@
  */
 
 import { isVisibleInLobby } from './GameVisibility.js';
+import { GAME_GUIDE_RU, BACCARAT_DRAW_GUIDE_RU } from './GameGuideRu.js';
 
 
 // 玩法长说明先收在这里，后面真改规则时只改一处就够了。
@@ -449,6 +450,7 @@ const BACCARAT_DRAW_GUIDE = {
 
 function getGuideLocale() {
     const lang = String(game.i18n.lang || 'en').toLowerCase();
+    if (lang.startsWith('ru')) return 'ru';
     return lang.startsWith('zh') || lang.startsWith('cn') ? 'zh' : 'en';
 }
 
@@ -626,7 +628,9 @@ export function getGameGuide(gameType) {
     if (!guideSet) return null;
 
     const locale = getGuideLocale();
-    const guide = guideSet[locale] ?? guideSet.en ?? guideSet.zh;
+    const guide = locale === 'ru'
+        ? (GAME_GUIDE_RU[gameType] ?? guideSet.en ?? guideSet.zh)
+        : (guideSet[locale] ?? guideSet.en ?? guideSet.zh);
     if (!guide) return null;
 
     const flowText = Array.isArray(guide.flow) && guide.flow.length
@@ -645,7 +649,7 @@ export function getGameGuide(gameType) {
         ? guide.paragraphs.filter(Boolean)
         : defaultParagraphs;
     const baccaratAccordion = gameType === 'baccarat'
-        ? (BACCARAT_DRAW_GUIDE[locale] ?? BACCARAT_DRAW_GUIDE.en)
+        ? (locale === 'ru' ? BACCARAT_DRAW_GUIDE_RU : (BACCARAT_DRAW_GUIDE[locale] ?? BACCARAT_DRAW_GUIDE.en))
         : null;
     const note = gameType === 'liarsdice' ? [winText, notesText].filter(Boolean).join(' ') : '';
 
