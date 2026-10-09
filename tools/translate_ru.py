@@ -72,28 +72,55 @@ def translate(sentence):
     raise RuntimeError(f"Translation failed after retries: {last_error}")
 
 entries = list(flatten(source))
-def worker(entry):
-    path, original = entry
-    old = lookup(previous, path)
-    if isinstance(old, str) and old != original and old.strip() and set(TOKEN.findall(old)) == set(TOKEN.findall(original)):
-        return path, old
-    if not re.search("[A-Za-z]", original):
-        return path, original
-    value = translate(original)
-    if sorted(TOKEN.findall(value)) != sorted(TOKEN.findall(original)):
-        raise ValueError("Tokens changed in "+ ".".join(path))
-    return path, value
+unique = {}
+for path, original in entries:
+    unique.setdefault(original, []).append(path)
 
-with concurrent.futures.ThreadPoolExecutor(max_workers=5) as executor:
-    futures = [executor.submit(worker, entry) for entry in entries]
-    for index, future in enumerate(concurrent.futures.as_completed(futures),1):
+BATCH_SEPARATOR = "۞۞۞"
+groups, current, current_size = [], [], 0
+for original in unique:
+    if not re.search(r"[A-Za-z]", original):
+        translations.update((p, original) for p in unique[original])
+        continue
+    prev = lookup(previous, unique[original][0])
+    if isinstance(prev, str) and prev.strip() and prev != original and sorted(TOKEN.findall(prev)) == sorted(TOKEN.findall(original)):
+        translations.update((p, prev) for p in unique[original])
+        continue
+    if current and (len(current) >= 12 or current_size + len(original) > 1150):
+        groups.append(current)
+        current, current_size = [], 0
+    current.append(original)
+    current_size += len(original)
+if current:
+    groups.append(current)
+
+def group_worker(group):
+    if len(group) == 1:
+        return [(group[0], translate(group[0]))]
+    try:
+        translated = translate(("\n" + BATCH_SEPARATOR + "\n").join(group))
+        parts = [x.strip() for x in translated.split(BATCH_SEPARATOR)]
+        if len(parts) != len(group):
+            raise ValueError("Separator mismatch")
+        for original, value in zip(group, parts):
+            if not value or sorted(TOKEN.findall(original)) != sorted(TOKEN.findall(value)):
+                raise ValueError("Interpolation mismatch")
+        return list(zip(group, parts))
+    except Exception:
+        return [(original, translate(original)) for original in group]
+
+with concurrent.futures.ThreadPoolExecutor(max_workers=8) as executor:
+    futures = [executor.submit(group_worker, group) for group in groups]
+    for index, future in enumerate(concurrent.futures.as_completed(futures), 1):
         try:
-            path, value = future.result()
-            translations[path] = value
+            result = future.result()
+            for original, value in result:
+                for path in unique[original]:
+                    translations[path] = value
         except Exception as exc:
             errors.append(str(exc))
-        if index % 200 == 0:
-            print(f"Processed {index}/{len(entries)}; errors: {len(errors)}", flush=True)
+        if index % 8 == 0:
+            print(f"Processed {index}/{len(groups)} groups; errors: {len(errors)}", flush=True)
 if errors:
     raise SystemExit("\n".join(errors[:30]) + f"\nTOTAL ERRORS: {len(errors)}")
 

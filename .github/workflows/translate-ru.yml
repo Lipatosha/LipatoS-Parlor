@@ -6,6 +6,10 @@ on:
   workflow_dispatch:
 permissions:
   contents: write
+  actions: write
+concurrency:
+  group: parlor-translation
+  cancel-in-progress: true
 jobs:
   translate:
     runs-on: ubuntu-latest
@@ -15,6 +19,15 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Cancel earlier translation runs
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh run list --repo Lipatosha/LipatoS-Parlor --workflow translate-ru.yml --status in_progress --limit 15 --json databaseId --jq '.[].databaseId' | while read -r id; do
+            if [ "$id" != "$GITHUB_RUN_ID" ]; then
+              gh run cancel "$id" --repo Lipatosha/LipatoS-Parlor || true
+            fi
+          done
       - name: Translate every localization entry
         run: python tools/translate_ru.py
       - name: Set Russian language and bump version
@@ -36,7 +49,3 @@ jobs:
           git add module.json languages/ru.json
           git commit -m 'i18n: translate Parlor UI into Russian (v1.5.0)'
           git push origin HEAD:main
-      - name: Trigger release pipeline
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: gh workflow run release.yml --ref main
