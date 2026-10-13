@@ -78,14 +78,21 @@ describe('Zonk Foundry inventory redesign', () => {
         assert.ok(code.includes('anyDice([3,3],2500)'));
         assert.ok(code.includes('anyDice([4,2],1500)'));
         assert.ok(code.includes("combo([1],100) + combo([5],50)"));
-        assert.ok(code.includes("simpleKind(4,t('FourKind'),'×2')"));
-        assert.ok(code.includes("simpleKind(5,t('FiveKind'),'×4')"));
-        assert.ok(code.includes("simpleKind(6,t('SixKind'),'×8')"));
+        assert.ok(code.includes("simpleKind(t('FourKind'),'×2')"));
+        assert.ok(code.includes("simpleKind(t('FiveKind'),'×4')"));
+        assert.ok(code.includes("simpleKind(t('SixKind'),'×8')"));
         assert.ok(code.includes('combo([1,2,3,4,5],500)'));
         assert.ok(code.includes('combo([2,3,4,5,6],750)'));
         assert.ok(code.includes('combo([1,2,3,4,5,6],1500)'));
         assert.equal(ru.PARLOR.Zonk.SectionPartialStraight, 'Частичный стрит (два варианта)');
         assert.equal(ru.PARLOR.Zonk.FourKind, 'Четыре одинаковых');
+        assert.equal(ru.PARLOR.Zonk.Multiplier, 'множитель');
+        assert.ok(code.includes("${esc(label)} ${esc(t('Multiplier'))}"));
+        assert.ok(code.includes("<b>${esc(multiplier)}</b>"));
+        assert.ok(!code.includes("fmt(points)}</b></div>"));
+        assert.ok(code.includes('_combos({ showDescriptions = false } = {})'));
+        assert.ok(code.includes('_combos({ showDescriptions: true })'));
+
     });
     it('paints the dice hover and selected ring above its uploaded icon', async () => {
         const css = await source('styles/zonk-v14.css');
@@ -97,6 +104,28 @@ describe('Zonk Foundry inventory redesign', () => {
         assert.match(css, /button\.parlor-zonk-pick\.is-selected::after/);
         assert.match(css, /pointer-events:\s*none;/);
         assert.ok(spriteCss.includes('background-image: url(\'../assets/dice/d6-white-faces.webp\')'));
+    });
+
+    it('uses full-icon clickable die bounds and a foreground ring without padding', async () => {
+        const css = await source('styles/zonk-v14.css');
+        assert.match(css, /\.parlor-zonk-dice-tray \.parlor-zonk-pick\s*\{[^}]*width:\s*var\(--z-die-size\);[^}]*height:\s*var\(--z-die-size\);/);
+        assert.match(css, /\.parlor-zonk-dice-tray \.parlor-zonk-pick > \.parlor-d6-face\s*\{[^}]*width:\s*100% !important;[^}]*height:\s*100% !important;/);
+        assert.match(css, /\.parlor-zonk-dice-tray button\.parlor-zonk-pick::after\s*\{[^}]*inset:\s*0;/);
+        assert.match(css, /padding:\s*0 !important;/);
+    });
+
+    it('compacts the middle section and places the narrow scoring sidebar in one column', async () => {
+        const css = await source('styles/zonk-v14.css');
+        const code = await source('scripts/games/zonk/ZonkTable.js');
+        assert.match(css, /\.parlor-zonk-lower-board\s*\{\s*display:\s*contents;/);
+        assert.match(css, /\.parlor-zonk-history\s*\{\s*width:\s*57%;/);
+        assert.match(css, /\.parlor-zonk-combos \.parlor-zonk-manuscript-columns\s*\{[^}]*grid-template-columns:\s*minmax\(0, 1fr\);/);
+        assert.match(css, /\.parlor-zonk-combos \.parlor-zonk-combo-list\s*\{[^}]*overflow:\s*hidden;/);
+        assert.ok(code.includes('showDescriptions ?'));
+        for (const lang of ['ru', 'en', 'cn']) {
+            const data = JSON.parse(await source('languages/' + lang + '.json'));
+            assert.equal(typeof data.PARLOR.Zonk.Multiplier, 'string');
+        }
     });
 
 });
