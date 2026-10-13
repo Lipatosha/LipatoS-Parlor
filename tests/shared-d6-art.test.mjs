@@ -19,7 +19,8 @@ describe('Shared user-supplied white D6 dice artwork', () => {
         assert.ok(blob.length > 1000, 'The real image data is included, not a placeholder');
         assert.equal(D6_SPRITE_PATH, 'modules/parlor/assets/dice/d6-white-faces.webp');
         const manifest = JSON.parse(await source('module.json'));
-        assert.equal(manifest.styles.at(-1), 'styles/dice-faces.css');
+        assert.ok(manifest.styles.includes('styles/dice-faces.css'));
+        assert.ok(manifest.styles.indexOf('styles/dice-faces.css') < manifest.styles.indexOf('styles/farkle-widescreen.css'), 'Shared dice assets load before the final Farkle layout');
     });
 
     it('renders each physical die face in correct index order, not fabricated pips', () => {
