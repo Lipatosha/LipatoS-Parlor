@@ -1,4 +1,4 @@
-# v2.2.2: winner/rematch with wager settings, full-width roll field and 3-second bot choice delay.
+# v2.2.3: zero bank minimum, turn order, 100-event full height history and spaced dice groups.
 # Re-validate v2.2.2 rematch handler order assertions.
 # Release verification: shared D6 assets load ahead of Farkle widescreen CSS.
 name: Publish Foundry module
@@ -67,6 +67,6 @@ jobs:
           VERSION=$(node -p "JSON.parse(require('fs').readFileSync('module.json')).version")
           TAG="v$VERSION"
           if ! gh release view "$TAG" >/dev/null 2>&1; then
-            gh release create "$TAG" --target "$(git rev-parse HEAD)" --title "LipatoS — Parlor $TAG" --notes "LipatoS Parlor v2.2.2: уведомление и экран победителя Farkle, сыграть ещё с новыми ставками и валютой через GM, полное поле броска без панели отложенных костей, 3 секунды отображения кубиков ботов до выбора. Сохранены английский и китайский языки. Манифест: https://github.com/Lipatosha/LipatoS-Parlor/releases/latest/download/module.json . Автоматические тесты пройдены; проверка в запущенном Foundry VTT остаётся необходимой." --latest
+            gh release create "$TAG" --target "$(git rev-parse HEAD)" --title "LipatoS — Parlor $TAG" --notes "LipatoS Parlor v2.2.3: минимум записи Farkle равен нулю и удалён из интерфейса, числовая очередность незавершивших ход участников, три группы специальных комбинаций раздвинуты, история до 100 событий растянута до низа экрана. Сохранены английский и китайский языки. Манифест: https://github.com/Lipatosha/LipatoS-Parlor/releases/latest/download/module.json . Автоматические тесты пройдены; проверка в запущенном Foundry VTT остаётся необходимой." --latest
           fi
           gh release upload "$TAG" module.json "lipatos-parlor-$TAG.zip" --clobber
