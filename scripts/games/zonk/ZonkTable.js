@@ -236,12 +236,12 @@ export class ZonkTable {
         const dice = choosing
             ? (state.currentDice || []).map((value, index) => `
                 <button type="button" class="parlor-zonk-pick ${this._selected.has(index) ? 'is-selected' : ''}"
-                    data-zonk-die="${index}" aria-pressed="${this._selected.has(index)}"
+                    data-zonk-die="${index}" style="--z-roll-tilt:${[-5, 4, -2, 6, -3, 3][index % 6]}deg"
+                    aria-pressed="${this._selected.has(index)}"
                     aria-label="${esc(t('Face', { value }))}" ${canPlay ? '' : 'disabled'}>
                     ${pipDie(value)}
                 </button>`).join('')
-            : Array.from({ length: state.remainingDice || 6 }, () =>
-                `<div class="parlor-zonk-pick is-placeholder">${pipDie(5)}</div>`).join('');
+            : ''; // Nothing on the 3D roll surface until a real roll lands.
 
         // Each keep action starts its OWN new row, rather than being packed
         // into remaining empty cells of the previous row.
