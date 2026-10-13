@@ -1,8 +1,8 @@
 {
   "id": "parlor",
   "title": "LipatoS — Parlor",
-  "description": "Казино Аиндора: 13 игр. Farkle на весь экран для 2–10 игроков, 6-уровневая лестница сохранённых костей и комбинации по иллюстрированным правилам.",
-  "version": "2.0.0",
+  "description": "Казино Аиндора: 13 игр для Foundry VTT. Новые белые кости D6 во Farkle, Костях лжеца, Костях 21 и тавернных игровых столах.",
+  "version": "2.1.0",
   "manifest": "https://github.com/Lipatosha/LipatoS-Parlor/releases/latest/download/module.json",
   "url": "https://github.com/Lipatosha/LipatoS-Parlor",
   "compatibility": {
@@ -33,7 +33,8 @@
     "styles/beetlerace-v14.css",
     "styles/slotmachine-v14.css",
     "styles/zonk-v14.css",
-    "styles/tavern.css"
+    "styles/tavern.css",
+    "styles/dice-faces.css"
   ],
   "languages": [
     {
@@ -52,5 +53,5 @@
       "path": "languages/ru.json"
     }
   ],
-  "download": "https://github.com/Lipatosha/LipatoS-Parlor/releases/download/v2.0.0/lipatos-parlor-v2.0.0.zip"
+  "download": "https://github.com/Lipatosha/LipatoS-Parlor/releases/download/v2.1.0/lipatos-parlor-v2.1.0.zip"
 }
