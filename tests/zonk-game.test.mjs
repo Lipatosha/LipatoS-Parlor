@@ -175,3 +175,27 @@ describe('Zonk table capacity', () => {
         assert.equal(applied.length, 1, 'An over-capacity table must never debit currency');
     });
 });
+
+describe('Farkle kept-dice staircase state', () => {
+    it('persists saved dice, resets after hot dice and clears on turn change', async () => {
+        const table = makeGame([1, 1, 1, 2, 3, 4]);
+        await table.start();
+        assert.deepEqual(table.getState().keptDice, []);
+        table.handlePlayerAction('p1', 'roll');
+        assert.equal(table.handlePlayerAction('p1', 'keep', { indices: [0, 1, 2] }).ok, true);
+        assert.deepEqual(table.getState().keptDice, [1, 1, 1]);
+        assert.equal(table.remainingDice, 3);
+
+        table.handlePlayerAction('p1', 'roll');
+        assert.equal(table.handlePlayerAction('p1', 'keep', { indices: [0, 1, 2] }).ok, true);
+        assert.deepEqual(table.getState().keptDice, [1, 1, 1, 1, 1, 1]);
+        assert.equal(table.remainingDice, 6);
+
+        table.handlePlayerAction('p1', 'roll');
+        assert.deepEqual(table.getState().keptDice, [], 'Hot dice start a new staircase');
+        table.handlePlayerAction('p1', 'keep', { indices: [0, 1, 2] });
+        table.handlePlayerAction('p1', 'bank');
+        assert.equal(table.currentPlayerId, 'p2');
+        assert.deepEqual(table.getState().keptDice, [], 'Staircase clears for the next participant');
+    });
+});
