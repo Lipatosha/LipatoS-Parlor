@@ -22,6 +22,7 @@ import {
     chooseBestSuit as chooseCrazyEightsSuit
 } from '../games/crazyeights/CrazyEightsRules.js';
 import { clampBetAmount } from './BetLimits.js';
+import { getZonkKeepOptions } from '../games/zonk/ZonkRules.js';
 import {
     getActorIdFromParticipantId,
     getParticipant
@@ -189,6 +190,9 @@ export class BotManager {
                     break;
                 case 'bone21':
                     await this._botBone21(gameInstance, state, phase);
+                    break;
+                case 'zonk':
+                    await this._botZonk(gameInstance, state, phase);
                     break;
                 case 'texasholdem':
                     await this._botTexasHoldem(gameInstance, state, phase);
@@ -565,6 +569,33 @@ export class BotManager {
         }
 
         game.handlePlayerAction(currentId, 'roll', {});
+    }
+
+    // ── Зонк: бот выбирает только результативные кости и сам решает, когда сохранить очки.
+    static async _botZonk(game, state, phase) {
+        if (phase !== 'PLAYER_TURNS' || !this.isBot(state.currentPlayerId)) return;
+        const id = state.currentPlayerId;
+        await new Promise(resolve => setTimeout(resolve, 400 + Math.random() * 400));
+        if (state.turnPhase === 'choose') {
+            const best = getZonkKeepOptions(state.currentDice || [])[0];
+            if (best) game.handlePlayerAction(id, 'keep', { indices: best.indices });
+            return;
+        }
+        if (state.turnPhase === 'ready') {
+            const points = Number(state.turnPoints || 0);
+            const mode = this.getBotMode(state, id);
+            const threshold = mode === 'win' ? 650 : mode === 'lose' ? 1300 : 850;
+            if (points >= (state.minBank || 300) && (
+                points >= threshold ||
+                (state.remainingDice <= 2 && Math.random() < .8)
+            )) {
+                game.handlePlayerAction(id, 'bank', {});
+                return;
+            }
+        }
+        if (state.turnPhase === 'ready' || state.turnPhase === 'needRoll') {
+            game.handlePlayerAction(id, 'roll', {});
+        }
     }
 
     // ── 疯狂八 ───────────────────────────────
