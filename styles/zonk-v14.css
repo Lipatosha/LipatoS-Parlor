@@ -364,3 +364,190 @@
     #parlor-zonk-overlay .parlor-zonk-manuscript-columns { gap: 6px; }
     #parlor-zonk-overlay .parlor-zonk-combo-faces .parlor-ld-die { width: 16px; height: 16px; }
 }
+
+/* v2.0 — true fullscreen table, six-tier bottom-up saved-dice rack.
+ * The paytable uses the same denim material, Foundry dice and bronze type. */
+#parlor-zonk-overlay.parlor-zonk-overlay {
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh;
+    padding: 0;
+    overflow: hidden;
+}
+#parlor-zonk-overlay .parlor-zonk-layout {
+    width: 100%;
+    max-width: none;
+    height: 100vh;
+    height: 100dvh;
+    min-height: 0;
+    margin: 0;
+    padding: 8px;
+    grid-template-columns: minmax(170px,17.5%) minmax(0,1fr) minmax(355px,30%);
+    overflow: hidden;
+}
+#parlor-zonk-overlay .parlor-zonk-progress,
+#parlor-zonk-overlay .parlor-zonk-center,
+#parlor-zonk-overlay .parlor-zonk-combos {
+    min-height: 0;
+    height: 100%;
+    overflow: hidden;
+}
+#parlor-zonk-overlay .parlor-zonk-progress-players {
+    max-height: none;
+    overflow-y: auto;
+    min-height: 0;
+}
+#parlor-zonk-overlay .parlor-zonk-progress-row { min-height: clamp(34px,4.3vh,52px); }
+#parlor-zonk-overlay .parlor-zonk-velvet {
+    min-height: 0;
+    flex: 1 1 auto;
+    overflow-y: auto;
+}
+#parlor-zonk-overlay .parlor-zonk-history { flex: 0 0 auto; }
+#parlor-zonk-overlay .parlor-zonk-history-list { max-height: clamp(65px,13vh,150px); }
+#parlor-zonk-overlay .parlor-zonk-dice-tray { min-height: clamp(72px,12vh,130px); }
+#parlor-zonk-overlay .parlor-zonk-lower-board {
+    min-height: clamp(265px,40vh,460px);
+    grid-template-columns: minmax(0,1.15fr) minmax(0,.85fr);
+}
+#parlor-zonk-overlay .parlor-zonk-saved-area {
+    height: 100%;
+    min-height: 260px;
+}
+#parlor-zonk-overlay .parlor-zonk-staircase {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-end;
+    min-height: 0;
+    height: 100%;
+    gap: 3px;
+}
+#parlor-zonk-overlay .parlor-zonk-stair-row {
+    display: flex;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 3px;
+}
+#parlor-zonk-overlay .parlor-zonk-stair-slot {
+    --z-slot: clamp(31px, 2.8vw, 51px);
+    flex: 0 0 var(--z-slot);
+    width: var(--z-slot);
+    height: var(--z-slot);
+}
+#parlor-zonk-overlay .parlor-zonk-stair-slot .parlor-ld-die {
+    width: 90%;
+    height: 90%;
+}
+#parlor-zonk-overlay .parlor-zonk-combo-list {
+    max-height: none;
+    min-height: 0;
+    overflow: auto;
+}
+#parlor-zonk-overlay .parlor-zonk-manuscript-columns {
+    grid-template-columns: repeat(2,minmax(0,1fr));
+    gap: clamp(8px,1vw,16px);
+    align-items: start;
+}
+#parlor-zonk-overlay .parlor-zonk-manuscript-section { margin-bottom: 10px; padding-bottom: 6px; }
+#parlor-zonk-overlay .parlor-zonk-manuscript-section h4,
+#parlor-zonk-overlay .parlor-zonk-combo-extra h4 {
+    font-size: 13px;
+    line-height: 1.3;
+    font-weight: 700;
+}
+#parlor-zonk-overlay .parlor-zonk-combo-row {
+    min-height: 25px;
+    padding: 3px 0;
+    align-items: center;
+}
+#parlor-zonk-overlay .parlor-zonk-combo-faces {
+    gap: 3px;
+    flex-wrap: wrap;
+}
+#parlor-zonk-overlay .parlor-zonk-combo-value { font-size: 12px; }
+#parlor-zonk-overlay .parlor-zonk-any-groups {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    gap: 8px;
+}
+#parlor-zonk-overlay .parlor-zonk-any-group {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 2px;
+}
+#parlor-zonk-overlay .parlor-zonk-any-die {
+    display: inline-grid;
+    place-items: center;
+    flex: 0 0 auto;
+    width: clamp(17px,1.32vw,23px);
+    height: clamp(17px,1.32vw,23px);
+    border-radius: 4px;
+    border: 1px solid #7e6e54;
+    background: linear-gradient(140deg,#dbcaac,#8c7f67);
+    box-shadow: 0 1px 3px #0505059c, inset 0 1px #fff7;
+    color: #241f19;
+    font: 700 clamp(11px,1vw,16px)/1 var(--font-primary, sans-serif);
+}
+#parlor-zonk-overlay .parlor-zonk-multiples {
+    display: grid;
+    gap: 4px;
+    border-top: 1px solid #71624a;
+    padding-top: 8px;
+}
+#parlor-zonk-overlay .parlor-zonk-kind-row {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 22px;
+    color: var(--z-ink);
+}
+#parlor-zonk-overlay .parlor-zonk-kind-row b { color: var(--z-emphasis); }
+#parlor-zonk-overlay .parlor-zonk-combo-extra {
+    border-top: 1px solid #756348;
+    padding-top: 9px;
+    margin-top: 10px;
+    font-size: 12px;
+    line-height: 1.48;
+}
+#parlor-zonk-overlay .parlor-zonk-combo-extra p { margin: 0 0 9px; }
+/* Rules use the same paytable, scaled slightly larger. */
+#parlor-zonk-overlay .parlor-zonk-rules-combos .parlor-zonk-any-die {
+    width: 26px;
+    height: 26px;
+    font-size: 17px;
+}
+#parlor-zonk-overlay .parlor-zonk-rules-combos .parlor-zonk-combo-faces .parlor-ld-die {
+    width: 25px; height: 25px;
+}
+/* Keep the six tiers intact while allowing scroll on compact screens. */
+@media (max-width: 1150px) {
+    #parlor-zonk-overlay .parlor-zonk-layout {
+        grid-template-columns: minmax(150px,18%) minmax(0,1fr) minmax(310px,32%);
+    }
+    #parlor-zonk-overlay .parlor-zonk-stair-slot { --z-slot: clamp(26px,3vw,38px); }
+    #parlor-zonk-overlay .parlor-zonk-lower-board { grid-template-columns: 1fr; min-height: 350px; }
+    #parlor-zonk-overlay .parlor-zonk-saved-area { min-height: 240px; }
+}
+@media (max-width: 780px) {
+    #parlor-zonk-overlay.parlor-zonk-overlay { overflow-y: auto; }
+    #parlor-zonk-overlay .parlor-zonk-layout {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-auto-rows: auto;
+        min-height: 100vh;
+        height: auto;
+        overflow: visible;
+    }
+    #parlor-zonk-overlay .parlor-zonk-progress,
+    #parlor-zonk-overlay .parlor-zonk-center,
+    #parlor-zonk-overlay .parlor-zonk-combos { height: auto; overflow: visible; }
+    #parlor-zonk-overlay .parlor-zonk-progress-players { max-height: 260px; }
+    #parlor-zonk-overlay .parlor-zonk-combos { grid-column: 1; }
+    #parlor-zonk-overlay .parlor-zonk-lower-board { grid-template-columns: 1fr; }
+    #parlor-zonk-overlay .parlor-zonk-stair-slot { --z-slot: clamp(30px,7vw,47px); }
+}
