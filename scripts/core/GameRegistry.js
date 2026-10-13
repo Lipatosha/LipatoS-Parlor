@@ -11,11 +11,11 @@ import { GAME_GUIDE_RU, BACCARAT_DRAW_GUIDE_RU } from './GameGuideRu.js';
 const GAME_GUIDE_TEXT = {
     zonk: {
         en: {
-            summary: 'Farkle (Farkle) is a six-dice push-your-luck tavern game with a shared entry-fee pot.',
+            summary: 'Farkle is a six-dice push-your-luck tavern game with a shared entry-fee pot.',
             flow: [
                 'All players pay a fixed entry fee once at the start.',
                 'On your turn roll six dice, select scoring dice and keep them. Bank at least 300 turn points or roll the remaining dice again.',
-                'If no die can score, you Farkle and lose unbanked turn points. When all six dice score, roll all six again.',
+                'If no die can score, you farkle and lose unbanked turn points. When all six dice score, roll all six again.',
                 'At the target score the other players each get one final turn.'
             ],
             win: [
