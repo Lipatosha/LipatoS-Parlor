@@ -1163,3 +1163,75 @@
     opacity: 1 !important;
     visibility: visible !important;
 }
+
+/* v2.1.8 — Farkle uses isolated HTML/CSS dice, not .parlor-d6-face or
+   .parlor-ld-die. Shared parlor dice-faces.css no longer matches these dice.
+   Explicit sizing in each use context avoids invisible, zero-size faces.
+ */
+#parlor-zonk-overlay .parlor-farkle-face {
+    display: inline-block !important;
+    position: relative !important;
+    isolation: isolate;
+    flex: 0 0 auto;
+    vertical-align: middle;
+    width: 64px;
+    height: 64px;
+    min-width: 0;
+    min-height: 0;
+    aspect-ratio: 1 / 1;
+    padding: 0 !important;
+    margin: 0 !important;
+    overflow: hidden !important;
+    border: 0 !important;
+    border-radius: 9% !important;
+    box-shadow: none !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    background: #d2d2d2 !important;
+    pointer-events: none !important;
+}
+#parlor-zonk-overlay .parlor-farkle-face-white {
+    position: absolute !important;
+    z-index: 1 !important;
+    inset: 0 !important;
+    display: block !important;
+    width: 100% !important;
+    height: 100% !important;
+    background: #ffffff !important;
+    border-radius: 28% !important;
+    opacity: 1 !important;
+    pointer-events: none !important;
+}
+#parlor-zonk-overlay .parlor-farkle-pip {
+    position: absolute !important;
+    z-index: 2 !important;
+    display: block !important;
+    border-radius: 50% !important;
+    background: #2b2b2b !important;
+    opacity: 1 !important;
+    pointer-events: none !important;
+}
+#parlor-zonk-overlay .parlor-zonk-roll-zone .parlor-zonk-dice-tray button.parlor-zonk-pick > .parlor-farkle-face {
+    display: block !important;
+    width: 100% !important;
+    height: 100% !important;
+}
+#parlor-zonk-overlay .parlor-zonk-stair-slot .parlor-farkle-face {
+    display: block !important;
+    width: 88% !important;
+    height: 88% !important;
+}
+#parlor-zonk-overlay .parlor-farkle-face.is-small,
+#parlor-zonk-overlay .parlor-zonk-history-dice .parlor-farkle-face,
+#parlor-zonk-overlay .parlor-zonk-combo-faces .parlor-farkle-face {
+    width: 18px !important;
+    height: 18px !important;
+    border-radius: 4px !important;
+}
+#parlor-zonk-overlay .parlor-zonk-rules-combos .parlor-farkle-face {
+    width: 25px !important;
+    height: 25px !important;
+}
+#parlor-zonk-overlay .parlor-zonk-pick:disabled > .parlor-farkle-face {
+    opacity: 1 !important;
+}
