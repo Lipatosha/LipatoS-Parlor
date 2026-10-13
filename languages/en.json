@@ -240,7 +240,7 @@
         "ZonkNote": "Each player contributes once. Choose 2,000, 3,000, 5,000 or 10,000 target points.",
         "ZonkAnte": "Entry fee",
         "ZonkTarget": "Target score",
-        "ZonkParticipantsNote": "2–8 players. Roll up to six dice and keep scoring dice to build your score.",
+        "ZonkParticipantsNote": "2–10 players. Roll up to six dice and keep scoring dice to build your score.",
         "SettlementSilver": "Silver coins",
         "SettlementSilverHint": "Wagers and winnings use the character’s silver coins.",
         "SettlementCopper": "Copper coins",
@@ -373,7 +373,7 @@
       },
       "Zonk": {
         "Name": "Zonk (Farkle)",
-        "Desc": "Six dice, high stakes and risky decisions in a tavern game."
+        "Desc": "Six dice, risky choices and up to ten tavern players."
       }
     },
     "Roulette": {
@@ -2429,7 +2429,11 @@
       "ThreePairs": "Three pairs",
       "Straight": "Straight",
       "Understood": "Got it",
-      "EntryFee": "Entry fee"
+      "EntryFee": "Entry fee",
+      "SectionSingles": "Single dice",
+      "SectionTriples": "Three of a kind",
+      "SectionSpecial": "Special combinations",
+      "SectionMultiples": "Four, five and six alike"
     },
     "Currency": {
       "Gold": "Gold",
