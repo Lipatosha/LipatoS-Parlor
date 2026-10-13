@@ -193,7 +193,7 @@ describe('Farkle kept-dice staircase state', () => {
 
         table.handlePlayerAction('p1', 'roll');
         assert.deepEqual(table.getState().keptDice, [], 'Hot dice start a new staircase');
-        table.handlePlayerAction('p1', 'keep', { indices: [0, 1, 2] });
+        assert.equal(table.handlePlayerAction('p1', 'keep', { indices: [3, 4, 5] }).ok, true);
         table.handlePlayerAction('p1', 'bank');
         assert.equal(table.currentPlayerId, 'p2');
         assert.deepEqual(table.getState().keptDice, [], 'Staircase clears for the next participant');
