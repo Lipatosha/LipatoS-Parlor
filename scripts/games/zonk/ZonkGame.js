@@ -137,8 +137,8 @@ export class ZonkGame extends GameBase {
 
         if (action === 'roll') {
             if (!['needRoll', 'ready'].includes(this.turnPhase)) return { ok: false, reason: 'keep-first' };
-            // Hot dice: a fresh set of six begins a new visible saved-dice staircase.
-            if (this.remainingDice === ZONK_DICE && this.keptDice.length === ZONK_DICE) this.keptDice = [];
+            // All hot-dice rerolls keep their saved dice, filling the 6→1 staircase
+            // across throws. We retain the most recent 21 dice (six visible tiers).
             this.currentDice = Array.from({ length: this.remainingDice }, () => rollD6(this._rng));
             this.lastRoll = [...this.currentDice];
             this.rollId++;
@@ -164,7 +164,7 @@ export class ZonkGame extends GameBase {
             if (!points) return { ok: false, reason: 'invalid-combination' };
             this.turnPoints += points;
             const kept = indices.map(i => this.currentDice[i]);
-            this.keptDice = [...this.keptDice, ...kept].slice(0, ZONK_DICE);
+            this.keptDice = [...this.keptDice, ...kept].slice(-21);
             this._record('keep', participantId, { dice: kept, points });
             this.remainingDice -= indices.length;
             this.currentDice = [];
