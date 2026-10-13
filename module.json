@@ -1,8 +1,8 @@
 {
   "id": "parlor",
   "title": "LipatoS — Parlor",
-  "description": "Казино Аиндора: в Farkle восстановлено отображение белых D6 поверх поля Dice So Nice!, сохранены интерактивные броски и подсветка.",
-  "version": "2.1.6",
+  "description": "Казино Аиндора: в Farkle грани D6 теперь гарантированно отображаются встроенной графикой независимо от атласа, фона Foundry и Dice So Nice!.",
+  "version": "2.1.7",
   "manifest": "https://github.com/Lipatosha/LipatoS-Parlor/releases/latest/download/module.json",
   "url": "https://github.com/Lipatosha/LipatoS-Parlor",
   "compatibility": {
@@ -53,5 +53,5 @@
       "path": "languages/ru.json"
     }
   ],
-  "download": "https://github.com/Lipatosha/LipatoS-Parlor/releases/download/v2.1.6/lipatos-parlor-v2.1.6.zip"
+  "download": "https://github.com/Lipatosha/LipatoS-Parlor/releases/download/v2.1.7/lipatos-parlor-v2.1.7.zip"
 }
