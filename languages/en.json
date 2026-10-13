@@ -2452,8 +2452,13 @@
       "ScoreHelpFullHand": "If all six dice score, roll a fresh full set of six dice.",
       "ScoreHelpBust": "If a roll contains no scoring combination, it's Farkle! You lose the unbanked points for that turn.",
       "Multiplier": "multiplier",
-      "RollZone": "Rolling area — Dice So Nice!",
-      "RollZoneHint": "Roll dice. The resulting dice remain here until a combination is kept or the turn is skipped."
+      "RollZone": "Dice field",
+      "RollZoneHint": "Roll the dice and select a scoring combination.",
+      "Players": "Players",
+      "ExtraActions": "Additional actions",
+      "OnlyGM": "Only the GM can use these actions",
+      "RollField": "Dice field",
+      "DiceShort": "dice"
     },
     "Currency": {
       "Gold": "Gold",
