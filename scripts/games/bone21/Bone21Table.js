@@ -26,19 +26,12 @@ import {
     buildBone21Status
 } from './Bone21PresenterData.js';
 
+import { renderD6Face } from '../../core/DiceFaces.js';
+
 const ACTION_LOCK_MS = 420;
 const MAX_SIDE_SEATS = 5;
 const DEFAULT_ANTE = 10;
 const BUST_LIMIT = 21;
-const DIE_PIPS = Object.freeze({
-    1: [5],
-    2: [1, 9],
-    3: [1, 5, 9],
-    4: [1, 3, 7, 9],
-    5: [1, 3, 5, 7, 9],
-    6: [1, 3, 4, 6, 7, 9]
-});
-
 export class Bone21Table {
     constructor({ gameInstance }) {
         this.gameInstance = gameInstance;
@@ -693,16 +686,7 @@ export class Bone21Table {
     }
 
     _buildDie(value, { small = false } = {}) {
-        const pips = DIE_PIPS[value] || [];
-        const classes = ['parlor-b21-die', small ? 'is-small' : ''].filter(Boolean).join(' ');
-        return `
-            <div class="${classes}" data-value="${value}">
-                ${Array.from({ length: 9 }, (_, index) => {
-                    const pipIndex = index + 1;
-                    return `<span class="parlor-b21-pip pip-${pipIndex} ${pips.includes(pipIndex) ? 'is-on' : ''}"></span>`;
-                }).join('')}
-            </div>
-        `;
+        return renderD6Face(value, { className: 'parlor-b21-die', small });
     }
 
     _buildDicePlaceholder() {
