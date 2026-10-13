@@ -1,8 +1,8 @@
 {
   "id": "parlor",
   "title": "LipatoS — Parlor",
-  "description": "Казино Аиндора: Farkle с полноразмерным выделением кубиков, компактным полем и одноколоночной таблицей комбинаций.",
-  "version": "2.1.4",
+  "description": "Казино Аиндора: Farkle с отдельной крупной зоной бросков, анимацией Dice So Nice! и сохраняющимися интерактивными результатами.",
+  "version": "2.1.5",
   "manifest": "https://github.com/Lipatosha/LipatoS-Parlor/releases/latest/download/module.json",
   "url": "https://github.com/Lipatosha/LipatoS-Parlor",
   "compatibility": {
@@ -53,5 +53,5 @@
       "path": "languages/ru.json"
     }
   ],
-  "download": "https://github.com/Lipatosha/LipatoS-Parlor/releases/download/v2.1.4/lipatos-parlor-v2.1.4.zip"
+  "download": "https://github.com/Lipatosha/LipatoS-Parlor/releases/download/v2.1.5/lipatos-parlor-v2.1.5.zip"
 }
