@@ -306,10 +306,11 @@ export class ZonkTable {
                     </section>
                 </div>
                 <div class="parlor-zonk-buttons">
-                    ${actionButton('bank', t('Bank'), canPlay && ready && Number(state.turnPoints || 0) >= (state.minBank || 300), 'is-save')}
+                    ${choosing
+                        ? actionButton('keep', t('Keep', { points: fmt(points || 0) }), canPlay && points > 0, 'is-save')
+                        : actionButton('bank', t('Bank'), canPlay && ready && Number(state.turnPoints || 0) >= (state.minBank || 300), 'is-save')}
                     ${actionButton('roll', hot ? t('BonusRoll') : t('Roll'), canPlay && !choosing && !ended && !pending, 'is-throw')}
                     ${actionButton('skip', t('SkipTurn'), game.user.isGM && !ended && !pending && !this._busy, 'is-skip')}
-                    ${choosing ? actionButton('keep', t('Keep', { points: fmt(points || 0) }), canPlay && points > 0, 'is-keep') : ''}
                 </div>
                 ${state.finalTurnsRemaining !== null && !ended ? `<div class="parlor-zonk-final">${esc(t('FinalRemaining', { count: state.finalTurnsRemaining }))}</div>` : ''}
                 <div class="parlor-zonk-ante">${esc(t('EntryFee'))}: ${esc(bet)} · ${esc(t('MinBank'))}: ${fmt(state.minBank || 300)}</div>
