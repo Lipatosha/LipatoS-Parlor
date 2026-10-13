@@ -217,13 +217,22 @@ export class ZonkTable {
 
         const standings = [...(state.turnOrder || [])].sort((a, b) =>
             (state.playerStates?.[b]?.score || 0) - (state.playerStates?.[a]?.score || 0));
+        // Turn order is authoritative and is independent of the score-sorted roster.
+        // Seats before currentPlayerId have already completed this round.
+        const nextTurnIndex = (state.turnOrder || []).indexOf(state.currentPlayerId);
+        const upcomingOrder = new Map(
+            nextTurnIndex < 0 ? [] : state.turnOrder.slice(nextTurnIndex)
+                .map((id, offset) => [id, nextTurnIndex + offset + 1])
+        );
         // Show actual seated participants only, up to the supported ten.
         const roster = standings.slice(0, 10).map((id, index) => {
             const p = state.playerStates?.[id] || {};
             const active = id === state.currentPlayerId;
             const winner = state.winnerIds?.includes(id);
-            return `<div class="parlor-zonk-progress-row ${active ? 'is-current' : ''} ${winner ? 'is-winner' : ''}">
+            const upcoming = upcomingOrder.get(id);
+            return `<div class="parlor-zonk-progress-row ${active ? 'is-current' : ''} ${winner ? 'is-winner' : ''} ${upcoming ? 'is-upcoming' : 'is-played'}">
                 <span class="parlor-zonk-rank">${index + 1}</span>
+                ${upcoming ? `<span class="parlor-zonk-turn-order" title="${esc(t('UpcomingTurn', { number: upcoming }))}" aria-label="${esc(t('UpcomingTurn', { number: upcoming }))}">${upcoming}</span>` : ''}
                 <span class="parlor-zonk-player" title="${esc(this._participantName(state, id))}">${esc(this._participantName(state, id))}</span>
                 <strong>${fmt(p.score || 0)}</strong>
             </div>`;
@@ -302,11 +311,11 @@ export class ZonkTable {
                 <div class="parlor-zonk-buttons">
                     ${choosing
                         ? actionButton('keep', t('Bank'), canPlay && points > 0, 'is-save')
-                        : actionButton('bank', t('Bank'), canPlay && ready && Number(state.turnPoints || 0) >= (state.minBank || 300), 'is-save')}
+                        : actionButton('bank', t('Bank'), canPlay && ready && Number(state.turnPoints || 0) >= 0, 'is-save')}
                     ${actionButton('roll', hot ? t('BonusRoll') : t('Roll'), canPlay && !choosing && !ended && !pending, 'is-throw')}
                 </div>
                 ${state.finalTurnsRemaining !== null && !ended ? `<div class="parlor-zonk-final">${esc(t('FinalRemaining', { count: state.finalTurnsRemaining }))}</div>` : ''}
-                <div class="parlor-zonk-ante">${esc(t('EntryFee'))}: ${esc(bet)} · ${esc(t('MinBank'))}: ${fmt(state.minBank || 300)}</div>
+                <div class="parlor-zonk-ante">${esc(t('EntryFee'))}: ${esc(bet)}</div>
                 <section class="parlor-zonk-history">
                     <div class="parlor-zonk-history-heading"><span>${esc(t('History'))}</span><small>${esc(t('RecentActions'))}</small></div>
                     <div class="parlor-zonk-history-list">${this._history(state)}</div>
