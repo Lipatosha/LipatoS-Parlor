@@ -2,7 +2,7 @@
   "id": "parlor",
   "title": "LipatoS — Parlor",
   "description": "Казино Аиндора: 13 игр для Foundry VTT. Новые белые кости D6 во Farkle, Костях лжеца, Костях 21 и тавернных игровых столах.",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "manifest": "https://github.com/Lipatosha/LipatoS-Parlor/releases/latest/download/module.json",
   "url": "https://github.com/Lipatosha/LipatoS-Parlor",
   "compatibility": {
@@ -53,5 +53,5 @@
       "path": "languages/ru.json"
     }
   ],
-  "download": "https://github.com/Lipatosha/LipatoS-Parlor/releases/download/v2.1.0/lipatos-parlor-v2.1.0.zip"
+  "download": "https://github.com/Lipatosha/LipatoS-Parlor/releases/download/v2.1.1/lipatos-parlor-v2.1.1.zip"
 }
