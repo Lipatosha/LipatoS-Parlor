@@ -240,7 +240,7 @@
         "ZonkNote": "每名玩家只需缴纳一次底注。选择 2000、3000、5000 或 10000 分目标。",
         "ZonkAnte": "每人底注",
         "ZonkTarget": "目标积分",
-        "ZonkParticipantsNote": "2–8位玩家，使用六枚骰子挑选得分组合。",
+        "ZonkParticipantsNote": "2–10位玩家，使用六枚骰子挑选得分组合。",
         "SettlementSilver": "银币结算",
         "SettlementSilverHint": "直接从角色的银币余额扣除与发放。",
         "SettlementCopper": "铜币结算",
@@ -373,7 +373,7 @@
       },
       "Zonk": {
         "Name": "Zonk 骰子",
-        "Desc": "六枚骰子组成组合，冒险积累积分。"
+        "Desc": "六枚骰子，最多十名玩家一起冒险计分。"
       }
     },
     "Roulette": {
@@ -2429,7 +2429,11 @@
       "ThreePairs": "三对",
       "Straight": "顺子",
       "Understood": "明白",
-      "EntryFee": "底注"
+      "EntryFee": "底注",
+      "SectionSingles": "单颗骰子",
+      "SectionTriples": "三条",
+      "SectionSpecial": "特殊组合",
+      "SectionMultiples": "四、五、六条"
     },
     "Currency": {
       "Gold": "金币",
