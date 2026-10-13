@@ -109,37 +109,68 @@ export class ZonkTable {
         return rows.length ? rows.join('') : `<div class="parlor-zonk-history-empty">${esc(t('HistoryEmpty'))}</div>`;
     }
 
+    /** Illuminated manuscript used in the paytable and in the rules window. */
     _combos() {
         const combo = (values, points, description = '') => `<div class="parlor-zonk-combo-row">
             <span class="parlor-zonk-combo-faces">${diceRow(values, true)}</span>
             <span class="parlor-zonk-combo-value">${esc(points)}</span>
             ${description ? `<small>${esc(description)}</small>` : ''}
         </div>`;
-        return `
-            ${combo([1], '100')}
-            ${combo([5], '50')}
-            ${combo([1, 1, 1], '1000')}
-            ${combo([2, 2, 2], '200')}
-            ${combo([3, 3, 3], '300')}
-            ${combo([4, 4, 4], '400')}
-            ${combo([5, 5, 5], '500')}
-            ${combo([6, 6, 6], '600')}
-            ${combo([1, 1, 2, 2, 3, 3], '750', t('ThreePairs'))}
-            ${combo([1, 2, 3, 4, 5, 6], '1500', t('Straight'))}
-            <div class="parlor-zonk-combo-extra">${esc(t('MultiplesNote'))}</div>`;
+        const section = (title, body) => `<section class="parlor-zonk-manuscript-section">
+            <h4>${esc(title)}</h4><div class="parlor-zonk-manuscript-entries">${body}</div>
+        </section>`;
+        return `<div class="parlor-zonk-manuscript" aria-label="${esc(t('Scoring'))}">
+            <div class="parlor-zonk-manuscript-flourish" aria-hidden="true">❧ ───── ❦ ───── ❧</div>
+            <div class="parlor-zonk-manuscript-title">${esc(t('Scoring'))}</div>
+            <div class="parlor-zonk-manuscript-columns">
+                <div>
+                    ${section(t('SectionSingles'), combo([1], '100') + combo([5], '50'))}
+                    ${section(t('SectionTriples'), [
+                        combo([1,1,1], '1000'),
+                        combo([2,2,2], '200'),
+                        combo([3,3,3], '300'),
+                        combo([4,4,4], '400'),
+                        combo([5,5,5], '500'),
+                        combo([6,6,6], '600')
+                    ].join(''))}
+                </div>
+                <div>
+                    ${section(t('SectionSpecial'), [
+                        combo([1,1,2,2,3,3], '750', t('ThreePairs')),
+                        combo([1,2,3,4,5,6], '1500', t('Straight'))
+                    ].join(''))}
+                    ${section(t('SectionMultiples'), [
+                        combo([1,1,1,1], '2000'),
+                        combo([1,1,1,1,1], '3000'),
+                        combo([1,1,1,1,1,1], '4000')
+                    ].join(''))}
+                    <p class="parlor-zonk-combo-extra">${esc(t('MultiplesNote'))}</p>
+                </div>
+            </div>
+            <div class="parlor-zonk-manuscript-flourish is-bottom" aria-hidden="true">✥ ❈ ✥ ❈ ✥ ❈ ✥</div>
+        </div>`;
     }
 
     _rules() {
         const guide = getGameGuide('zonk');
+        const paragraphs = guide?.paragraphs || [];
         return `<div class="parlor-zonk-rules-backdrop" data-zonk-rule-backdrop>
             <section class="parlor-zonk-rules" role="dialog" aria-modal="true" aria-label="${esc(t('Rules'))}">
-                <header><h2>${esc(t('Rules'))}</h2><button type="button" data-zonk-action="hide-rules" aria-label="${esc(t('Close'))}">×</button></header>
+                <header><h2>${esc(t('Rules'))}</h2>
+                    <button type="button" data-zonk-action="hide-rules" aria-label="${esc(t('Close'))}">×</button>
+                </header>
                 <div class="parlor-zonk-rules-content">
-                    <p class="parlor-zonk-rules-intro">${esc(guide?.summary || '')}</p>
-                    ${(guide?.paragraphs || []).map(text => `<p>${esc(text)}</p>`).join('')}
-                    <h3>${esc(t('Scoring'))}</h3>
-                    <div class="parlor-zonk-rules-combos">${this._combos()}</div>
-                    ${guide?.note ? `<p class="parlor-zonk-rules-note">${esc(guide.note)}</p>` : ''}
+                    <article class="parlor-zonk-rulebook-paper">
+                        <div class="parlor-zonk-manuscript-flourish" aria-hidden="true">❧ ───────── ❦ ───────── ❧</div>
+                        <h3 class="parlor-zonk-rulebook-title">${esc(t('Rules'))}</h3>
+                        <p class="parlor-zonk-rules-intro">${esc(guide?.summary || '')}</p>
+                        <div class="parlor-zonk-rulebook-text">
+                            ${paragraphs.map((text, index) => `<p${index === 0 ? ' class="is-first"' : ''}>${esc(text)}</p>`).join('')}
+                        </div>
+                        ${guide?.note ? `<p class="parlor-zonk-rules-note">${esc(guide.note)}</p>` : ''}
+                        <div class="parlor-zonk-rules-combos">${this._combos()}</div>
+                        <div class="parlor-zonk-manuscript-flourish is-bottom" aria-hidden="true">✥ ❈ ✥ ❈ ✥ ❈ ✥</div>
+                    </article>
                 </div>
                 <footer><button type="button" data-zonk-action="hide-rules">${esc(t('Understood'))}</button></footer>
             </section>
