@@ -2458,7 +2458,22 @@
       "ExtraActions": "更多操作",
       "OnlyGM": "仅主持人可用",
       "RollField": "掷骰区",
-      "DiceShort": "颗骰子"
+      "DiceShort": "颗骰子",
+      "VictoryNotice": "Farkle 游戏结束！获胜者：{winners}",
+      "VictoryDrawNotice": "Farkle 游戏平局！获胜者：{winners}",
+      "VictoryTitle": "Farkle 获胜！",
+      "VictoryDrawTitle": "Farkle 平局！",
+      "Rematch": "再玩一局",
+      "RematchHostHint": "只有主持人可以重新开局。",
+      "VictoryDismiss": "查看结果",
+      "RematchAnte": "新的入场费",
+      "RematchCurrency": "结算货币",
+      "RematchTarget": "目标分数",
+      "RematchSettings": "新一局 Farkle — 下注",
+      "RematchCancel": "取消",
+      "RematchInvalid": "请输入 1 到 100000 的入场费。",
+      "RematchInsufficient": "一名或多名玩家无法支付新入场费。",
+      "RematchFailed": "无法开始新对局。"
     },
     "Currency": {
       "Gold": "金币",
