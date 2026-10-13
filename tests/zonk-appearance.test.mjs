@@ -147,13 +147,13 @@ describe('Zonk Foundry inventory redesign', () => {
         assert.ok(code.includes('Dsn3dBridge.attachOverlay(token)'));
         assert.ok(code.includes('zonk-roll:${this.gameInstance.sessionId}:${state.rollId}'));
         assert.ok(code.includes('Dsn3dBridge.detachOverlay(token)'));
-        assert.ok(code.includes("overlay.classList.add('parlor-zonk-dsn-rolling')"));
-        assert.ok(code.includes("overlay?.classList.remove('parlor-zonk-dsn-rolling')"));
+        assert.ok(code.includes("overlay.classList.add('parlor-zonk-dsn-rolling', 'parlor-zonk-3d-active')"));
+        assert.ok(code.includes("overlay?.classList.remove('parlor-zonk-dsn-rolling','parlor-zonk-3d-active')"));
         assert.ok(code.includes("state.turnPhase === 'choose'"));
         assert.ok(code.includes('Dsn3dBridge.rollD6Visuals(state.currentDice'));
         assert.ok(code.includes('state.rollId'));
         assert.ok(code.includes('const dice = choosing'));
-        assert.ok(code.includes(" : ''; // Nothing on the 3D roll surface until a real roll lands."));
+        assert.ok(code.includes(" : '';"));
         assert.ok(code.includes('data-zonk-die='));
         for (const lang of ['ru', 'en', 'cn']) {
             const locale = JSON.parse(await source('languages/' + lang + '.json'));
@@ -182,7 +182,7 @@ describe('Zonk Foundry inventory redesign', () => {
         assert.ok(css.includes('pointer-events: none !important'));
     });
 
-    it('keeps Farkle over DSN (3100), except while actually playing its 3D animation', async () => {
+    it('retains real DSN dice above Farkle through the choice phase, then clears on keep', async () => {
         const css = await source('styles/zonk-v14.css');
         const code = await source('scripts/games/zonk/ZonkTable.js');
         const bridge = await source('scripts/core/Dsn3dBridge.js');
@@ -193,9 +193,26 @@ describe('Zonk Foundry inventory redesign', () => {
         assert.ok(code.includes('this._dsnRollTokens.add(token)'));
         assert.ok(code.includes('.finally(() => {'));
         assert.ok(code.includes('Dsn3dBridge.detachOverlay(token)'));
-        assert.ok(code.includes('if (!this._dsnRollTokens.size) overlay?.classList.remove('));
+        assert.ok(code.includes('Dsn3dBridge.clearFarkleDice()'));
         assert.ok(!code.includes('Dsn3dBridge.attachOverlay(`zonk:${this.gameInstance.sessionId}`)'),
             'Never hold the DSN canvas above visible faces between rolls');
+    });
+
+    it('shows actual DSN rolls as primary Farkle dice with blue stone appearance', async () => {
+        const table = await source('scripts/games/zonk/ZonkTable.js');
+        const bridge = await source('scripts/core/Dsn3dBridge.js');
+        const css = await source('styles/zonk-v14.css');
+        assert.ok(table.includes('Dsn3dBridge.holdFarkleDice(token)'));
+        assert.ok(table.includes('Dsn3dBridge.rollD6Visuals(state.currentDice'));
+        assert.ok(table.includes("colorset: 'custom'"));
+        assert.ok(table.includes("background: '#2845cc'"));
+        assert.ok(table.includes("material: 'stone'"));
+        assert.ok(table.includes("foreground: '#FFFFFF'"));
+        assert.ok(table.includes('Dsn3dBridge.releaseFarkleDice(token)'));
+        assert.ok(table.includes("class=\\"${use3d ? 'parlor-zonk-dsn-choice' : 'parlor-zonk-pick'}"));
+        assert.ok(css.includes('.parlor-zonk-dice-tray.is-dsn-3d'));
+        assert.ok(bridge.includes("config.hideAfterRoll = false;"));
+        assert.ok(bridge.includes("config.hideAfterRoll = oldValue;"));
     });
 
 });
