@@ -171,7 +171,7 @@ describe('Zonk Foundry inventory redesign', () => {
         assert.ok(code.includes("svg + '</span>'"));
         assert.ok(!code.includes('D6_SPRITE_PATH'), 'Dice faces must not depend on external image paths');
         for (const [face, expected] of [[1, 1], [2, 2], [3, 3], [4, 4], [5, 5], [6, 6]]) {
-            const layout = code.split('\\n').find(line => line.trim().startsWith(face + ': [['));
+            const layout = code.split(String.fromCharCode(10)).find(line => line.trim().startsWith(face + ': [['));
             assert.ok(layout, 'Face ' + face + ' must have a pip layout');
             assert.equal(layout.split('], [').length, expected, 'Incorrect pip count for face ' + face);
         }
