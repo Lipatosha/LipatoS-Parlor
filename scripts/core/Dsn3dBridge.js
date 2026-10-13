@@ -27,6 +27,20 @@ function getMode() {
 }
 
 const _stageHolders = new Set();
+// Scoped override for Farkle only: do not save/modify any user's DSN settings.
+const _farkleHoldTokens = new Set();
+const _farkleHideSnapshots = new Map();
+function getDsnRuntimeConfigs() {
+    const dice3d = game.dice3d;
+    const candidates = [
+        dice3d?.constructor?.CONFIG,
+        dice3d?.CONFIG,
+        dice3d?.box?.config
+    ];
+    return [...new Set(candidates)].filter(value => value && typeof value === 'object'
+        && Object.prototype.hasOwnProperty.call(value, 'hideAfterRoll'));
+}
+
 // stage-keyed：DSN 重建舞台节点时，各自恢复各自的原值，不会串号。
 const _savedStylesByStage = new WeakMap();
 
@@ -261,6 +275,44 @@ export const Dsn3dBridge = {
         if (_stageHolders.size === 0) releaseStageRaise('overlay.detach');
     },
 
+    /** For Farkle, keep REAL 3D dice visible until a game action clears them.
+     * Legacy and v5 DSN expose an in-memory hideAfterRoll config. We ONLY
+     * override a present runtime field. When the last Farkle match closes
+     * its previous value is restored, with no persisted setting changes.
+     */
+    holdFarkleDice(token) {
+        if (!token || !this.isAvailable()) return false;
+        _farkleHoldTokens.add(token);
+        const configs = getDsnRuntimeConfigs();
+        for (const config of configs) {
+            if (!_farkleHideSnapshots.has(config)) {
+                _farkleHideSnapshots.set(config, config.hideAfterRoll);
+            }
+            config.hideAfterRoll = false;
+        }
+        return configs.length > 0;
+    },
+
+    clearFarkleDice() {
+        // Do not clear Dice So Nice's global table unless this module has
+        // actually placed temporary Farkle dice on the stage.
+        if (_farkleHoldTokens.size) {
+            try { game.dice3d?.box?.clearAll?.(); } catch (error) {
+                console.warn('parlor | could not clear Farkle 3D dice', error);
+            }
+        }
+    },
+
+    releaseFarkleDice(token) {
+        if (!token) return;
+        _farkleHoldTokens.delete(token);
+        if (_farkleHoldTokens.size) return;
+        for (const [config, oldValue] of _farkleHideSnapshots) {
+            config.hideAfterRoll = oldValue;
+        }
+        _farkleHideSnapshots.clear();
+    },
+
     isAvailable() {
         const availability = getAvailabilitySnapshot();
         debugDsn('availability.check', {
@@ -279,7 +331,7 @@ export const Dsn3dBridge = {
      * @param {string|null} [options.ownerUserId] 骰子主人的 userId，DSN 会用他的皮肤；缺省 = 本机用户
      * @returns {Promise<boolean>} 没播或播失败都解析为 false，不抛
      */
-    async rollD6Visuals(values, { broadcast = false, ownerUserId = null } = {}) {
+    async rollD6Visuals(values, { broadcast = false, ownerUserId = null, appearance = null } = {}) {
         const availability = getAvailabilitySnapshot();
         debugDsn('roll.request', {
             values: Array.isArray(values) ? [...values] : values,
@@ -309,6 +361,15 @@ export const Dsn3dBridge = {
 
             const roll = new Roll(`${faces.length}d6`);
             await roll.evaluate();
+
+            // Use a per-roll DSN appearance — never change a player's global
+            // settings, because this blue stone set belongs ONLY to Farkle.
+            if (appearance && typeof appearance === 'object') {
+                roll.options.appearance = { ...appearance };
+                for (const die of roll.dice || []) {
+                    die.options.appearance = { ...appearance };
+                }
+            }
 
             const dieTerm = roll.terms?.[0];
             if (dieTerm?.results?.length) {
