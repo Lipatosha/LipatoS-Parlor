@@ -285,7 +285,7 @@ export class ZonkTable {
                 <div class="parlor-zonk-players-heading"><strong>${esc(t('Players'))}</strong><span>${standings.length}/10</span></div>
                 <div class="parlor-zonk-progress-players">${roster}</div>
                 <div class="parlor-zonk-progress-foot">
-                    <small>${esc(t('Leader'))}</small><strong>${fmt(topScore)}</strong>
+                    ${actionButton('skip', t('SkipTurn'), game.user.isGM && !ended && !pending && !this._busy, 'is-skip')}
                 </div>
             </aside>
             <main class="parlor-zonk-center">
@@ -313,19 +313,18 @@ export class ZonkTable {
                         ? actionButton('keep', t('Bank'), canPlay && points > 0, 'is-save')
                         : actionButton('bank', t('Bank'), canPlay && ready && Number(state.turnPoints || 0) >= (state.minBank || 300), 'is-save')}
                     ${actionButton('roll', hot ? t('BonusRoll') : t('Roll'), canPlay && !choosing && !ended && !pending, 'is-throw')}
-                    ${actionButton('skip', t('SkipTurn'), game.user.isGM && !ended && !pending && !this._busy, 'is-skip')}
                 </div>
                 ${state.finalTurnsRemaining !== null && !ended ? `<div class="parlor-zonk-final">${esc(t('FinalRemaining', { count: state.finalTurnsRemaining }))}</div>` : ''}
                 <div class="parlor-zonk-ante">${esc(t('EntryFee'))}: ${esc(bet)} · ${esc(t('MinBank'))}: ${fmt(state.minBank || 300)}</div>
+                <section class="parlor-zonk-history">
+                    <div class="parlor-zonk-history-heading"><span>${esc(t('History'))}</span><small>${esc(t('RecentActions'))}</small></div>
+                    <div class="parlor-zonk-history-list">${this._history(state)}</div>
+                </section>
             </main>
             <aside class="parlor-zonk-right">
                 <section class="parlor-zonk-combos">
                     <div class="parlor-zonk-panel-title">${esc(t('Scoring'))}</div>
                     <div class="parlor-zonk-combo-list">${this._combos({ showDescriptions: false })}</div>
-                </section>
-                <section class="parlor-zonk-history">
-                    <div class="parlor-zonk-history-heading"><span>${esc(t('History'))}</span><small>${esc(t('RecentActions'))}</small></div>
-                    <div class="parlor-zonk-history-list">${this._history(state)}</div>
                 </section>
             </aside>
             ${this._rulesOpen ? this._rules() : ''}
