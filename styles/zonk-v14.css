@@ -593,3 +593,282 @@
     background: transparent;
     border-color: transparent;
 }
+
+/* v2.1.4 — compact Farkle composition based on the marked-up table screenshot.
+   Single-column scoring sidebar; no nested sidebar scrollbar. */
+#parlor-zonk-overlay .parlor-zonk-layout {
+    grid-template-columns: clamp(150px, 15.5vw, 205px) minmax(0, 1fr) clamp(250px, 23vw, 310px);
+    gap: 7px;
+}
+#parlor-zonk-overlay .parlor-zonk-center { gap: 7px; }
+#parlor-zonk-overlay .parlor-zonk-toolbar {
+    min-height: 47px;
+    padding: 5px 9px;
+}
+#parlor-zonk-overlay .parlor-zonk-velvet {
+    display: grid;
+    grid-template-columns: minmax(0, 57%) minmax(0, 43%);
+    grid-template-rows: minmax(85px, auto) minmax(0, 1fr) auto auto;
+    align-items: stretch;
+    gap: 7px 12px;
+    flex: 1 1 auto;
+    min-height: 0;
+    padding: 10px;
+    overflow-y: auto;
+}
+#parlor-zonk-overlay .parlor-zonk-dice-tray {
+    grid-column: 1;
+    grid-row: 1;
+    width: 100%;
+    min-width: 0;
+    min-height: 85px;
+    height: auto;
+    gap: clamp(3px, .55vw, 8px);
+    padding: 9px 5px;
+    align-content: center;
+}
+#parlor-zonk-overlay .parlor-zonk-lower-board { display: contents; }
+#parlor-zonk-overlay .parlor-zonk-saved-area {
+    grid-column: 1;
+    grid-row: 2;
+    height: auto;
+    min-height: 272px;
+    align-self: stretch;
+    padding: 6px 9px 8px;
+}
+#parlor-zonk-overlay .parlor-zonk-staircase {
+    justify-content: flex-end;
+    padding: 5px 0 0;
+    gap: 2px;
+}
+#parlor-zonk-overlay .parlor-zonk-stair-row { gap: 2px; }
+#parlor-zonk-overlay .parlor-zonk-stair-slot {
+    --z-slot: clamp(29px, 2.7vw, 44px);
+    border-radius: 3px;
+}
+#parlor-zonk-overlay .parlor-zonk-status-area {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    align-self: stretch;
+    min-width: 0;
+    justify-content: center;
+    gap: 11px;
+    padding: 10px 2px;
+}
+#parlor-zonk-overlay .parlor-zonk-choice {
+    min-height: 0;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+}
+#parlor-zonk-overlay .parlor-zonk-mini-stats {
+    width: 100%;
+    gap: 5px;
+}
+#parlor-zonk-overlay .parlor-zonk-mini-stats > div {
+    min-width: 0;
+    flex: 1 1 85px;
+    padding: 7px 5px;
+}
+#parlor-zonk-overlay .parlor-zonk-mini-stats b {
+    font-size: 15px;
+    overflow-wrap: anywhere;
+    text-align: center;
+}
+#parlor-zonk-overlay .parlor-zonk-buttons {
+    grid-column: 1 / -1;
+    width: auto;
+    min-height: 38px;
+    margin: 0 auto;
+    padding: 0;
+    gap: 7px;
+}
+#parlor-zonk-overlay .parlor-zonk-buttons .parlor-zonk-action {
+    min-height: 35px;
+    min-width: 124px;
+    padding: 6px 11px;
+}
+#parlor-zonk-overlay .parlor-zonk-ante,
+#parlor-zonk-overlay .parlor-zonk-final {
+    grid-column: 1 / -1;
+    margin: 0;
+    padding: 2px 0 0;
+}
+#parlor-zonk-overlay .parlor-zonk-history {
+    width: 57%;
+    min-width: min(100%, 335px);
+    max-width: 100%;
+    padding: 7px 9px;
+}
+#parlor-zonk-overlay .parlor-zonk-history-list { max-height: clamp(68px, 14vh, 148px); }
+#parlor-zonk-overlay .parlor-zonk-history-row {
+    min-height: 25px;
+    padding: 3px 0;
+}
+
+/* The clickable target and the foreground selection ring cover the entire die,
+   instead of the previous narrow stripe caused by the padded Foundry button. */
+#parlor-zonk-overlay .parlor-zonk-dice-tray .parlor-zonk-pick {
+    --z-die-size: clamp(38px, 4.3vw, 64px);
+    width: var(--z-die-size);
+    height: var(--z-die-size);
+    flex: 0 0 var(--z-die-size);
+    min-width: 0;
+    min-height: 0;
+    margin: 0;
+    padding: 0 !important;
+    display: grid;
+    place-items: center;
+    position: relative;
+    isolation: isolate;
+    overflow: visible;
+    border: 0 !important;
+    border-radius: 9%;
+    background: transparent !important;
+    box-shadow: none !important;
+}
+#parlor-zonk-overlay .parlor-zonk-dice-tray .parlor-zonk-pick > .parlor-d6-face {
+    display: block;
+    width: 100% !important;
+    height: 100% !important;
+    border-radius: 9% !important;
+}
+#parlor-zonk-overlay .parlor-zonk-dice-tray button.parlor-zonk-pick::after {
+    inset: 0;
+    border: 3px solid #e5c88a;
+    border-radius: 9%;
+    z-index: 5;
+    box-shadow: inset 0 0 0 1px #1a140c99, 0 0 0 1px #120f0bb3, 0 0 7px #e6c17670;
+}
+#parlor-zonk-overlay .parlor-zonk-dice-tray button.parlor-zonk-pick.is-selected,
+#parlor-zonk-overlay .parlor-zonk-dice-tray button.parlor-zonk-pick:not(:disabled):hover {
+    background: transparent !important;
+    border: 0 !important;
+}
+#parlor-zonk-overlay .parlor-zonk-dice-tray button.parlor-zonk-pick:focus-visible {
+    outline: 0;
+}
+
+/* Narrow scoring column, one continuous column of combinations. */
+#parlor-zonk-overlay .parlor-zonk-combos {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    overflow: hidden;
+}
+#parlor-zonk-overlay .parlor-zonk-combos > .parlor-zonk-panel-title {
+    flex: 0 0 auto;
+    padding: 7px 9px;
+}
+#parlor-zonk-overlay .parlor-zonk-combos .parlor-zonk-combo-list {
+    flex: 1 1 auto;
+    padding: 5px;
+    min-height: 0;
+    max-height: none;
+    overflow: hidden;
+}
+#parlor-zonk-overlay .parlor-zonk-combos .parlor-zonk-manuscript {
+    padding: 6px 8px;
+    min-height: 0;
+    box-shadow: none;
+}
+#parlor-zonk-overlay .parlor-zonk-combos .parlor-zonk-manuscript-columns {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+}
+#parlor-zonk-overlay .parlor-zonk-combos .parlor-zonk-manuscript-section {
+    margin: 0 0 4px;
+    padding: 0 0 3px;
+}
+#parlor-zonk-overlay .parlor-zonk-combos .parlor-zonk-manuscript-section h4 {
+    margin: 0 0 3px;
+    font-size: 11.5px;
+    line-height: 1.15;
+}
+#parlor-zonk-overlay .parlor-zonk-combos .parlor-zonk-manuscript-entries { gap: 0; }
+#parlor-zonk-overlay .parlor-zonk-combos .parlor-zonk-combo-row {
+    min-height: 21px;
+    padding: 1px 0;
+    gap: 3px;
+    font-size: 11px;
+    border-bottom-color: #6e615037;
+}
+#parlor-zonk-overlay .parlor-zonk-combos .parlor-zonk-combo-faces { gap: 2px; }
+#parlor-zonk-overlay .parlor-zonk-combos .parlor-zonk-combo-faces .parlor-ld-die {
+    width: 18px;
+    height: 18px;
+}
+#parlor-zonk-overlay .parlor-zonk-combos .parlor-zonk-any-die {
+    width: 17px;
+    height: 17px;
+    font-size: 11px;
+}
+#parlor-zonk-overlay .parlor-zonk-combos .parlor-zonk-any-groups { gap: 6px; }
+#parlor-zonk-overlay .parlor-zonk-combos .parlor-zonk-multiples {
+    gap: 2px;
+    padding: 4px 0 5px;
+    border-top: 0;
+}
+#parlor-zonk-overlay .parlor-zonk-kind-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 5px;
+    min-height: 19px;
+    font-size: 11px;
+}
+#parlor-zonk-overlay .parlor-zonk-kind-row span {
+    color: var(--z-ink);
+    white-space: normal;
+}
+#parlor-zonk-overlay .parlor-zonk-kind-row b {
+    white-space: nowrap;
+    color: var(--z-emphasis);
+}
+#parlor-zonk-overlay .parlor-zonk-rules-combos .parlor-zonk-manuscript-columns {
+    grid-template-columns: repeat(2, minmax(0,1fr));
+    gap: 18px;
+}
+@media (max-height: 780px) and (min-width: 921px) {
+    #parlor-zonk-overlay .parlor-zonk-combos .parlor-zonk-combo-row { min-height: 19px; }
+    #parlor-zonk-overlay .parlor-zonk-combos .parlor-zonk-manuscript-section h4 { font-size: 11px; }
+    #parlor-zonk-overlay .parlor-zonk-combos .parlor-zonk-manuscript-section { margin-bottom: 3px; padding-bottom: 2px; }
+    #parlor-zonk-overlay .parlor-zonk-combos .parlor-zonk-manuscript { padding: 5px 7px; }
+}
+@media (max-width: 1120px) and (min-width: 921px) {
+    #parlor-zonk-overlay .parlor-zonk-layout {
+        grid-template-columns: 150px minmax(0,1fr) 260px;
+    }
+    #parlor-zonk-overlay .parlor-zonk-dice-tray .parlor-zonk-pick { --z-die-size: 42px; }
+    #parlor-zonk-overlay .parlor-zonk-stair-slot { --z-slot: 33px; }
+}
+@media (max-width: 920px) {
+    #parlor-zonk-overlay.parlor-zonk-overlay { overflow-y: auto; }
+    #parlor-zonk-overlay .parlor-zonk-layout {
+        grid-template-columns: minmax(145px, 23%) minmax(0,1fr);
+        height: auto;
+        min-height: 100vh;
+        overflow: visible;
+    }
+    #parlor-zonk-overlay .parlor-zonk-combos { grid-column: 1 / -1; height: auto; overflow: visible; }
+    #parlor-zonk-overlay .parlor-zonk-combos .parlor-zonk-combo-list { overflow: visible; }
+    #parlor-zonk-overlay .parlor-zonk-combos .parlor-zonk-manuscript-columns { grid-template-columns: 1fr; }
+    #parlor-zonk-overlay .parlor-zonk-center,
+    #parlor-zonk-overlay .parlor-zonk-progress { height: auto; overflow: visible; }
+}
+@media (max-width: 650px) {
+    #parlor-zonk-overlay .parlor-zonk-layout { grid-template-columns: 1fr; }
+    #parlor-zonk-overlay .parlor-zonk-combos { grid-column: 1; }
+    #parlor-zonk-overlay .parlor-zonk-velvet { grid-template-columns: 1fr; grid-template-rows: auto; }
+    #parlor-zonk-overlay .parlor-zonk-dice-tray,
+    #parlor-zonk-overlay .parlor-zonk-saved-area,
+    #parlor-zonk-overlay .parlor-zonk-status-area,
+    #parlor-zonk-overlay .parlor-zonk-buttons,
+    #parlor-zonk-overlay .parlor-zonk-ante,
+    #parlor-zonk-overlay .parlor-zonk-final {
+        grid-column: 1;
+        grid-row: auto;
+    }
+    #parlor-zonk-overlay .parlor-zonk-history { width: 100%; min-width: 0; }
+}
