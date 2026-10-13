@@ -5,7 +5,7 @@ import { getGameGuide } from '../../core/GameRegistry.js';
 import { BotManager } from '../../core/BotManager.js';
 import { scoreZonkDice } from './ZonkRules.js';
 import { getFarkleRackDisplay } from './FarkleRack.js';
-import { renderD6Face } from '../../core/DiceFaces.js';
+import { D6_SPRITE_PATH, normalizeD6, renderD6Face } from '../../core/DiceFaces.js';
 import { Dsn3dBridge } from '../../core/Dsn3dBridge.js';
 
 // The same physical pip dice and CSS classes used by LiarsDiceTable.
@@ -15,8 +15,22 @@ const t = (key, data) => data
     : game.i18n.localize('PARLOR.Zonk.' + key);
 const esc = value => foundry.utils.escapeHTML(String(value ?? ''));
 const fmt = value => Number(value || 0).toLocaleString(game.i18n?.lang || 'ru-RU');
-const pipDie = (value, small = false) =>
-    renderD6Face(value, { className: 'parlor-ld-die', small });
+/**
+ * Full-sized dice in Farkle use a real HTML image above the table textures.
+ * The original shared WebP contains six 128px faces side-by-side.
+ * An img inside the clipped face keeps the full-resolution artwork visible
+ * even when Foundry/DSN overrides CSS background painting on nested buttons.
+ * Compact dice in rules/history continue to use the established sprite CSS.
+ */
+const pipDie = (value, small = false) => {
+    const face = renderD6Face(value, { className: 'parlor-ld-die', small });
+    if (small) return face;
+    const sliceOffset = ((normalizeD6(value) - 1) * 100 / 6).toFixed(6);
+    const image = `<img class="parlor-zonk-face-image" src="${D6_SPRITE_PATH}"
+        style="transform:translateX(-${sliceOffset}%)" draggable="false"
+        loading="eager" decoding="sync" aria-hidden="true" alt="">`;
+    return face.replace('</span>', image + '</span>');
+};
 const diceRow = (dice, small = false) => (dice || []).map(value => pipDie(value, small)).join('');
 
 export class ZonkTable {
