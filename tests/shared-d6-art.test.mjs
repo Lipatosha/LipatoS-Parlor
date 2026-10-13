@@ -27,6 +27,7 @@ describe('Shared user-supplied white D6 dice artwork', () => {
             const html = renderD6Face(value, { className: 'parlor-ld-die', small: true });
             assert.match(html, new RegExp('parlor-d6-index:' + (value - 1) + '["]'));
             assert.ok(html.includes('data-value="' + value + '"'));
+            assert.ok(html.includes('--parlor-d6-position:' + (value - 1) * 20 + '%'));
             assert.ok(html.includes('is-small'));
             assert.ok(!html.includes('parlor-ld-pip'));
         }
@@ -48,6 +49,7 @@ describe('Shared user-supplied white D6 dice artwork', () => {
         };
         assert.equal(applyD6Face(el, 4), el);
         assert.equal(styles.get('--parlor-d6-index'), '3');
+        assert.equal(styles.get('--parlor-d6-position'), '60%');
         assert.equal(el.dataset.v, '4');
         assert.equal(attrs.role, 'img');
         assert.ok(classes.has('parlor-d6-face'));
