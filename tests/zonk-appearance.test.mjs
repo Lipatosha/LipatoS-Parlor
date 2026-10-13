@@ -145,7 +145,9 @@ describe('Farkle widescreen 16:9 existing-game redesign', () => {
         const code = await table();
         assert.ok(code.includes('SettlementManager.formatAmount(state.pot, state)'));
         assert.ok(code.includes('SettlementManager.formatAmount(state.ante, state)'));
-        assert.ok(code.includes('state.minBank || 300'));
+        assert.ok(code.includes('canPlay && ready && Number(state.turnPoints || 0) >= 0'));
+        assert.ok(!code.includes("esc(t('MinBank'))"));
+        assert.ok(code.includes("${esc(t('EntryFee'))}: ${esc(bet)}"));
         assert.ok(code.includes("action === 'finish' ? 'finishGame' : 'skipTurn'"));
         assert.ok(code.includes('RefundAndClose'));
         assert.ok(code.includes('DialogV2.confirm'));
@@ -232,6 +234,56 @@ describe('Farkle widescreen 16:9 existing-game redesign', () => {
         const end = manager.indexOf('await this.endGame(sessionId, { settleBeforeEnd: false })', settle);
         const start = manager.indexOf("await this.startGame('zonk'", end);
         assert.ok(settle >= 0 && end > settle && start > end);
+    });
+
+    it('shows a distinct numeric round-order indicator only on remaining seats', async () => {
+        const code = await table(), styles = await css();
+        assert.ok(code.includes('getUpcomingZonkTurns(state)'));
+        assert.ok(code.includes("upcoming ? 'is-upcoming' : 'is-played'"));
+        assert.ok(code.includes('parlor-zonk-turn-order'));
+        assert.ok(code.includes('aria-label='));
+        assert.ok(styles.includes('.parlor-zonk-progress-row.is-played .parlor-zonk-player'));
+        assert.ok(styles.includes('grid-column:2 / 4'));
+        assert.ok(styles.includes('.parlor-zonk-progress-row.is-current .parlor-zonk-turn-order'));
+        for (const lang of ['ru','en','cn']) {
+            const locale = JSON.parse(await source('languages/'+lang+'.json')).PARLOR.Zonk;
+            assert.ok(locale.UpcomingTurn?.includes('{number}'));
+        }
+    });
+
+    it('spaces three pairs, two triplets and four-plus-pair groups apart', async () => {
+        const code = await table(), styles = await css();
+        for(const shape of ["anyDice([2,2,2],1500)", "anyDice([3,3],2500)", "anyDice([4,2],1500)"]) {
+            assert.ok(code.includes(shape));
+        }
+        assert.ok(styles.includes('.parlor-zonk-right .parlor-zonk-any-groups'));
+        assert.ok(styles.includes('gap:2em !important'));
+        assert.ok(styles.includes('flex-wrap:nowrap'));
+        assert.ok(code.includes('parlor-zonk-any-group'));
+    });
+
+    it('stretches a 100-entry scrolling history to the bottom of the center column', async () => {
+        const code = await table(), styles = await css();
+        const core = await source('scripts/games/zonk/ZonkGame.js');
+        assert.ok(core.includes('this.history = [entry, ...this.history].slice(0, 100)'));
+        assert.ok(code.includes("(state.history || []).slice(0, 100)"));
+        assert.ok(styles.includes('grid-template-rows:68px minmax(0,40fr) 42px 22px minmax(0,60fr) !important'));
+        assert.ok(styles.includes('height:100% !important'));
+        assert.ok(styles.includes('overflow-y:auto !important'));
+    });
+
+    it('removes 300-point minimum from the rules and bots as well as the score button', async () => {
+        const rules = await source('scripts/games/zonk/ZonkRules.js');
+        const bot = await source('scripts/core/BotManager.js');
+        const registry = await source('scripts/core/GameRegistry.js');
+        const ruGuide = await source('scripts/core/GameGuideRu.js');
+        assert.ok(rules.includes('export const ZONK_MIN_BANK = 0'));
+        assert.ok(bot.includes('points >= Number(state.minBank ?? 0)'));
+        assert.ok(!registry.includes('After reaching 300 unbanked points'));
+        assert.ok(!ruGuide.includes('не менее 300 очков'));
+        const code = await table();
+        assert.ok(!code.includes('state.minBank || 300'));
+        assert.ok(!code.includes("t('MinBank')"));
     });
 
 });
