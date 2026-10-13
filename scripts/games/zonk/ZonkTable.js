@@ -227,6 +227,17 @@ export class ZonkTable {
             : Array.from({ length: state.remainingDice || 6 }, () =>
                 `<div class="parlor-zonk-pick is-placeholder">${pipDie(5)}</div>`).join('');
 
+        const savedDice = Array.isArray(state.keptDice) ? state.keptDice.slice(0, 6) : [];
+        let savedIndex = 0;
+        const stairs = [1,2,3,4].map((count, rowIndex) => `<div class="parlor-zonk-stair-row" data-stair-row="${rowIndex}">
+            ${Array.from({ length: count }, () => {
+                const face = savedDice[savedIndex++];
+                return `<div class="parlor-zonk-stair-slot ${face ? 'is-filled' : ''}">
+                    ${face ? pipDie(face) : '<span class="parlor-zonk-stair-glyph" aria-hidden="true">◇</span>'}
+                </div>`;
+            }).join('')}
+        </div>`).join('');
+
         const last = (state.history || [])[0];
         const showZonk = last?.kind === 'zonk' || last?.kind === 'skip';
         const status = pending ? (state.lastError || t('Waiting'))
@@ -246,50 +257,57 @@ export class ZonkTable {
                 </div>
             </aside>
             <main class="parlor-zonk-center">
-                <div class="parlor-zonk-toolbar">
-                    <span class="parlor-zonk-aindor">✦ АИНДОР ✦</span>
-                    <div class="parlor-zonk-toolbar-buttons">
-                        <button type="button" data-zonk-action="rules">📜 ${esc(t('Rules'))}</button>
-                        <button type="button" data-zonk-action="sound" aria-pressed="${this._soundOn}" title="${esc(t('Sound'))}">${this._soundOn ? '🔊' : '🔇'}</button>
-                        <button type="button" data-zonk-action="close" title="${esc(t('Close'))}">✕</button>
-                    </div>
+              <header class="parlor-zonk-toolbar">
+                <div class="parlor-zonk-brand"><small>АИНДОР</small><strong>FARKLE</strong></div>
+                <div class="parlor-zonk-turn">${ended
+                    ? esc(t('WinnerLabel')) + ' ' + esc((state.winnerIds || []).map(id => this._participantName(state, id)).join(', '))
+                    : esc(t('TurnOf')) + ' ' + esc(current || '—')}</div>
+                <div class="parlor-zonk-round">${esc(t('Round'))} ${Number(state.round || 1)}
+                    ${state.finalTurnsRemaining !== null ? ' · ' + esc(t('FinalRound')) : ''}</div>
+                <div class="parlor-zonk-toolbar-buttons">
+                    <button type="button" data-zonk-action="rules" title="${esc(t('Rules'))}">◫ ${esc(t('Rules'))}</button>
+                    <button type="button" data-zonk-action="sound" aria-pressed="${this._soundOn}" title="${esc(t('Sound'))}">${this._soundOn ? '◖))' : '◖×'}</button>
+                    <button type="button" data-zonk-action="close" title="${esc(t('Close'))}">✕</button>
                 </div>
-                <div class="parlor-zonk-velvet">
-                    <div class="parlor-zonk-stars">✦ · ✧ · ✦</div>
-                    <div class="parlor-zonk-title">${esc(t('Title'))}</div>
-                    <div class="parlor-zonk-round">${esc(t('Round'))} ${Number(state.round || 1)}
-                      ${state.finalTurnsRemaining !== null ? ' · ' + esc(t('FinalRound')) : ''}</div>
-                    <div class="parlor-zonk-turn">${ended
-                        ? esc(t('WinnerLabel')) + ' ' + esc((state.winnerIds || []).map(id => this._participantName(state, id)).join(', '))
-                        : esc(t('TurnOf')) + ' ' + esc(current || '—')}</div>
-                    <div class="parlor-zonk-dice-tray">${dice}</div>
-                    <div class="parlor-zonk-choice">${showZonk ? `<div class="parlor-zonk-bust-mark">☠ ЗОНК!</div>` : ''}
-                         <span>${esc(status)}</span></div>
+              </header>
+              <div class="parlor-zonk-velvet">
+                <div class="parlor-zonk-dice-tray" aria-label="${esc(t('DiceLeft'))}">${dice}</div>
+                <div class="parlor-zonk-lower-board">
+                  <section class="parlor-zonk-saved-area" aria-label="${esc(t('SavedDice'))}">
+                    <div class="parlor-zonk-saved-heading">${esc(t('SavedDice'))} <span>${savedDice.length}/6</span></div>
+                    <div class="parlor-zonk-staircase">${stairs}</div>
+                  </section>
+                  <section class="parlor-zonk-status-area">
+                    <div class="parlor-zonk-choice">
+                      ${showZonk ? `<strong class="parlor-zonk-bust-mark">${esc(t('Bust'))}!</strong>` : ''}
+                      <span>${esc(status)}</span>
+                    </div>
                     ${choosing && canPlay ? `<div class="parlor-zonk-selection">${points > 0
-                        ? '+' + fmt(points) + ' ' + esc(t('Points')) : esc(t('SelectValid'))}</div>` : ''}
+                      ? '+' + fmt(points) + ' ' + esc(t('Points')) : esc(t('SelectValid'))}</div>` : ''}
                     <div class="parlor-zonk-mini-stats">
-                        <div><small>${esc(t('TurnPoints'))}</small><b>${fmt(state.turnPoints || 0)}</b></div>
-                        <div><small>${esc(t('DiceLeft'))}</small><b>${state.remainingDice || 6}</b></div>
-                        <div><small>${esc(t('Pot'))}</small><b>${esc(pot)}</b></div>
+                      <div><small>${esc(t('TurnPoints'))}</small><b>${fmt(state.turnPoints || 0)}</b></div>
+                      <div><small>${esc(t('DiceLeft'))}</small><b>${state.remainingDice || 6}</b></div>
+                      <div><small>${esc(t('Pot'))}</small><b>${esc(pot)}</b></div>
                     </div>
-                    <div class="parlor-zonk-buttons">
-                        ${choosing ? actionButton('keep', t('Keep', { points: fmt(points || 0) }), canPlay && points > 0, 'is-save') : ''}
-                        ${!choosing && !ended && !pending ? `
-                            ${actionButton('bank', t('Bank'), canPlay && ready && Number(state.turnPoints || 0) >= (state.minBank || 300), 'is-save')}
-                            ${actionButton('roll', hot ? t('BonusRoll') : t('Roll'), canPlay, 'is-throw')}
-                        ` : ''}
-                    </div>
-                    ${state.finalTurnsRemaining !== null && !ended ? `<div class="parlor-zonk-final">${esc(t('FinalRemaining', { count: state.finalTurnsRemaining }))}</div>` : ''}
-                    <div class="parlor-zonk-ante">${esc(t('EntryFee'))}: ${esc(bet)} · ${esc(t('MinBank'))}: ${fmt(state.minBank || 300)}</div>
+                  </section>
                 </div>
-                <div class="parlor-zonk-history">
-                    <div class="parlor-zonk-history-heading"><span>${esc(t('History'))}</span><small>${esc(t('RecentActions'))}</small></div>
-                    <div class="parlor-zonk-history-list">${this._history(state)}</div>
+                <div class="parlor-zonk-buttons">
+                  ${choosing
+                    ? actionButton('keep', t('Keep', { points: fmt(points || 0) }), canPlay && points > 0, 'is-save')
+                    : actionButton('bank', t('Bank'), canPlay && ready && Number(state.turnPoints || 0) >= (state.minBank || 300), 'is-save')}
+                  ${actionButton('roll', hot ? t('BonusRoll') : t('Roll'), canPlay && !choosing && !ended && !pending, 'is-throw')}
                 </div>
-                ${game.user.isGM ? `<div class="parlor-zonk-gm">
-                   ${actionButton('skip', t('SkipTurn'), !ended && !pending && !this._busy)}
-                   ${actionButton('finish', ended ? t('PayAndClose') : t('RefundAndClose'), !this._busy, 'is-danger')}
-                </div>` : ''}
+                ${state.finalTurnsRemaining !== null && !ended ? `<div class="parlor-zonk-final">${esc(t('FinalRemaining', { count: state.finalTurnsRemaining }))}</div>` : ''}
+                <div class="parlor-zonk-ante">${esc(t('EntryFee'))}: ${esc(bet)} · ${esc(t('MinBank'))}: ${fmt(state.minBank || 300)}</div>
+              </div>
+              <section class="parlor-zonk-history">
+                <div class="parlor-zonk-history-heading"><span>${esc(t('History'))}</span><small>${esc(t('RecentActions'))}</small></div>
+                <div class="parlor-zonk-history-list">${this._history(state)}</div>
+              </section>
+              ${game.user.isGM ? `<div class="parlor-zonk-gm">
+                  ${actionButton('skip', t('SkipTurn'), !ended && !pending && !this._busy)}
+                  ${actionButton('finish', ended ? t('PayAndClose') : t('RefundAndClose'), !this._busy, 'is-danger')}
+              </div>` : ''}
             </main>
             <aside class="parlor-zonk-combos">
                 <div class="parlor-zonk-panel-title">${esc(t('Scoring'))}</div>
