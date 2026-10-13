@@ -6,6 +6,7 @@ import { BotManager } from '../../core/BotManager.js';
 import { scoreZonkDice } from './ZonkRules.js';
 import { getFarkleRackDisplay } from './FarkleRack.js';
 import { renderD6Face } from '../../core/DiceFaces.js';
+import { Dsn3dBridge } from '../../core/Dsn3dBridge.js';
 
 // The same physical pip dice and CSS classes used by LiarsDiceTable.
 // Its stylesheet is already loaded by the parent Parlor module.
@@ -41,6 +42,7 @@ export class ZonkTable {
             this._overlay.id = 'parlor-zonk-overlay';
             this._overlay.className = 'parlor-zonk-overlay';
             document.body.appendChild(this._overlay);
+            Dsn3dBridge.attachOverlay(`zonk:${this.gameInstance.sessionId}`);
         }
         this.refresh();
     }
@@ -49,6 +51,7 @@ export class ZonkTable {
         if (dismiss) this._dismissedByUser = true;
         this._overlay?.remove();
         this._overlay = null;
+        Dsn3dBridge.detachOverlay(`zonk:${this.gameInstance.sessionId}`);
         this._rulesOpen = false;
         this._busy = false;
     }
@@ -184,10 +187,20 @@ export class ZonkTable {
             this._visibleRollId = state.rollId;
             this._visiblePlayerId = state.currentPlayerId;
         }
+        // A roll's results are GM-authoritative and remain visible in the blue
+        // play zone until the action changes to keep / bank / skip / Farkle.
+        // Dice So Nice handles only the 3D animation of these exact values.
+        // The persistent interactive faces are in our own synced table DOM,
+        // not in DSN's auto-hiding full-screen scene.
         if (this._soundRollId === null) this._soundRollId = state.rollId;
         else if (this._soundRollId !== state.rollId) {
             this._soundRollId = state.rollId;
-            this._playRollSound();
+            if (state.turnPhase === 'choose' && Array.isArray(state.currentDice) && state.currentDice.length) {
+                if (Dsn3dBridge.isAvailable()) {
+                    Promise.resolve(Dsn3dBridge.rollD6Visuals(state.currentDice, { broadcast: false }))
+                        .catch(error => console.warn('parlor | Farkle DSN roll failed', error));
+                } else this._playRollSound();
+            }
         }
 
         const choosing = state.turnPhase === 'choose';
@@ -277,12 +290,7 @@ export class ZonkTable {
                 </div>
               </header>
               <div class="parlor-zonk-velvet">
-                <div class="parlor-zonk-dice-tray" aria-label="${esc(t('DiceLeft'))}">${dice}</div>
                 <div class="parlor-zonk-lower-board">
-                  <section class="parlor-zonk-saved-area" aria-label="${esc(t('SavedDice'))}">
-                    <div class="parlor-zonk-saved-heading">${esc(t('SavedDice'))} <span>${savedCount}/21</span></div>
-                    <div class="parlor-zonk-staircase">${stairs}</div>
-                  </section>
                   <section class="parlor-zonk-status-area">
                     <div class="parlor-zonk-choice">
                       ${showZonk ? `<strong class="parlor-zonk-bust-mark">${esc(t('Bust'))}!</strong>` : ''}
@@ -296,7 +304,16 @@ export class ZonkTable {
                       <div><small>${esc(t('Pot'))}</small><b>${esc(pot)}</b></div>
                     </div>
                   </section>
+                  <section class="parlor-zonk-saved-area" aria-label="${esc(t('SavedDice'))}">
+                    <div class="parlor-zonk-saved-heading">${esc(t('SavedDice'))} <span>${savedCount}/21</span></div>
+                    <div class="parlor-zonk-staircase">${stairs}</div>
+                  </section>
                 </div>
+                <section class="parlor-zonk-roll-zone" aria-label="${esc(t('DiceLeft'))}">
+                  <div class="parlor-zonk-roll-zone-heading">${esc(t('RollZone'))}</div>
+                  <div class="parlor-zonk-dice-tray" data-zonk-roll-zone aria-live="polite">${dice}</div>
+                  ${!choosing && !ended ? `<div class="parlor-zonk-roll-zone-hint">${esc(t('RollZoneHint'))}</div>` : ''}
+                </section>
                 <div class="parlor-zonk-buttons">
                   ${choosing
                     ? actionButton('keep', t('Keep', { points: fmt(points || 0) }), canPlay && points > 0, 'is-save')
