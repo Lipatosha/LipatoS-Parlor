@@ -55,9 +55,8 @@ describe('Shared user-supplied white D6 dice artwork', () => {
         assert.ok(classes.has('parlor-d6-face'));
     });
 
-    it('uses uploaded face art everywhere: Farkle, Liars Dice, Bone21 and tavern HUDs', async () => {
+    it('uses uploaded sprites in other games while Farkle isolates its own visible dice', async () => {
         const paths = [
-            'scripts/games/zonk/ZonkTable.js',
             'scripts/games/liarsdice/LiarsDiceTable.js',
             'scripts/games/liarsdice/LiarsDicePresenterData.js',
             'scripts/games/bone21/Bone21Table.js',
@@ -69,6 +68,12 @@ describe('Shared user-supplied white D6 dice artwork', () => {
             assert.ok(/renderD6Face|applyD6Face/.test(code), 'Missing shared dice art: ' + path);
             assert.ok(!code.includes('DIE_PIPS'), 'Legacy drawn dots remain: ' + path);
         }
+        const farkleTable = await source('scripts/games/zonk/ZonkTable.js');
+        const farkleFaces = await source('scripts/games/zonk/FarkleDie.js');
+        assert.ok(farkleTable.includes("renderFarkleDie as pipDie"));
+        assert.ok(farkleFaces.includes("parlor-farkle-face"));
+        assert.ok(!farkleFaces.includes("renderD6Face("),
+            'Shared dice skin previously made Farkle faces invisible behind DSN');
         const css = await source('styles/dice-faces.css');
         assert.ok(css.includes("url('../assets/dice/d6-white-faces.webp')"));
         assert.ok(css.includes('background-size: 600% 100%'));
