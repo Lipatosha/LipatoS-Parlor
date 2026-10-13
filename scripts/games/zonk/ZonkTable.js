@@ -5,47 +5,15 @@ import { getGameGuide } from '../../core/GameRegistry.js';
 import { BotManager } from '../../core/BotManager.js';
 import { scoreZonkDice } from './ZonkRules.js';
 import { getFarkleRackDisplay } from './FarkleRack.js';
-import { normalizeD6 } from '../../core/DiceFaces.js';
+import { renderFarkleDie as pipDie } from './FarkleDie.js';
 import { Dsn3dBridge } from '../../core/Dsn3dBridge.js';
 
-// The same physical pip dice and CSS classes used by LiarsDiceTable.
-// Its stylesheet is already loaded by the parent Parlor module.
+// Dice markup is intentionally isolated from all other Parlor dice skins.
 const t = (key, data) => data
     ? game.i18n.format('PARLOR.Zonk.' + key, data)
     : game.i18n.localize('PARLOR.Zonk.' + key);
 const esc = value => foundry.utils.escapeHTML(String(value ?? ''));
 const fmt = value => Number(value || 0).toLocaleString(game.i18n?.lang || 'ru-RU');
-/**
- * Farkle has its OWN dice markup. Do not add .parlor-d6-face or .parlor-ld-die
- * here: those classes receive a conflicting background-image and legacy dice
- * skin from two other Parlor CSS modules. That was the real cause of the
- * invisible white faces while button outlines stayed visible.
- *
- * Every face is basic HTML spans and CSS circles, with inline paint fallback.
- * No SVG, image decoding, externally loaded sprites, or shared dice skins.
- */
-const FARKLE_PIPS = Object.freeze({
-    1: [[50, 50]],
-    2: [[24, 24], [76, 76]],
-    3: [[24, 24], [50, 50], [76, 76]],
-    4: [[24, 24], [76, 24], [24, 76], [76, 76]],
-    5: [[24, 24], [76, 24], [50, 50], [24, 76], [76, 76]],
-    6: [[24, 22], [76, 22], [24, 50], [76, 50], [24, 78], [76, 78]]
-});
-
-const pipDie = (value, small = false) => {
-    const face = normalizeD6(value);
-    const dots = FARKLE_PIPS[face].map(([x, y]) =>
-        `<span class="parlor-farkle-pip" aria-hidden="true" style="position:absolute;z-index:2;left:${x}%;top:${y}%;width:22%;height:22%;transform:translate(-50%,-50%);border-radius:50%;background:#2b2b2b"></span>`
-    ).join('');
-    return `<span class="parlor-farkle-face${small ? ' is-small' : ''}" role="img"
-        data-face="${face}" aria-label="Кость: ${face}"
-        style="position:relative;display:inline-block;overflow:hidden;box-sizing:border-box;isolation:isolate;background:#d2d2d2;border-radius:9%;opacity:1;visibility:visible">
-        <span class="parlor-farkle-face-white" aria-hidden="true"
-            style="position:absolute;z-index:1;inset:0;background:#ffffff;border-radius:28%;"></span>
-        ${dots}
-    </span>`;
-};
 const diceRow = (dice, small = false) => (dice || []).map(value => pipDie(value, small)).join('');
 
 export class ZonkTable {
