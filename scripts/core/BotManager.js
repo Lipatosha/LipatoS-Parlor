@@ -575,12 +575,19 @@ export class BotManager {
     static async _botZonk(game, state, phase) {
         if (phase !== 'PLAYER_TURNS' || !this.isBot(state.currentPlayerId)) return;
         const id = state.currentPlayerId;
-        await new Promise(resolve => setTimeout(resolve, 400 + Math.random() * 400));
         if (state.turnPhase === 'choose') {
-            const best = getZonkKeepOptions(state.currentDice || [])[0];
+            // Three seconds TOTAL from the GM roll, including bot-scheduler time.
+            const startedAt = Number(state.rollTimestamp || Date.now());
+            const remaining = Math.max(0, 3000 - (Date.now() - startedAt));
+            if (remaining) await new Promise(resolve => setTimeout(resolve, remaining));
+            const latest = game.getState();
+            if (latest.phase !== 'PLAYER_TURNS' || latest.turnPhase !== 'choose'
+                || latest.currentPlayerId !== id || latest.rollId !== state.rollId) return;
+            const best = getZonkKeepOptions(latest.currentDice || [])[0];
             if (best) game.handlePlayerAction(id, 'keep', { indices: best.indices });
             return;
         }
+        await new Promise(resolve => setTimeout(resolve, 400 + Math.random() * 400));
         if (state.turnPhase === 'ready') {
             const points = Number(state.turnPoints || 0);
             const mode = this.getBotMode(state, id);
