@@ -216,9 +216,8 @@ export class ZonkTable {
 
         const standings = [...(state.turnOrder || [])].sort((a, b) =>
             (state.playerStates?.[b]?.score || 0) - (state.playerStates?.[a]?.score || 0));
-        const roster = Array.from({ length: Math.max(6, standings.length) }, (_, index) => {
-            const id = standings[index];
-            if (!id) return `<div class="parlor-zonk-progress-row is-empty"><span>${index + 1}</span><small>—</small></div>`;
+        // Show actual seated participants only, up to the supported ten.
+        const roster = standings.slice(0, 10).map((id, index) => {
             const p = state.playerStates?.[id] || {};
             const active = id === state.currentPlayerId;
             const winner = state.winnerIds?.includes(id);
@@ -239,16 +238,20 @@ export class ZonkTable {
             : Array.from({ length: state.remainingDice || 6 }, () =>
                 `<div class="parlor-zonk-pick is-placeholder">${pipDie(5)}</div>`).join('');
 
-        const savedDice = Array.isArray(state.keptDice) ? state.keptDice.slice(0, 6) : [];
-        let savedIndex = 0;
-        const stairs = [1,2,3,4].map((count, rowIndex) => `<div class="parlor-zonk-stair-row" data-stair-row="${rowIndex}">
-            ${Array.from({ length: count }, () => {
-                const face = savedDice[savedIndex++];
-                return `<div class="parlor-zonk-stair-slot ${face ? 'is-filled' : ''}">
-                    ${face ? pipDie(face) : '<span class="parlor-zonk-stair-glyph" aria-hidden="true">◇</span>'}
-                </div>`;
-            }).join('')}
-        </div>`).join('');
+        // Fill from the bottom: 6 slots, then 5, 4, 3, 2, 1 at the top.
+        // All 21 slots remain visible. Dice from successive hot-dice throws advance
+        // to the next tier rather than replacing the bottom row.
+        const savedDice = Array.isArray(state.keptDice) ? state.keptDice.slice(-21) : [];
+        const tierStarts = [20, 18, 15, 11, 6, 0];
+        const stairs = [1, 2, 3, 4, 5, 6].map((count, rowIndex) =>
+            `<div class="parlor-zonk-stair-row" data-stair-row="${rowIndex}" data-capacity="${count}">
+                ${Array.from({ length: count }, (_, col) => {
+                    const face = savedDice[tierStarts[rowIndex] + col];
+                    return `<div class="parlor-zonk-stair-slot ${face ? 'is-filled' : ''}" data-stair-cell="${tierStarts[rowIndex]+col}">
+                        ${face ? pipDie(face) : '<span class="parlor-zonk-stair-glyph" aria-hidden="true">◇</span>'}
+                    </div>`;
+                }).join('')}
+            </div>`).join('');
 
         const last = (state.history || [])[0];
         const showZonk = last?.kind === 'zonk' || last?.kind === 'skip';
@@ -286,7 +289,7 @@ export class ZonkTable {
                 <div class="parlor-zonk-dice-tray" aria-label="${esc(t('DiceLeft'))}">${dice}</div>
                 <div class="parlor-zonk-lower-board">
                   <section class="parlor-zonk-saved-area" aria-label="${esc(t('SavedDice'))}">
-                    <div class="parlor-zonk-saved-heading">${esc(t('SavedDice'))} <span>${savedDice.length}/6</span></div>
+                    <div class="parlor-zonk-saved-heading">${esc(t('SavedDice'))} <span>${savedDice.length}/21</span></div>
                     <div class="parlor-zonk-staircase">${stairs}</div>
                   </section>
                   <section class="parlor-zonk-status-area">
