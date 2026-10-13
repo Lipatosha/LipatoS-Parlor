@@ -304,7 +304,7 @@ export class ZonkTable {
                         <div class="parlor-zonk-dice-tray ${animateRoll ? 'is-new-roll' : ''}" data-zonk-roll-zone aria-live="polite">${dice}</div>
                         <div class="parlor-zonk-roll-hint">
                             ${showZonk ? `<strong>${esc(t('Bust'))}</strong>` : ''}
-                            ${choosing ? esc(status) + (points > 0 ? ` · +${fmt(points)} ${esc(t('Points'))}` : '') : esc(status)}
+                            ${choosing ? esc(status) + (points > 0 ? ` · +${fmt(points)} ${esc(t('Points'))}` : '') : (zonked ? '' : esc(status))}
                         </div>
                     </section>
                 </div>
