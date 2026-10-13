@@ -93,6 +93,30 @@ describe('Zonk scoring', () => {
     });
 });
 
+describe('Farkle no-minimum banking and full history', () => {
+    it('banks a single five for 50 points without any 300-point threshold', async () => {
+        const table = makeGame([5, 2, 3, 4, 6, 2]);
+        await table.start();
+        assert.equal(table.minBank, 0);
+        assert.equal(table.getState().minBank, 0);
+        assert.equal(table.handlePlayerAction('p1', 'roll', {}).ok, true);
+        assert.equal(table.handlePlayerAction('p1', 'keep', { indices: [0] }).ok, true);
+        assert.equal(table.turnPoints, 50);
+        assert.equal(table.handlePlayerAction('p1', 'bank', {}).ok, true);
+        assert.equal(table.playerStates.p1.score, 50);
+        assert.equal(table.currentPlayerId, 'p2');
+    });
+
+    it('keeps up to one hundred recorded actions rather than only seven', async () => {
+        const table = makeGame();
+        await table.start();
+        for (let i = 0; i < 125; i++) table._record('roll', 'p1', { dice: [1,5], points: i });
+        assert.equal(table.history.length, 100);
+        assert.equal(table.history[0].points, 124);
+        assert.equal(table.history[99].points, 25);
+    });
+});
+
 describe('Zonk table flow and entry-fee settlement', () => {
     it('charges once, enforces current turn and minimum bank, allows hot dice', async () => {
         const table = makeGame([1, 1, 1, 1, 1, 1]);
