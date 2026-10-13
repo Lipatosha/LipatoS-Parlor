@@ -2,217 +2,152 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { describe, it } from 'node:test';
 
-const source = async relative => readFile(new URL('../' + relative, import.meta.url), 'utf8');
+const source = path => readFile(new URL('../' + path, import.meta.url), 'utf8');
+const table = () => source('scripts/games/zonk/ZonkTable.js');
+const css = () => source('styles/farkle-widescreen.css');
 
-describe('Zonk Foundry inventory redesign', () => {
-    it('uses the original Foundry dice.wav, without generated audio or bundled copies', async () => {
-        const code = await source('scripts/games/zonk/ZonkTable.js');
+describe('Farkle widescreen 16:9 existing-game redesign', () => {
+    it('removes Dice So Nice from Farkle and restores real Foundry dice.wav on every rollId', async () => {
+        const code = await table();
         assert.ok(code.includes("src: 'sounds/dice.wav'"));
         assert.ok(code.includes('foundry?.audio?.AudioHelper'));
-        assert.doesNotMatch(code, /AudioContext|createBufferSource|oscillator|new Audio\(/);
+        assert.ok(code.includes('this._soundRollId !== state.rollId'));
+        assert.ok(code.includes("state.turnPhase === 'choose' && state.currentDice?.length"));
+        assert.ok(code.includes('this._playRollSound()'));
+        assert.ok(!code.includes('Dsn3dBridge'));
+        assert.ok(!code.includes('dice3d'));
+        assert.ok(!code.includes('rollD6Visuals'));
+        assert.ok(!code.includes('holdFarkleDice'));
+        assert.ok(!code.includes('AudioContext'));
     });
 
-    it('uses native Foundry scoring pages and isolated Farkle dice', async () => {
-        const code = await source('scripts/games/zonk/ZonkTable.js');
-        const css = await source('styles/zonk-v14.css');
-        assert.match(code, /parlor-zonk-manuscript/);
-        assert.match(code, /parlor-zonk-rulebook-paper/);
-        assert.ok(code.includes("renderFarkleDie as pipDie"));
-        assert.match(css, /parlor-zonk-manuscript-columns/);
-        assert.match(css, /parlor-zonk-rulebook-text/);
-        assert.match(css, /--z-panel: #212329/);
+    it('shows the existing 2D dice with clickable faces and synced choices', async () => {
+        const code = await table();
+        assert.ok(code.includes('renderFarkleDie as pipDie'));
+        assert.ok(code.includes('data-zonk-die='));
+        assert.ok(code.includes('aria-pressed='));
+        assert.ok(code.includes('this._selected.add(index)'));
+        assert.ok(code.includes('this._selected.delete(index)'));
+        assert.ok(code.includes('this._selected.clear()'));
+        assert.ok(code.includes("action === 'keep' ? { indices: [...this._selected] } : {}"));
+        assert.ok(code.includes('SocketManager.requestGM('));
+        assert.ok(code.includes('SOCKET_EVENTS.PLAYER_ACTION'));
+        assert.ok(code.includes('SOCKET_EVENTS.GM_ACTION'));
+        assert.ok(code.includes("is-new-roll"));
+        assert.ok(!code.includes('parlor-zonk-dsn-choice'));
     });
 
-    it('keeps the scoring and player seat limits available in each language', async () => {
-        const registry = await source('scripts/core/GameRegistry.js');
-        assert.match(registry, /zonk:\s*\{[\s\S]*?maxParticipants: 10/);
-        for (const lang of ['ru', 'en', 'cn']) {
-            const data = JSON.parse(await source('languages/' + lang + '.json'));
-            assert.ok(data.PARLOR.Lobby.Setup.ZonkParticipantsNote.includes('10'), lang);
-            for (const key of ['SectionSingles', 'SectionTriples', 'SectionSpecial', 'SectionMultiples']) {
-                assert.equal(typeof data.PARLOR.Zonk[key], 'string', lang + ':' + key);
-            }
-        }
+    it('keeps exactly three action buttons Save, Roll dice and Skip turn', async () => {
+        const code = await table();
+        assert.ok(code.includes("actionButton('keep', t('Bank')"));
+        assert.ok(code.includes("actionButton('bank', t('Bank')"));
+        assert.ok(code.includes("actionButton('roll', hot ? t('BonusRoll') : t('Roll')"));
+        assert.ok(code.includes("actionButton('skip', t('SkipTurn')"));
+        assert.equal((code.match(/actionButton\('skip'/g) || []).length, 1);
+        assert.ok(code.includes("game.user.isGM && !ended"));
+        const styles = await css();
+        assert.ok(styles.includes('grid-template-columns:repeat(3,minmax(0,1fr))'));
+        assert.ok(styles.includes('.parlor-zonk-action.is-throw'));
     });
 
-    it('uses native denim texture and one bronze type palette across the entire screen', async () => {
-        const css = await source('styles/zonk-v14.css');
-        const code = await source('scripts/games/zonk/ZonkTable.js');
-        assert.match(css, /--z-ink: #9f9275/);
-        assert.ok(css.includes('url("../../../ui/denim065.png")'));
-        assert.match(css, /parlor-zonk-rulebook-paper/);
-        assert.match(css, /parlor-zonk-manuscript/);
-        assert.match(code, /parlor-zonk-staircase/);
-        assert.match(code, /parlor-zonk-saved-area/);
-        assert.match(code, /parlor-zonk-turn/);
-        assert.match(code, /parlor-zonk-round/);
-        assert.ok(!code.includes('☠ ЗОНК!'));
+    it('draws one 16:9 frame, top toolbar and proportions 21/54/25', async () => {
+        const styles = await css();
+        assert.match(styles, /aspect-ratio:16 \/ 9/);
+        assert.ok(styles.includes('width:min(1600px,'));
+        assert.ok(styles.includes('grid-template-areas:"toolbar toolbar toolbar" "players center right"'));
+        assert.ok(styles.includes('grid-template-columns:minmax(0,21fr) minmax(0,54fr) minmax(0,25fr)'));
+        assert.ok(styles.includes('overflow:hidden !important'));
+        assert.ok(styles.includes('grid-area:toolbar'));
+        const code = await table();
+        assert.ok(code.includes('parlor-zonk-toolbar-right'));
+        assert.ok(code.includes('parlor-zonk-more'));
+        assert.ok(code.includes('parlor-zonk-turn'));
+        assert.ok(code.includes('parlor-zonk-round'));
+        assert.ok(code.includes('data-zonk-action="rules"'));
+        assert.ok(code.includes('data-zonk-action="sound"'));
+        assert.ok(code.includes('data-zonk-action="close"'));
     });
 
-    it('shows Farkle everywhere and uses full Russian gold settlement wording', async () => {
-        const ru = JSON.parse(await source('languages/ru.json'));
-        assert.equal(ru.PARLOR.Games.Zonk.Name, 'Farkle');
-        assert.equal(ru.PARLOR.Zonk.Title, 'FARKLE');
-        assert.equal(ru.PARLOR.Lobby.Setup.SettlementGold, 'Расчёт золотом D&D');
-        assert.equal(ru.PARLOR.Zonk.Bust, 'Farkle');
+    it('shows up to ten real players with progress, name, score and leader', async () => {
+        const code = await table(), styles = await css();
+        assert.ok(code.includes('standings.slice(0, 10).map'));
+        assert.ok(code.includes('standings.length}/10'));
+        assert.ok(code.includes('parlor-zonk-players-heading'));
+        assert.ok(code.includes('parlor-zonk-progress-row'));
+        assert.ok(code.includes('parlor-zonk-player'));
+        assert.ok(code.includes('parlor-zonk-progress-foot'));
+        assert.ok(styles.includes('grid-area:players'));
+        assert.ok(styles.includes('.parlor-zonk-progress-row.is-current'));
+        assert.ok(styles.includes('overflow-y:auto'));
+        assert.ok(!code.includes('Math.max(6, standings.length)'));
     });
-    it('fills a six-tier 21-slot staircase bottom up and lists only seated players', async () => {
-        const code = await source('scripts/games/zonk/ZonkTable.js');
-        const css = await source('styles/zonk-v14.css');
+
+    it('places 62% dice field and 38% kept stairway side-by-side, left aligned', async () => {
+        const code = await table(), styles = await css();
+        assert.ok(styles.includes('grid-template-columns:minmax(0,62fr) minmax(0,38fr)'));
+        assert.ok(styles.includes('.parlor-zonk-stair-row'));
+        assert.ok(styles.includes('justify-content:flex-start !important'));
         assert.ok(code.includes('getFarkleRackDisplay(state.keptDiceRows)'));
         assert.ok(code.includes('rackRows.map'));
+        assert.ok(code.includes('data-stair-row='));
         assert.ok(code.includes('data-stair-cell='));
-        assert.ok(code.includes('standings.slice(0, 10).map'));
-        assert.ok(!code.includes('Math.max(6, standings.length)'));
-        assert.ok(css.includes('width: 100vw'));
-        assert.ok(css.includes('height: 100dvh'));
-        assert.ok(css.includes('grid-template-columns: repeat(2,minmax(0,1fr))'));
+        assert.ok(!code.includes('${savedCount}/21'));
+        assert.ok(!code.includes('0/21'));
+        const helper = await source('scripts/games/zonk/FarkleRack.js');
+        assert.ok(helper.includes('[6, 5, 4, 3, 2, 1]'));
+        assert.ok(helper.includes('.reverse()'));
     });
 
-    it('matches photo paytable with # wildcards and no star tiles', async () => {
-        const code = await source('scripts/games/zonk/ZonkTable.js');
-        const ru = JSON.parse(await source('languages/ru.json'));
-        assert.ok(code.includes('parlor-zonk-any-die'));
-        assert.ok(code.includes('>#</span>'));
-        assert.ok(code.includes('anyDice([2,2,2],1500)'));
-        assert.ok(code.includes('anyDice([3,3],2500)'));
-        assert.ok(code.includes('anyDice([4,2],1500)'));
-        assert.ok(code.includes("combo([1],100) + combo([5],50)"));
-        assert.ok(code.includes("simpleKind(t('FourKind'),'×2')"));
-        assert.ok(code.includes("simpleKind(t('FiveKind'),'×4')"));
-        assert.ok(code.includes("simpleKind(t('SixKind'),'×8')"));
-        assert.ok(code.includes('combo([1,2,3,4,5],500)'));
-        assert.ok(code.includes('combo([2,3,4,5,6],750)'));
-        assert.ok(code.includes('combo([1,2,3,4,5,6],1500)'));
-        assert.equal(ru.PARLOR.Zonk.SectionPartialStraight, 'Частичный стрит (два варианта)');
-        assert.equal(ru.PARLOR.Zonk.FourKind, 'Четыре одинаковых');
-        assert.equal(ru.PARLOR.Zonk.Multiplier, 'множитель');
-        assert.ok(code.includes("${esc(label)} ${esc(t('Multiplier'))}"));
-        assert.ok(code.includes("<b>${esc(multiplier)}</b>"));
-        assert.ok(!code.includes("fmt(points)}</b></div>"));
-        assert.ok(code.includes('_combos({ showDescriptions = false } = {})'));
-        assert.ok(code.includes('_combos({ showDescriptions: true })'));
-
-    });
-    it('paints the dice hover and selected ring above its uploaded icon', async () => {
-        const css = await source('styles/zonk-v14.css');
-        const spriteCss = await source('styles/dice-faces.css');
-        const markup = await source('scripts/games/zonk/ZonkTable.js');
-        assert.ok(markup.includes("this._selected.has(index) ? 'is-selected' : ''"));
-        assert.match(css, /button\.parlor-zonk-pick::after\s*\{[^}]*z-index:\s*3;[^}]*inset:\s*7px;[^}]*border:\s*3px solid/);
-        assert.match(css, /button\.parlor-zonk-pick:not\(:disabled\):hover::after/);
-        assert.match(css, /button\.parlor-zonk-pick\.is-selected::after/);
-        assert.match(css, /pointer-events:\s*none;/);
-        assert.ok(spriteCss.includes('background-image: url(\'../assets/dice/d6-white-faces.webp\')'));
+    it('moves independent scrolling scoring and history panels into right column', async () => {
+        const code = await table(), styles = await css();
+        assert.ok(code.includes('<aside class="parlor-zonk-right">'));
+        const start = code.indexOf('<aside class="parlor-zonk-right">');
+        const history = code.indexOf('<section class="parlor-zonk-history">', start);
+        const combos = code.indexOf('<section class="parlor-zonk-combos">', start);
+        assert.ok(start >= 0 && combos > start && history > combos);
+        assert.equal((code.match(/<section class="parlor-zonk-history">/g) || []).length, 1);
+        assert.equal((code.match(/<section class="parlor-zonk-combos">/g) || []).length, 1);
+        assert.ok(styles.includes('grid-area:right'));
+        assert.ok(styles.includes('grid-template-rows:minmax(0,62fr) minmax(0,38fr)'));
+        assert.ok(styles.includes('overflow-y:auto !important'));
+        assert.ok(code.includes("(state.history || []).slice(0, 100)"));
+        assert.ok(code.includes('this._history(state)'));
+        assert.ok(code.includes('this._combos({ showDescriptions: false })'));
     });
 
-    it('uses full-icon clickable die bounds and a foreground ring without padding', async () => {
-        const css = await source('styles/zonk-v14.css');
-        assert.match(css, /\.parlor-zonk-dice-tray \.parlor-zonk-pick\s*\{[^}]*width:\s*var\(--z-die-size\);[^}]*height:\s*var\(--z-die-size\);/);
-        assert.match(css, /\.parlor-zonk-dice-tray \.parlor-zonk-pick > \.parlor-d6-face\s*\{[^}]*width:\s*100% !important;[^}]*height:\s*100% !important;/);
-        assert.match(css, /\.parlor-zonk-dice-tray button\.parlor-zonk-pick::after\s*\{[^}]*inset:\s*0;/);
-        assert.match(css, /padding:\s*0 !important;/);
+    it('retains all scoring groups, original dice images and rules dialogue', async () => {
+        const code = await table();
+        for (const entry of [
+            "combo([1],100)", "combo([5],50)", "combo([1,1,1],1000)",
+            "simpleKind(t('FourKind'),'×2')", "simpleKind(t('FiveKind'),'×4')",
+            "simpleKind(t('SixKind'),'×8')", "combo([1,2,3,4,5],500)",
+            "combo([2,3,4,5,6],750)", "combo([1,2,3,4,5,6],1500)",
+            "anyDice([2,2,2],1500)", "anyDice([3,3],2500)", "anyDice([4,2],1500)"
+        ]) assert.ok(code.includes(entry), 'Missing scoring combination '+entry);
+        assert.ok(code.includes('renderD6Face(value, { className:'));
+        assert.ok(code.includes('data-zonk-rule-backdrop'));
+        assert.ok(code.includes('this._rules()'));
+        assert.ok(code.includes('getGameGuide'));
     });
 
-    it('compacts the middle section and places the narrow scoring sidebar in one column', async () => {
-        const css = await source('styles/zonk-v14.css');
-        const code = await source('scripts/games/zonk/ZonkTable.js');
-        assert.match(css, /\.parlor-zonk-lower-board\s*\{\s*display:\s*contents;/);
-        assert.match(css, /\.parlor-zonk-history\s*\{\s*width:\s*57%;/);
-        assert.match(css, /\.parlor-zonk-combos \.parlor-zonk-manuscript-columns\s*\{[^}]*grid-template-columns:\s*minmax\(0, 1fr\);/);
-        assert.match(css, /\.parlor-zonk-combos \.parlor-zonk-combo-list\s*\{[^}]*overflow:\s*hidden;/);
-        assert.ok(code.includes('showDescriptions ?'));
-        for (const lang of ['ru', 'en', 'cn']) {
-            const data = JSON.parse(await source('languages/' + lang + '.json'));
-            assert.equal(typeof data.PARLOR.Zonk.Multiplier, 'string');
+    it('does not touch pot, currency or wager calculations', async () => {
+        const code = await table();
+        assert.ok(code.includes('SettlementManager.formatAmount(state.pot, state)'));
+        assert.ok(code.includes('SettlementManager.formatAmount(state.ante, state)'));
+        assert.ok(code.includes('state.minBank || 300'));
+        assert.ok(code.includes("action === 'finish' ? 'finishGame' : 'skipTurn'"));
+        assert.ok(code.includes('RefundAndClose'));
+        assert.ok(code.includes('DialogV2.confirm'));
+    });
+
+    it('registers new CSS last and includes translated new labels', async () => {
+        const manifest = JSON.parse(await source('module.json'));
+        assert.equal(manifest.styles.at(-1), 'styles/farkle-widescreen.css');
+        for (const lang of ['ru','en','cn']) {
+            const locale = JSON.parse(await source('languages/'+lang+'.json')).PARLOR.Zonk;
+            for (const key of ['Players','ExtraActions','OnlyGM','RollField','DiceShort','Roll','Bank'])
+                assert.ok(locale[key], lang+' missing '+key);
+            assert.doesNotMatch(locale.RollZone, /Dice So Nice/i);
         }
     });
-
-    it('lays out the wide right Dice So Nice zone and compact left statistics / rack', async () => {
-        const markup = await source('scripts/games/zonk/ZonkTable.js');
-        const css = await source('styles/zonk-v14.css');
-        assert.ok(markup.includes('class="parlor-zonk-roll-zone"'));
-        assert.ok(markup.includes('class="parlor-zonk-lower-board"'));
-        assert.ok(markup.includes('class="parlor-zonk-status-area"'));
-        assert.ok(markup.includes('class="parlor-zonk-saved-area"'));
-        assert.ok(markup.includes('data-zonk-roll-zone'));
-        assert.match(css, /\.parlor-zonk-velvet\s*\{[^}]*grid-template-columns:\s*minmax\(245px, 32%\) minmax\(0, 1fr\)/);
-        assert.match(css, /\.parlor-zonk-roll-zone\s*\{[^}]*grid-column:\s*2;[^}]*grid-row:\s*1;/);
-        assert.match(css, /\.parlor-zonk-lower-board\s*\{[^}]*grid-column:\s*1;[^}]*grid-row:\s*1;/);
-    });
-
-    it('animates GM-authoritative dice via optional DSN and keeps results until the turn changes', async () => {
-        const code = await source('scripts/games/zonk/ZonkTable.js');
-        assert.match(code, /import \{ Dsn3dBridge \} from '\.\.\/\.\.\/core\/Dsn3dBridge\.js'/);
-        assert.ok(code.includes('Dsn3dBridge.attachOverlay(token)'));
-        assert.ok(code.includes('zonk-roll:${this.gameInstance.sessionId}:${state.rollId}'));
-        assert.ok(code.includes('Dsn3dBridge.detachOverlay(token)'));
-        assert.ok(code.includes("overlay.classList.add('parlor-zonk-dsn-rolling', 'parlor-zonk-3d-active')"));
-        assert.ok(code.includes("overlay?.classList.remove('parlor-zonk-dsn-rolling','parlor-zonk-3d-active')"));
-        assert.ok(code.includes("state.turnPhase === 'choose'"));
-        assert.ok(code.includes('Dsn3dBridge.rollD6Visuals(state.currentDice'));
-        assert.ok(code.includes('state.rollId'));
-        assert.ok(code.includes('const dice = choosing'));
-        assert.ok(code.includes(" : '';"));
-        assert.ok(code.includes('data-zonk-die='));
-        for (const lang of ['ru', 'en', 'cn']) {
-            const locale = JSON.parse(await source('languages/' + lang + '.json'));
-            assert.ok(locale.PARLOR.Zonk.RollZone);
-            assert.ok(locale.PARLOR.Zonk.RollZoneHint);
-        }
-    });
-
-    it('renders independent CSS Farkle dice, without SVG, shared sprite or legacy dice class', async () => {
-        const code = await source('scripts/games/zonk/ZonkTable.js');
-        const renderer = await source('scripts/games/zonk/FarkleDie.js');
-        const css = await source('styles/zonk-v14.css');
-        assert.ok(code.includes("import { renderFarkleDie as pipDie } from './FarkleDie.js'"));
-        assert.ok(renderer.includes('const FARKLE_PIPS = Object.freeze({'));
-        assert.ok(renderer.includes('class="parlor-farkle-face'));
-        assert.ok(renderer.includes('class="parlor-farkle-pip"'));
-        assert.ok(renderer.includes('class="parlor-farkle-face-white"'));
-        assert.ok(renderer.includes('background:#ffffff'));
-        assert.ok(renderer.includes('background:#2b2b2b'));
-        assert.ok(!renderer.includes('renderD6Face('));
-        assert.ok(!renderer.includes('<svg'));
-        assert.ok(!renderer.includes('D6_SPRITE_PATH'));
-        assert.ok(css.includes('#parlor-zonk-overlay .parlor-farkle-face {'));
-        assert.ok(css.includes('#parlor-zonk-overlay .parlor-zonk-stair-slot .parlor-farkle-face'));
-        assert.ok(css.includes('#parlor-zonk-overlay .parlor-zonk-history-dice .parlor-farkle-face'));
-        assert.ok(css.includes('pointer-events: none !important'));
-    });
-
-    it('retains real DSN dice above Farkle through the choice phase, then clears on keep', async () => {
-        const css = await source('styles/zonk-v14.css');
-        const code = await source('scripts/games/zonk/ZonkTable.js');
-        const bridge = await source('scripts/core/Dsn3dBridge.js');
-        assert.ok(bridge.includes("const STAGE_Z_INDEX = '3100'"));
-        assert.ok(css.includes('#parlor-zonk-overlay.parlor-zonk-overlay {\n    z-index: 3110;'));
-        assert.ok(css.includes('#parlor-zonk-overlay.parlor-zonk-overlay.parlor-zonk-dsn-rolling {\n    z-index: 2300;'));
-        assert.ok(code.includes('this._dsnRollTokens = new Set()'));
-        assert.ok(code.includes('this._dsnRollTokens.add(token)'));
-        assert.ok(code.includes('.finally(() => {'));
-        assert.ok(code.includes('Dsn3dBridge.detachOverlay(token)'));
-        assert.ok(code.includes('Dsn3dBridge.clearFarkleDice()'));
-        assert.ok(!code.includes('Dsn3dBridge.attachOverlay(`zonk:${this.gameInstance.sessionId}`)'),
-            'Never hold the DSN canvas above visible faces between rolls');
-    });
-
-    it('shows actual DSN rolls as primary Farkle dice with blue stone appearance', async () => {
-        const table = await source('scripts/games/zonk/ZonkTable.js');
-        const bridge = await source('scripts/core/Dsn3dBridge.js');
-        const css = await source('styles/zonk-v14.css');
-        assert.ok(table.includes('Dsn3dBridge.holdFarkleDice(token)'));
-        assert.ok(table.includes('Dsn3dBridge.rollD6Visuals(state.currentDice'));
-        assert.ok(table.includes("colorset: 'custom'"));
-        assert.ok(table.includes("background: '#2845cc'"));
-        assert.ok(table.includes("material: 'stone'"));
-        assert.ok(table.includes("foreground: '#FFFFFF'"));
-        assert.ok(table.includes('Dsn3dBridge.releaseFarkleDice(token)'));
-        assert.ok(table.includes('parlor-zonk-dsn-choice'));
-        assert.ok(css.includes('.parlor-zonk-dice-tray.is-dsn-3d'));
-        assert.ok(bridge.includes("config.hideAfterRoll = false;"));
-        assert.ok(bridge.includes("config.hideAfterRoll = oldValue;"));
-    });
-
 });
