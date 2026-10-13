@@ -1,4 +1,4 @@
-/** Farkle: scoring according to the illustrated rules reference.
+/** Farkle: scoring according to the updated illustrated rules reference.
  * Every die in a kept selection must belong to a complete scoring combination.
  * Pure functions are shared by players, the GM referee and the bot.
  */
@@ -7,12 +7,13 @@ export const ZONK_DEFAULT_TARGET = 5000;
 export const ZONK_MIN_BANK = 300;
 
 export const FARKLE_SCORE = Object.freeze({
-    singleOne: 50,
-    singleFive: 100,
-    fourKind: 1000,
-    fiveKind: 2000,
-    sixKind: 3000,
-    partialStraight: 750,
+    singleOne: 100,
+    singleFive: 50,
+    fourMultiplier: 2,
+    fiveMultiplier: 4,
+    sixMultiplier: 8,
+    partialStraightLow: 500,
+    partialStraightHigh: 750,
     straight: 1500,
     threePairs: 1500,
     doubleTriple: 2500,
@@ -56,7 +57,12 @@ export function scoreZonkDice(dice) {
             if (Number.isFinite(rest)) best = Math.max(best, points + rest);
         };
         const special = specialScore(remaining, total);
-        if (special) best = Math.max(best, special);
+        // The illustrated six-die combinations are exclusive: do not override
+        // a four-of-a-kind-plus-pair with four 1s + two single 5s, for example.
+        if (special) {
+            memo.set(key, special);
+            return special;
+        }
         for (let face = 1; face <= 6; face++) {
             if (!remaining[face]) continue;
             if ((face === 1 || face === 5) && remaining[face] < 3) {
@@ -71,9 +77,11 @@ export function scoreZonkDice(dice) {
                 for (let length = remaining[face] >= 4 ? remaining[face] : 3;
                     length <= remaining[face]; length++) {
                     taken[face] = length;
-                    const points = length === 3 ? (face === 1 ? 1000 : face * 100)
-                        : length === 4 ? FARKLE_SCORE.fourKind
-                        : length === 5 ? FARKLE_SCORE.fiveKind : FARKLE_SCORE.sixKind;
+                    const triple = face === 1 ? 1000 : face * 100;
+                    const points = length === 3 ? triple
+                        : length === 4 ? triple * FARKLE_SCORE.fourMultiplier
+                        : length === 5 ? triple * FARKLE_SCORE.fiveMultiplier
+                        : triple * FARKLE_SCORE.sixMultiplier;
                     candidate(taken, points);
                 }
             }
@@ -81,7 +89,12 @@ export function scoreZonkDice(dice) {
         if ([1, 2, 3, 4, 5].every(face => remaining[face] > 0)) {
             const taken = Array(7).fill(0);
             for (let face = 1; face <= 5; face++) taken[face] = 1;
-            candidate(taken, FARKLE_SCORE.partialStraight);
+            candidate(taken, FARKLE_SCORE.partialStraightLow);
+        }
+        if ([2, 3, 4, 5, 6].every(face => remaining[face] > 0)) {
+            const taken = Array(7).fill(0);
+            for (let face = 2; face <= 6; face++) taken[face] = 1;
+            candidate(taken, FARKLE_SCORE.partialStraightHigh);
         }
         memo.set(key, best);
         return best;
