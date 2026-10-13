@@ -294,12 +294,10 @@ export const Dsn3dBridge = {
     },
 
     clearFarkleDice() {
-        // Do not clear Dice So Nice's global table unless this module has
-        // actually placed temporary Farkle dice on the stage.
-        if (_farkleHoldTokens.size) {
-            try { game.dice3d?.box?.clearAll?.(); } catch (error) {
-                console.warn('parlor | could not clear Farkle 3D dice', error);
-            }
+        // Called only when a Farkle result leaves its 'choose' phase.
+        // Do not change user settings or clear dice of another game.
+        try { game.dice3d?.box?.clearAll?.(); } catch (error) {
+            console.warn('parlor | could not clear Farkle 3D dice', error);
         }
     },
 
