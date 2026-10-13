@@ -1,0 +1,154 @@
+import assert from 'node:assert/strict';
+import { describe, it, beforeEach } from 'node:test';
+
+globalThis.foundry = {
+    utils: {
+        randomID: () => 'zonk-test',
+        deepClone: value => structuredClone(value),
+        getProperty: () => null
+    }
+};
+globalThis.game = {
+    system: { id: 'generic' },
+    user: { id: 'gm1', isGM: true, active: true },
+    users: { get: () => null, find: () => null },
+    actors: { get: () => null },
+    settings: { settings: new Map(), get: () => null },
+    i18n: { localize: key => key, format: key => key }
+};
+globalThis.ui = { notifications: { warn: () => {} } };
+
+const { scoreZonkDice, getZonkKeepOptions, canScoreZonkRoll } =
+    await import('../scripts/games/zonk/ZonkRules.js');
+const { SettlementManager } = await import('../scripts/core/SettlementManager.js');
+const { ZonkGame } = await import('../scripts/games/zonk/ZonkGame.js');
+
+let applied = [];
+let affordable = () => true;
+SettlementManager.canAfford = id => affordable(id);
+SettlementManager.applyDeltas = async entries => {
+    applied.push(entries.map(entry => ({ ...entry })));
+    return true;
+};
+
+function makeGame(sequence = [1, 1, 1, 2, 3, 4], options = {}) {
+    let i = 0;
+    const table = new ZonkGame({
+        sessionId: 'zonk-test',
+        playerIds: ['p1', 'p2'],
+        participants: [
+            { id: 'p1', type: 'user', name: 'One' },
+            { id: 'p2', type: 'user', name: 'Two' }
+        ],
+        gameOptions: { ante: 10, targetScore: 5000, ...options },
+        zonkRng: () => ((sequence[i++ % sequence.length] - 1) + 0.1) / 6
+    });
+    table._broadcastState = async () => {};
+    return table;
+}
+
+beforeEach(() => {
+    applied = [];
+    affordable = () => true;
+});
+
+describe('Zonk scoring', () => {
+    it('scores singles, triples, extra matches, two triples, and full-roll bonuses', () => {
+        assert.equal(scoreZonkDice([1]), 100);
+        assert.equal(scoreZonkDice([5, 5]), 100);
+        assert.equal(scoreZonkDice([1, 1, 1]), 1000);
+        assert.equal(scoreZonkDice([2, 2, 2]), 200);
+        assert.equal(scoreZonkDice([6, 6, 6]), 600);
+        assert.equal(scoreZonkDice([1, 1, 1, 1]), 2000);
+        assert.equal(scoreZonkDice([5, 5, 5, 5, 5]), 1500);
+        assert.equal(scoreZonkDice([6, 6, 6, 6, 6, 6]), 2400);
+        assert.equal(scoreZonkDice([2, 2, 2, 3, 3, 3]), 500);
+        assert.equal(scoreZonkDice([2, 2, 3, 3, 4, 4]), 750);
+        assert.equal(scoreZonkDice([1, 2, 3, 4, 5, 6]), 1500);
+    });
+
+    it('rejects unscorable dice and detects true zonks', () => {
+        assert.equal(scoreZonkDice([1, 2]), 0);
+        assert.equal(scoreZonkDice([3, 3]), 0);
+        assert.equal(scoreZonkDice([1, 7]), 0);
+        assert.equal(scoreZonkDice([2, 3, 4, 6, 2, 3]), 0);
+        assert.equal(canScoreZonkRoll([2, 3, 4, 6, 2, 3]), false);
+        assert.equal(canScoreZonkRoll([2, 3, 4, 5]), true);
+        const best = getZonkKeepOptions([1, 1, 1, 2, 3, 4])[0];
+        assert.equal(best.points, 1000);
+        assert.deepEqual(best.indices, [0, 1, 2]);
+    });
+});
+
+describe('Zonk table flow and entry-fee settlement', () => {
+    it('charges once, enforces current turn and minimum bank, allows hot dice', async () => {
+        const table = makeGame([1, 1, 1, 1, 1, 1]);
+        assert.deepEqual(await table.start(), { ok: true });
+        assert.deepEqual(applied[0], [{ userId: 'p1', delta: -10 }, { userId: 'p2', delta: -10 }]);
+        assert.equal(table.handlePlayerAction('p2', 'roll', {}).ok, false);
+        assert.equal(table.handlePlayerAction('p1', 'bank', {}).ok, false);
+        assert.equal(table.handlePlayerAction('p1', 'roll', {}).ok, true);
+        assert.deepEqual(table.currentDice, [1, 1, 1, 1, 1, 1]);
+        assert.equal(table.handlePlayerAction('p1', 'keep', { indices: [0, 0] }).ok, false);
+        assert.equal(table.handlePlayerAction('p1', 'keep', { indices: [0, 1, 2, 3, 4, 5] }).ok, true);
+        assert.equal(table.turnPoints, 4000);
+        assert.equal(table.remainingDice, 6);
+        assert.equal(table.handlePlayerAction('p1', 'roll', {}).ok, true);
+    });
+
+    it('burns only unbanked points on zonk, then advances the turn', async () => {
+        const table = makeGame([1, 2, 3, 4, 5, 6]);
+        await table.start();
+        table.handlePlayerAction('p1', 'roll', {});
+        table.handlePlayerAction('p1', 'keep', { indices: [0, 1, 2, 3, 4, 5] });
+        assert.equal(table.turnPoints, 1500);
+        table._rng = (() => {
+            const rolls = [2, 3, 4, 6, 2, 3];
+            let i = 0;
+            return () => ((rolls[i++ % 6] - 1) + .1) / 6;
+        })();
+        table.handlePlayerAction('p1', 'roll', {});
+        assert.equal(table.playerStates.p1.score, 0);
+        assert.equal(table.playerStates.p1.zonks, 1);
+        assert.equal(table.currentPlayerId, 'p2');
+    });
+
+    it('runs final opponent turn, names winner, and pays once', async () => {
+        const table = makeGame([1, 1, 1, 2, 3, 4]);
+        await table.start();
+        table.playerStates.p1.score = 4800;
+        table.handlePlayerAction('p1', 'roll', {});
+        table.handlePlayerAction('p1', 'keep', { indices: [0, 1, 2] });
+        table.handlePlayerAction('p1', 'bank', {});
+        assert.equal(table.finalTurnsRemaining, 1);
+        assert.equal(table.currentPlayerId, 'p2');
+        assert.equal(table.phase, 'PLAYER_TURNS');
+        table.handlePlayerAction('p2', 'roll', {});
+        table.handlePlayerAction('p2', 'keep', { indices: [0, 1, 2] });
+        table.handlePlayerAction('p2', 'bank', {});
+        assert.equal(table.phase, 'FINISHED');
+        assert.deepEqual(table.winnerIds, ['p1']);
+        await table.handleGMAction('finishGame');
+        await table.handleGMAction('finishGame');
+        assert.equal(applied.length, 2);
+        assert.deepEqual(applied[1], [{ userId: 'p1', delta: 20 }]);
+    });
+
+    it('returns entry fees once when GM cancels unfinished match', async () => {
+        const table = makeGame();
+        await table.start();
+        await table.handleGMAction('finishGame');
+        await table.handleGMAction('finishGame');
+        assert.equal(applied.length, 2);
+        assert.deepEqual(applied[1], [{ userId: 'p1', delta: 10 }, { userId: 'p2', delta: 10 }]);
+    });
+
+    it('rejects insufficient funds before any deduction', async () => {
+        affordable = id => id !== 'p2';
+        const table = makeGame();
+        const result = await table.start();
+        assert.equal(result.ok, false);
+        assert.equal(result.reason, 'funds');
+        assert.equal(applied.length, 0);
+    });
+});
