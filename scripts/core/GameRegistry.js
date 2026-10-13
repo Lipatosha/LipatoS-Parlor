@@ -11,11 +11,11 @@ import { GAME_GUIDE_RU, BACCARAT_DRAW_GUIDE_RU } from './GameGuideRu.js';
 const GAME_GUIDE_TEXT = {
     zonk: {
         en: {
-            summary: 'Zonk (Farkle) is a six-dice push-your-luck tavern game with a shared entry-fee pot.',
+            summary: 'Farkle (Farkle) is a six-dice push-your-luck tavern game with a shared entry-fee pot.',
             flow: [
                 'All players pay a fixed entry fee once at the start.',
                 'On your turn roll six dice, select scoring dice and keep them. Bank at least 300 turn points or roll the remaining dice again.',
-                'If no die can score, you Zonk and lose unbanked turn points. When all six dice score, roll all six again.',
+                'If no die can score, you Farkle and lose unbanked turn points. When all six dice score, roll all six again.',
                 'At the target score the other players each get one final turn.'
             ],
             win: [
@@ -26,7 +26,7 @@ const GAME_GUIDE_TEXT = {
             notes: ['All dice rolls are controlled by the host GM. Unfinished matches refund entry fees.']
         },
         zh: {
-            summary: 'Zonk 是六骰子的酒馆积分游戏。',
+            summary: 'Farkle 是六骰子的酒馆积分游戏。',
             flow: ['全员先缴纳底注。每回合投六颗骰子，留下得分骰子。', '累计至少300分可以存分；继续投骰子可能丢失本回合所有分数。', '六颗骰子全部用完可继续投六颗。有人达到目标后，其他玩家各有一次最终回合。'],
             win: ['单个1为100，单个5为50，三个相同骰子按规则得分。', '三对得750分，1–6顺子得1500分。分数最高的玩家赢取奖池。'],
             notes: ['中途取消对局将退还底注。']
