@@ -109,41 +109,53 @@ export class ZonkTable {
         return rows.length ? rows.join('') : `<div class="parlor-zonk-history-empty">${esc(t('HistoryEmpty'))}</div>`;
     }
 
-    /** The scoring reference shares the same Foundry fabric and typography as the table. */
+    /** Exact illustrated rules order, re-skinned using the shared Foundry materials. */
     _combos() {
         const combo = (faces, points, note = '') => `<div class="parlor-zonk-combo-row">
             <span class="parlor-zonk-combo-faces">${diceRow(faces, true)}</span>
-            <strong class="parlor-zonk-combo-value">${esc(fmt(points))}</strong>
+            <strong class="parlor-zonk-combo-value">${fmt(points)}</strong>
             ${note ? `<small>${esc(note)}</small>` : ''}
         </div>`;
-        const group = (label, rows) => `<section class="parlor-zonk-manuscript-section">
-            <h4>${esc(label)}</h4><div class="parlor-zonk-manuscript-entries">${rows}</div>
+        // The reference uses starred 'any face' cubes. Draw # on the actual die tiles.
+        const anyDice = (groups, points) => `<div class="parlor-zonk-combo-row">
+            <span class="parlor-zonk-combo-faces parlor-zonk-any-groups">${groups.map(count =>
+                `<span class="parlor-zonk-any-group">${Array.from({ length: count }, () =>
+                    '<span class="parlor-zonk-any-die" aria-label="любая грань">#</span>').join('')}</span>`
+            ).join('')}</span>
+            <strong class="parlor-zonk-combo-value">${fmt(points)}</strong>
+        </div>`;
+        const group = (label, body) => `<section class="parlor-zonk-manuscript-section">
+            <h4>${esc(label)}</h4><div class="parlor-zonk-manuscript-entries">${body}</div>
         </section>`;
+        const simpleKind = (count, label, points) =>
+            `<div class="parlor-zonk-kind-row"><span>${esc(label)}</span><b>${fmt(points)}</b></div>`;
         return `<div class="parlor-zonk-manuscript" aria-label="${esc(t('Scoring'))}">
-          <div class="parlor-zonk-manuscript-columns">
-            <div class="parlor-zonk-guide-column">
-              ${group(t('SectionSingles'), combo([1],100) + combo([5],50))}
-              ${group(t('SectionTriples'), [
-                  combo([1,1,1],1000), combo([2,2,2],200), combo([3,3,3],300),
-                  combo([4,4,4],400), combo([5,5,5],500), combo([6,6,6],600)
-              ].join(''))}
-              ${group(t('SectionMultiples'), [
-                  combo([1,1,1,1],2000), combo([1,1,1,1,1],3000),
-                  combo([1,1,1,1,1,1],4000)
-              ].join(''))}
+            <div class="parlor-zonk-manuscript-columns">
+                <div class="parlor-zonk-guide-column">
+                    ${group(t('SectionSingles'), combo([1],50) + combo([5],100))}
+                    ${group(t('SectionTriples'), [
+                        combo([1,1,1],1000), combo([2,2,2],200), combo([3,3,3],300),
+                        combo([4,4,4],400), combo([5,5,5],500), combo([6,6,6],600)
+                    ].join(''))}
+                    <div class="parlor-zonk-multiples">
+                        ${simpleKind(4,t('FourKind'),1000)}
+                        ${simpleKind(5,t('FiveKind'),2000)}
+                        ${simpleKind(6,t('SixKind'),3000)}
+                    </div>
+                </div>
+                <div class="parlor-zonk-guide-column">
+                    ${group(t('SectionPartialStraight'),combo([1,2,3,4,5],750))}
+                    ${group(t('SectionStraight'),combo([1,2,3,4,5,6],1500))}
+                    ${group(t('SectionPairs'),anyDice([2,2,2],1500))}
+                    ${group(t('SectionDoubleTriples'),anyDice([3,3],2500))}
+                    ${group(t('SectionFourPlusPair'),anyDice([4,2],1500))}
+                    <div class="parlor-zonk-combo-extra">
+                        <p>${esc(t('ScoreHelpText'))}</p>
+                        <p>${esc(t('ScoreHelpFullHand'))}</p>
+                        <p>${esc(t('ScoreHelpBust'))}</p>
+                    </div>
+                </div>
             </div>
-            <div class="parlor-zonk-guide-column">
-              ${group(t('SectionStraight'), combo([1,2,3,4,5,6],1500))}
-              ${group(t('SectionPairs'), combo([2,2,3,3,4,4],750))}
-              ${group(t('SectionDoubleTriples'), combo([2,2,2,3,3,3],500,t('DoubleTriplesNote')))}
-              ${group(t('SectionFourPlusPair'), combo([1,1,1,1,5,5],2100,t('FourPlusPairNote')))}
-              <div class="parlor-zonk-combo-extra">
-                <h4>${esc(t('SectionHowToPlay'))}</h4>
-                <p>${esc(t('ScoreHelpText'))}</p>
-                <p>${esc(t('MultiplesNote'))}</p>
-              </div>
-            </div>
-          </div>
         </div>`;
     }
 
