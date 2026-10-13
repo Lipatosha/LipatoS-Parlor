@@ -64,6 +64,6 @@ jobs:
           VERSION=$(node -p "JSON.parse(require('fs').readFileSync('module.json')).version")
           TAG="v$VERSION"
           if ! gh release view "$TAG" >/dev/null 2>&1; then
-            gh release create "$TAG" --target "$(git rev-parse HEAD)" --title "LipatoS — Parlor $TAG" --notes "Farkle для 2–10 игроков: единый стиль Foundry denim065.png, бронзовый текст #9f9275, отложенные кости лестницей, правила и комбинации в общем дизайне, звук dice.wav. Сохранены английский и китайский языки. Манифест: https://github.com/Lipatosha/LipatoS-Parlor/releases/latest/download/module.json . Автоматические тесты пройдены; проверка в запущенном Foundry VTT остаётся необходимой." --latest
+            gh release create "$TAG" --target "$(git rev-parse HEAD)" --title "LipatoS — Parlor $TAG" --notes "Farkle v2.0.0: полноэкранный стол, до 10 игроков без пустых строк, ступени 6–5–4–3–2–1 с заполнением снизу, таблица комбинаций и подсчёт по иллюстрации (1=50, 5=100, три пары=1500, две тройки=2500, символ # вместо звёздочек), единые текстуры Foundry. Сохранены английский и китайский языки. Манифест: https://github.com/Lipatosha/LipatoS-Parlor/releases/latest/download/module.json . Автоматические тесты пройдены; проверка в запущенном Foundry VTT остаётся необходимой." --latest
           fi
           gh release upload "$TAG" module.json "lipatos-parlor-$TAG.zip" --clobber
