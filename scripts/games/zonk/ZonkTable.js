@@ -36,7 +36,6 @@ export class ZonkTable {
         this._visiblePlayerId = '';
         this._soundRollId = null;
         this._soundOn = true;
-        this._audioContext = null;
         this._rulesOpen = false;
         this._busy = false;
     }
@@ -60,8 +59,6 @@ export class ZonkTable {
         this._overlay = null;
         this._rulesOpen = false;
         this._busy = false;
-        this._audioContext?.close?.().catch?.(() => {});
-        this._audioContext = null;
     }
 
     _participantName(state, id) {
@@ -75,53 +72,20 @@ export class ZonkTable {
         return getControlledParticipants(state).some(entry => entry.id === state.currentPlayerId);
     }
 
-    _audio() {
-        if (!this._soundOn) return null;
-        try {
-            const AudioClass = window.AudioContext || window.webkitAudioContext;
-            if (!AudioClass) return null;
-            this._audioContext ||= new AudioClass();
-            return this._audioContext;
-        } catch { return null; }
-    }
-
-    /** Lightweight wooden-dice rattle: generated locally, no external assets/network. */
+    /** Use the actual Foundry VTT installation sound, served from public/sounds/dice.wav. */
     _playRollSound() {
-        const ctx = this._audio();
-        if (!ctx) return;
+        if (!this._soundOn) return;
         try {
-            if (ctx.state === 'suspended') void ctx.resume().catch(() => {});
-            const duration = 0.68;
-            const samples = Math.floor(ctx.sampleRate * duration);
-            const buffer = ctx.createBuffer(1, samples, ctx.sampleRate);
-            const channel = buffer.getChannelData(0);
-            const hits = [0, .045, .09, .15, .21, .285, .365, .43, .51];
-            for (const [index, at] of hits.entries()) {
-                const offset = Math.floor(ctx.sampleRate * at);
-                const length = Math.floor(ctx.sampleRate * (.055 - Math.min(index, 7) * .003));
-                const strength = Math.max(.10, .65 - index * .062);
-                for (let i = 0; i < length && offset + i < samples; i++) {
-                    const time = i / ctx.sampleRate;
-                    const env = Math.exp(-time * 86);
-                    const crackle = (Math.random() * 2 - 1) * .65;
-                    const knock = Math.sin(2 * Math.PI * (230 + index * 27) * time) * .35;
-                    channel[offset + i] += Math.max(-1, Math.min(1, (crackle + knock) * env * strength));
-                }
-            }
-            const source = ctx.createBufferSource();
-            const filter = ctx.createBiquadFilter();
-            const gain = ctx.createGain();
-            source.buffer = buffer;
-            filter.type = 'lowpass';
-            filter.frequency.value = 2200;
-            gain.gain.value = .65;
-            source.connect(filter);
-            filter.connect(gain);
-            gain.connect(ctx.destination);
-            source.start();
-            source.onended = () => { source.disconnect(); filter.disconnect(); gain.disconnect(); };
+            const helper = globalThis.foundry?.audio?.AudioHelper;
+            if (typeof helper?.play !== 'function') return;
+            Promise.resolve(helper.play({
+                src: 'sounds/dice.wav',
+                volume: 0.6,
+                loop: false,
+                channel: 'interface'
+            }, false)).catch(error => console.warn('parlor | Foundry dice.wav failed', error));
         } catch (error) {
-            console.warn('parlor | Zonk dice sound unavailable', error);
+            console.warn('parlor | Could not play Foundry dice.wav', error);
         }
     }
 
@@ -340,14 +304,12 @@ export class ZonkTable {
         }
         if (action === 'sound') {
             this._soundOn = !this._soundOn;
-            this._audio()?.resume?.().catch?.(() => {});
             this.refresh();
             return;
         }
         if (this._busy) return;
         const state = this.gameInstance.getState();
         if (!game.user.isGM && !this._canPlay(state)) return;
-        if (action === 'roll') this._audio()?.resume?.().catch?.(() => {});
         this._busy = true;
         this.refresh();
         try {
