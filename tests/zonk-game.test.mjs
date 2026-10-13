@@ -144,7 +144,14 @@ describe('Zonk table flow and entry-fee settlement', () => {
             let i = 0;
             return () => ((rolls[i++ % 6] - 1) + .1) / 6;
         })();
+        table._zonkPauseMs = 15; // Only tests use the shortened timeout.
         table.handlePlayerAction('p1', 'roll', {});
+        assert.equal(table.turnPhase, 'zonked');
+        assert.equal(table.lastEvent, 'Вы обосрались!');
+        assert.deepEqual(table.currentDice, [2, 3, 4, 6, 2, 3]);
+        assert.equal(table.currentPlayerId, 'p1', 'Keep losing dice visible');
+        assert.equal(table.handlePlayerAction('p1', 'roll').ok, false);
+        await new Promise(resolve => setTimeout(resolve, 45));
         assert.equal(table.playerStates.p1.score, 0);
         assert.equal(table.playerStates.p1.zonks, 1);
         assert.equal(table.currentPlayerId, 'p2');
@@ -165,6 +172,8 @@ describe('Zonk table flow and entry-fee settlement', () => {
         table.handlePlayerAction('p2', 'bank', {});
         assert.equal(table.phase, 'FINISHED');
         assert.deepEqual(table.winnerIds, ['p1']);
+        await table._settlementPromise;
+        assert.equal(table.settlementApplied, true, 'Winner is paid without GM clicking');
         await table.handleGMAction('finishGame');
         await table.handleGMAction('finishGame');
         assert.equal(applied.length, 2);
