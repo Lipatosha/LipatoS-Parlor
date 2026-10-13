@@ -43,13 +43,13 @@ describe('Farkle widescreen 16:9 existing-game redesign', () => {
         assert.ok(code.includes("actionButton('bank', t('Bank')"));
         assert.ok(code.includes("actionButton('roll', hot ? t('BonusRoll') : t('Roll')"));
         assert.ok(code.includes("actionButton('skip', t('SkipTurn')"));
-        assert.equal((code.match(/actionButton\\('skip'/g) || []).length, 1);
+        assert.equal((code.match(/actionButton\('skip'/g) || []).length, 1);
         const foot = code.indexOf('<div class="parlor-zonk-progress-foot">');
         const footEnd = code.indexOf('</aside>', foot);
         const skip = code.indexOf("actionButton('skip'", foot);
         assert.ok(foot >= 0 && skip > foot && skip < footEnd);
         assert.ok(code.includes('game.user.isGM && !ended && !pending'));
-        assert.equal(code.slice(code.indexOf('<div class="parlor-zonk-buttons">')).split('</div>')[0].match(/actionButton\\('/g)?.length, 4,
+        assert.equal(code.slice(code.indexOf('<div class="parlor-zonk-buttons">')).split('</div>')[0].match(/actionButton\('/g)?.length, 3,
             'Save is either keep or bank, followed by Roll; Skip is outside this group');
         assert.ok(styles.includes('grid-template-columns:repeat(2,minmax(0,1fr))'));
         assert.ok(styles.includes('.parlor-zonk-progress-foot .parlor-zonk-action.is-skip'));
@@ -107,7 +107,7 @@ describe('Farkle widescreen 16:9 existing-game redesign', () => {
         assert.ok(styles.includes('grid-template-rows:68px minmax(0,55fr) 42px 22px minmax(0,45fr)'));
     });
 
-    it('moves independent scrolling scoring and history panels into right column', async () => {
+    it('moves history into center while scoring alone fills the right column', async () => {
         const code = await table(), styles = await css();
         const center = code.indexOf('<main class="parlor-zonk-center">');
         const right = code.indexOf('<aside class="parlor-zonk-right">');
