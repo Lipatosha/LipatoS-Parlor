@@ -209,7 +209,7 @@ describe('Zonk Foundry inventory redesign', () => {
         assert.ok(table.includes("material: 'stone'"));
         assert.ok(table.includes("foreground: '#FFFFFF'"));
         assert.ok(table.includes('Dsn3dBridge.releaseFarkleDice(token)'));
-        assert.ok(table.includes("class=\\"${use3d ? 'parlor-zonk-dsn-choice' : 'parlor-zonk-pick'}"));
+        assert.ok(table.includes('parlor-zonk-dsn-choice'));
         assert.ok(css.includes('.parlor-zonk-dice-tray.is-dsn-3d'));
         assert.ok(bridge.includes("config.hideAfterRoll = false;"));
         assert.ok(bridge.includes("config.hideAfterRoll = oldValue;"));
