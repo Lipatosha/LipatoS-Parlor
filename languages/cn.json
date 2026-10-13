@@ -93,7 +93,7 @@
         "CrazyEightsNeedPlayers": "疯狂八需要 {minCount} 到 {maxCount} 人。",
         "CrazyEightsAnteShort": "底注 {amount} 不够付：{names}",
         "BeetleRaceInvalid": "这张赛事卡上场的甲虫不足三只（可能有甲虫被删了），请换一张或去赛事工坊补上。",
-        "ZonkNeedPlayers": "Zonk 需要 {minCount}–{maxCount} 名玩家。",
+        "ZonkNeedPlayers": "Farkle 需要 {minCount}–{maxCount} 位玩家。",
         "ZonkAnteShort": "底注 {amount} 不足：{names}。"
       },
       "Toolbar": {
@@ -236,11 +236,11 @@
         "BeetleRaceSound": "比赛音效（全桌一起；比赛中 GM 也能点喇叭临时关）",
         "BeetleRaceCleanTable": "纯净桌面：比赛时收起桌上的摆件，赛道看得更清楚",
         "BeetleRacePrefsHint": "这两项会记住，下次开甲虫赛跑沿用这次的选择。",
-        "ZonkTitle": "Zonk 设置",
+        "ZonkTitle": "Farkle 设置",
         "ZonkNote": "每名玩家只需缴纳一次底注。选择 2000、3000、5000 或 10000 分目标。",
         "ZonkAnte": "每人底注",
         "ZonkTarget": "目标积分",
-        "ZonkParticipantsNote": "2–10位玩家，使用六枚骰子挑选得分组合。",
+        "ZonkParticipantsNote": "Farkle 支持2–10名玩家，轮流投六颗骰子。",
         "SettlementSilver": "银币结算",
         "SettlementSilverHint": "直接从角色的银币余额扣除与发放。",
         "SettlementCopper": "铜币结算",
@@ -372,8 +372,8 @@
         "Desc": "DM 配好赛事，大家挑一只甲虫下注，然后一起看它们赛跑。"
       },
       "Zonk": {
-        "Name": "Zonk 骰子",
-        "Desc": "六枚骰子，最多十名玩家一起冒险计分。"
+        "Name": "Farkle",
+        "Desc": "六骰冒险游戏，支持2至10名玩家。"
       }
     },
     "Roulette": {
@@ -2362,7 +2362,7 @@
       }
     },
     "Zonk": {
-      "Title": "ZONK",
+      "Title": "FARKLE",
       "Kicker": "Aindor",
       "Tagline": "六颗骰子，一次冒险。",
       "Target": "目标",
@@ -2380,8 +2380,8 @@
       "TurnOf": "当前玩家：",
       "NowPlaying": "行动中",
       "Winner": "赢家",
-      "Bust": "Zonk",
-      "Busts": "Zonk 次数",
+      "Bust": "Farkle",
+      "Busts": "Farkle",
       "Die": "骰子",
       "Points": "分",
       "SelectValid": "请选择可得分的组合",
@@ -2420,7 +2420,7 @@
       "HistoryRoll": "掷骰",
       "HistoryKeep": "保留骰子",
       "HistoryBank": "存入积分",
-      "HistoryZonk": "ZONK！",
+      "HistoryZonk": "Farkle!",
       "HistorySkip": "跳过回合",
       "HistoryFinish": "游戏结束",
       "HistoryPaid": "奖池已支付",
@@ -2433,7 +2433,18 @@
       "SectionSingles": "单颗骰子",
       "SectionTriples": "三条",
       "SectionSpecial": "特殊组合",
-      "SectionMultiples": "四、五、六条"
+      "SectionMultiples": "四、五、六条",
+      "SectionStraight": "顺子",
+      "SectionPairs": "三对",
+      "SectionDoubleTriples": "两组三条",
+      "SectionFourPlusPair": "四条 + 一对",
+      "SectionHowToPlay": "玩法",
+      "ScoreHelpText": "轮流掷骰，保留计分骰子，选择存分或继续冒险。未掷出有效组合即为 Farkle，本回合未存积分作废。",
+      "DoubleTriplesNote": "两组三条分别计分",
+      "FourPlusPairNote": "四个1为2000，两颗5为100",
+      "SavedDice": "保留的骰子",
+      "SavedDiceHint": "本回合已保留的计分骰子",
+      "Name": "Farkle"
     },
     "Currency": {
       "Gold": "金币",
