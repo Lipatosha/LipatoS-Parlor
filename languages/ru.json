@@ -2458,7 +2458,22 @@
       "ExtraActions": "Дополнительные действия",
       "OnlyGM": "Действия доступны только мастеру",
       "RollField": "Поле броска",
-      "DiceShort": "костей"
+      "DiceShort": "костей",
+      "VictoryNotice": "Партия Farkle завершена! Победитель: {winners}",
+      "VictoryDrawNotice": "Партия Farkle завершена вничью! Победители: {winners}",
+      "VictoryTitle": "Победа в Farkle!",
+      "VictoryDrawTitle": "Ничья в Farkle!",
+      "Rematch": "Сыграть ещё",
+      "RematchHostHint": "Повторную игру может начать мастер.",
+      "VictoryDismiss": "Посмотреть результаты",
+      "RematchAnte": "Новый взнос",
+      "RematchCurrency": "Расчёт ставок",
+      "RematchTarget": "Победные очки",
+      "RematchSettings": "Новая партия Farkle — ставки",
+      "RematchCancel": "Отмена",
+      "RematchInvalid": "Укажите взнос от 1 до 100 000.",
+      "RematchInsufficient": "Недостаточно средств для новой ставки у одного или нескольких участников.",
+      "RematchFailed": "Не удалось начать повторную партию."
     },
     "Currency": {
       "Gold": "Золото",
