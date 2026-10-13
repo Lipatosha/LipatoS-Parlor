@@ -1,3 +1,4 @@
+# v2.1.1: verify accurate positions of all six uploaded D6 sprite faces.
 name: Publish Foundry module
 on:
   push:
