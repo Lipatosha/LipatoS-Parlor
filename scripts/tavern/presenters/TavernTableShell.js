@@ -31,6 +31,7 @@ import { renderPropSvg, getPropType, propBaseWidth } from '../props/PropLibrary.
 import { isPropOnFelt } from '../props/TableGeometry.js';
 import { getTableStylePreset, getWoodPreset, woodAssetPath } from '../props/WoodPresets.js';
 import { TavernDeckEditor } from './TavernDeckEditor.js';
+import { applyD6Face } from '../../core/DiceFaces.js';
 
 export const MODULE_ID = 'parlor';
 const ASSET = `modules/${MODULE_ID}/assets/tavern`;
@@ -1369,7 +1370,8 @@ export class TavernTableShell {
         const el = document.createElement('div');
         el.className = 'die';
         el.dataset.v = String(v);
-        el.innerHTML = '<i></i>'.repeat(v);
+        // Use the same uploaded six face textures as the casino tables.
+        applyD6Face(el, v);
         return el;
     }
 
