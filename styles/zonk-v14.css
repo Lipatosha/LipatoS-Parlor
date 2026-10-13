@@ -1248,3 +1248,56 @@
 #parlor-zonk-overlay.parlor-zonk-overlay.parlor-zonk-dsn-rolling {
     z-index: 2300;
 }
+
+/* v2.1.9 — actual Dice So Nice 3D meshes are the primary Farkle dice.
+ * This compact strip only selects the corresponding DSN roll results;
+ * the full-size white HTML pips are not shown while 3D DSN is active.
+ */
+#parlor-zonk-overlay .parlor-zonk-roll-zone .parlor-zonk-dice-tray.is-dsn-3d {
+    justify-content: center;
+    align-items: flex-end;
+    align-content: flex-end;
+    flex-wrap: nowrap;
+    padding: 15px 11px;
+    gap: clamp(5px, .85vw, 13px);
+    background: transparent !important;
+}
+#parlor-zonk-overlay .parlor-zonk-roll-zone .parlor-zonk-dsn-choice {
+    display: flex;
+    flex: 0 1 58px;
+    min-width: 34px;
+    width: 54px;
+    height: 48px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 2;
+    padding: 3px !important;
+    gap: 1px;
+    background: #202025cc !important;
+    border: 1px solid #716650 !important;
+    border-radius: 6px !important;
+    box-shadow: inset 0 1px 5px #0008 !important;
+    color: #e4d0a6;
+    cursor: pointer;
+}
+#parlor-zonk-overlay .parlor-zonk-dsn-choice-index {
+    font-size: 9px;
+    opacity: .75;
+}
+#parlor-zonk-overlay .parlor-zonk-dsn-choice b {
+    font-size: 18px;
+    color: #f5e5c5;
+    line-height: 1;
+}
+#parlor-zonk-overlay .parlor-zonk-dsn-choice.is-selected,
+#parlor-zonk-overlay .parlor-zonk-dsn-choice:hover:not(:disabled) {
+    background: #38352bcf !important;
+    border: 2px solid #e5c88a !important;
+    box-shadow: 0 0 7px #e5c88a88 !important;
+}
+#parlor-zonk-overlay .parlor-zonk-dsn-choice:disabled { opacity: .78; }
+#parlor-zonk-overlay.parlor-zonk-3d-active .parlor-zonk-roll-zone {
+    box-shadow: inset 0 2px 24px #0008, 0 0 0 1px #57492e5c;
+}
