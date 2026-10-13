@@ -56,4 +56,30 @@ describe('Zonk Foundry inventory redesign', () => {
         assert.equal(ru.PARLOR.Lobby.Setup.SettlementGold, 'Расчёт золотом D&D');
         assert.equal(ru.PARLOR.Zonk.Bust, 'Farkle');
     });
+    it('fills a six-tier 21-slot staircase bottom up and lists only seated players', async () => {
+        const code = await source('scripts/games/zonk/ZonkTable.js');
+        const css = await source('styles/zonk-v14.css');
+        assert.ok(code.includes('const tierStarts = [20, 18, 15, 11, 6, 0]'));
+        assert.ok(code.includes('[1, 2, 3, 4, 5, 6].map'));
+        assert.ok(code.includes('data-stair-cell='));
+        assert.ok(code.includes('standings.slice(0, 10).map'));
+        assert.ok(!code.includes('Math.max(6, standings.length)'));
+        assert.ok(css.includes('width: 100vw'));
+        assert.ok(css.includes('height: 100dvh'));
+        assert.ok(css.includes('grid-template-columns: repeat(2,minmax(0,1fr))'));
+    });
+
+    it('matches photo paytable with # wildcards and no star tiles', async () => {
+        const code = await source('scripts/games/zonk/ZonkTable.js');
+        const ru = JSON.parse(await source('languages/ru.json'));
+        assert.ok(code.includes('parlor-zonk-any-die'));
+        assert.ok(code.includes('>#</span>'));
+        assert.ok(code.includes('anyDice([2,2,2],1500)'));
+        assert.ok(code.includes('anyDice([3,3],2500)'));
+        assert.ok(code.includes('anyDice([4,2],1500)'));
+        assert.ok(code.includes('combo([1,2,3,4,5],750)'));
+        assert.ok(code.includes('combo([1,2,3,4,5,6],1500)'));
+        assert.equal(ru.PARLOR.Zonk.SectionPartialStraight, 'Частичный стрит');
+        assert.equal(ru.PARLOR.Zonk.FourKind, 'Четыре одинаковых');
+    });
 });
