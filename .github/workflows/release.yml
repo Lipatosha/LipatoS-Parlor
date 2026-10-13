@@ -66,6 +66,6 @@ jobs:
           VERSION=$(node -p "JSON.parse(require('fs').readFileSync('module.json')).version")
           TAG="v$VERSION"
           if ! gh release view "$TAG" >/dev/null 2>&1; then
-            gh release create "$TAG" --target "$(git rev-parse HEAD)" --title "LipatoS — Parlor $TAG" --notes "LipatoS Parlor v2.2.0: полный интерфейс Farkle 16:9, 21/54/25 колонки, список до 10 игроков, 21 ячейка 1–2–3–4–5–6 слева, история и комбинации справа, стандартный dice.wav и никаких вызовов Dice So Nice! в Farkle. Сохранены английский и китайский языки. Манифест: https://github.com/Lipatosha/LipatoS-Parlor/releases/latest/download/module.json . Автоматические тесты пройдены; проверка в запущенном Foundry VTT остаётся необходимой." --latest
+            gh release create "$TAG" --target "$(git rev-parse HEAD)" --title "LipatoS — Parlor $TAG" --notes "LipatoS Parlor v2.2.1: Farkle 16:9 — история ходов под центральным игровым полем, правая колонка целиком под увеличенную таблицу комбинаций, пирамидa прижата к заголовку, пропуск хода снизу панели игроков, две кнопки управления. Сохранены английский и китайский языки. Манифест: https://github.com/Lipatosha/LipatoS-Parlor/releases/latest/download/module.json . Автоматические тесты пройдены; проверка в запущенном Foundry VTT остаётся необходимой." --latest
           fi
           gh release upload "$TAG" module.json "lipatos-parlor-$TAG.zip" --clobber
