@@ -229,7 +229,7 @@ export class ZonkGame extends GameBase {
             points: Number(payload.points || 0),
             time: Date.now()
         };
-        this.history = [entry, ...this.history].slice(0, 7);
+        this.history = [entry, ...this.history].slice(0, 100);
     }
 
     _finishTurn(gain, zonk, { skipped = false } = {}) {
