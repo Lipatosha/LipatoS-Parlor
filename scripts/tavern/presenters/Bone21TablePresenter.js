@@ -7,6 +7,7 @@
  */
 
 import { TavernTableShell } from './TavernTableShell.js';
+import { renderD6Face } from '../../core/DiceFaces.js';
 
 const PHASES = [
     { keys: ['IDLE', 'BETTING'], labelKey: 'PARLOR.Bone21.Phase.Betting' },
@@ -66,7 +67,7 @@ export class Bone21TablePresenter extends TavernTableShell {
             const delta = payout != null ? Number(payout) - Number(seat.bet || 0) : null;
             const diceHtml = dice.map(v => {
                 const val = Math.max(1, Math.min(6, Number(v) || 1));
-                return `<div class="die die-sm" data-v="${val}">${'<i></i>'.repeat(val)}</div>`;
+                return renderD6Face(val, { className: 'die die-sm' });
             }).join('');
             return `<div class="pth-reveal-row${win ? ' win' : ''}${bust ? ' bust' : ''}">
                 <span class="rv-name">${this._esc(this._seatName(id))}</span>
@@ -105,7 +106,7 @@ export class Bone21TablePresenter extends TavernTableShell {
         row.className = 'dice-row';
         row.innerHTML = (values || []).map(v => {
             const val = Math.max(1, Math.min(6, Number(v) || 1));
-            return `<div class="die${small ? ' die-sm' : ''}" data-v="${val}">${'<i></i>'.repeat(val)}</div>`;
+            return renderD6Face(val, { className: small ? 'die die-sm' : 'die' });
         }).join('');
         return row;
     }
