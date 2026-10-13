@@ -29,6 +29,7 @@ export class ZonkGame extends GameBase {
         this.playerStates = {};
         this.currentPlayerId = '';
         this.currentDice = [];
+        this.keptDice = [];
         this.remainingDice = ZONK_DICE;
         this.turnPoints = 0;
         this.turnPhase = 'needRoll';
@@ -57,7 +58,7 @@ export class ZonkGame extends GameBase {
     async start() {
         if (this.started) return { ok: false, reason: 'already-started' };
         if (this.turnOrder.length < 2 || this.turnOrder.length > 10) {
-            this.lastError = 'Для Зонка требуется от 2 до 10 участников.';
+            this.lastError = 'Для Farkle требуется от 2 до 10 участников.';
             return { ok: false, reason: 'players' };
         }
         const shortIds = this.turnOrder.filter(id => !this.exemptIds.has(id)
@@ -97,6 +98,7 @@ export class ZonkGame extends GameBase {
             playerStates: this.playerStates,
             currentPlayerId: this.currentPlayerId,
             currentDice: this.currentDice,
+            keptDice: this.keptDice,
             remainingDice: this.remainingDice,
             turnPoints: this.turnPoints,
             turnPhase: this.turnPhase,
@@ -118,7 +120,7 @@ export class ZonkGame extends GameBase {
         super.setState(state);
         for (const key of [
             'ante', 'targetScore', 'minBank', 'turnOrder', 'playerStates',
-            'currentPlayerId', 'currentDice', 'remainingDice', 'turnPoints',
+            'currentPlayerId', 'currentDice', 'keptDice', 'remainingDice', 'turnPoints',
             'turnPhase', 'rollId', 'pot', 'lastRoll', 'lastEvent', 'winnerIds',
             'finalTurnsRemaining', 'settlementApplied', 'started', 'lastError',
             'history', 'historySequence'
@@ -135,6 +137,8 @@ export class ZonkGame extends GameBase {
 
         if (action === 'roll') {
             if (!['needRoll', 'ready'].includes(this.turnPhase)) return { ok: false, reason: 'keep-first' };
+            // Hot dice: a fresh set of six begins a new visible saved-dice staircase.
+            if (this.remainingDice === ZONK_DICE && this.keptDice.length === ZONK_DICE) this.keptDice = [];
             this.currentDice = Array.from({ length: this.remainingDice }, () => rollD6(this._rng));
             this.lastRoll = [...this.currentDice];
             this.rollId++;
@@ -159,7 +163,9 @@ export class ZonkGame extends GameBase {
             const points = scoreZonkDice(indices.map(i => this.currentDice[i]));
             if (!points) return { ok: false, reason: 'invalid-combination' };
             this.turnPoints += points;
-            this._record('keep', participantId, { dice: indices.map(i => this.currentDice[i]), points });
+            const kept = indices.map(i => this.currentDice[i]);
+            this.keptDice = [...this.keptDice, ...kept].slice(0, ZONK_DICE);
+            this._record('keep', participantId, { dice: kept, points });
             this.remainingDice -= indices.length;
             this.currentDice = [];
             if (this.remainingDice === 0) this.remainingDice = ZONK_DICE;
@@ -197,6 +203,7 @@ export class ZonkGame extends GameBase {
         this.currentPlayerId = this.turnOrder[this._nextIndex || 0] || '';
         this._nextIndex = this._nextIndex ?? 0;
         this.currentDice = [];
+        this.keptDice = [];
         this.remainingDice = ZONK_DICE;
         this.turnPoints = 0;
         this.turnPhase = 'needRoll';
@@ -230,9 +237,10 @@ export class ZonkGame extends GameBase {
         seat.score += gain;
         seat.status = zonk ? 'zonk' : 'banked';
         this.lastEvent = zonk
-            ? 'ЗОНК! Очки этого хода сгорели.'
+            ? 'Farkle! Очки текущего хода сгорели.'
             : `В копилку добавлено ${gain} очков.`;
         this.currentDice = [];
+        this.keptDice = [];
         this.turnPoints = 0;
 
         const triggeredFinal = this.finalTurnsRemaining === null && seat.score >= this.targetScore;
@@ -257,6 +265,7 @@ export class ZonkGame extends GameBase {
         this.winnerIds = this.turnOrder.filter(id => this.playerStates[id].score === maxScore);
         this.currentPlayerId = '';
         this.currentDice = [];
+        this.keptDice = [];
         this.turnPhase = 'complete';
         this.lastEvent = this.winnerIds.length === 1
             ? 'Партия завершена. Победитель определён!'
