@@ -4,6 +4,7 @@ import { SettlementManager } from '../../core/SettlementManager.js';
 import { getGameGuide } from '../../core/GameRegistry.js';
 import { BotManager } from '../../core/BotManager.js';
 import { scoreZonkDice } from './ZonkRules.js';
+import { getFarkleRackDisplay } from './FarkleRack.js';
 import { renderD6Face } from '../../core/DiceFaces.js';
 
 // The same physical pip dice and CSS classes used by LiarsDiceTable.
@@ -229,16 +230,15 @@ export class ZonkTable {
             : Array.from({ length: state.remainingDice || 6 }, () =>
                 `<div class="parlor-zonk-pick is-placeholder">${pipDie(5)}</div>`).join('');
 
-        // Fill from the bottom: 6 slots, then 5, 4, 3, 2, 1 at the top.
-        // All 21 slots remain visible. Dice from successive hot-dice throws advance
-        // to the next tier rather than replacing the bottom row.
-        const savedDice = Array.isArray(state.keptDice) ? state.keptDice.slice(-21) : [];
-        const tierStarts = [20, 18, 15, 11, 6, 0];
-        const stairs = [1, 2, 3, 4, 5, 6].map((count, rowIndex) =>
-            `<div class="parlor-zonk-stair-row" data-stair-row="${rowIndex}" data-capacity="${count}">
-                ${Array.from({ length: count }, (_, col) => {
-                    const face = savedDice[tierStarts[rowIndex] + col];
-                    return `<div class="parlor-zonk-stair-slot ${face ? 'is-filled' : ''}" data-stair-cell="${tierStarts[rowIndex]+col}">
+        // Each keep action starts its OWN new row, rather than being packed
+        // into remaining empty cells of the previous row.
+        const rackRows = getFarkleRackDisplay(state.keptDiceRows);
+        const savedCount = rackRows.reduce((sum, row) => sum + row.values.length, 0);
+        const stairs = rackRows.map(({ capacity, rowIndex, values }) =>
+            `<div class="parlor-zonk-stair-row" data-stair-row="${rowIndex}" data-capacity="${capacity}">
+                ${Array.from({ length: capacity }, (_, col) => {
+                    const face = values[col];
+                    return `<div class="parlor-zonk-stair-slot ${face ? 'is-filled' : ''}" data-stair-cell="${rowIndex}-${col}">
                         ${face ? pipDie(face) : '<span class="parlor-zonk-stair-glyph" aria-hidden="true">◇</span>'}
                     </div>`;
                 }).join('')}
@@ -280,7 +280,7 @@ export class ZonkTable {
                 <div class="parlor-zonk-dice-tray" aria-label="${esc(t('DiceLeft'))}">${dice}</div>
                 <div class="parlor-zonk-lower-board">
                   <section class="parlor-zonk-saved-area" aria-label="${esc(t('SavedDice'))}">
-                    <div class="parlor-zonk-saved-heading">${esc(t('SavedDice'))} <span>${savedDice.length}/21</span></div>
+                    <div class="parlor-zonk-saved-heading">${esc(t('SavedDice'))} <span>${savedCount}/21</span></div>
                     <div class="parlor-zonk-staircase">${stairs}</div>
                   </section>
                   <section class="parlor-zonk-status-area">
