@@ -427,6 +427,25 @@ export class GameLobby extends HandlebarsApplicationMixin(ApplicationV2) {
             }
         }
 
+        if (gameConfig.id === 'zonk') {
+            const minCount = this._getMinParticipantCount(gameConfig);
+            const maxCount = this._getMaxParticipantCount(gameConfig);
+            if (participants.length < minCount || participants.length > maxCount) {
+                ui.notifications.warn(t('PARLOR.Lobby.Errors.ZonkNeedPlayers', { minCount, maxCount }));
+                return;
+            }
+            const ante = result.gameOptions?.ante || 10;
+            const shortNames = participants
+                .filter(entry => !SettlementManager.canAfford(entry.id, ante, result.gameOptions))
+                .map(entry => getParticipantLabel(entry));
+            if (shortNames.length) {
+                ui.notifications.warn(t('PARLOR.Lobby.Errors.ZonkAnteShort', {
+                    amount: ante, names: shortNames.join(', ')
+                }));
+                return;
+            }
+        }
+
         if (gameConfig.id === 'beetlerace') {
             // 赛事卡里的甲虫可能被删得不够三只了，开桌前就拦下来，别进桌才发现跑不起来
             if (!result.gameOptions?.race) {
@@ -519,6 +538,8 @@ export class GameLobby extends HandlebarsApplicationMixin(ApplicationV2) {
             slotOperatorId: '',
             slotSpinCost: 5,
             bone21Ante: 10,
+            zonkAnte: 10,
+            zonkTargetScore: 5000,
             crazyEightsAnte: DEFAULT_CRAZY_EIGHTS_OPTIONS.ante,
             crazyEightsPenaltyPerPoint: DEFAULT_CRAZY_EIGHTS_OPTIONS.penaltyPerPoint,
             crazyEightsDrawRule: DEFAULT_CRAZY_EIGHTS_OPTIONS.drawRule,
@@ -929,6 +950,13 @@ export class GameLobby extends HandlebarsApplicationMixin(ApplicationV2) {
                 ante: Math.max(1, Math.floor(Number(draft.bone21Ante || 0)) || 10)
             };
         }
+        if (gameConfig?.id === 'zonk') {
+            return {
+                ...gameOptions,
+                ante: Math.max(1, Math.min(100000, Math.floor(Number(draft.zonkAnte || 0)) || 10)),
+                targetScore: Number(draft.zonkTargetScore) === 10000 ? 10000 : 5000
+            };
+        }
         if (gameConfig?.id === 'crazyeights') {
             const options = sanitizeCrazyEightsOptions({
                 ante: draft.crazyEightsAnte,
@@ -1011,6 +1039,11 @@ export class GameLobby extends HandlebarsApplicationMixin(ApplicationV2) {
 
         if (gameConfig.id === 'bone21') {
             draft.bone21Ante = Math.max(1, Math.floor(Number(draft.bone21Ante || 0)) || 10);
+        }
+
+        if (gameConfig.id === 'zonk') {
+            draft.zonkAnte = Math.max(1, Math.min(100000, Math.floor(Number(draft.zonkAnte || 0)) || 10));
+            draft.zonkTargetScore = Number(draft.zonkTargetScore) === 10000 ? 10000 : 5000;
         }
 
         if (gameConfig.id === 'crazyeights') {
@@ -1188,6 +1221,7 @@ export class GameLobby extends HandlebarsApplicationMixin(ApplicationV2) {
         switch (gameConfig.id) {
             case 'slotmachine': return this._renderSlotSetup(gameConfig, draft);
             case 'bone21': return this._renderBone21Setup(draft);
+            case 'zonk': return this._renderZonkSetup(draft);
             case 'crazyeights': return this._renderCrazyEightsSetup(draft);
             case 'beetlerace': return this._renderBeetleRaceSetup(draft);
             case 'texasholdem': return this._renderTexasSetup(draft);
@@ -1226,6 +1260,28 @@ export class GameLobby extends HandlebarsApplicationMixin(ApplicationV2) {
                     ${setupField({
                         label: t('PARLOR.Lobby.Setup.Bone21Ante'),
                         control: `<input type="number" min="1" step="1" value="${draft.bone21Ante}" data-bone21-ante>`
+                    })}
+                </div>
+            `
+        });
+    }
+
+    _renderZonkSetup(draft) {
+        return setupSection({
+            title: t('PARLOR.Lobby.Setup.ZonkTitle'),
+            note: t('PARLOR.Lobby.Setup.ZonkNote'),
+            body: `
+                <div class="parlor-setup-fields is-2">
+                    ${setupField({
+                        label: t('PARLOR.Lobby.Setup.ZonkAnte'),
+                        control: `<input type="number" min="1" step="1" max="100000" value="${draft.zonkAnte}" data-zonk-ante>`
+                    })}
+                    ${setupField({
+                        label: t('PARLOR.Lobby.Setup.ZonkTarget'),
+                        control: `<select data-zonk-target>
+                            <option value="5000" ${draft.zonkTargetScore === 5000 ? 'selected' : ''}>5 000</option>
+                            <option value="10000" ${draft.zonkTargetScore === 10000 ? 'selected' : ''}>10 000</option>
+                        </select>`
                     })}
                 </div>
             `
@@ -1450,6 +1506,14 @@ export class GameLobby extends HandlebarsApplicationMixin(ApplicationV2) {
             const value = Math.max(1, Math.floor(Number(event.currentTarget.value || 0)) || 10);
             draft.bone21Ante = value;
             event.currentTarget.value = String(value);
+        });
+
+        onChange('[data-zonk-ante]', (event) => {
+            draft.zonkAnte = Math.max(1, Math.min(100000, Math.floor(Number(event.currentTarget.value)) || 10));
+            event.currentTarget.value = String(draft.zonkAnte);
+        });
+        onChange('[data-zonk-target]', (event) => {
+            draft.zonkTargetScore = Number(event.currentTarget.value) === 10000 ? 10000 : 5000;
         });
 
         onChange('[data-br-race]', (event) => {
