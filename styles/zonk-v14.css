@@ -1,94 +1,249 @@
-/* Zonk: warm tavern felt table, readable in Foundry 13 / 14. */
+/* Aindor Zonk • casino-board layout inspired by classic red/green dice cabinets.
+ * All dice reuse the existing Liars Dice .parlor-ld-die / .parlor-ld-pip skin.
+ */
 #parlor-zonk-overlay.parlor-zonk-overlay {
-  position: fixed; inset: 0; z-index: 2300; overflow: auto;
-  box-sizing: border-box; padding: clamp(12px, 2.2vw, 30px);
-  background: radial-gradient(circle at 50% 20%, #493322 0%, #1c1613 74%, #100e0d 100%);
-  color: #f4e4c6; font: 15px/1.35 Georgia, serif;
+  position: fixed; inset: 0; z-index: 2300; overflow: auto; box-sizing: border-box;
+  padding: clamp(8px, 1.5vw, 20px);
+  background: radial-gradient(ellipse at 50% 30%, #4b140f, #130905 86%);
+  color: #f9e2ac; font: 15px/1.36 Georgia, 'Times New Roman', serif;
 }
-#parlor-zonk-overlay * { box-sizing: border-box; }
-#parlor-zonk-overlay button { cursor: pointer; font: inherit; }
-#parlor-zonk-overlay button:disabled { cursor: not-allowed; opacity: .42; }
+#parlor-zonk-overlay *, #parlor-zonk-overlay *::before, #parlor-zonk-overlay *::after { box-sizing: border-box; }
+#parlor-zonk-overlay button { font: inherit; cursor: pointer; }
+#parlor-zonk-overlay button:disabled { opacity: .4; cursor: not-allowed; filter: grayscale(.55); }
 #parlor-zonk-overlay .parlor-zonk-layout {
-  width: min(1360px, 100%); min-height: min(810px, 90vh); margin: 0 auto;
-  padding: 22px; border-radius: 20px;
-  background: linear-gradient(145deg, #403025, #241910);
-  border: 2px solid #a17a46; box-shadow: 0 15px 55px #080605bb, inset 0 0 0 6px #20150d;
+  display: grid; grid-template-columns: minmax(190px, 230px) minmax(420px, 1fr) minmax(225px, 270px);
+  gap: 10px; width: min(1510px, 100%); min-height: min(850px, 96vh); margin: auto;
+  background: linear-gradient(90deg,#170e09,#492319 40%,#220b09);
+  border: 7px ridge #9d6b30; border-radius: 11px;
+  box-shadow: 0 22px 70px #000b, inset 0 0 18px #170403;
+  padding: 8px;
 }
-#parlor-zonk-overlay .parlor-zonk-header {
-  display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;
-  gap: 16px; padding: 4px 8px 20px; border-bottom: 1px solid #9d784d6e;
+#parlor-zonk-overlay .parlor-zonk-progress,
+#parlor-zonk-overlay .parlor-zonk-combos {
+  min-width: 0; border: 3px solid #895e24; border-radius: 8px;
+  background: linear-gradient(90deg,#03210c 0%,#075222 45%,#00310e 100%);
+  box-shadow: inset 0 0 0 3px #07270c, inset 0 0 18px #001c08, 2px 3px 12px #0009;
 }
-#parlor-zonk-overlay .parlor-zonk-kicker { color: #d9af69; letter-spacing: .24em; font-size: 11px; text-transform: uppercase; }
-#parlor-zonk-overlay h1 { font: 700 clamp(31px, 4vw, 52px) Georgia,serif; color: #f6e0aa; margin: 0; letter-spacing: .08em; text-shadow: 0 2px 3px #060503; }
-#parlor-zonk-overlay .parlor-zonk-tagline { color: #cfbaa0; font-size: 13px; }
-#parlor-zonk-overlay .parlor-zonk-header-right { display: flex; gap: 20px; align-items: center; }
-#parlor-zonk-overlay .parlor-zonk-metric { display: flex; flex-direction: column; align-items: end; gap: 3px; }
-#parlor-zonk-overlay .parlor-zonk-metric small { color: #c6aa85; font-size: 12px; }
-#parlor-zonk-overlay .parlor-zonk-metric strong { color: #f2cf78; font-size: 24px; }
-#parlor-zonk-overlay .parlor-zonk-close { width: 38px; height: 38px; color: #e6cbae; background: #492e22; border: 1px solid #ab7b51; border-radius: 8px; font-size: 27px; line-height: 1; }
-#parlor-zonk-overlay .parlor-zonk-body { display: grid; grid-template-columns: minmax(0, 1fr) minmax(240px, 310px); gap: 22px; padding-top: 22px; }
-#parlor-zonk-overlay .parlor-zonk-table {
-  display: grid; align-items: center; min-height: 620px; padding: 19px;
-  border-radius: 36% / 15%; border: 15px ridge #835432;
-  background: radial-gradient(ellipse at 50% 35%, #205944, #143a30 75%, #11251f);
-  box-shadow: inset 0 0 0 2px #c6a06c, inset 0 0 90px #07130fb3, 4px 10px 20px #0c0909a6;
+#parlor-zonk-overlay .parlor-zonk-panel-title {
+  margin: 0; padding: 13px 8px 9px; text-align: center;
+  font: 700 clamp(17px,1.6vw,22px) Georgia,serif; color: #f9d976;
+  text-shadow: 1px 2px 3px #000, 0 0 12px #c88f3c77;
+  background: linear-gradient(#133c16, #092811);
+  border-bottom: 2px solid #a07632;
 }
-#parlor-zonk-overlay .parlor-zonk-table-inner { text-align: center; width: 100%; min-width: 0; }
-#parlor-zonk-overlay .parlor-zonk-round { text-transform: uppercase; color: #edd198; letter-spacing: .17em; font-size: 12px; }
-#parlor-zonk-overlay .parlor-zonk-current { margin: 17px 0 16px; font-size: clamp(18px,2vw,25px); }
-#parlor-zonk-overlay .parlor-zonk-current b { color: #ffd58d; }
-#parlor-zonk-overlay .parlor-zonk-last { margin: 12px; font-size: 20px; font-weight: bold; color: #ffe2a0; }
-#parlor-zonk-overlay .parlor-zonk-dice {
-  display: flex; flex-wrap: wrap; justify-content: center; gap: clamp(8px,1vw,15px);
-  min-height: 128px; align-items: center; padding: 12px 0;
+#parlor-zonk-overlay .parlor-zonk-progress { display: flex; flex-direction: column; }
+#parlor-zonk-overlay .parlor-zonk-progress-score {
+  text-align: center; font: 700 27px Georgia,serif; color: #fff1c3; padding: 9px 3px 6px;
+  text-shadow: 1px 2px 2px #000;
 }
-#parlor-zonk-overlay .parlor-zonk-die {
-  position: relative; width: clamp(55px,6.5vw,86px); height: clamp(55px,6.5vw,86px);
-  padding: 0; border-radius: 14px; border: 3px solid #e6dac6;
-  color: #282521; background: linear-gradient(140deg,#fff9eb,#c8bda7);
-  box-shadow: 1px 5px 11px #06150d99, inset 1px 2px 3px #ffffff;
-  transition: transform .12s ease, outline-color .12s ease;
+#parlor-zonk-overlay .parlor-zonk-progress-score span { color: #d5b875; font-size: 18px; font-weight: 400; }
+#parlor-zonk-overlay .parlor-zonk-progress-track { height: 7px; margin: 0 10px 8px; border: 1px solid #a17734; background: #041608; border-radius: 5px; overflow: hidden; }
+#parlor-zonk-overlay .parlor-zonk-progress-track div { height: 100%; background: linear-gradient(90deg,#c37a15,#f9df70); transition: width .25s ease; }
+#parlor-zonk-overlay .parlor-zonk-progress-players { display: flex; flex-direction: column; flex: 1; }
+#parlor-zonk-overlay .parlor-zonk-progress-row {
+  display: flex; align-items: center; gap: 8px; padding: 10px 8px; min-height: 52px; flex: 1;
+  border-bottom: 2px solid #906d2e; background: linear-gradient(90deg,#06471b,#035326bb);
+  box-shadow: inset 0 2px 8px #ffffff0b; color: #e8e5b7;
 }
-#parlor-zonk-overlay button.parlor-zonk-die:not(:disabled):hover { transform: translateY(-5px); }
-#parlor-zonk-overlay .parlor-zonk-die span { font: 65px/.95 Georgia,serif; display: block; }
-#parlor-zonk-overlay .parlor-zonk-die em { position: absolute; bottom: 3px; right: 7px; font: 700 10px Arial,sans-serif; color: #544b40; }
-#parlor-zonk-overlay .parlor-zonk-die.is-selected { outline: 4px solid #f9cc59; transform: translateY(-8px); box-shadow: 0 0 24px #f6c64e66; }
-#parlor-zonk-overlay .parlor-zonk-die.is-waiting { display: flex; align-items: center; justify-content: center; opacity: .25; filter: grayscale(1); }
-#parlor-zonk-overlay .parlor-zonk-info { color: #f4dfbd; font-size: 17px; min-height: 27px; margin: 8px 0; }
-#parlor-zonk-overlay .parlor-zonk-selection { color: #ffd47c; font-weight: bold; min-height: 23px; }
-#parlor-zonk-overlay .parlor-zonk-totals { display: flex; flex-wrap: wrap; justify-content: center; gap: 9px; margin: 20px 0; }
-#parlor-zonk-overlay .parlor-zonk-totals > div { min-width: 110px; padding: 9px 15px; border: 1px solid #d9b97b88; background: #071a1680; border-radius: 10px; display: flex; flex-direction: column; }
-#parlor-zonk-overlay .parlor-zonk-totals small { color: #ccb792; font-size: 12px; }
-#parlor-zonk-overlay .parlor-zonk-totals b { color: #f5dba6; font-size: 23px; }
-#parlor-zonk-overlay .parlor-zonk-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; min-height: 47px; }
-#parlor-zonk-overlay .parlor-zonk-btn { min-height: 42px; padding: 9px 18px; border-radius: 8px; border: 1px solid #b08a55; background: linear-gradient(#573f2a,#34271c); color: #fae3bd; font-weight: bold; }
-#parlor-zonk-overlay .parlor-zonk-btn.is-primary { background: linear-gradient(#b08a47,#805523); color: #20150d; border-color: #f1c778; }
-#parlor-zonk-overlay .parlor-zonk-btn.is-danger { background: linear-gradient(#6c3830,#43231f); color: #ffddd2; border-color: #a76b60; width: 100%; }
-#parlor-zonk-overlay .parlor-zonk-event { max-width: 500px; margin: 15px auto 0; color: #ddc4a0; font-style: italic; min-height: 20px; }
-#parlor-zonk-overlay .parlor-zonk-final { color: #f2c871; margin-top: 8px; font-weight: bold; }
-#parlor-zonk-overlay .parlor-zonk-sidebar { display: flex; flex-direction: column; gap: 15px; }
-#parlor-zonk-overlay .parlor-zonk-sidebar h2 { margin: 0; font: 700 23px Georgia,serif; color: #eac58a; }
-#parlor-zonk-overlay .parlor-zonk-seats { display: flex; flex-direction: column; gap: 6px; }
-#parlor-zonk-overlay .parlor-zonk-seat { display: flex; align-items: center; gap: 9px; padding: 10px 8px; border-radius: 8px; border: 1px solid #826b473f; background: #120c0999; }
-#parlor-zonk-overlay .parlor-zonk-seat.is-active { border-color: #e6c47e; background: #3c3424; }
-#parlor-zonk-overlay .parlor-zonk-seat.is-winner { border-color: #83b878; background: #24452e; }
-#parlor-zonk-overlay .parlor-zonk-seat-rank { color: #b39165; min-width: 14px; }
-#parlor-zonk-overlay .parlor-zonk-seat-name { min-width: 0; flex: 1; overflow-wrap: anywhere; font-weight: bold; font-size: 13px; }
-#parlor-zonk-overlay .parlor-zonk-seat-name small { color: #d4ac77; display: block; font-weight: normal; font-size: 11px; }
-#parlor-zonk-overlay .parlor-zonk-seat strong { color: #f4cf89; font-size: 16px; white-space: nowrap; }
-#parlor-zonk-overlay .parlor-zonk-seat-zonks { color: #b3a49a; font-size: 11px; white-space: nowrap; }
-#parlor-zonk-overlay .parlor-zonk-cheatsheet { padding: 15px; background: #15110eae; border-radius: 12px; border: 1px solid #765c3b; display: grid; gap: 5px; font-size: 13px; color: #e4d1b5; }
-#parlor-zonk-overlay .parlor-zonk-cheatsheet h3 { margin: 0 0 5px; color: #f5cd8b; font: 700 19px Georgia,serif; }
-#parlor-zonk-overlay .parlor-zonk-gm { display: flex; flex-wrap: wrap; flex-direction: column; gap: 9px; border-top: 1px solid #735637; padding-top: 14px; font-size: 13px; color: #e4c49a; }
-@media(max-width:850px) {
-  #parlor-zonk-overlay .parlor-zonk-body { grid-template-columns: 1fr; }
-  #parlor-zonk-overlay .parlor-zonk-table { min-height: 470px; border-radius: 28px; }
-  #parlor-zonk-overlay .parlor-zonk-sidebar { display: grid; grid-template-columns: repeat(auto-fit,minmax(230px,1fr)); }
-  #parlor-zonk-overlay .parlor-zonk-sidebar h2 { grid-column: 1 / -1; }
+#parlor-zonk-overlay .parlor-zonk-progress-row:nth-child(2n) { background: #06401d; }
+#parlor-zonk-overlay .parlor-zonk-progress-row.is-current { color: #ffeba4; background: #22612a; box-shadow: inset 0 0 10px #f4b62c6b; }
+#parlor-zonk-overlay .parlor-zonk-progress-row.is-winner { color: #ffe88a; background: #48752a; }
+#parlor-zonk-overlay .parlor-zonk-progress-row.is-empty { opacity: .4; }
+#parlor-zonk-overlay .parlor-zonk-rank { font: 700 15px Georgia,serif; color: #f3cf6c; width: 18px; text-align: center; }
+#parlor-zonk-overlay .parlor-zonk-player { min-width: 0; flex: 1; font-size: 13px; font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+#parlor-zonk-overlay .parlor-zonk-progress-row strong { font: 700 18px Georgia,serif; white-space: nowrap; color: #f9e7b8; }
+#parlor-zonk-overlay .parlor-zonk-progress-foot {
+  display: flex; gap: 7px; flex-direction: column; align-items: center; justify-content: center;
+  padding: 10px 5px; background: linear-gradient(#02230d,#051a0c); border-top: 2px solid #c49a49;
 }
-@media(max-width:500px) {
-  #parlor-zonk-overlay .parlor-zonk-layout { padding: 13px; }
-  #parlor-zonk-overlay .parlor-zonk-table { padding: 8px; border-width: 7px; }
-  #parlor-zonk-overlay .parlor-zonk-die span { font-size: 44px; }
-  #parlor-zonk-overlay .parlor-zonk-header-right { gap: 11px; }
+#parlor-zonk-overlay .parlor-zonk-progress-foot small { color: #d9b775; }
+#parlor-zonk-overlay .parlor-zonk-progress-foot strong { font: 700 28px Georgia,serif; color: #ffcf56; }
+
+/* Center • ornate crimson playing field, with compact action log below. */
+#parlor-zonk-overlay .parlor-zonk-center { display: flex; flex-direction: column; min-width: 0; gap: 8px; }
+#parlor-zonk-overlay .parlor-zonk-toolbar {
+  display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  min-height: 49px; padding: 6px 12px;
+  border: 2px solid #a66c30; border-radius: 8px;
+  background: linear-gradient(#6a1913,#3d0909); box-shadow: inset 0 0 13px #130101;
+}
+#parlor-zonk-overlay .parlor-zonk-aindor {
+  font: 700 clamp(16px, 2vw, 25px) Georgia,serif; letter-spacing: .15em; color: #ffda79;
+  text-shadow: 0 2px 2px #1d0401, 0 0 8px #d89d3170; white-space: nowrap;
+}
+#parlor-zonk-overlay .parlor-zonk-toolbar-buttons { display: flex; gap: 7px; }
+#parlor-zonk-overlay .parlor-zonk-toolbar-buttons button {
+  color: #ffe0a3; background: #3b0b0c; border: 1px solid #b88948;
+  border-radius: 6px; padding: 5px 9px; min-height: 32px;
+}
+#parlor-zonk-overlay .parlor-zonk-toolbar-buttons button:hover { background: #762923; }
+#parlor-zonk-overlay .parlor-zonk-velvet {
+  flex: 1; min-height: 455px; padding: 15px clamp(10px,2.8vw,30px) 14px;
+  display: flex; flex-direction: column; align-items: center;
+  text-align: center; border-radius: 18px 18px 26px 26px;
+  border: 5px ridge #ba7b33; outline: 1px solid #51200d; outline-offset: -11px;
+  box-shadow: inset 0 0 0 4px #470d07, inset 0 0 45px #210205, 1px 6px 20px #130302a8;
+  background:
+    radial-gradient(ellipse at 50% 28%, #9b1d15 0%, #5d0a0b 52%, #360407 87%),
+    repeating-linear-gradient(90deg,transparent 0 20px,#20000010 20px 23px);
+}
+#parlor-zonk-overlay .parlor-zonk-stars { font-size: 17px; letter-spacing: .8em; color: #ffd27f; opacity: .9; }
+#parlor-zonk-overlay .parlor-zonk-title {
+  font: 700 clamp(33px,4vw,58px) Georgia,serif; letter-spacing: .045em;
+  color: #f7c655; -webkit-text-stroke: .4px #5e240d;
+  text-shadow: 1px 3px 0 #7f360c, -1px -1px 1px #fff0af, 0 0 18px #f4ba4455;
+}
+#parlor-zonk-overlay .parlor-zonk-round { color: #f2ca7d; font-size: 13px; letter-spacing: .08em; }
+#parlor-zonk-overlay .parlor-zonk-turn { margin: 15px auto 5px; color: #ffebc2; font: 700 clamp(14px,1.5vw,19px) Georgia,serif; }
+#parlor-zonk-overlay .parlor-zonk-dice-tray {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: center;
+  min-height: 110px; max-width: 620px; gap: clamp(8px, 1.4vw, 19px);
+  width: 100%; padding: 12px; margin: 8px 0;
+  background: linear-gradient(#20080455,#43120a50); border: 1px solid #c1803c54; border-radius: 30px;
+}
+#parlor-zonk-overlay .parlor-zonk-pick {
+  display: flex; align-items: center; justify-content: center;
+  border: 0; background: transparent; padding: 4px;
+  border-radius: 17px; transition: transform .16s ease;
+}
+#parlor-zonk-overlay .parlor-zonk-pick .parlor-ld-die {
+  display: block; width: clamp(48px,5.2vw,65px); height: clamp(48px,5.2vw,65px);
+  border-radius: 16px; box-shadow: 0 7px 14px #1a0303b0,inset 0 1px 0 #fff9;
+}
+#parlor-zonk-overlay .parlor-zonk-pick:hover:not(:disabled) { transform: translateY(-3px); }
+#parlor-zonk-overlay .parlor-zonk-pick.is-selected { transform: translateY(-10px); }
+#parlor-zonk-overlay .parlor-zonk-pick.is-selected .parlor-ld-die { outline: 4px solid #f1d552; box-shadow: 0 0 14px #eab74e; }
+#parlor-zonk-overlay .parlor-zonk-pick.is-placeholder { opacity: .22; filter: grayscale(1); }
+#parlor-zonk-overlay .parlor-zonk-choice { min-height: 45px; font-size: 15px; color: #f7d5ad; }
+#parlor-zonk-overlay .parlor-zonk-bust-mark {
+  font: 700 34px Georgia,serif; letter-spacing: .08em; color: #ffcc50;
+  text-shadow: 0 3px 3px #230000, 0 0 22px #efb448;
+}
+#parlor-zonk-overlay .parlor-zonk-selection { color: #f9e59c; font-weight: 700; }
+#parlor-zonk-overlay .parlor-zonk-mini-stats {
+  display: flex; flex-wrap: wrap; justify-content: center; width: 100%; gap: 10px; margin: 11px 0;
+}
+#parlor-zonk-overlay .parlor-zonk-mini-stats > div {
+  display: flex; align-items: center; flex-direction: column;
+  min-width: 106px; padding: 7px 10px; border-radius: 8px; background: #2d0907a1; border: 1px solid #c28c4a80;
+}
+#parlor-zonk-overlay .parlor-zonk-mini-stats small { color: #e0b67f; font-size: 12px; }
+#parlor-zonk-overlay .parlor-zonk-mini-stats b { color: #ffe3a0; font-size: 19px; overflow-wrap: anywhere; }
+#parlor-zonk-overlay .parlor-zonk-buttons { display: flex; flex-wrap: wrap; justify-content: center; gap: 25px; min-height: 54px; width: 100%; margin: 9px auto 5px; }
+#parlor-zonk-overlay .parlor-zonk-action {
+  border: 3px ridge #cc9b52; border-radius: 10px;
+  padding: 10px 17px; font: 700 17px Georgia,serif; color: #fbe2aa;
+  background: linear-gradient(#65331c,#2e120d);
+  box-shadow: 0 3px 1px #220404, inset 0 1px 3px #fff5;
+  text-shadow: 0 2px 2px #090200;
+}
+#parlor-zonk-overlay .parlor-zonk-action.is-save {
+  min-width: 150px; background: linear-gradient(#1093a4,#005874 54%,#034057); border-color: #d29b3c;
+}
+#parlor-zonk-overlay .parlor-zonk-action.is-throw {
+  min-width: 160px; background: linear-gradient(#49bc34,#167d13 55%,#0c4f0a); border-color: #cb9a3e;
+}
+#parlor-zonk-overlay .parlor-zonk-action:not(:disabled):hover { filter: brightness(1.16); }
+#parlor-zonk-overlay .parlor-zonk-action.is-danger { background: #69231d; color: #ffe0d5; }
+#parlor-zonk-overlay .parlor-zonk-final { color: #ffd47c; font-weight: 700; margin: 4px 0; }
+#parlor-zonk-overlay .parlor-zonk-ante { margin-top: auto; padding-top: 12px; color: #eec18a; font-size: 12px; }
+#parlor-zonk-overlay .parlor-zonk-history {
+  padding: 10px 15px; border: 2px ridge #a87835; border-radius: 9px;
+  background: linear-gradient(130deg,#33110c,#4c140d 60%,#2b100b);
+}
+#parlor-zonk-overlay .parlor-zonk-history-heading {
+  display: flex; justify-content: space-between; padding-bottom: 5px; gap: 10px;
+  border-bottom: 1px solid #bf8b4c; color: #f8ce75; font-weight: 700;
+}
+#parlor-zonk-overlay .parlor-zonk-history-heading small { color: #b9a282; font-size: 12px; font-weight: 400; }
+#parlor-zonk-overlay .parlor-zonk-history-list { max-height: 145px; overflow-y: auto; }
+#parlor-zonk-overlay .parlor-zonk-history-row {
+  display: flex; align-items: center; gap: 7px; padding: 4px 1px; min-height: 27px;
+  border-bottom: 1px solid #bd906026; color: #f3d4a8; font-size: 12px;
+}
+#parlor-zonk-overlay .parlor-zonk-history-name { font-weight: 700; flex: 0 1 auto; max-width: 110px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+#parlor-zonk-overlay .parlor-zonk-history-verb { color: #ddbd86; white-space: nowrap; }
+#parlor-zonk-overlay .parlor-zonk-history-dice { display: flex; flex: 1; align-items: center; flex-wrap: wrap; gap: 3px; min-width: 0; }
+#parlor-zonk-overlay .parlor-zonk-history-points { color: #ffe08c; margin-left: auto; }
+#parlor-zonk-overlay .parlor-zonk-history-row.is-zonk .parlor-zonk-history-verb { color: #ff7772; }
+#parlor-zonk-overlay .parlor-zonk-history-empty { padding: 9px; color: #bdac90; font-style: italic; }
+#parlor-zonk-overlay .parlor-zonk-gm { display: flex; gap: 9px; flex-wrap: wrap; }
+#parlor-zonk-overlay .parlor-zonk-gm .parlor-zonk-action { flex: 1; font-size: 12px; padding: 5px; min-height: 34px; }
+
+/* Right side • move paytable out of the playing area. */
+#parlor-zonk-overlay .parlor-zonk-combos { display: flex; flex-direction: column; }
+#parlor-zonk-overlay .parlor-zonk-combo-list { padding: 6px; flex: 1; display: flex; flex-direction: column; justify-content: space-around; }
+#parlor-zonk-overlay .parlor-zonk-combo-row {
+  display: flex; flex-wrap: wrap; align-items: center; column-gap: 5px;
+  min-height: 43px; padding: 5px 5px; border-bottom: 2px solid #916e2d;
+  color: #f2d874; font-size: 14px;
+}
+#parlor-zonk-overlay .parlor-zonk-combo-row small { width: 100%; color: #b8d7a2; text-align: right; font-size: 10px; }
+#parlor-zonk-overlay .parlor-zonk-combo-faces { display: flex; align-items: center; flex: 1; gap: 3px; }
+#parlor-zonk-overlay .parlor-zonk-combo-value { font-weight: 700; }
+#parlor-zonk-overlay .parlor-zonk-combo-extra { padding: 9px 3px; text-align: center; color: #ecd29d; font-size: 13px; }
+
+/* Smaller pip dice use exactly the same Liars Dice renderer at two scaled sizes. */
+#parlor-zonk-overlay .parlor-zonk-combo-faces .parlor-ld-die,
+#parlor-zonk-overlay .parlor-zonk-history-dice .parlor-ld-die {
+  display: inline-block; width: 23px; height: 23px; border-radius: 6px;
+  box-shadow: 0 2px 4px #0007, inset 0 1px 0 #fff;
+  flex: none;
+}
+#parlor-zonk-overlay .parlor-zonk-history-dice .parlor-ld-die { width: 19px; height: 19px; border-radius: 5px; }
+#parlor-zonk-overlay .parlor-zonk-combo-faces .parlor-ld-pip { width: 3.7px; height: 3.7px; }
+#parlor-zonk-overlay .parlor-zonk-history-dice .parlor-ld-pip { width: 3px; height: 3px; }
+
+/* Readable rulebook without leaving the table. */
+#parlor-zonk-overlay .parlor-zonk-rules-backdrop {
+  position: fixed; inset: 0; z-index: 2350; display: grid; place-items: center;
+  padding: 16px; background: #0a0605d8; backdrop-filter: blur(3px);
+}
+#parlor-zonk-overlay .parlor-zonk-rules {
+  width: min(850px, 96vw); max-height: 91vh; display: flex; flex-direction: column;
+  color: #eedcb8; background: linear-gradient(#4b1710,#2c0c09);
+  border: 5px ridge #b68a41; border-radius: 15px; box-shadow: 0 20px 70px #000b;
+}
+#parlor-zonk-overlay .parlor-zonk-rules header {
+  display: flex; align-items: center; justify-content: space-between; padding: 12px 20px;
+  border-bottom: 2px solid #b48c4d;
+}
+#parlor-zonk-overlay .parlor-zonk-rules header h2 { font: 700 30px Georgia,serif; color: #f9d47b; margin: 0; }
+#parlor-zonk-overlay .parlor-zonk-rules header button {
+  color: #f4dfb2; background: #561e16; border: 1px solid #c19451; border-radius: 5px; padding: 3px 10px;
+}
+#parlor-zonk-overlay .parlor-zonk-rules-content { padding: 8px 22px; overflow-y: auto; }
+#parlor-zonk-overlay .parlor-zonk-rules-content p { line-height: 1.5; margin: 12px 0; }
+#parlor-zonk-overlay .parlor-zonk-rules-intro { color: #ffe2a2; font-size: 18px; }
+#parlor-zonk-overlay .parlor-zonk-rules-content h3 { font: 700 23px Georgia,serif; color: #efcd83; }
+#parlor-zonk-overlay .parlor-zonk-rules-combos { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 4px 10px; }
+#parlor-zonk-overlay .parlor-zonk-rules-combos .parlor-zonk-combo-row { min-height: 34px; background: #073214; border: 1px solid #83652f; padding: 5px 7px; }
+#parlor-zonk-overlay .parlor-zonk-rules-combos .parlor-zonk-combo-extra { grid-column: 1/-1; }
+#parlor-zonk-overlay .parlor-zonk-rules-note { color: #f0ca90; }
+#parlor-zonk-overlay .parlor-zonk-rules footer { text-align: center; padding: 10px; border-top: 1px solid #b48c4d; }
+#parlor-zonk-overlay .parlor-zonk-rules footer button {
+  padding: 8px 25px; color: #ffe3a6; border: 1px solid #cca65a; border-radius: 7px; background: #125728;
+}
+@media(max-width:1110px) {
+  #parlor-zonk-overlay .parlor-zonk-layout { grid-template-columns: minmax(150px,205px) minmax(300px,1fr); }
+  #parlor-zonk-overlay .parlor-zonk-combos { grid-column: 1/-1; }
+  #parlor-zonk-overlay .parlor-zonk-combo-list { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); }
+}
+@media(max-width:690px) {
+  #parlor-zonk-overlay .parlor-zonk-layout { grid-template-columns: minmax(0,1fr); }
+  #parlor-zonk-overlay .parlor-zonk-progress { grid-column: 1; }
+  #parlor-zonk-overlay .parlor-zonk-progress-players { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); }
+  #parlor-zonk-overlay .parlor-zonk-progress-row { min-height: 36px; }
+  #parlor-zonk-overlay .parlor-zonk-progress-foot { flex-direction: row; padding: 5px; }
+  #parlor-zonk-overlay .parlor-zonk-velvet { min-height: 465px; }
+  #parlor-zonk-overlay .parlor-zonk-combos { grid-column: 1; }
+  #parlor-zonk-overlay .parlor-zonk-combo-list { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  #parlor-zonk-overlay .parlor-zonk-rules-combos { grid-template-columns: 1fr; }
+}
+@media(max-width:450px) {
+  #parlor-zonk-overlay .parlor-zonk-toolbar { flex-wrap: wrap; }
+  #parlor-zonk-overlay .parlor-zonk-progress-players { grid-template-columns: 1fr; }
+  #parlor-zonk-overlay .parlor-zonk-combo-list { grid-template-columns: 1fr; }
+  #parlor-zonk-overlay .parlor-zonk-mini-stats > div { min-width: 85px; }
+  #parlor-zonk-overlay .parlor-zonk-buttons { gap: 8px; }
 }
