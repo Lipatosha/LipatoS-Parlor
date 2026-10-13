@@ -12,7 +12,7 @@ describe('Farkle widescreen 16:9 existing-game redesign', () => {
         assert.ok(code.includes("src: 'sounds/dice.wav'"));
         assert.ok(code.includes('foundry?.audio?.AudioHelper'));
         assert.ok(code.includes('this._soundRollId !== state.rollId'));
-        assert.ok(code.includes("state.turnPhase === 'choose' && state.currentDice?.length"));
+        assert.ok(code.includes("['choose', 'zonked'].includes(state.turnPhase) && state.currentDice?.length"));
         assert.ok(code.includes('this._playRollSound()'));
         assert.ok(!code.includes('Dsn3dBridge'));
         assert.ok(!code.includes('dice3d'));
@@ -257,9 +257,12 @@ describe('Farkle widescreen 16:9 existing-game redesign', () => {
             assert.ok(code.includes(shape));
         }
         assert.ok(styles.includes('.parlor-zonk-right .parlor-zonk-any-groups'));
-        assert.ok(styles.includes('gap:2em !important'));
+        assert.ok(styles.includes('gap:1.2em !important'));
         assert.ok(styles.includes('flex-wrap:nowrap'));
         assert.ok(code.includes('parlor-zonk-any-group'));
+        assert.ok(code.includes('displaySelection.has(index)'));
+        assert.ok(code.includes("state.turnPhase === 'zonked'"));
+        assert.ok(code.includes("const dice = (choosing || zonked)"));
     });
 
     it('stretches a 100-entry scrolling history to the bottom of the center column', async () => {
