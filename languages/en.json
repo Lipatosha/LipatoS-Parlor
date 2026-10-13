@@ -2458,7 +2458,22 @@
       "ExtraActions": "Additional actions",
       "OnlyGM": "Only the GM can use these actions",
       "RollField": "Dice field",
-      "DiceShort": "dice"
+      "DiceShort": "dice",
+      "VictoryNotice": "Farkle game over! Winner: {winners}",
+      "VictoryDrawNotice": "Farkle ended in a tie! Winners: {winners}",
+      "VictoryTitle": "Farkle Victory!",
+      "VictoryDrawTitle": "Farkle Tie!",
+      "Rematch": "Play again",
+      "RematchHostHint": "The GM can start another match.",
+      "VictoryDismiss": "View results",
+      "RematchAnte": "New entry fee",
+      "RematchCurrency": "Settlement currency",
+      "RematchTarget": "Target score",
+      "RematchSettings": "New Farkle match — wagers",
+      "RematchCancel": "Cancel",
+      "RematchInvalid": "Enter a wager between 1 and 100,000.",
+      "RematchInsufficient": "One or more players cannot afford the new entry fee.",
+      "RematchFailed": "Unable to start a new match."
     },
     "Currency": {
       "Gold": "Gold",
