@@ -56,8 +56,8 @@ export class ZonkGame extends GameBase {
 
     async start() {
         if (this.started) return { ok: false, reason: 'already-started' };
-        if (this.turnOrder.length < 2) {
-            this.lastError = 'Для Зонка необходимо хотя бы два участника.';
+        if (this.turnOrder.length < 2 || this.turnOrder.length > 10) {
+            this.lastError = 'Для Зонка требуется от 2 до 10 участников.';
             return { ok: false, reason: 'players' };
         }
         const shortIds = this.turnOrder.filter(id => !this.exemptIds.has(id)
