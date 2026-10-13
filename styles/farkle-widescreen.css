@@ -396,3 +396,120 @@
     font-size:12px;
   }
 }
+
+/* v2.2.2 — Farkle table is now one wide roll field, with no kept-dice panel.
+   Kept values remain in authoritative game state and scoring history. */
+#parlor-zonk-overlay .parlor-zonk-velvet {
+  display:grid !important;
+  grid-template-columns:minmax(0,1fr) !important;
+  grid-template-rows:minmax(0,1fr) !important;
+  gap:0;
+}
+#parlor-zonk-overlay .parlor-zonk-velvet > .parlor-zonk-roll-zone {
+  grid-column:1 / -1 !important;
+  grid-row:1 !important;
+  width:100% !important;
+  min-width:0 !important;
+  height:100% !important;
+}
+#parlor-zonk-overlay .parlor-zonk-roll-zone .parlor-zonk-dice-tray {
+  gap:clamp(8px,1.15vw,18px);
+  padding:12px 18px;
+}
+#parlor-zonk-overlay .parlor-zonk-roll-zone .parlor-zonk-pick {
+  --z-die-size:clamp(42px,5vw,78px);
+}
+/* The game-over panel never shifts the 16:9 grid or hides the scoring entries. */
+#parlor-zonk-overlay .parlor-zonk-layout {position:relative}
+#parlor-zonk-overlay .parlor-zonk-victory-overlay {
+  position:absolute;
+  inset:0;
+  z-index:60;
+  display:grid;
+  place-items:center;
+  background:rgba(9,9,10,.73);
+  padding:14px;
+}
+#parlor-zonk-overlay .parlor-zonk-victory {
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:13px;
+  width:min(440px,100%);
+  max-height:100%;
+  overflow-y:auto;
+  padding:26px 25px;
+  background:#232220 url("../../../ui/denim065.png") repeat;
+  border:1px solid #8b7757;
+  border-radius:5px;
+  box-shadow:0 12px 28px #000b;
+  color:var(--z-emphasis);
+  text-align:center;
+}
+#parlor-zonk-overlay .parlor-zonk-victory h2 {
+  margin:0;
+  font-size:25px;
+  color:#dbc99e;
+}
+#parlor-zonk-overlay .parlor-zonk-victory p {
+  margin:0;
+  font-size:16px;
+}
+#parlor-zonk-overlay .parlor-zonk-victory-winners {
+  font-weight:700;
+  font-size:21px !important;
+  overflow-wrap:anywhere;
+}
+#parlor-zonk-overlay .parlor-zonk-victory-actions {
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:9px;
+  width:100%;
+}
+#parlor-zonk-overlay .parlor-zonk-victory-actions .parlor-zonk-action {
+  min-height:39px;
+  padding:8px 15px;
+  color:var(--z-emphasis);
+  border:1px solid #746347;
+  border-radius:3px;
+  background:#302d27;
+  font-weight:700;
+  cursor:pointer;
+}
+#parlor-zonk-overlay .parlor-zonk-victory-actions .parlor-zonk-action.is-throw {
+  background:#594a30;
+  border-color:#b39867;
+  color:#f1ddb1;
+}
+#parlor-zonk-overlay .parlor-zonk-victory-actions .parlor-zonk-action:disabled {opacity:.5}
+.parlor-zonk-rematch-form {
+  display:grid;
+  grid-template-columns:minmax(0,1fr);
+  gap:12px;
+  padding:10px 3px;
+}
+.parlor-zonk-rematch-form label {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  font-weight:600;
+}
+.parlor-zonk-rematch-form input,
+.parlor-zonk-rematch-form select {
+  min-width:135px;
+  width:48%;
+  padding:6px 8px;
+  background:#292624;
+  color:#ded0af;
+  border:1px solid #74664e;
+  border-radius:3px;
+}
+@media (max-width:1050px), (max-height:650px) {
+  #parlor-zonk-overlay .parlor-zonk-roll-zone .parlor-zonk-pick {
+    --z-die-size:clamp(27px,4vw,52px);
+  }
+  #parlor-zonk-overlay .parlor-zonk-victory {padding:14px}
+  #parlor-zonk-overlay .parlor-zonk-victory h2 {font-size:20px}
+}
