@@ -488,7 +488,7 @@ const GAME_REGISTRY = {
         dealerMode: 'gm',
         lobby: {
             minParticipants: 2,
-            maxParticipants: 8,
+            maxParticipants: 10,
             allowGM: true,
             allowNpc: true,
             autoFillBots: true,
