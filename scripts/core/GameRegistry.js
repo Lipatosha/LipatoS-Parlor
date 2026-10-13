@@ -11,38 +11,42 @@ import { GAME_GUIDE_RU, BACCARAT_DRAW_GUIDE_RU } from './GameGuideRu.js';
 const GAME_GUIDE_TEXT = {
     zonk: {
         en: {
-            summary: 'Farkle is a six-dice tavern game for 2–10 players, with one entry fee contributing to a shared prize pot.',
+            summary: 'Farkle is a six-dice push-your-luck tavern game for 2–10 players with a shared prize pot.',
             flow: [
-                'Roll six dice, then choose and keep only dice forming a scoring combination. Your kept dice fill the six-tier staircase from the bottom upwards: 6, 5, 4, 3, 2, 1 slots.',
-                'At 300 or more points for the current turn you may bank them, or reroll the unused dice. Once all six dice score, you may roll a fresh set of six.',
-                'If the new roll contains no scoring dice, you farkle: all unbanked points from this turn are lost.',
-                'The first player to reach the target triggers one final turn for each opponent.'
+                'Each player pays one entry fee. On your turn, roll six dice and choose at least one scoring combination.',
+                'Each time you keep dice, those dice occupy a NEW tier of the staircase: first the bottom six-slot row, then five, four, three, two and one. Empty spaces in earlier tiers stay empty. If the remaining tiers cannot fit a selected combination, the visual rack starts over without losing the turn score.',
+                'After reaching 300 unbanked points you may bank your score or roll the remaining dice again.',
+                'After scoring all six dice in a roll you can roll all six again. A roll with no scoring dice is a Farkle and loses your unbanked turn points.',
+                'When a player reaches the target, every opponent receives one final turn.'
             ],
             win: [
-                'Single 1 = 50; single 5 = 100. Three 1s = 1000. Other triples = face × 100.',
-                'Four of a kind = 1000, five of a kind = 2000, six of a kind = 3000. These groups score as one combination, not as a triple plus spare singles.',
-                'Partial straight 1–5 = 750; full straight 1–6 = 1500. Three pairs = 1500; two triples = 2500; four of a kind plus a pair = 1500.',
-                'The # symbol in the illustrated chart means any die face; faces must match inside each group. All selected dice must score.',
-                'The player with the highest score after the final turns wins the prize pot. Ties split it.'
+                'Single 1 = 100; single 5 = 50. Three 1s = 1000. Three of any other number = face × 100.',
+                'Four of a kind = 2× the corresponding triple, five of a kind = 4×, six of a kind = 8×. Thus four, five or six 1s score 2000, 4000 or 8000.',
+                'Partial straight 1–2–3–4–5 = 500; partial straight 2–3–4–5–6 = 750. Full straight 1–6 = 1500.',
+                'Three pairs = 1500; two triples = 2500; four of a kind plus a pair = 1500. These six-die special hands score as complete combinations rather than being split into smaller ones.',
+                'The # symbol means any face: dice must match within each group. All selected dice must be part of scoring combinations.',
+                'The highest score after the final turns wins the prize pot; ties split it.'
             ],
-            notes: ['The GM can skip a turn or cancel an unfinished game, refunding the entry fees.']
+            notes: ['The GM can skip a turn or cancel an unfinished match and refund its entry fees.']
         },
         zh: {
-            summary: 'Farkle 是一款适合 2–10 人玩的六骰酒馆游戏，开局一次性缴纳底注。',
+            summary: 'Farkle 是供 2–10 位玩家参与的六骰冒险游戏，所有底注构成共同奖池。',
             flow: [
-                '掷六枚骰子并保留计分组合。保留的骰子按底部六格、再往上五、四、三、二、一格的阶梯排列。',
-                '本回合累计至少300分可以存分，或继续投掷未保留的骰子。六颗都得分时可以重新投六颗。',
-                '如果一次投掷没有任何得分组合，就发生 Farkle，本回合未存的积分全部失去。',
-                '有人达到目标分数后，其他玩家各有最后一次机会。'
+                '所有玩家各付一次底注。每回合掷六枚骰子并选择有效计分组合。',
+                '每次保留骰子都从新的一层开始：底层六格，然后依次往上五、四、三、二、一格；上一层空格不补填。剩余层数容不下整组骰子时，仅重置阶梯显示，回合积分保留。',
+                '本回合累计至少 300 分可以存分，也可以继续掷剩余骰子。',
+                '若一轮投出的六颗骰子全部计分，可以再次投六颗。若投掷结果没有任何得分骰子，则发生 Farkle，丢失本回合未存的分数。',
+                '达到目标分数后其他玩家各有一次最后回合。'
             ],
             win: [
-                '单个1得50分；单个5得100分。三个1得1000分，其他三条得点数乘100。',
-                '四、五、六条分别得1000、2000、3000分，不能把四条拆成三条加单个骰子重复计分。',
-                '1–5部分顺子得750，1–6完整顺子得1500。三对得1500，两组三条得2500，四条加一对得1500。',
-                '表中的#代表任意点数，每一组中必须是相同点数。',
-                '最后一轮结束后积分最高者赢得奖池；平局则平分。'
+                '单个 1 得 100 分，单个 5 得 50 分。三个 1 得 1000 分，其余三条为点数乘以 100。',
+                '四条为对应三条的 2 倍，五条 4 倍，六条 8 倍。例如四、五、六个 1 分别为 2000、4000、8000 分。',
+                '1–5 部分顺子为 500 分；2–6 部分顺子为 750 分；1–6 完整顺子为 1500 分。',
+                '三对 1500 分；两组三条 2500 分；四条加一对 1500 分。六骰特殊组合必须整体计分，不能拆分累加。',
+                '# 表示任意点数，同组骰子的点数需相同，所有被选择的骰子都必须得分。',
+                '最终得分最高者赢得奖池，平局则平分。'
             ],
-            notes: ['主持 GM 可以跳过回合；提前取消未完成对局将退还底注。']
+            notes: ['GM 可以跳过回合或取消未结束的对局并退还底注。']
         }
     },
 
