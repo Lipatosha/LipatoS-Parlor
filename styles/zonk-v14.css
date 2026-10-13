@@ -1128,3 +1128,38 @@
     opacity: 1 !important;
     cursor: default;
 }
+
+/* v2.1.7 — an actual SVG die FACE, not a sprite-backed empty box.
+ * Applies only inside the Farkle overlay; other Parlor games are unchanged.
+ * Inline vector markup cannot fail because of a 404, sprite crop, CSS
+ * background override, image decoding race or Dice So Nice WebGL layer.
+ */
+#parlor-zonk-overlay .parlor-ld-die.parlor-d6-face {
+    display: block;
+    position: relative;
+    isolation: isolate;
+    overflow: hidden !important;
+    background-color: #d2d2d2 !important;
+}
+#parlor-zonk-overlay .parlor-ld-die.parlor-d6-face > svg.parlor-zonk-inline-die {
+    position: absolute !important;
+    z-index: 6 !important;
+    display: block !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    min-width: 100% !important;
+    min-height: 100% !important;
+    max-width: none !important;
+    max-height: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: none !important;
+    object-fit: fill;
+}
+#parlor-zonk-overlay .parlor-zonk-roll-zone button.parlor-zonk-pick > .parlor-ld-die.parlor-d6-face {
+    opacity: 1 !important;
+    visibility: visible !important;
+}
