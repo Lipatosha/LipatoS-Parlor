@@ -59,8 +59,8 @@ describe('Zonk Foundry inventory redesign', () => {
     it('fills a six-tier 21-slot staircase bottom up and lists only seated players', async () => {
         const code = await source('scripts/games/zonk/ZonkTable.js');
         const css = await source('styles/zonk-v14.css');
-        assert.ok(code.includes('const tierStarts = [20, 18, 15, 11, 6, 0]'));
-        assert.ok(code.includes('[1, 2, 3, 4, 5, 6].map'));
+        assert.ok(code.includes('getFarkleRackDisplay(state.keptDiceRows)'));
+        assert.ok(code.includes('rackRows.map'));
         assert.ok(code.includes('data-stair-cell='));
         assert.ok(code.includes('standings.slice(0, 10).map'));
         assert.ok(!code.includes('Math.max(6, standings.length)'));
@@ -77,7 +77,12 @@ describe('Zonk Foundry inventory redesign', () => {
         assert.ok(code.includes('anyDice([2,2,2],1500)'));
         assert.ok(code.includes('anyDice([3,3],2500)'));
         assert.ok(code.includes('anyDice([4,2],1500)'));
-        assert.ok(code.includes('combo([1,2,3,4,5],750)'));
+        assert.ok(code.includes("combo([1],100) + combo([5],50)"));
+        assert.ok(code.includes("simpleKind(4,t('FourKind'),'×2')"));
+        assert.ok(code.includes("simpleKind(5,t('FiveKind'),'×4')"));
+        assert.ok(code.includes("simpleKind(6,t('SixKind'),'×8')"));
+        assert.ok(code.includes('combo([1,2,3,4,5],500)'));
+        assert.ok(code.includes('combo([2,3,4,5,6],750)'));
         assert.ok(code.includes('combo([1,2,3,4,5,6],1500)'));
         assert.equal(ru.PARLOR.Zonk.SectionPartialStraight, 'Частичный стрит');
         assert.equal(ru.PARLOR.Zonk.FourKind, 'Четыре одинаковых');
