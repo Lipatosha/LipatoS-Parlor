@@ -1,8 +1,8 @@
 {
   "id": "parlor",
   "title": "LipatoS — Parlor",
-  "description": "Казино Аиндора: исправлены невидимые кубики Farkle — независимые HTML-грани и правильный порядок слоёв Dice So Nice после броска.",
-  "version": "2.1.8",
+  "description": "Казино Аиндора: Farkle использует реальные анимированные 3D-кубики Dice So Nice!, синий камень, сохранение результата до выбора; локальный откат настроек DSN.",
+  "version": "2.1.9",
   "manifest": "https://github.com/Lipatosha/LipatoS-Parlor/releases/latest/download/module.json",
   "url": "https://github.com/Lipatosha/LipatoS-Parlor",
   "compatibility": {
@@ -53,5 +53,5 @@
       "path": "languages/ru.json"
     }
   ],
-  "download": "https://github.com/Lipatosha/LipatoS-Parlor/releases/download/v2.1.8/lipatos-parlor-v2.1.8.zip"
+  "download": "https://github.com/Lipatosha/LipatoS-Parlor/releases/download/v2.1.9/lipatos-parlor-v2.1.9.zip"
 }
