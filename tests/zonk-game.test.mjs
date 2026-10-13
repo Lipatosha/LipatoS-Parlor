@@ -117,6 +117,61 @@ describe('Farkle no-minimum banking and full history', () => {
     });
 });
 
+describe('Farkle live human dice selections', () => {
+    it('broadcasts the current player selection to spectators and validates roll identity', async () => {
+        const match = makeGame([1, 1, 1, 2, 3, 4]);
+        let updates = 0;
+        match._broadcastState = async () => { updates++; };
+        await match.start();
+        assert.equal(match.handlePlayerAction('p1', 'roll').ok, true);
+        const rollId = match.rollId;
+        assert.deepEqual(match.getState().playerSelectedIndices, []);
+        assert.deepEqual(match.handlePlayerAction('p1', 'previewSelection', {
+            rollId, indices: [2, 0]
+        }), { ok: true });
+        assert.deepEqual(match.getState().playerSelectedIndices, [0, 2]);
+        assert.ok(updates >= 3, 'Public selection is broadcast to every spectator');
+        assert.equal(match.handlePlayerAction('p2', 'previewSelection', {
+            rollId, indices: [3]
+        }).reason, 'turn');
+        assert.equal(match.handlePlayerAction('p1', 'previewSelection', {
+            rollId: rollId - 1, indices: [3]
+        }).reason, 'stale-roll');
+        for (const indices of [[-1], [9], [0, 0], ['0'], Array(7).fill(0)]) {
+            assert.equal(match.handlePlayerAction('p1', 'previewSelection', {
+                rollId, indices
+            }).reason, 'selection');
+        }
+        assert.deepEqual(match.getState().playerSelectedIndices, [0, 2]);
+        assert.equal(match.handlePlayerAction('p1', 'previewSelection', {
+            rollId, indices: []
+        }).ok, true);
+        assert.deepEqual(match.playerSelectedIndices, []);
+    });
+
+    it('clears the visible player selection on keep, new roll and turn change', async () => {
+        const match = makeGame([1, 1, 1, 2, 3, 4]);
+        await match.start();
+        match.handlePlayerAction('p1', 'roll');
+        let rollId = match.rollId;
+        assert.equal(match.handlePlayerAction('p1', 'previewSelection', {
+            rollId, indices: [0, 1, 2]
+        }).ok, true);
+        match.handlePlayerAction('p1', 'keep', { indices: [0, 1, 2] });
+        assert.deepEqual(match.playerSelectedIndices, []);
+        match.handlePlayerAction('p1', 'roll');
+        rollId = match.rollId;
+        match.handlePlayerAction('p1', 'previewSelection', { rollId, indices: [0] });
+        assert.deepEqual(match.playerSelectedIndices, [0]);
+        match.handleGMAction('skipTurn');
+        assert.deepEqual(match.playerSelectedIndices, []);
+        assert.equal(match.currentPlayerId, 'p2');
+        assert.equal(match.handlePlayerAction('p1', 'previewSelection', {
+            rollId, indices: [0]
+        }).ok, false);
+    });
+});
+
 describe('Zonk table flow and entry-fee settlement', () => {
     it('charges once, enforces current turn and minimum bank, allows hot dice', async () => {
         const table = makeGame([1, 1, 1, 1, 1, 1]);
