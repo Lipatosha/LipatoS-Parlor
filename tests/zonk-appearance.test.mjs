@@ -7,9 +7,9 @@ const source = async relative => readFile(new URL('../' + relative, import.meta.
 describe('Zonk Foundry inventory redesign', () => {
     it('uses the original Foundry dice.wav, without generated audio or bundled copies', async () => {
         const code = await source('scripts/games/zonk/ZonkTable.js');
-        assert.match(code, /src: 'sounds\\/dice\\.wav'/);
-        assert.match(code, /foundry\\?\\.audio\\?\\.AudioHelper/);
-        assert.doesNotMatch(code, /AudioContext|createBufferSource|oscillator|new Audio\\(/);
+        assert.ok(code.includes("src: 'sounds/dice.wav'"));
+        assert.ok(code.includes('foundry?.audio?.AudioHelper'));
+        assert.doesNotMatch(code, /AudioContext|createBufferSource|oscillator|new Audio\(/);
     });
 
     it('uses illuminated scoring and rule pages with native Liars Dice pips', async () => {
