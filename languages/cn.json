@@ -92,7 +92,9 @@
         "CardLuckInvalid": "牌运设置无效，请重新选择。",
         "CrazyEightsNeedPlayers": "疯狂八需要 {minCount} 到 {maxCount} 人。",
         "CrazyEightsAnteShort": "底注 {amount} 不够付：{names}",
-        "BeetleRaceInvalid": "这张赛事卡上场的甲虫不足三只（可能有甲虫被删了），请换一张或去赛事工坊补上。"
+        "BeetleRaceInvalid": "这张赛事卡上场的甲虫不足三只（可能有甲虫被删了），请换一张或去赛事工坊补上。",
+        "ZonkNeedPlayers": "Zonk 需要 {minCount}–{maxCount} 名玩家。",
+        "ZonkAnteShort": "底注 {amount} 不足：{names}。"
       },
       "Toolbar": {
         "ManageChips": "分配筹码",
@@ -233,7 +235,12 @@
         "BeetleRaceStudio": "管理赛事",
         "BeetleRaceSound": "比赛音效（全桌一起；比赛中 GM 也能点喇叭临时关）",
         "BeetleRaceCleanTable": "纯净桌面：比赛时收起桌上的摆件，赛道看得更清楚",
-        "BeetleRacePrefsHint": "这两项会记住，下次开甲虫赛跑沿用这次的选择。"
+        "BeetleRacePrefsHint": "这两项会记住，下次开甲虫赛跑沿用这次的选择。",
+        "ZonkTitle": "Zonk 设置",
+        "ZonkNote": "全员一次性缴纳底注，最终赢家获得奖池。",
+        "ZonkAnte": "每人底注",
+        "ZonkTarget": "目标积分",
+        "ZonkParticipantsNote": "2–8位玩家，使用六枚骰子挑选得分组合。"
       },
       "ChipAllocation": {
         "Title": "分配筹码",
@@ -359,6 +366,10 @@
       "BeetleRace": {
         "Name": "甲虫赛跑",
         "Desc": "DM 配好赛事，大家挑一只甲虫下注，然后一起看它们赛跑。"
+      },
+      "Zonk": {
+        "Name": "Zonk 骰子",
+        "Desc": "六枚骰子组成组合，冒险积累积分。"
       }
     },
     "Roulette": {
@@ -2345,6 +2356,54 @@
         "On": "全桌音效：开（点一下全桌静音）",
         "Off": "全桌音效：已静音（点一下打开）"
       }
+    },
+    "Zonk": {
+      "Title": "ZONK",
+      "Kicker": "酒馆骰子",
+      "Tagline": "六颗骰子，一次冒险。",
+      "Target": "目标",
+      "Pot": "奖池",
+      "Close": "关闭桌面",
+      "Round": "轮次",
+      "FinalRound": "最终回合",
+      "GameOver": "游戏结束",
+      "ChooseDice": "请选择可得分的骰子",
+      "HotDice": "全部骰子已使用！可以再掷六枚。",
+      "RollOrBank": "继续投骰或保存积分？",
+      "ReadyToRoll": "投六颗骰子！",
+      "Waiting": "等待玩家",
+      "WinnerLabel": "赢家：",
+      "TurnOf": "当前玩家：",
+      "NowPlaying": "行动中",
+      "Winner": "赢家",
+      "Bust": "Zonk",
+      "Busts": "Zonk 次数",
+      "Die": "骰子",
+      "Points": "分",
+      "SelectValid": "请选择可得分的组合",
+      "TurnPoints": "本回合积分",
+      "DiceLeft": "剩余骰子",
+      "MinBank": "最低存分",
+      "AutoSelect": "自动选择最佳组合",
+      "Keep": "保留骰子 (+{points})",
+      "BonusRoll": "奖励投骰",
+      "Roll": "掷骰",
+      "Bank": "保存积分",
+      "Tip": "1、5、三条、三对与顺子均可得分。",
+      "FinalRemaining": "最后剩余回合：{count}",
+      "Scoreboard": "积分榜",
+      "Scoring": "计分规则",
+      "TripleNote": "三个 2–6：200–600",
+      "MultiplesNote": "四/五/六条：×2 / ×3 / ×4",
+      "PairsNote": "三对：750",
+      "StraightNote": "1–2–3–4–5–6：1500",
+      "GmTools": "GM 控制",
+      "SkipTurn": "跳过回合",
+      "PayAndClose": "结算并关闭",
+      "RefundAndClose": "取消并退款",
+      "CancelConfirm": "游戏尚未结束。退款并关闭？",
+      "InvalidAction": "操作不可用，请检查回合和选择。",
+      "ActionError": "操作失败，请检查连接。"
     }
   },
   "PARLORTAVERN": {
