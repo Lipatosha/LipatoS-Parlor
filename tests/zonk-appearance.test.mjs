@@ -144,8 +144,11 @@ describe('Zonk Foundry inventory redesign', () => {
     it('animates GM-authoritative dice via optional DSN and keeps results until the turn changes', async () => {
         const code = await source('scripts/games/zonk/ZonkTable.js');
         assert.match(code, /import \{ Dsn3dBridge \} from '\.\.\/\.\.\/core\/Dsn3dBridge\.js'/);
-        assert.ok(code.includes('Dsn3dBridge.attachOverlay(`zonk:'));
-        assert.ok(code.includes('Dsn3dBridge.detachOverlay(`zonk:'));
+        assert.ok(code.includes('Dsn3dBridge.attachOverlay(token)'));
+        assert.ok(code.includes('zonk-roll:${this.gameInstance.sessionId}:${state.rollId}'));
+        assert.ok(code.includes('Dsn3dBridge.detachOverlay(token)'));
+        assert.ok(code.includes("overlay.classList.add('parlor-zonk-dsn-rolling')"));
+        assert.ok(code.includes("overlay?.classList.remove('parlor-zonk-dsn-rolling')"));
         assert.ok(code.includes("state.turnPhase === 'choose'"));
         assert.ok(code.includes('Dsn3dBridge.rollD6Visuals(state.currentDice'));
         assert.ok(code.includes('state.rollId'));
@@ -177,6 +180,22 @@ describe('Zonk Foundry inventory redesign', () => {
         assert.ok(css.includes('#parlor-zonk-overlay .parlor-zonk-stair-slot .parlor-farkle-face'));
         assert.ok(css.includes('#parlor-zonk-overlay .parlor-zonk-history-dice .parlor-farkle-face'));
         assert.ok(css.includes('pointer-events: none !important'));
+    });
+
+    it('keeps Farkle over DSN (3100), except while actually playing its 3D animation', async () => {
+        const css = await source('styles/zonk-v14.css');
+        const code = await source('scripts/games/zonk/ZonkTable.js');
+        const bridge = await source('scripts/core/Dsn3dBridge.js');
+        assert.ok(bridge.includes("const STAGE_Z_INDEX = '3100'"));
+        assert.ok(css.includes('#parlor-zonk-overlay.parlor-zonk-overlay {\n    z-index: 3110;'));
+        assert.ok(css.includes('#parlor-zonk-overlay.parlor-zonk-overlay.parlor-zonk-dsn-rolling {\n    z-index: 2300;'));
+        assert.ok(code.includes('this._dsnRollTokens = new Set()'));
+        assert.ok(code.includes('this._dsnRollTokens.add(token)'));
+        assert.ok(code.includes('.finally(() => {'));
+        assert.ok(code.includes('Dsn3dBridge.detachOverlay(token)'));
+        assert.ok(code.includes('if (!this._dsnRollTokens.size) overlay?.classList.remove('));
+        assert.ok(!code.includes('Dsn3dBridge.attachOverlay(`zonk:${this.gameInstance.sessionId}`)'),
+            'Never hold the DSN canvas above visible faces between rolls');
     });
 
 });
