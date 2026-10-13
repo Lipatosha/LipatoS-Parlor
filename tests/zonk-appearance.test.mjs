@@ -12,12 +12,12 @@ describe('Zonk Foundry inventory redesign', () => {
         assert.doesNotMatch(code, /AudioContext|createBufferSource|oscillator|new Audio\(/);
     });
 
-    it('uses illuminated scoring and rule pages with native Liars Dice pips', async () => {
+    it('uses native Foundry scoring pages and isolated Farkle dice', async () => {
         const code = await source('scripts/games/zonk/ZonkTable.js');
         const css = await source('styles/zonk-v14.css');
         assert.match(code, /parlor-zonk-manuscript/);
         assert.match(code, /parlor-zonk-rulebook-paper/);
-        assert.match(code, /parlor-ld-die/);
+        assert.ok(code.includes("renderFarkleDie as pipDie"));
         assert.match(css, /parlor-zonk-manuscript-columns/);
         assert.match(css, /parlor-zonk-rulebook-text/);
         assert.match(css, /--z-panel: #212329/);
@@ -159,26 +159,24 @@ describe('Zonk Foundry inventory redesign', () => {
         }
     });
 
-    it('renders self-contained white Farkle dice above DSN without relying on external image URLs', async () => {
+    it('renders independent CSS Farkle dice, without SVG, shared sprite or legacy dice class', async () => {
         const code = await source('scripts/games/zonk/ZonkTable.js');
+        const renderer = await source('scripts/games/zonk/FarkleDie.js');
         const css = await source('styles/zonk-v14.css');
-        assert.ok(code.includes('const FARKLE_DOTS = Object.freeze({'));
-        assert.ok(code.includes('class="parlor-zonk-inline-die"'));
-        assert.ok(code.includes('viewBox="0 0 1080 1080"'));
-        assert.ok(code.includes('fill="#ffffff"'));
-        assert.ok(code.includes('fill="#2b2b2b"'));
-        assert.ok(code.includes('renderD6Face(face, { className:'));
-        assert.ok(code.includes("svg + '</span>'"));
-        assert.ok(!code.includes('D6_SPRITE_PATH'), 'Dice faces must not depend on external image paths');
-        for (const [face, expected] of [[1, 1], [2, 2], [3, 3], [4, 4], [5, 5], [6, 6]]) {
-            const layout = code.split(String.fromCharCode(10)).find(line => line.trim().startsWith(face + ': [['));
-            assert.ok(layout, 'Face ' + face + ' must have a pip layout');
-            assert.equal(layout.split('], [').length, expected, 'Incorrect pip count for face ' + face);
-        }
-        assert.ok(css.includes('> svg.parlor-zonk-inline-die'));
-        assert.ok(css.includes('z-index: 6 !important'));
+        assert.ok(code.includes("import { renderFarkleDie as pipDie } from './FarkleDie.js'"));
+        assert.ok(renderer.includes('const FARKLE_PIPS = Object.freeze({'));
+        assert.ok(renderer.includes('class="parlor-farkle-face'));
+        assert.ok(renderer.includes('class="parlor-farkle-pip"'));
+        assert.ok(renderer.includes('class="parlor-farkle-face-white"'));
+        assert.ok(renderer.includes('background:#ffffff'));
+        assert.ok(renderer.includes('background:#2b2b2b'));
+        assert.ok(!renderer.includes('renderD6Face('));
+        assert.ok(!renderer.includes('<svg'));
+        assert.ok(!renderer.includes('D6_SPRITE_PATH'));
+        assert.ok(css.includes('#parlor-zonk-overlay .parlor-farkle-face {'));
+        assert.ok(css.includes('#parlor-zonk-overlay .parlor-zonk-stair-slot .parlor-farkle-face'));
+        assert.ok(css.includes('#parlor-zonk-overlay .parlor-zonk-history-dice .parlor-farkle-face'));
         assert.ok(css.includes('pointer-events: none !important'));
-        assert.ok(css.includes('opacity: 1 !important'));
     });
 
 });
