@@ -31,6 +31,7 @@ export class ZonkGame extends GameBase {
         this.currentPlayerId = '';
         this.currentDice = [];
         this.botSelectedIndices = [];
+        this.playerSelectedIndices = [];
         this.keptDice = [];
         this.keptDiceRows = [];
         this.remainingDice = ZONK_DICE;
@@ -106,6 +107,7 @@ export class ZonkGame extends GameBase {
             currentPlayerId: this.currentPlayerId,
             currentDice: this.currentDice,
             botSelectedIndices: this.botSelectedIndices,
+            playerSelectedIndices: this.playerSelectedIndices,
             keptDice: this.keptDice,
             keptDiceRows: this.keptDiceRows,
             remainingDice: this.remainingDice,
@@ -130,7 +132,7 @@ export class ZonkGame extends GameBase {
         super.setState(state);
         for (const key of [
             'ante', 'targetScore', 'minBank', 'turnOrder', 'playerStates',
-            'currentPlayerId', 'currentDice', 'botSelectedIndices', 'keptDice', 'keptDiceRows', 'remainingDice', 'turnPoints',
+            'currentPlayerId', 'currentDice', 'botSelectedIndices', 'playerSelectedIndices', 'keptDice', 'keptDiceRows', 'remainingDice', 'turnPoints',
             'turnPhase', 'rollId', 'rollTimestamp', 'pot', 'lastRoll', 'lastEvent', 'winnerIds',
             'finalTurnsRemaining', 'settlementApplied', 'started', 'lastError',
             'history', 'historySequence'
@@ -145,11 +147,29 @@ export class ZonkGame extends GameBase {
             return { ok: false, reason: 'turn' };
         }
 
+        if (action === 'previewSelection') {
+            // The host GM alone owns the public choice. Reject stale or malformed
+            // previews so a delayed click cannot affect another throw or player.
+            if (this.turnPhase !== 'choose' || Number(data?.rollId) !== this.rollId) {
+                return { ok: false, reason: 'stale-roll' };
+            }
+            const indices = data?.indices;
+            if (!Array.isArray(indices) || indices.length > this.currentDice.length
+                || !indices.every(i => Number.isInteger(i) && i >= 0 && i < this.currentDice.length)
+                || new Set(indices).size !== indices.length) {
+                return { ok: false, reason: 'selection' };
+            }
+            this.playerSelectedIndices = [...indices].sort((a, b) => a - b);
+            void this._broadcastState();
+            return { ok: true };
+        }
+
         if (action === 'roll') {
             if (!['needRoll', 'ready'].includes(this.turnPhase)) return { ok: false, reason: 'keep-first' };
             // All hot-dice rerolls keep their saved dice, filling the 6→1 staircase
             // across throws. We retain the most recent 21 dice (six visible tiers).
             this.botSelectedIndices = [];
+            this.playerSelectedIndices = [];
             this.currentDice = Array.from({ length: this.remainingDice }, () => rollD6(this._rng));
             this.lastRoll = [...this.currentDice];
             this.rollId++;
@@ -193,6 +213,7 @@ export class ZonkGame extends GameBase {
             this.remainingDice -= indices.length;
             this.currentDice = [];
             this.botSelectedIndices = [];
+            this.playerSelectedIndices = [];
             if (this.remainingDice === 0) this.remainingDice = ZONK_DICE;
             this.turnPhase = 'ready';
             this.lastEvent = `+${points} очков за комбинацию`;
@@ -235,6 +256,7 @@ export class ZonkGame extends GameBase {
         this.turnPoints = 0;
         this.turnPhase = 'needRoll';
         this.botSelectedIndices = [];
+        this.playerSelectedIndices = [];
         if (this.playerStates[this.currentPlayerId]) {
             this.playerStates[this.currentPlayerId].status = 'playing';
         }
@@ -270,6 +292,7 @@ export class ZonkGame extends GameBase {
         });
         seat.score += gain;
         seat.status = zonk ? 'zonk' : 'banked';
+        this.playerSelectedIndices = [];
         this.lastEvent = zonk
             ? 'Вы обосрались! Очки текущего хода сгорели.'
             : `В копилку добавлено ${gain} очков.`;
@@ -303,6 +326,7 @@ export class ZonkGame extends GameBase {
         this.keptDice = [];
         this.keptDiceRows = [];
         this.turnPhase = 'complete';
+        this.playerSelectedIndices = [];
         this.lastEvent = this.winnerIds.length === 1
             ? 'Партия завершена. Победитель определён!'
             : 'Партия завершена. Ничья по очкам!';
