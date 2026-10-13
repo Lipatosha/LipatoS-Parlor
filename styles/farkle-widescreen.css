@@ -1,0 +1,205 @@
+/* Farkle 2.2.0 — 16:9 layout, Foundry v14. Loaded after legacy CSS. */
+#parlor-zonk-overlay.parlor-zonk-overlay {
+  display:grid; place-items:center; position:fixed; inset:0; padding:6px;
+  overflow:hidden !important; z-index:2300 !important;
+  --z-border:#62594b; --z-ink:#b8ab96; --z-emphasis:#d1c09d; --z-subtle:#91846e;
+  background:#111112 url("../../../ui/denim065.png") repeat;
+}
+#parlor-zonk-overlay *,#parlor-zonk-overlay *::before,#parlor-zonk-overlay *::after {box-sizing:border-box}
+#parlor-zonk-overlay .parlor-zonk-layout {
+  display:grid !important; grid-template-areas:"toolbar toolbar toolbar" "players center right";
+  grid-template-columns:minmax(0,21fr) minmax(0,54fr) minmax(0,25fr) !important;
+  grid-template-rows:58px minmax(0,1fr); gap:8px;
+  width:min(1600px,calc(100vw - 12px),calc((100dvh - 12px)*1.77777778)) !important;
+  height:auto !important; aspect-ratio:16 / 9; max-height:calc(100dvh - 12px);
+  min-height:0 !important; max-width:100%; margin:0 auto; padding:8px;
+  overflow:hidden !important; background:#1e1e1f url("../../../ui/denim065.png");
+  border:1px solid #64594a; border-radius:4px; box-shadow:0 9px 32px #0008;
+}
+#parlor-zonk-overlay .parlor-zonk-toolbar {
+  grid-area:toolbar; display:grid !important; grid-template-columns:1fr minmax(0,1.2fr) 1fr !important;
+  align-items:center; min-width:0; min-height:0 !important; height:100%; padding:5px 11px;
+  background:#252422; border:1px solid var(--z-border); border-radius:3px; gap:8px;
+}
+#parlor-zonk-overlay .parlor-zonk-turn {
+  min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
+  text-align:center; font-size:clamp(13px,1.25vw,19px); font-weight:700; color:var(--z-emphasis);
+}
+#parlor-zonk-overlay .parlor-zonk-brand {min-width:0}
+#parlor-zonk-overlay .parlor-zonk-brand small {font-size:10px}
+#parlor-zonk-overlay .parlor-zonk-brand strong {font-size:clamp(15px,1.2vw,19px)}
+#parlor-zonk-overlay .parlor-zonk-toolbar-right {display:flex;align-items:center;justify-content:flex-end;gap:5px;min-width:0;white-space:nowrap}
+#parlor-zonk-overlay .parlor-zonk-round {white-space:nowrap;font-size:11px;margin-right:5px}
+#parlor-zonk-overlay .parlor-zonk-toolbar-buttons {display:flex;gap:3px}
+#parlor-zonk-overlay .parlor-zonk-toolbar-buttons button {min-height:28px;height:28px;padding:3px 6px;font-size:11px}
+#parlor-zonk-overlay .parlor-zonk-more {position:relative;flex:0 0 auto}
+#parlor-zonk-overlay .parlor-zonk-more summary {
+  display:grid;place-items:center;cursor:pointer;list-style:none;min-width:28px;height:28px;
+  background:#292725;border:1px solid var(--z-border);border-radius:3px;color:var(--z-emphasis);
+}
+#parlor-zonk-overlay .parlor-zonk-more summary::-webkit-details-marker {display:none}
+#parlor-zonk-overlay .parlor-zonk-more-menu {
+  position:absolute;z-index:50;right:0;top:31px;min-width:190px;max-width:220px;
+  padding:7px;background:#242322;border:1px solid #7b6951;box-shadow:0 5px 14px #000a;
+}
+#parlor-zonk-overlay .parlor-zonk-more-menu button {width:100%;padding:5px}
+#parlor-zonk-overlay .parlor-zonk-more-menu span {font-size:11px;white-space:normal}
+/* Progress — all 10 players visible in 900px frame */
+#parlor-zonk-overlay .parlor-zonk-progress {
+  grid-area:players;display:flex;flex-direction:column;height:100%;overflow:hidden;
+  min-width:0;min-height:0;background:#202021;
+}
+#parlor-zonk-overlay .parlor-zonk-panel-title,
+#parlor-zonk-overlay .parlor-zonk-history-heading,
+#parlor-zonk-overlay .parlor-zonk-players-heading {
+  display:flex;align-items:center;justify-content:space-between;gap:5px;
+  min-height:30px;height:30px;padding:5px 8px;margin:0;border-bottom:1px solid #544b40;
+  background:#292725;font-size:12px;color:var(--z-emphasis);font-weight:700;
+}
+#parlor-zonk-overlay .parlor-zonk-players-heading span,
+#parlor-zonk-overlay .parlor-zonk-history-heading small {font-size:11px;color:var(--z-subtle);font-weight:400}
+#parlor-zonk-overlay .parlor-zonk-progress-score {flex:0 0 auto;padding:8px 4px 4px;font-size:clamp(17px,1.7vw,25px)}
+#parlor-zonk-overlay .parlor-zonk-progress-track {flex:0 0 auto;height:7px;margin:2px 8px 8px}
+#parlor-zonk-overlay .parlor-zonk-progress-players {
+  flex:1 1 auto;min-height:0;max-height:none;overflow-y:auto;overflow-x:hidden;scrollbar-width:thin;
+}
+#parlor-zonk-overlay .parlor-zonk-progress-row {
+  display:grid;grid-template-columns:23px minmax(0,1fr) auto;align-items:center;gap:5px;
+  height:clamp(29px,3.9vh,42px);min-height:0;padding:3px 7px;
+  border-bottom:1px solid #494136;background:#212121;
+}
+#parlor-zonk-overlay .parlor-zonk-progress-row.is-current {background:#4d4233;border-left:3px solid #c6a575}
+#parlor-zonk-overlay .parlor-zonk-progress-row strong {text-align:right;font-size:12px}
+#parlor-zonk-overlay .parlor-zonk-player {font-size:12px;min-width:0}
+#parlor-zonk-overlay .parlor-zonk-progress-foot {flex:0 0 38px;min-height:0;margin-top:auto;padding:5px 8px}
+/* Central stats, roll and saved rack, 3 controls and footer */
+#parlor-zonk-overlay .parlor-zonk-center {
+  grid-area:center;display:grid !important;grid-template-rows:68px minmax(0,1fr) 42px 22px;
+  height:100%;gap:8px;min-width:0;min-height:0;overflow:hidden;
+}
+#parlor-zonk-overlay .parlor-zonk-center > .parlor-zonk-mini-stats {
+  display:grid !important;grid-template-columns:repeat(3,minmax(0,1fr));
+  width:100%;margin:0;padding:0;gap:7px;min-height:0;
+}
+#parlor-zonk-overlay .parlor-zonk-mini-stats > div {
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;
+  min-width:0;min-height:0;padding:5px;border:1px solid var(--z-border);border-radius:3px;background:#292725;
+}
+#parlor-zonk-overlay .parlor-zonk-mini-stats small {font-size:11px;color:var(--z-subtle);white-space:nowrap}
+#parlor-zonk-overlay .parlor-zonk-mini-stats b {font-size:clamp(16px,1.5vw,22px);line-height:1.05;color:var(--z-emphasis);font-variant-numeric:tabular-nums}
+#parlor-zonk-overlay .parlor-zonk-velvet {
+  display:grid !important;grid-template-columns:minmax(0,62fr) minmax(0,38fr) !important;
+  grid-template-rows:minmax(0,1fr) !important;
+  gap:8px;width:100%;height:100%;min-height:0 !important;padding:0 !important;overflow:hidden !important;
+  background:none;border:0;box-shadow:none;
+}
+#parlor-zonk-overlay .parlor-zonk-roll-zone,
+#parlor-zonk-overlay .parlor-zonk-saved-area {
+  grid-column:auto !important;grid-row:auto !important;display:flex;flex-direction:column;
+  width:100%;height:100% !important;min-width:0;min-height:0 !important;
+  padding:0 !important;overflow:hidden !important;background:#1c1c1e;
+  border:1px solid var(--z-border);border-radius:3px;box-shadow:none;
+}
+#parlor-zonk-overlay .parlor-zonk-roll-zone-heading,
+#parlor-zonk-overlay .parlor-zonk-saved-heading {
+  display:flex;flex:0 0 30px;align-items:center;justify-content:space-between;
+  min-height:30px;margin:0;padding:5px 8px;border-bottom:1px solid #544a3b;
+  background:#2a2723;color:var(--z-emphasis);font-size:12px;
+}
+#parlor-zonk-overlay .parlor-zonk-roll-zone-heading span {color:var(--z-subtle);font-size:11px}
+#parlor-zonk-overlay .parlor-zonk-roll-zone .parlor-zonk-dice-tray {
+  display:flex !important;flex:1 1 auto;flex-wrap:wrap;align-content:center;align-items:center;justify-content:center;
+  width:100%;height:auto !important;min-height:0 !important;min-width:0;
+  gap:9px;margin:0;padding:12px;overflow:hidden;background:#1a1a1c;border:0;border-radius:0;box-shadow:none;
+}
+#parlor-zonk-overlay .parlor-zonk-roll-zone .parlor-zonk-pick {
+  --z-die-size:clamp(32px,3.8vw,65px);
+  width:var(--z-die-size);height:var(--z-die-size);flex:0 0 var(--z-die-size);
+  min-width:0;min-height:0;margin:0;padding:0 !important;transform:rotate(var(--z-roll-tilt,0deg));
+  border:0 !important;background:transparent !important;box-shadow:none !important;
+}
+#parlor-zonk-overlay .parlor-zonk-roll-zone .parlor-zonk-pick > .parlor-farkle-face {width:100% !important;height:100% !important}
+#parlor-zonk-overlay .parlor-zonk-roll-zone button.parlor-zonk-pick::after {inset:0 !important;z-index:5;border:3px solid #dbbe85;border-radius:8px}
+#parlor-zonk-overlay .parlor-zonk-roll-zone .parlor-zonk-pick.is-selected {transform:translateY(-5px) rotate(var(--z-roll-tilt,0deg))}
+#parlor-zonk-overlay .parlor-zonk-dice-tray.is-new-roll .parlor-zonk-pick {animation:farkle-arrival .3s ease-out backwards}
+#parlor-zonk-overlay .parlor-zonk-dice-tray.is-new-roll .parlor-zonk-pick:nth-child(even) {animation-delay:.06s}
+@keyframes farkle-arrival {from{opacity:.6;translate:0 -9px}to{opacity:1;translate:0 0}}
+#parlor-zonk-overlay .parlor-zonk-roll-hint {
+  flex:0 0 auto;min-height:28px;padding:6px 8px;
+  border-top:1px solid #494238;font-size:11px;text-align:center;color:var(--z-ink);
+}
+#parlor-zonk-overlay .parlor-zonk-saved-area .parlor-zonk-staircase {
+  display:flex !important;flex:1 1 auto;flex-direction:column;
+  align-items:flex-start !important;justify-content:flex-end;
+  min-width:0;min-height:0;width:100%;margin:0;padding:8px;gap:3px;overflow:hidden;
+}
+#parlor-zonk-overlay .parlor-zonk-stair-row {
+  display:flex !important;align-items:center;justify-content:flex-start !important;
+  flex:0 0 auto;min-width:0;width:100%;margin:0 !important;gap:3px;
+}
+#parlor-zonk-overlay .parlor-zonk-stair-slot {
+  --z-slot:clamp(20px,2.1vw,35px);width:var(--z-slot);height:var(--z-slot);
+  flex:0 0 var(--z-slot);min-width:0;min-height:0;margin:0;border-radius:2px;
+}
+#parlor-zonk-overlay .parlor-zonk-stair-slot .parlor-farkle-face {width:100% !important;height:100% !important}
+#parlor-zonk-overlay .parlor-zonk-buttons {
+  display:grid !important;grid-template-columns:repeat(3,minmax(0,1fr)) !important;
+  grid-column:auto !important;grid-row:auto !important;
+  gap:8px;align-items:stretch;width:100%;height:42px;margin:0;padding:0;min-height:0;
+}
+#parlor-zonk-overlay .parlor-zonk-buttons .parlor-zonk-action {
+  width:100%;height:42px;min-width:0;min-height:0;padding:4px 7px;
+  font-size:clamp(10px,.95vw,14px);font-weight:700;background:#2b2926;color:var(--z-emphasis);
+}
+#parlor-zonk-overlay .parlor-zonk-buttons .parlor-zonk-action.is-throw {
+  background:#534734 !important;color:#efdeb9;border-color:#ab9067;
+}
+#parlor-zonk-overlay .parlor-zonk-ante {
+  display:grid;place-items:center;grid-column:auto !important;grid-row:auto !important;
+  min-height:0;height:22px;margin:0;padding:0 5px;font-size:11px;white-space:nowrap;
+}
+#parlor-zonk-overlay .parlor-zonk-final {display:none}
+/* Right: two vertically stacked panels, only their lists can scroll */
+#parlor-zonk-overlay .parlor-zonk-right {
+  grid-area:right;display:grid;grid-template-rows:minmax(0,62fr) minmax(0,38fr);
+  gap:8px;height:100%;min-width:0;min-height:0;overflow:hidden;
+}
+#parlor-zonk-overlay .parlor-zonk-combos,
+#parlor-zonk-overlay .parlor-zonk-history {
+  display:flex !important;flex-direction:column;width:100%;height:100%;
+  min-width:0;min-height:0;max-width:none;margin:0;padding:0;
+  overflow:hidden !important;border:1px solid var(--z-border);border-radius:3px;background:#202021;
+}
+#parlor-zonk-overlay .parlor-zonk-combos .parlor-zonk-combo-list,
+#parlor-zonk-overlay .parlor-zonk-history-list {
+  display:block;flex:1 1 auto;min-height:0;max-height:none !important;
+  width:100%;padding:5px 7px;overflow-y:auto !important;overflow-x:hidden !important;scrollbar-width:thin;
+}
+#parlor-zonk-overlay .parlor-zonk-combos .parlor-zonk-manuscript {
+  height:auto;min-height:0;margin:0;padding:0;background:transparent;border:0;box-shadow:none;
+}
+#parlor-zonk-overlay .parlor-zonk-combos .parlor-zonk-manuscript-columns {
+  display:flex !important;flex-direction:column;gap:0;min-height:0;
+}
+#parlor-zonk-overlay .parlor-zonk-combos .parlor-zonk-manuscript-section {margin:0 0 5px;padding:0 0 4px}
+#parlor-zonk-overlay .parlor-zonk-combos .parlor-zonk-manuscript-section h4 {font-size:11px;margin:0 0 2px}
+#parlor-zonk-overlay .parlor-zonk-combos .parlor-zonk-combo-row {min-height:20px;padding:1px 0;gap:3px}
+#parlor-zonk-overlay .parlor-zonk-combos .parlor-zonk-combo-value {min-width:42px;margin-left:auto;text-align:right}
+#parlor-zonk-overlay .parlor-zonk-combos .parlor-zonk-kind-row {display:flex;justify-content:space-between;gap:5px;min-height:18px;font-size:11px}
+#parlor-zonk-overlay .parlor-zonk-history-heading {flex:0 0 30px}
+#parlor-zonk-overlay .parlor-zonk-history-row {min-height:25px;padding:3px 0;border-bottom:1px solid #423c33}
+#parlor-zonk-overlay .parlor-zonk-history-dice .parlor-farkle-face {width:17px !important;height:17px !important}
+#parlor-zonk-overlay .parlor-zonk-rules-backdrop {z-index:45}
+#parlor-zonk-overlay .parlor-zonk-progress,
+#parlor-zonk-overlay .parlor-zonk-center,
+#parlor-zonk-overlay .parlor-zonk-right {min-width:0;min-height:0}
+@media (max-width:1050px), (max-height:650px) {
+ #parlor-zonk-overlay .parlor-zonk-layout {grid-template-rows:45px minmax(0,1fr);gap:5px;padding:5px}
+ #parlor-zonk-overlay .parlor-zonk-center {grid-template-rows:54px minmax(0,1fr) 34px 20px;gap:5px}
+ #parlor-zonk-overlay .parlor-zonk-buttons {height:34px;gap:4px}
+ #parlor-zonk-overlay .parlor-zonk-buttons .parlor-zonk-action {height:34px;font-size:10px}
+ #parlor-zonk-overlay .parlor-zonk-progress-row {height:27px;padding:2px 4px}
+ #parlor-zonk-overlay .parlor-zonk-stair-slot {--z-slot:clamp(14px,2vw,26px)}
+ #parlor-zonk-overlay .parlor-zonk-roll-zone .parlor-zonk-pick {--z-die-size:clamp(20px,3.4vw,42px)}
+ #parlor-zonk-overlay .parlor-zonk-ante {font-size:9px}
+}
