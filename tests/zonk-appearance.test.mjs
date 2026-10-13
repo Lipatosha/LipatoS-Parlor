@@ -39,7 +39,7 @@ describe('Zonk Foundry inventory redesign', () => {
         const css = await source('styles/zonk-v14.css');
         const code = await source('scripts/games/zonk/ZonkTable.js');
         assert.match(css, /--z-ink: #9f9275/);
-        assert.match(css, /url\\("..\\/..\\/..\\/ui\\/denim065\\.png"\\)/);
+        assert.ok(css.includes('url("../../../ui/denim065.png")'));
         assert.match(css, /parlor-zonk-rulebook-paper/);
         assert.match(css, /parlor-zonk-manuscript/);
         assert.match(code, /parlor-zonk-staircase/);
