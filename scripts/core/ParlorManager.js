@@ -296,6 +296,7 @@ export class ParlorManager {
             return;
         }
         session.ui?.close();
+        session.game?._cancelZonkPause?.();
         this._sessions.delete(sessionId);
         this._hiddenSessionIds.delete(sessionId);
         this._removeReturnDock(sessionId);
