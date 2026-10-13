@@ -93,7 +93,7 @@
         "CrazyEightsNeedPlayers": "Crazy Eights needs {minCount} to {maxCount} players.",
         "CrazyEightsAnteShort": "Cannot cover the ante of {amount}: {names}",
         "BeetleRaceInvalid": "This race card has fewer than three runners (some beetles may have been deleted). Pick another card or fix it in the Race Studio.",
-        "ZonkNeedPlayers": "Zonk needs {minCount}–{maxCount} participants.",
+        "ZonkNeedPlayers": "Farkle requires {minCount}–{maxCount} players.",
         "ZonkAnteShort": "Insufficient funds for entry fee {amount}: {names}."
       },
       "Toolbar": {
@@ -236,11 +236,11 @@
         "BeetleRaceSound": "Race sound (whole table; the GM can also mute it mid-race)",
         "BeetleRaceCleanTable": "Clear table: put the decorations away so the lanes stay in view",
         "BeetleRacePrefsHint": "Both choices are remembered and used the next time you start a Beetle Derby.",
-        "ZonkTitle": "Zonk settings",
+        "ZonkTitle": "Farkle settings",
         "ZonkNote": "Each player contributes once. Choose 2,000, 3,000, 5,000 or 10,000 target points.",
         "ZonkAnte": "Entry fee",
         "ZonkTarget": "Target score",
-        "ZonkParticipantsNote": "2–10 players. Roll up to six dice and keep scoring dice to build your score.",
+        "ZonkParticipantsNote": "Farkle: 2–10 players. Roll scoring dice and decide when to bank.",
         "SettlementSilver": "Silver coins",
         "SettlementSilverHint": "Wagers and winnings use the character’s silver coins.",
         "SettlementCopper": "Copper coins",
@@ -372,8 +372,8 @@
         "Desc": "The DM sets up a race, everyone backs a beetle, and the whole table watches them run."
       },
       "Zonk": {
-        "Name": "Zonk (Farkle)",
-        "Desc": "Six dice, risky choices and up to ten tavern players."
+        "Name": "Farkle",
+        "Desc": "Six-dice push-your-luck game for 2–10 players."
       }
     },
     "Roulette": {
@@ -2362,7 +2362,7 @@
       }
     },
     "Zonk": {
-      "Title": "ZONK",
+      "Title": "FARKLE",
       "Kicker": "Aindor",
       "Tagline": "Six dice. Your choice. One pot.",
       "Target": "Target",
@@ -2380,8 +2380,8 @@
       "TurnOf": "Current turn:",
       "NowPlaying": "Playing",
       "Winner": "Winner",
-      "Bust": "Zonk",
-      "Busts": "Zonks",
+      "Bust": "Farkle",
+      "Busts": "Farkle",
       "Die": "Die",
       "Points": "points",
       "SelectValid": "Select a valid scoring combination",
@@ -2420,7 +2420,7 @@
       "HistoryRoll": "rolled dice",
       "HistoryKeep": "kept dice",
       "HistoryBank": "banked points",
-      "HistoryZonk": "ZONK!",
+      "HistoryZonk": "Farkle!",
       "HistorySkip": "turn skipped",
       "HistoryFinish": "match completed",
       "HistoryPaid": "pot paid",
@@ -2433,7 +2433,18 @@
       "SectionSingles": "Single dice",
       "SectionTriples": "Three of a kind",
       "SectionSpecial": "Special combinations",
-      "SectionMultiples": "Four, five and six alike"
+      "SectionMultiples": "Four, five and six alike",
+      "SectionStraight": "Straight",
+      "SectionPairs": "Three pairs",
+      "SectionDoubleTriples": "Two triples",
+      "SectionFourPlusPair": "Four of a kind + pair",
+      "SectionHowToPlay": "How to play",
+      "ScoreHelpText": "Take turns rolling, keep scoring dice and choose to bank or roll again. No scoring dice means Farkle and unbanked turn points are lost.",
+      "DoubleTriplesNote": "Both triples score separately",
+      "FourPlusPairNote": "2000 + 100 for the fives",
+      "SavedDice": "Kept dice",
+      "SavedDiceHint": "Scoring dice kept this turn",
+      "Name": "Farkle"
     },
     "Currency": {
       "Gold": "Gold",
