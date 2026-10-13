@@ -98,7 +98,7 @@ describe('Zonk Foundry inventory redesign', () => {
         const css = await source('styles/zonk-v14.css');
         const spriteCss = await source('styles/dice-faces.css');
         const markup = await source('scripts/games/zonk/ZonkTable.js');
-        assert.ok(markup.includes('parlor-zonk-pick ${this._selected.has(index)'));
+        assert.ok(markup.includes("this._selected.has(index) ? 'is-selected' : ''"));
         assert.match(css, /button\.parlor-zonk-pick::after\s*\{[^}]*z-index:\s*3;[^}]*inset:\s*7px;[^}]*border:\s*3px solid/);
         assert.match(css, /button\.parlor-zonk-pick:not\(:disabled\):hover::after/);
         assert.match(css, /button\.parlor-zonk-pick\.is-selected::after/);
