@@ -6,6 +6,7 @@ import { BotManager } from '../../core/BotManager.js';
 import { scoreZonkDice } from './ZonkRules.js';
 import { getFarkleRackDisplay } from './FarkleRack.js';
 import { renderFarkleDie as pipDie } from './FarkleDie.js';
+import { renderD6Face } from '../../core/DiceFaces.js';
 
 // Dice markup is intentionally isolated from all other Parlor dice skins.
 const t = (key, data) => data
@@ -13,7 +14,9 @@ const t = (key, data) => data
     : game.i18n.localize('PARLOR.Zonk.' + key);
 const esc = value => foundry.utils.escapeHTML(String(value ?? ''));
 const fmt = value => Number(value || 0).toLocaleString(game.i18n?.lang || 'ru-RU');
-const diceRow = (dice, small = false) => (dice || []).map(value => pipDie(value, small)).join('');
+const diceRow = (dice, small = false) => (dice || []).map(value => small
+    ? renderD6Face(value, { className: 'parlor-ld-die', small: true })
+    : pipDie(value)).join('');
 
 export class ZonkTable {
     constructor({ gameInstance }) {
@@ -307,7 +310,7 @@ export class ZonkTable {
                 </div>
                 <div class="parlor-zonk-buttons">
                     ${choosing
-                        ? actionButton('keep', t('Keep', { points: fmt(points || 0) }), canPlay && points > 0, 'is-save')
+                        ? actionButton('keep', t('Bank'), canPlay && points > 0, 'is-save')
                         : actionButton('bank', t('Bank'), canPlay && ready && Number(state.turnPoints || 0) >= (state.minBank || 300), 'is-save')}
                     ${actionButton('roll', hot ? t('BonusRoll') : t('Roll'), canPlay && !choosing && !ended && !pending, 'is-throw')}
                     ${actionButton('skip', t('SkipTurn'), game.user.isGM && !ended && !pending && !this._busy, 'is-skip')}
