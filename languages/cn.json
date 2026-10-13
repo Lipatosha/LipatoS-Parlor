@@ -2452,8 +2452,13 @@
       "ScoreHelpFullHand": "若六枚骰子均已计分，可以重新投掷全部六枚。",
       "ScoreHelpBust": "如果没有任何得分组合，则为 Farkle！本回合未存的积分全部失去。",
       "Multiplier": "倍率",
-      "RollZone": "骰子投掷区 — Dice So Nice!",
-      "RollZoneHint": "投掷后的骰子会保留在此处，直到选择得分组合或跳过回合。"
+      "RollZone": "掷骰区",
+      "RollZoneHint": "投掷骰子并选择有效组合。",
+      "Players": "玩家",
+      "ExtraActions": "更多操作",
+      "OnlyGM": "仅主持人可用",
+      "RollField": "掷骰区",
+      "DiceShort": "颗骰子"
     },
     "Currency": {
       "Gold": "金币",
