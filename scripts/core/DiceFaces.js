@@ -23,7 +23,7 @@ export function renderD6Face(value, { className = '', small = false } = {}) {
     const die = d6FaceAttributes(value);
     const classes = String(className).split(/\s+/u).filter(token => /^[a-z0-9_-]+$/iu.test(token));
     if (small && !classes.includes('is-small')) classes.push('is-small');
-    return `<span class="parlor-d6-face ${classes.join(' ')}" data-value="${die.face}" data-v="${die.face}" style="--parlor-d6-index:${die.index}" role="img" aria-label="${die.label}"></span>`;
+    return `<span class="parlor-d6-face ${classes.join(' ')}" data-value="${die.face}" data-v="${die.face}" style="--parlor-d6-index:${die.index};--parlor-d6-position:${die.index * 20}%" role="img" aria-label="${die.label}"></span>`;
 }
 
 export function applyD6Face(element, value) {
@@ -35,5 +35,6 @@ export function applyD6Face(element, value) {
     element.setAttribute('role', 'img');
     element.setAttribute('aria-label', die.label);
     element.style.setProperty('--parlor-d6-index', String(die.index));
+    element.style.setProperty('--parlor-d6-position', String(die.index * 20) + '%');
     return element;
 }
