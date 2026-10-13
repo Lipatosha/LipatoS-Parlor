@@ -171,9 +171,9 @@ describe('Zonk Foundry inventory redesign', () => {
         assert.ok(code.includes("svg + '</span>'"));
         assert.ok(!code.includes('D6_SPRITE_PATH'), 'Dice faces must not depend on external image paths');
         for (const [face, expected] of [[1, 1], [2, 2], [3, 3], [4, 4], [5, 5], [6, 6]]) {
-            const match = code.match(new RegExp('\\\\b' + face + ': \\\\[([^\\\\]]+)\\\\]'));
-            assert.ok(match, 'Face ' + face + ' must have a pip layout');
-            assert.equal((match[1].match(/\\\\[/g) || []).length, expected, 'Incorrect pip count for face ' + face);
+            const layout = code.split('\\n').find(line => line.trim().startsWith(face + ': [['));
+            assert.ok(layout, 'Face ' + face + ' must have a pip layout');
+            assert.equal(layout.split('], [').length, expected, 'Incorrect pip count for face ' + face);
         }
         assert.ok(css.includes('> svg.parlor-zonk-inline-die'));
         assert.ok(css.includes('z-index: 6 !important'));
