@@ -1073,3 +1073,58 @@
     #parlor-zonk-overlay .parlor-zonk-ante { grid-column: 1; grid-row: 5; }
     #parlor-zonk-overlay .parlor-zonk-history { width: 100%; max-width: none; }
 }
+
+/* v2.1.6 — Restore the dice artwork above the black DSN play surface.
+ * Previously the button's selection outline was visible but its CSS-only
+ * background sprite could be obscured. A foreground <img> is now clipped
+ * inside each die face, and pointer events remain on the parent button.
+ */
+#parlor-zonk-overlay .parlor-zonk-roll-zone {
+    isolation: isolate;
+}
+#parlor-zonk-overlay .parlor-zonk-roll-zone .parlor-zonk-dice-tray {
+    position: relative;
+    z-index: 1;
+}
+#parlor-zonk-overlay .parlor-zonk-roll-zone button.parlor-zonk-pick {
+    position: relative;
+    z-index: 2;
+    overflow: visible;
+}
+#parlor-zonk-overlay .parlor-zonk-roll-zone .parlor-zonk-pick > .parlor-d6-face {
+    position: relative;
+    z-index: 2;
+    display: block;
+    overflow: hidden !important;
+    opacity: 1 !important;
+    pointer-events: none;
+    background-color: #fff !important;
+}
+#parlor-zonk-overlay .parlor-zonk-roll-zone .parlor-zonk-pick > .parlor-d6-face > .parlor-zonk-face-image {
+    display: block !important;
+    position: absolute !important;
+    z-index: 3;
+    top: 0;
+    left: 0;
+    width: 600% !important;
+    min-width: 600% !important;
+    max-width: none !important;
+    height: 100% !important;
+    min-height: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    object-fit: fill !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: none !important;
+}
+#parlor-zonk-overlay .parlor-zonk-roll-zone .parlor-zonk-dice-tray button.parlor-zonk-pick::after {
+    z-index: 4;
+}
+/* A spectator/GM must still see every face even if they cannot select it. */
+#parlor-zonk-overlay .parlor-zonk-roll-zone button.parlor-zonk-pick:disabled {
+    opacity: 1 !important;
+    cursor: default;
+}
