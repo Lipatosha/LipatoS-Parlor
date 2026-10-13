@@ -4,7 +4,6 @@ import { SettlementManager } from '../../core/SettlementManager.js';
 import { getGameGuide } from '../../core/GameRegistry.js';
 import { BotManager } from '../../core/BotManager.js';
 import { scoreZonkDice } from './ZonkRules.js';
-import { getFarkleRackDisplay } from './FarkleRack.js';
 import { renderFarkleDie as pipDie } from './FarkleDie.js';
 import { renderD6Face } from '../../core/DiceFaces.js';
 
@@ -31,6 +30,8 @@ export class ZonkTable {
         this._rulesOpen = false;
         this._busy = false;
         this._lastAnimatedRollId = null;
+        this._winnerNoticeShown = false;
+        this._victoryDismissed = false;
     }
 
     render(force = false) {
@@ -194,6 +195,13 @@ export class ZonkTable {
         const choosing = state.turnPhase === 'choose';
         const ready = state.turnPhase === 'ready';
         const ended = state.phase === 'FINISHED';
+        if (ended && !this._winnerNoticeShown && state.winnerIds?.length) {
+            this._winnerNoticeShown = true;
+            const winnerNames = state.winnerIds.map(id => this._participantName(state, id)).join(', ');
+            ui.notifications?.info(t(state.winnerIds.length === 1 ? 'VictoryNotice' : 'VictoryDrawNotice', {
+                winners: winnerNames
+            }));
+        }
         const pending = !state.started;
         const hot = ready && state.remainingDice === 6;
         const canPlay = this._canPlay(state) && !this._busy;
@@ -232,19 +240,6 @@ export class ZonkTable {
                     ${pipDie(value)}
                 </button>`).join('')
             : '';
-
-        // Each keep action starts its OWN new row, rather than being packed
-        // into remaining empty cells of the previous row.
-        const rackRows = getFarkleRackDisplay(state.keptDiceRows);
-        const stairs = rackRows.map(({ capacity, rowIndex, values }) =>
-            `<div class="parlor-zonk-stair-row" data-stair-row="${rowIndex}" data-capacity="${capacity}">
-                ${Array.from({ length: capacity }, (_, col) => {
-                    const face = values[col];
-                    return `<div class="parlor-zonk-stair-slot ${face ? 'is-filled' : ''}" data-stair-cell="${rowIndex}-${col}">
-                        ${face ? pipDie(face) : '<span class="parlor-zonk-stair-glyph" aria-hidden="true">◇</span>'}
-                    </div>`;
-                }).join('')}
-            </div>`).join('');
 
         const last = (state.history || [])[0];
         const showZonk = last?.kind === 'zonk' || last?.kind === 'skip';
@@ -303,10 +298,6 @@ export class ZonkTable {
                             ${choosing ? esc(status) + (points > 0 ? ` · +${fmt(points)} ${esc(t('Points'))}` : '') : esc(status)}
                         </div>
                     </section>
-                    <section class="parlor-zonk-saved-area" aria-label="${esc(t('SavedDice'))}">
-                        <div class="parlor-zonk-saved-heading">${esc(t('SavedDice'))}</div>
-                        <div class="parlor-zonk-staircase">${stairs}</div>
-                    </section>
                 </div>
                 <div class="parlor-zonk-buttons">
                     ${choosing
@@ -327,6 +318,17 @@ export class ZonkTable {
                     <div class="parlor-zonk-combo-list">${this._combos({ showDescriptions: false })}</div>
                 </section>
             </aside>
+            ${ended && !this._victoryDismissed ? `<div class="parlor-zonk-victory-overlay">
+                <section class="parlor-zonk-victory" role="dialog" aria-modal="true" aria-label="${esc(t('VictoryTitle'))}">
+                    <h2>${esc(state.winnerIds?.length === 1 ? t('VictoryTitle') : t('VictoryDrawTitle'))}</h2>
+                    <p class="parlor-zonk-victory-winners">${esc((state.winnerIds || []).map(id => this._participantName(state, id)).join(', '))}</p>
+                    <p>${fmt(topScore)} ${esc(t('Points'))}</p>
+                    <div class="parlor-zonk-victory-actions">
+                        ${game.user.isGM ? actionButton('rematch', t('Rematch'), !this._busy, 'is-throw') : `<small>${esc(t('RematchHostHint'))}</small>`}
+                        ${actionButton('hide-victory', t('VictoryDismiss'), true)}
+                    </div>
+                </section>
+            </div>` : ''}
             ${this._rulesOpen ? this._rules() : ''}
         </div>`;
 
@@ -349,6 +351,79 @@ export class ZonkTable {
         });
     }
 
+    async _requestRematch() {
+        const state = this.gameInstance.getState();
+        if (this._busy || !game.user.isGM || state.phase !== 'FINISHED') return;
+        const draft = {
+            ante: Number(state.ante || 10),
+            targetScore: Number(state.targetScore || 5000),
+            settlementMode: SettlementManager.getMode(state)
+        };
+        const modes = [
+            [SettlementManager.MODES.CHIPS, 'Фишки'],
+            ...(SettlementManager.canUseDnd5eGold() ? [
+                [SettlementManager.MODES.DND5E_GOLD, 'Золото'],
+                [SettlementManager.MODES.DND5E_SILVER, 'Серебро'],
+                [SettlementManager.MODES.DND5E_COPPER, 'Медь']
+            ] : [])
+        ];
+        const content = `<div class="parlor-zonk-rematch-form">
+            <label>${esc(t('RematchAnte'))}
+                <input type="number" name="ante" min="1" max="100000" step="1" value="${draft.ante}">
+            </label>
+            <label>${esc(t('RematchCurrency'))}
+                <select name="settlementMode">${modes.map(([id,label]) =>
+                    `<option value="${esc(id)}" ${id === draft.settlementMode ? 'selected' : ''}>${esc(label)}</option>`).join('')}</select>
+            </label>
+            <label>${esc(t('RematchTarget'))}
+                <select name="targetScore">${[2000,3000,5000,10000].map(value =>
+                    `<option value="${value}" ${value === draft.targetScore ? 'selected' : ''}>${fmt(value)}</option>`).join('')}</select>
+            </label>
+        </div>`;
+        const result = await foundry.applications.api.DialogV2.wait({
+            window: { title: t('RematchSettings') },
+            content,
+            render: (_event, dialog) => {
+                const root = dialog.element || dialog;
+                const fields = root.querySelectorAll('.parlor-zonk-rematch-form [name]');
+                for (const field of fields) field.addEventListener('change', () => {
+                    if (field.name === 'ante') draft.ante = Number(field.value);
+                    if (field.name === 'targetScore') draft.targetScore = Number(field.value);
+                    if (field.name === 'settlementMode') draft.settlementMode = field.value;
+                });
+            },
+            buttons: [
+                { action: 'start', label: t('Rematch'), default: true,
+                    callback: () => ({ ...draft }) },
+                { action: 'cancel', label: t('RematchCancel'), callback: () => null }
+            ],
+            rejectClose: false
+        });
+        if (!result || !Number.isInteger(result.ante) || result.ante < 1 || result.ante > 100000) {
+            if (result) ui.notifications?.warn(t('RematchInvalid'));
+            return;
+        }
+        this._busy = true;
+        this.refresh();
+        try {
+            const response = await SocketManager.requestGM(SOCKET_EVENTS.GM_ACTION, {
+                sessionId: this.gameInstance.sessionId,
+                action: 'rematchZonk',
+                data: result
+            });
+            if (response?.ok === false) {
+                ui.notifications?.warn(t(response.reason === 'funds'
+                    ? 'RematchInsufficient' : 'RematchFailed'));
+            }
+        } catch (error) {
+            console.error('parlor | Farkle rematch failed', error);
+            ui.notifications?.error(t('RematchFailed'));
+        } finally {
+            this._busy = false;
+            if (this._overlay) this.refresh();
+        }
+    }
+
     async _performAction(action) {
         if (action === 'close') {
             if (typeof this._requestParlorClose === 'function') await this._requestParlorClose();
@@ -363,6 +438,15 @@ export class ZonkTable {
         if (action === 'sound') {
             this._soundOn = !this._soundOn;
             this.refresh();
+            return;
+        }
+        if (action === 'hide-victory') {
+            this._victoryDismissed = true;
+            this.refresh();
+            return;
+        }
+        if (action === 'rematch') {
+            if (game.user.isGM) await this._requestRematch();
             return;
         }
         if (this._busy) return;
