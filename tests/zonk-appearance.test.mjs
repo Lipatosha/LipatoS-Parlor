@@ -38,15 +38,21 @@ describe('Farkle widescreen 16:9 existing-game redesign', () => {
     });
 
     it('keeps exactly three action buttons Save, Roll dice and Skip turn', async () => {
-        const code = await table();
+        const code = await table(), styles = await css();
         assert.ok(code.includes("actionButton('keep', t('Bank')"));
         assert.ok(code.includes("actionButton('bank', t('Bank')"));
         assert.ok(code.includes("actionButton('roll', hot ? t('BonusRoll') : t('Roll')"));
         assert.ok(code.includes("actionButton('skip', t('SkipTurn')"));
-        assert.equal((code.match(/actionButton\('skip'/g) || []).length, 1);
-        assert.ok(code.includes("game.user.isGM && !ended"));
-        const styles = await css();
-        assert.ok(styles.includes('grid-template-columns:repeat(3,minmax(0,1fr))'));
+        assert.equal((code.match(/actionButton\\('skip'/g) || []).length, 1);
+        const foot = code.indexOf('<div class="parlor-zonk-progress-foot">');
+        const footEnd = code.indexOf('</aside>', foot);
+        const skip = code.indexOf("actionButton('skip'", foot);
+        assert.ok(foot >= 0 && skip > foot && skip < footEnd);
+        assert.ok(code.includes('game.user.isGM && !ended && !pending'));
+        assert.equal(code.slice(code.indexOf('<div class="parlor-zonk-buttons">')).split('</div>')[0].match(/actionButton\\('/g)?.length, 4,
+            'Save is either keep or bank, followed by Roll; Skip is outside this group');
+        assert.ok(styles.includes('grid-template-columns:repeat(2,minmax(0,1fr))'));
+        assert.ok(styles.includes('.parlor-zonk-progress-foot .parlor-zonk-action.is-skip'));
         assert.ok(styles.includes('.parlor-zonk-action.is-throw'));
     });
 
@@ -76,8 +82,10 @@ describe('Farkle widescreen 16:9 existing-game redesign', () => {
         assert.ok(code.includes('parlor-zonk-progress-row'));
         assert.ok(code.includes('parlor-zonk-player'));
         assert.ok(code.includes('parlor-zonk-progress-foot'));
+        assert.ok(!code.includes("esc(t('Leader'))"));
         assert.ok(styles.includes('grid-area:players'));
         assert.ok(styles.includes('.parlor-zonk-progress-row.is-current'));
+        assert.ok(styles.includes('margin-top:auto'));
         assert.ok(styles.includes('overflow-y:auto'));
         assert.ok(!code.includes('Math.max(6, standings.length)'));
     });
@@ -87,28 +95,33 @@ describe('Farkle widescreen 16:9 existing-game redesign', () => {
         assert.ok(styles.includes('grid-template-columns:minmax(0,62fr) minmax(0,38fr)'));
         assert.ok(styles.includes('.parlor-zonk-stair-row'));
         assert.ok(styles.includes('justify-content:flex-start !important'));
+        assert.ok(styles.includes('justify-content:flex-start !important;\\n  padding-top:8px;'));
         assert.ok(code.includes('getFarkleRackDisplay(state.keptDiceRows)'));
         assert.ok(code.includes('rackRows.map'));
         assert.ok(code.includes('data-stair-row='));
         assert.ok(code.includes('data-stair-cell='));
         assert.ok(!code.includes('${savedCount}/21'));
-        assert.ok(!code.includes('0/21'));
         const helper = await source('scripts/games/zonk/FarkleRack.js');
         assert.ok(helper.includes('[6, 5, 4, 3, 2, 1]'));
         assert.ok(helper.includes('.reverse()'));
+        assert.ok(styles.includes('grid-template-rows:68px minmax(0,55fr) 42px 22px minmax(0,45fr)'));
     });
 
     it('moves independent scrolling scoring and history panels into right column', async () => {
         const code = await table(), styles = await css();
-        assert.ok(code.includes('<aside class="parlor-zonk-right">'));
-        const start = code.indexOf('<aside class="parlor-zonk-right">');
-        const history = code.indexOf('<section class="parlor-zonk-history">', start);
-        const combos = code.indexOf('<section class="parlor-zonk-combos">', start);
-        assert.ok(start >= 0 && combos > start && history > combos);
+        const center = code.indexOf('<main class="parlor-zonk-center">');
+        const right = code.indexOf('<aside class="parlor-zonk-right">');
+        const history = code.indexOf('<section class="parlor-zonk-history">');
+        const combos = code.indexOf('<section class="parlor-zonk-combos">');
+        const board = code.indexOf('<div class="parlor-zonk-velvet">');
+        assert.ok(center >= 0 && board > center && history > board && history < right);
+        assert.ok(combos > right);
         assert.equal((code.match(/<section class="parlor-zonk-history">/g) || []).length, 1);
         assert.equal((code.match(/<section class="parlor-zonk-combos">/g) || []).length, 1);
         assert.ok(styles.includes('grid-area:right'));
-        assert.ok(styles.includes('grid-template-rows:minmax(0,62fr) minmax(0,38fr)'));
+        assert.ok(styles.includes('grid-template-rows:minmax(0,1fr)'));
+        assert.ok(styles.includes('.parlor-zonk-center > .parlor-zonk-history'));
+        assert.ok(styles.includes('grid-row:5'));
         assert.ok(styles.includes('overflow-y:auto !important'));
         assert.ok(code.includes("(state.history || []).slice(0, 100)"));
         assert.ok(code.includes('this._history(state)'));
@@ -150,4 +163,29 @@ describe('Farkle widescreen 16:9 existing-game redesign', () => {
             assert.doesNotMatch(locale.RollZone, /Dice So Nice/i);
         }
     });
+    it('enlarges the full-height scoring reference without cutting the final combinations', async () => {
+        const styles = await css(), code = await table();
+        assert.ok(styles.includes('.parlor-zonk-right > .parlor-zonk-combos'));
+        assert.ok(styles.includes('height:100%'));
+        assert.ok(styles.includes('overflow-y:auto !important'));
+        assert.ok(styles.includes('padding:10px 11px 16px'));
+        assert.ok(styles.includes('font-size:16px'));
+        assert.ok(styles.includes('width:25px !important'));
+        assert.ok(styles.includes('height:25px !important'));
+        assert.ok(styles.includes('font-size:15px'));
+        assert.ok(styles.includes('text-align:right'));
+        assert.ok(code.includes("simpleKind(t('FourKind'),'×2')"));
+        assert.ok(code.includes("simpleKind(t('FiveKind'),'×4')"));
+        assert.ok(code.includes("simpleKind(t('SixKind'),'×8')"));
+    });
+
+    it('preserves the fixed widescreen 16:9 proportions and no outer scrolling', async () => {
+        const styles = await css();
+        assert.ok(styles.includes('aspect-ratio:16 / 9'));
+        assert.ok(styles.includes('grid-template-columns:minmax(0,21fr) minmax(0,54fr) minmax(0,25fr)'));
+        assert.ok(styles.includes('overflow:hidden !important'));
+        assert.ok(styles.includes('grid-template-rows:54px minmax(0,53fr) 34px 20px minmax(0,47fr)'));
+        assert.ok(styles.includes('grid-template-columns:repeat(2,minmax(0,1fr))'));
+    });
+
 });
