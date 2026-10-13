@@ -124,19 +124,19 @@ export class ZonkTable {
         return `<div class="parlor-zonk-manuscript" aria-label="${esc(t('Scoring'))}">
             <div class="parlor-zonk-manuscript-columns">
                 <div class="parlor-zonk-guide-column">
-                    ${group(t('SectionSingles'), combo([1],50) + combo([5],100))}
+                    ${group(t('SectionSingles'), combo([1],100) + combo([5],50))}
                     ${group(t('SectionTriples'), [
                         combo([1,1,1],1000), combo([2,2,2],200), combo([3,3,3],300),
                         combo([4,4,4],400), combo([5,5,5],500), combo([6,6,6],600)
                     ].join(''))}
                     <div class="parlor-zonk-multiples">
-                        ${simpleKind(4,t('FourKind'),1000)}
-                        ${simpleKind(5,t('FiveKind'),2000)}
-                        ${simpleKind(6,t('SixKind'),3000)}
+                        ${simpleKind(4,t('FourKind'),'×2')}
+                        ${simpleKind(5,t('FiveKind'),'×4')}
+                        ${simpleKind(6,t('SixKind'),'×8')}
                     </div>
                 </div>
                 <div class="parlor-zonk-guide-column">
-                    ${group(t('SectionPartialStraight'),combo([1,2,3,4,5],750))}
+                    ${group(t('SectionPartialStraight'),combo([1,2,3,4,5],500) + combo([2,3,4,5,6],750))}
                     ${group(t('SectionStraight'),combo([1,2,3,4,5,6],1500))}
                     ${group(t('SectionPairs'),anyDice([2,2,2],1500))}
                     ${group(t('SectionDoubleTriples'),anyDice([3,3],2500))}
