@@ -2450,7 +2450,8 @@
       "FiveKind": "五个相同",
       "SixKind": "六个相同",
       "ScoreHelpFullHand": "若六枚骰子均已计分，可以重新投掷全部六枚。",
-      "ScoreHelpBust": "如果没有任何得分组合，则为 Farkle！本回合未存的积分全部失去。"
+      "ScoreHelpBust": "如果没有任何得分组合，则为 Farkle！本回合未存的积分全部失去。",
+      "Multiplier": "倍率"
     },
     "Currency": {
       "Gold": "金币",
