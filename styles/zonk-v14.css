@@ -1235,3 +1235,16 @@
 #parlor-zonk-overlay .parlor-zonk-pick:disabled > .parlor-farkle-face {
     opacity: 1 !important;
 }
+
+/* Farkle and DSN stacking fix: Dice So Nice elevates its WebGL canvas
+ * to 3100, while Farkle used z-index 2300. On some installations the
+ * WebGL canvas covered dice faces, with only gold hover borders visible.
+ * Normally the table is ABOVE DSN; only while actively animating a roll
+ * do we put DSN above the Farkle surface, restoring the table afterwards.
+ */
+#parlor-zonk-overlay.parlor-zonk-overlay {
+    z-index: 3110;
+}
+#parlor-zonk-overlay.parlor-zonk-overlay.parlor-zonk-dsn-rolling {
+    z-index: 2300;
+}
