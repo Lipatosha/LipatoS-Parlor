@@ -13,8 +13,17 @@ import {
 const DND5E_GOLD_PATH = 'system.currency.gp';
 const SETTLEMENT_MODES = Object.freeze({
     CHIPS: 'chips',
-    DND5E_GOLD: 'dnd5e-gold'
+    DND5E_GOLD: 'dnd5e-gold',
+    DND5E_SILVER: 'dnd5e-silver',
+    DND5E_COPPER: 'dnd5e-copper'
 });
+
+const CURRENCY_CODES = Object.freeze({
+    [SETTLEMENT_MODES.DND5E_GOLD]: 'gp',
+    [SETTLEMENT_MODES.DND5E_SILVER]: 'sp',
+    [SETTLEMENT_MODES.DND5E_COPPER]: 'cp'
+});
+const CURRENCY_KEYS = Object.freeze({ gp: 'Gold', sp: 'Silver', cp: 'Copper' });
 
 export class SettlementManager {
     static MODES = SETTLEMENT_MODES;
@@ -25,9 +34,7 @@ export class SettlementManager {
     }
 
     static normalizeMode(mode) {
-        if (mode === SETTLEMENT_MODES.DND5E_GOLD && this.canUseDnd5eGold()) {
-            return SETTLEMENT_MODES.DND5E_GOLD;
-        }
+        if (Object.hasOwn(CURRENCY_CODES, mode) && this.canUseDnd5eGold()) return mode;
         return SETTLEMENT_MODES.CHIPS;
     }
 
@@ -40,8 +47,27 @@ export class SettlementManager {
         return this.normalizeMode(context?.settlementMode || this._activeMode);
     }
 
+    /** Compatibility alias: historically isGoldMode also controls actor selection. */
     static isGoldMode(context = null) {
-        return this.getMode(context) === SETTLEMENT_MODES.DND5E_GOLD;
+        return this.getMode(context) !== SETTLEMENT_MODES.CHIPS;
+    }
+
+    static getCurrencyCode(context = null) {
+        return CURRENCY_CODES[this.getMode(context)] || null;
+    }
+
+    static getCurrencyLabel(context = null) {
+        const code = this.getCurrencyCode(context);
+        const key = code ? 'PARLOR.Currency.' + CURRENCY_KEYS[code] : 'PARLOR.Currency.Chips';
+        const translated = game.i18n?.localize?.(key);
+        return translated && translated !== key ? translated : ({
+            gp: 'Золото', sp: 'Серебро', cp: 'Медь'
+        }[code] || 'Фишки');
+    }
+
+    static formatAmount(amount, context = null) {
+        const value = Number(amount) || 0;
+        return `${value.toLocaleString(game.i18n?.lang || 'ru-RU')} ${this.getCurrencyLabel(context)}`;
     }
 
     static getBalance(participantId, context = null) {
@@ -50,7 +76,7 @@ export class SettlementManager {
 
         const actor = this._getActor(participantId);
         if (!actor) return 0;
-        return this._readActorGold(actor);
+        return this._readActorCurrency(actor, this.getCurrencyCode(context));
     }
 
     static getDisplayBalance(participantId, context = null) {
@@ -59,7 +85,7 @@ export class SettlementManager {
 
         const actor = this._getActor(participantId);
         if (!actor) return '0';
-        return this._readActorGold(actor);
+        return this._readActorCurrency(actor, this.getCurrencyCode(context));
     }
 
     static canAfford(participantId, amount, context = null) {
@@ -68,7 +94,7 @@ export class SettlementManager {
 
         const actor = this._getActor(participantId);
         if (!actor) return false;
-        return this._readActorGold(actor) >= Number(amount || 0);
+        return this._readActorCurrency(actor, this.getCurrencyCode(context)) >= Number(amount || 0);
     }
 
     static async grant(participantId, amount, context = null) {
@@ -88,6 +114,8 @@ export class SettlementManager {
         if (!game.user.isGM) return false;
         if (!Array.isArray(entries) || !entries.length) return true;
 
+        const currencyCode = this.getCurrencyCode(context);
+        const currencyPath = `system.currency.${currencyCode}`;
         const changes = new Map();
         for (const entry of entries) {
             const participantId = migrateChipOwnerId(entry?.userId ?? entry?.id);
@@ -105,10 +133,10 @@ export class SettlementManager {
 
         for (const { actor, delta } of changes.values()) {
             if (!delta) continue;
-            const current = this._readActorGold(actor);
+            const current = this._readActorCurrency(actor, currencyCode);
             const next = Math.max(0, Math.round((current + delta) * 100) / 100);
             if (next === current) continue;
-            await actor.update({ [DND5E_GOLD_PATH]: next });
+            await actor.update({ [currencyPath]: next });
         }
 
         return true;
@@ -196,9 +224,14 @@ export class SettlementManager {
         return actorId ? game.actors?.get(actorId) || null : null;
     }
 
-    static _readActorGold(actor) {
-        const value = foundry.utils.getProperty(actor, DND5E_GOLD_PATH);
+    static _readActorCurrency(actor, currencyCode = 'gp') {
+        const key = ['gp', 'sp', 'cp'].includes(currencyCode) ? currencyCode : 'gp';
+        const value = foundry.utils.getProperty(actor, `system.currency.${key}`);
         const amount = Number(value ?? 0);
         return Number.isFinite(amount) ? amount : 0;
+    }
+
+    static _readActorGold(actor) {
+        return this._readActorCurrency(actor, 'gp');
     }
 }
