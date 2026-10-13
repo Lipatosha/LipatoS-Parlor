@@ -10,7 +10,7 @@ const hasRussian = text => /[А-Яа-яЁё]/u.test(text);
 
 describe('Russian game rules', () => {
     it('provides Russian rules for all registered games, including hidden tables', () => {
-        assert.equal(gameIds.length, 12);
+        assert.equal(gameIds.length, 13);
         assert.deepEqual(Object.keys(GAME_GUIDE_RU).sort(), gameIds.sort());
         for (const id of gameIds) {
             const guide = getGameGuide(id);
