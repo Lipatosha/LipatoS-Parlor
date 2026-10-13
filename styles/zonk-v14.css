@@ -8,7 +8,7 @@
     --z-subtle: #857b67;
     --z-border: #5c5448;
     --z-base: #181818;
-    --z-material: linear-gradient(140deg, #1c1c1fe0, #18191bd9), url("ui/denim065.png");
+    --z-material: linear-gradient(140deg, #1c1c1fe0, #18191bd9), url("../../../ui/denim065.png");
     position: fixed;
     inset: 0;
     z-index: 2300;
@@ -17,7 +17,7 @@
     padding: clamp(7px, 1.2vw, 16px);
     color: var(--z-ink);
     font: 14px/1.36 var(--font-primary, "Signika", sans-serif);
-    background: linear-gradient(#080809db,#090a0cee), url("ui/denim065.png") repeat;
+    background: linear-gradient(#080809db,#090a0cee), url("../../../ui/denim065.png") repeat;
 }
 #parlor-zonk-overlay *, #parlor-zonk-overlay *::before, #parlor-zonk-overlay *::after { box-sizing: border-box; }
 #parlor-zonk-overlay button {
@@ -26,7 +26,7 @@
     color: var(--z-emphasis);
     border: 1px solid #6a6052;
     border-radius: 3px;
-    background: linear-gradient(#34322fda,#202020eb), url("ui/denim065.png") repeat;
+    background: linear-gradient(#34322fda,#202020eb), url("../../../ui/denim065.png") repeat;
     box-shadow: inset 0 1px #ffffff0b;
 }
 #parlor-zonk-overlay button:not(:disabled):hover { border-color: #b19c72; filter: brightness(1.15); }
@@ -70,7 +70,7 @@
     font-weight: 700;
     font-size: 13px;
     border-bottom: 1px solid var(--z-border);
-    background: linear-gradient(#47403755, #211e1acc), url("ui/denim065.png");
+    background: linear-gradient(#47403755, #211e1acc), url("../../../ui/denim065.png");
 }
 #parlor-zonk-overlay .parlor-zonk-progress { display: flex; flex-direction: column; }
 #parlor-zonk-overlay .parlor-zonk-progress-score {
@@ -147,14 +147,14 @@
     position: relative;
     background:
         radial-gradient(ellipse at 60% 35%, #44403929, transparent 72%),
-        linear-gradient(145deg,#1e1f20e8,#141414e7),url("ui/denim065.png");
+        linear-gradient(145deg,#1e1f20e8,#141414e7),url("../../../ui/denim065.png");
 }
 #parlor-zonk-overlay .parlor-zonk-dice-tray {
     display: flex; align-items: center; justify-content: center; flex-wrap: wrap;
     gap: clamp(6px,1.1vw,14px);
     width: 100%; min-height: 119px; padding: 13px 10px;
     border: 1px solid #625a4b; border-radius: 4px;
-    background: linear-gradient(#1313135e,#24232269),url("ui/denim065.png");
+    background: linear-gradient(#1313135e,#24232269),url("../../../ui/denim065.png");
 }
 #parlor-zonk-overlay .parlor-zonk-pick {
     display: flex; justify-content: center; align-items: center;
@@ -177,7 +177,7 @@
     min-width: 0; align-self: stretch; display: flex; flex-direction: column;
     border: 1px solid #5f5749; border-radius: 4px;
     padding: 7px 10px 10px;
-    background: linear-gradient(#15151555,#29272355),url("ui/denim065.png");
+    background: linear-gradient(#15151555,#29272355),url("../../../ui/denim065.png");
 }
 #parlor-zonk-overlay .parlor-zonk-saved-heading {
     display: flex; justify-content: space-between; align-items: center;
@@ -193,7 +193,7 @@
     width: clamp(34px,3.6vw,48px); height: clamp(34px,3.6vw,48px);
     border: 1px solid #726754; border-radius: 3px;
     display: grid; place-items: center;
-    background: linear-gradient(#1a19188c,#2b28238c),url("ui/denim065.png");
+    background: linear-gradient(#1a19188c,#2b28238c),url("../../../ui/denim065.png");
 }
 #parlor-zonk-overlay .parlor-zonk-stair-slot.is-filled {
     border-color: #afa081; background: #363228d4;
@@ -217,7 +217,7 @@
     display: flex; flex-direction: column; align-items: center; gap: 4px;
     padding: 7px 9px; min-width: 91px;
     border: 1px solid #595143; border-radius: 3px;
-    background: linear-gradient(#2a2925ca,#1a1a1ae8),url("ui/denim065.png");
+    background: linear-gradient(#2a2925ca,#1a1a1ae8),url("../../../ui/denim065.png");
 }
 #parlor-zonk-overlay .parlor-zonk-mini-stats small { color: var(--z-subtle); font-size: 11px; }
 #parlor-zonk-overlay .parlor-zonk-mini-stats b { font-variant-numeric: tabular-nums; color: var(--z-emphasis); font-size: 17px; }
