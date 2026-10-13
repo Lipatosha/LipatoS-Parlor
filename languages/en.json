@@ -2451,7 +2451,9 @@
       "SixKind": "Six of a kind",
       "ScoreHelpFullHand": "If all six dice score, roll a fresh full set of six dice.",
       "ScoreHelpBust": "If a roll contains no scoring combination, it's Farkle! You lose the unbanked points for that turn.",
-      "Multiplier": "multiplier"
+      "Multiplier": "multiplier",
+      "RollZone": "Rolling area — Dice So Nice!",
+      "RollZoneHint": "Roll dice. The resulting dice remain here until a combination is kept or the turn is skipped."
     },
     "Currency": {
       "Gold": "Gold",
