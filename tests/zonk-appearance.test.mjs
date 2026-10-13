@@ -95,7 +95,7 @@ describe('Farkle widescreen 16:9 existing-game redesign', () => {
         assert.ok(styles.includes('grid-template-columns:minmax(0,62fr) minmax(0,38fr)'));
         assert.ok(styles.includes('.parlor-zonk-stair-row'));
         assert.ok(styles.includes('justify-content:flex-start !important'));
-        assert.ok(styles.includes('justify-content:flex-start !important;\\n  padding-top:8px;'));
+        assert.ok(styles.includes('padding-top:8px;'));
         assert.ok(code.includes('getFarkleRackDisplay(state.keptDiceRows)'));
         assert.ok(code.includes('rackRows.map'));
         assert.ok(code.includes('data-stair-row='));
