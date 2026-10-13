@@ -92,7 +92,9 @@
         "CardLuckInvalid": "The card luck setup is invalid. Please choose it again.",
         "CrazyEightsNeedPlayers": "Crazy Eights needs {minCount} to {maxCount} players.",
         "CrazyEightsAnteShort": "Cannot cover the ante of {amount}: {names}",
-        "BeetleRaceInvalid": "This race card has fewer than three runners (some beetles may have been deleted). Pick another card or fix it in the Race Studio."
+        "BeetleRaceInvalid": "This race card has fewer than three runners (some beetles may have been deleted). Pick another card or fix it in the Race Studio.",
+        "ZonkNeedPlayers": "Zonk needs {minCount}–{maxCount} participants.",
+        "ZonkAnteShort": "Insufficient funds for entry fee {amount}: {names}."
       },
       "Toolbar": {
         "ManageChips": "Allocate Chips",
@@ -233,7 +235,12 @@
         "BeetleRaceStudio": "Manage races",
         "BeetleRaceSound": "Race sound (whole table; the GM can also mute it mid-race)",
         "BeetleRaceCleanTable": "Clear table: put the decorations away so the lanes stay in view",
-        "BeetleRacePrefsHint": "Both choices are remembered and used the next time you start a Beetle Derby."
+        "BeetleRacePrefsHint": "Both choices are remembered and used the next time you start a Beetle Derby.",
+        "ZonkTitle": "Zonk settings",
+        "ZonkNote": "Each player pays a single entry fee. Highest score wins the pooled stakes.",
+        "ZonkAnte": "Entry fee",
+        "ZonkTarget": "Target score",
+        "ZonkParticipantsNote": "2–8 players. Roll up to six dice and keep scoring dice to build your score."
       },
       "ChipAllocation": {
         "Title": "Allocate Chips",
@@ -359,6 +366,10 @@
       "BeetleRace": {
         "Name": "Beetle Derby",
         "Desc": "The DM sets up a race, everyone backs a beetle, and the whole table watches them run."
+      },
+      "Zonk": {
+        "Name": "Zonk (Farkle)",
+        "Desc": "Six dice, high stakes and risky decisions in a tavern game."
       }
     },
     "Roulette": {
@@ -2345,6 +2356,54 @@
         "On": "Table sound on (click to mute everyone)",
         "Off": "Table sound muted (click to turn it on)"
       }
+    },
+    "Zonk": {
+      "Title": "ZONK",
+      "Kicker": "Tavern dice game",
+      "Tagline": "Six dice. Your choice. One pot.",
+      "Target": "Target",
+      "Pot": "Prize pot",
+      "Close": "Close table",
+      "Round": "Round",
+      "FinalRound": "FINAL ROUND",
+      "GameOver": "Match complete",
+      "ChooseDice": "Select scoring dice",
+      "HotDice": "Hot dice! Roll all six again.",
+      "RollOrBank": "Roll remaining dice or bank your points?",
+      "ReadyToRoll": "Roll six dice!",
+      "Waiting": "Waiting for players",
+      "WinnerLabel": "Winner:",
+      "TurnOf": "Current turn:",
+      "NowPlaying": "Playing",
+      "Winner": "Winner",
+      "Bust": "Zonk",
+      "Busts": "Zonks",
+      "Die": "Die",
+      "Points": "points",
+      "SelectValid": "Select a valid scoring combination",
+      "TurnPoints": "Turn points",
+      "DiceLeft": "Dice left",
+      "MinBank": "Minimum to bank",
+      "AutoSelect": "Pick best combination",
+      "Keep": "Keep dice (+{points})",
+      "BonusRoll": "Bonus roll",
+      "Roll": "Roll dice",
+      "Bank": "Bank points",
+      "Tip": "Ones, fives, triples, three pairs and straights all score.",
+      "FinalRemaining": "Final turns remaining: {count}",
+      "Scoreboard": "Scores",
+      "Scoring": "Scoring chart",
+      "TripleNote": "Three of 2–6: 200–600",
+      "MultiplesNote": "4/5/6 alike: ×2 / ×3 / ×4",
+      "PairsNote": "Three pairs: 750",
+      "StraightNote": "1–2–3–4–5–6: 1500",
+      "GmTools": "GM controls",
+      "SkipTurn": "Skip turn",
+      "PayAndClose": "Pay pot and close",
+      "RefundAndClose": "Cancel and refund",
+      "CancelConfirm": "The match isn't finished. Refund entry fees and close?",
+      "InvalidAction": "Action not allowed. Check dice selection or turn.",
+      "ActionError": "Action failed. Check your connection."
     }
   },
   "PARLORTAVERN": {
