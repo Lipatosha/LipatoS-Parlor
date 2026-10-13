@@ -5,7 +5,7 @@ import { getGameGuide } from '../../core/GameRegistry.js';
 import { BotManager } from '../../core/BotManager.js';
 import { scoreZonkDice } from './ZonkRules.js';
 import { getFarkleRackDisplay } from './FarkleRack.js';
-import { normalizeD6, renderD6Face } from '../../core/DiceFaces.js';
+import { normalizeD6 } from '../../core/DiceFaces.js';
 import { Dsn3dBridge } from '../../core/Dsn3dBridge.js';
 
 // The same physical pip dice and CSS classes used by LiarsDiceTable.
@@ -16,37 +16,35 @@ const t = (key, data) => data
 const esc = value => foundry.utils.escapeHTML(String(value ?? ''));
 const fmt = value => Number(value || 0).toLocaleString(game.i18n?.lang || 'ru-RU');
 /**
- * Self-contained Farkle die faces.
+ * Farkle has its OWN dice markup. Do not add .parlor-d6-face or .parlor-ld-die
+ * here: those classes receive a conflicting background-image and legacy dice
+ * skin from two other Parlor CSS modules. That was the real cause of the
+ * invisible white faces while button outlines stayed visible.
  *
- * Foundry / DSN can override CSS backgrounds, and module assets can resolve
- * differently on self-hosted installations. An inline SVG is real foreground
- * content: it needs no external asset request, keeps all six values visible,
- * and paints correctly at any size, including the rack and action history.
- * The white face, grey rounded corners and dark pips follow the supplied dice.
- * Other Parlor games keep using their original uploaded D6 sprite.
+ * Every face is basic HTML spans and CSS circles, with inline paint fallback.
+ * No SVG, image decoding, externally loaded sprites, or shared dice skins.
  */
-const FARKLE_DOTS = Object.freeze({
-    1: [[540, 540]],
-    2: [[260, 260], [820, 820]],
-    3: [[260, 260], [540, 540], [820, 820]],
-    4: [[260, 260], [820, 260], [260, 820], [820, 820]],
-    5: [[260, 260], [820, 260], [540, 540], [260, 820], [820, 820]],
-    6: [[260, 240], [820, 240], [260, 540], [820, 540], [260, 840], [820, 840]]
+const FARKLE_PIPS = Object.freeze({
+    1: [[50, 50]],
+    2: [[24, 24], [76, 76]],
+    3: [[24, 24], [50, 50], [76, 76]],
+    4: [[24, 24], [76, 24], [24, 76], [76, 76]],
+    5: [[24, 24], [76, 24], [50, 50], [24, 76], [76, 76]],
+    6: [[24, 22], [76, 22], [24, 50], [76, 50], [24, 78], [76, 78]]
 });
 
 const pipDie = (value, small = false) => {
     const face = normalizeD6(value);
-    const dots = FARKLE_DOTS[face].map(([cx, cy]) =>
-        `<circle cx="${cx}" cy="${cy}" r="120" fill="#2b2b2b"/>`).join('');
-    const svg = `<svg class="parlor-zonk-inline-die" aria-hidden="true"
-        xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1080"
-        preserveAspectRatio="xMidYMid meet" focusable="false">
-        <rect x="0" y="0" width="1080" height="1080" rx="76" fill="#d2d2d2"/>
-        <rect x="0" y="0" width="1080" height="1080" rx="300" fill="#ffffff"/>
+    const dots = FARKLE_PIPS[face].map(([x, y]) =>
+        `<span class="parlor-farkle-pip" aria-hidden="true" style="position:absolute;z-index:2;left:${x}%;top:${y}%;width:22%;height:22%;transform:translate(-50%,-50%);border-radius:50%;background:#2b2b2b"></span>`
+    ).join('');
+    return `<span class="parlor-farkle-face${small ? ' is-small' : ''}" role="img"
+        data-face="${face}" aria-label="Кость: ${face}"
+        style="position:relative;display:inline-block;overflow:hidden;box-sizing:border-box;isolation:isolate;background:#d2d2d2;border-radius:9%;opacity:1;visibility:visible">
+        <span class="parlor-farkle-face-white" aria-hidden="true"
+            style="position:absolute;z-index:1;inset:0;background:#ffffff;border-radius:28%;"></span>
         ${dots}
-    </svg>`;
-    return renderD6Face(face, { className: 'parlor-ld-die', small })
-        .replace('</span>', svg + '</span>');
+    </span>`;
 };
 const diceRow = (dice, small = false) => (dice || []).map(value => pipDie(value, small)).join('');
 
