@@ -54,17 +54,22 @@ beforeEach(() => {
 
 describe('Zonk scoring', () => {
     it('scores singles, triples, extra matches, two triples, and full-roll bonuses', () => {
-        assert.equal(scoreZonkDice([1]), 100);
-        assert.equal(scoreZonkDice([5, 5]), 100);
+        assert.equal(scoreZonkDice([1]), 50);
+        assert.equal(scoreZonkDice([5, 5]), 200);
         assert.equal(scoreZonkDice([1, 1, 1]), 1000);
         assert.equal(scoreZonkDice([2, 2, 2]), 200);
         assert.equal(scoreZonkDice([6, 6, 6]), 600);
-        assert.equal(scoreZonkDice([1, 1, 1, 1]), 2000);
-        assert.equal(scoreZonkDice([5, 5, 5, 5, 5]), 1500);
-        assert.equal(scoreZonkDice([6, 6, 6, 6, 6, 6]), 2400);
-        assert.equal(scoreZonkDice([2, 2, 2, 3, 3, 3]), 500);
-        assert.equal(scoreZonkDice([2, 2, 3, 3, 4, 4]), 750);
+        assert.equal(scoreZonkDice([1, 1, 1, 1]), 1000);
+        assert.equal(scoreZonkDice([5, 5, 5, 5, 5]), 2000);
+        assert.equal(scoreZonkDice([6, 6, 6, 6, 6, 6]), 3000);
+        assert.equal(scoreZonkDice([2, 2, 2, 3, 3, 3]), 2500);
+        assert.equal(scoreZonkDice([2, 2, 3, 3, 4, 4]), 1500);
         assert.equal(scoreZonkDice([1, 2, 3, 4, 5, 6]), 1500);
+        assert.equal(scoreZonkDice([1, 2, 3, 4, 5]), 750);
+        assert.equal(scoreZonkDice([2, 2, 2, 2, 3, 3]), 1500);
+        assert.equal(scoreZonkDice([1, 1, 1, 1, 1, 1]), 3000);
+        assert.equal(scoreZonkDice([1, 2, 3, 4, 5, 5]), 850);
+        assert.equal(scoreZonkDice([5]), 100);
     });
 
     it('rejects unscorable dice and detects true zonks', () => {
@@ -91,7 +96,7 @@ describe('Zonk table flow and entry-fee settlement', () => {
         assert.deepEqual(table.currentDice, [1, 1, 1, 1, 1, 1]);
         assert.equal(table.handlePlayerAction('p1', 'keep', { indices: [0, 0] }).ok, false);
         assert.equal(table.handlePlayerAction('p1', 'keep', { indices: [0, 1, 2, 3, 4, 5] }).ok, true);
-        assert.equal(table.turnPoints, 4000);
+        assert.equal(table.turnPoints, 3000);
         assert.equal(table.remainingDice, 6);
         assert.equal(table.handlePlayerAction('p1', 'roll', {}).ok, true);
     });
@@ -192,8 +197,9 @@ describe('Farkle kept-dice staircase state', () => {
         assert.equal(table.remainingDice, 6);
 
         table.handlePlayerAction('p1', 'roll');
-        assert.deepEqual(table.getState().keptDice, [], 'Hot dice start a new staircase');
+        assert.deepEqual(table.getState().keptDice, [1, 1, 1, 1, 1, 1], 'Hot dice preserve six bottom-tier dice');
         assert.equal(table.handlePlayerAction('p1', 'keep', { indices: [3, 4, 5] }).ok, true);
+        assert.deepEqual(table.getState().keptDice, Array(9).fill(1), 'Next three dice fill the second tier');
         table.handlePlayerAction('p1', 'bank');
         assert.equal(table.currentPlayerId, 'p2');
         assert.deepEqual(table.getState().keptDice, [], 'Staircase clears for the next participant');
