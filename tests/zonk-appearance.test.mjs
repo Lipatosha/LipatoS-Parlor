@@ -84,7 +84,7 @@ describe('Zonk Foundry inventory redesign', () => {
         assert.ok(code.includes('combo([1,2,3,4,5],500)'));
         assert.ok(code.includes('combo([2,3,4,5,6],750)'));
         assert.ok(code.includes('combo([1,2,3,4,5,6],1500)'));
-        assert.equal(ru.PARLOR.Zonk.SectionPartialStraight, 'Частичный стрит');
+        assert.equal(ru.PARLOR.Zonk.SectionPartialStraight, 'Частичный стрит (два варианта)');
         assert.equal(ru.PARLOR.Zonk.FourKind, 'Четыре одинаковых');
     });
     it('paints the dice hover and selected ring above its uploaded icon', async () => {
