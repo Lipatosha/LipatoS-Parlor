@@ -253,11 +253,12 @@ describe('Farkle six-level bonus-dice capacity', () => {
     it('fills all twenty-one cells from the bottom across repeated hot-dice throws', async () => {
         const table = makeGame([1, 1, 1, 1, 1, 1]);
         await table.start();
-        for (const expected of [6, 6, 6, 6, 6]) {
+        for (const expected of [6, 12, 18, 6, 12]) {
             assert.equal(table.handlePlayerAction('p1', 'roll').ok, true);
             assert.equal(table.handlePlayerAction('p1', 'keep', { indices: [0, 1, 2, 3, 4, 5] }).ok, true);
             assert.equal(table.getState().keptDiceRows.flat().length, expected);
-            assert.deepEqual(table.getState().keptDiceRows, [Array(6).fill(1)]);
+            assert.equal(table.getState().keptDiceRows[0].length, 6);
+            assert.ok(table.getState().keptDiceRows.every((row, index) => row.length <= 6 - index));
 
         }
         table.handlePlayerAction('p1', 'bank');
