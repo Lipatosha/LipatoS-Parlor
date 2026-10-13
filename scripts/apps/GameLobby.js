@@ -954,7 +954,7 @@ export class GameLobby extends HandlebarsApplicationMixin(ApplicationV2) {
             return {
                 ...gameOptions,
                 ante: Math.max(1, Math.min(100000, Math.floor(Number(draft.zonkAnte || 0)) || 10)),
-                targetScore: Number(draft.zonkTargetScore) === 10000 ? 10000 : 5000
+                targetScore: [2000, 3000, 5000, 10000].includes(Number(draft.zonkTargetScore)) ? Number(draft.zonkTargetScore) : 5000
             };
         }
         if (gameConfig?.id === 'crazyeights') {
@@ -1043,7 +1043,7 @@ export class GameLobby extends HandlebarsApplicationMixin(ApplicationV2) {
 
         if (gameConfig.id === 'zonk') {
             draft.zonkAnte = Math.max(1, Math.min(100000, Math.floor(Number(draft.zonkAnte || 0)) || 10));
-            draft.zonkTargetScore = Number(draft.zonkTargetScore) === 10000 ? 10000 : 5000;
+            draft.zonkTargetScore = [2000, 3000, 5000, 10000].includes(Number(draft.zonkTargetScore)) ? Number(draft.zonkTargetScore) : 5000;
         }
 
         if (gameConfig.id === 'crazyeights') {
@@ -1279,6 +1279,8 @@ export class GameLobby extends HandlebarsApplicationMixin(ApplicationV2) {
                     ${setupField({
                         label: t('PARLOR.Lobby.Setup.ZonkTarget'),
                         control: `<select data-zonk-target>
+                            <option value="2000" ${draft.zonkTargetScore === 2000 ? 'selected' : ''}>2 000</option>
+                            <option value="3000" ${draft.zonkTargetScore === 3000 ? 'selected' : ''}>3 000</option>
                             <option value="5000" ${draft.zonkTargetScore === 5000 ? 'selected' : ''}>5 000</option>
                             <option value="10000" ${draft.zonkTargetScore === 10000 ? 'selected' : ''}>10 000</option>
                         </select>`
@@ -1433,6 +1435,8 @@ export class GameLobby extends HandlebarsApplicationMixin(ApplicationV2) {
                 <div class="parlor-setup-choices">
                     ${choice(SettlementManager.MODES.CHIPS, 'PARLOR.Lobby.Setup.SettlementChips', 'PARLOR.Lobby.Setup.SettlementChipsHint')}
                     ${choice(SettlementManager.MODES.DND5E_GOLD, 'PARLOR.Lobby.Setup.SettlementGold', 'PARLOR.Lobby.Setup.SettlementGoldHint')}
+                    ${choice(SettlementManager.MODES.DND5E_SILVER, 'PARLOR.Lobby.Setup.SettlementSilver', 'PARLOR.Lobby.Setup.SettlementSilverHint')}
+                    ${choice(SettlementManager.MODES.DND5E_COPPER, 'PARLOR.Lobby.Setup.SettlementCopper', 'PARLOR.Lobby.Setup.SettlementCopperHint')}
                 </div>
             `
         });
@@ -1513,7 +1517,7 @@ export class GameLobby extends HandlebarsApplicationMixin(ApplicationV2) {
             event.currentTarget.value = String(draft.zonkAnte);
         });
         onChange('[data-zonk-target]', (event) => {
-            draft.zonkTargetScore = Number(event.currentTarget.value) === 10000 ? 10000 : 5000;
+            draft.zonkTargetScore = [2000, 3000, 5000, 10000].includes(Number(event.currentTarget.value)) ? Number(event.currentTarget.value) : 5000;
         });
 
         onChange('[data-br-race]', (event) => {
