@@ -27,20 +27,6 @@ function getMode() {
 }
 
 const _stageHolders = new Set();
-// Scoped override for Farkle only: do not save/modify any user's DSN settings.
-const _farkleHoldTokens = new Set();
-const _farkleHideSnapshots = new Map();
-function getDsnRuntimeConfigs() {
-    const dice3d = game.dice3d;
-    const candidates = [
-        dice3d?.constructor?.CONFIG,
-        dice3d?.CONFIG,
-        dice3d?.box?.config
-    ];
-    return [...new Set(candidates)].filter(value => value && typeof value === 'object'
-        && Object.prototype.hasOwnProperty.call(value, 'hideAfterRoll'));
-}
-
 // stage-keyed：DSN 重建舞台节点时，各自恢复各自的原值，不会串号。
 const _savedStylesByStage = new WeakMap();
 
@@ -273,42 +259,6 @@ export const Dsn3dBridge = {
             holders: [..._stageHolders]
         });
         if (_stageHolders.size === 0) releaseStageRaise('overlay.detach');
-    },
-
-    /** For Farkle, keep REAL 3D dice visible until a game action clears them.
-     * Legacy and v5 DSN expose an in-memory hideAfterRoll config. We ONLY
-     * override a present runtime field. When the last Farkle match closes
-     * its previous value is restored, with no persisted setting changes.
-     */
-    holdFarkleDice(token) {
-        if (!token || !this.isAvailable()) return false;
-        _farkleHoldTokens.add(token);
-        const configs = getDsnRuntimeConfigs();
-        for (const config of configs) {
-            if (!_farkleHideSnapshots.has(config)) {
-                _farkleHideSnapshots.set(config, config.hideAfterRoll);
-            }
-            config.hideAfterRoll = false;
-        }
-        return configs.length > 0;
-    },
-
-    clearFarkleDice() {
-        // Called only when a Farkle result leaves its 'choose' phase.
-        // Do not change user settings or clear dice of another game.
-        try { game.dice3d?.box?.clearAll?.(); } catch (error) {
-            console.warn('parlor | could not clear Farkle 3D dice', error);
-        }
-    },
-
-    releaseFarkleDice(token) {
-        if (!token) return;
-        _farkleHoldTokens.delete(token);
-        if (_farkleHoldTokens.size) return;
-        for (const [config, oldValue] of _farkleHideSnapshots) {
-            config.hideAfterRoll = oldValue;
-        }
-        _farkleHideSnapshots.clear();
     },
 
     isAvailable() {
