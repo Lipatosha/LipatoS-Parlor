@@ -25,7 +25,7 @@ describe('Shared user-supplied white D6 dice artwork', () => {
     it('renders each physical die face in correct index order, not fabricated pips', () => {
         for (let value = 1; value <= 6; value++) {
             const html = renderD6Face(value, { className: 'parlor-ld-die', small: true });
-            assert.match(html, new RegExp('parlor-d6-index:' + (value - 1) + '["]'));
+            assert.ok(html.includes('--parlor-d6-index:' + (value - 1) + ';'));
             assert.ok(html.includes('data-value="' + value + '"'));
             assert.ok(html.includes('--parlor-d6-position:' + (value - 1) * 20 + '%'));
             assert.ok(html.includes('is-small'));
