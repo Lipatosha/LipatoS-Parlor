@@ -90,21 +90,19 @@ describe('Farkle widescreen 16:9 existing-game redesign', () => {
         assert.ok(!code.includes('Math.max(6, standings.length)'));
     });
 
-    it('places 62% dice field and 38% kept stairway side-by-side, left aligned', async () => {
+    it('removes only the kept-dice panel while giving the center roll field full width', async () => {
         const code = await table(), styles = await css();
-        assert.ok(styles.includes('grid-template-columns:minmax(0,62fr) minmax(0,38fr)'));
-        assert.ok(styles.includes('.parlor-zonk-stair-row'));
-        assert.ok(styles.includes('justify-content:flex-start !important'));
-        assert.ok(styles.includes('padding-top:8px;'));
-        assert.ok(code.includes('getFarkleRackDisplay(state.keptDiceRows)'));
-        assert.ok(code.includes('rackRows.map'));
-        assert.ok(code.includes('data-stair-row='));
-        assert.ok(code.includes('data-stair-cell='));
-        assert.ok(!code.includes('${savedCount}/21'));
-        const helper = await source('scripts/games/zonk/FarkleRack.js');
-        assert.ok(helper.includes('[6, 5, 4, 3, 2, 1]'));
-        assert.ok(helper.includes('.reverse()'));
-        assert.ok(styles.includes('grid-template-rows:68px minmax(0,55fr) 42px 22px minmax(0,45fr)'));
+        assert.ok(code.includes('class="parlor-zonk-roll-zone"'));
+        assert.ok(!code.includes('class="parlor-zonk-saved-area"'));
+        assert.ok(!code.includes('getFarkleRackDisplay'));
+        assert.ok(!code.includes('data-stair-row='));
+        assert.ok(!code.includes('data-stair-cell='));
+        assert.ok(styles.includes('grid-template-columns:minmax(0,1fr) !important'));
+        assert.ok(styles.includes('grid-column:1 / -1 !important'));
+        assert.ok(styles.includes('.parlor-zonk-velvet > .parlor-zonk-roll-zone'));
+        const gameCode = await source('scripts/games/zonk/ZonkGame.js');
+        assert.ok(gameCode.includes('appendFarkleRackRow'));
+        assert.ok(gameCode.includes('this.keptDiceRows = appendFarkleRackRow'));
     });
 
     it('moves history into center while scoring alone fills the right column', async () => {
@@ -186,6 +184,54 @@ describe('Farkle widescreen 16:9 existing-game redesign', () => {
         assert.ok(styles.includes('overflow:hidden !important'));
         assert.ok(styles.includes('grid-template-rows:54px minmax(0,53fr) 34px 20px minmax(0,47fr)'));
         assert.ok(styles.includes('grid-template-columns:repeat(2,minmax(0,1fr))'));
+    });
+
+    it('shows winner notification once, an in-table game-over result, and a GM-only replay menu', async () => {
+        const code = await table(), styles = await css();
+        assert.ok(code.includes('this._winnerNoticeShown = true'));
+        assert.ok(code.includes('ui.notifications?.info('));
+        assert.ok(code.includes('parlor-zonk-victory-overlay'));
+        assert.ok(code.includes('state.winnerIds?.length'));
+        assert.ok(code.includes("actionButton('rematch', t('Rematch')"));
+        assert.ok(code.includes("action === 'hide-victory'"));
+        assert.ok(code.includes("action === 'rematch'"));
+        assert.ok(code.includes("action: 'rematchZonk'"));
+        assert.ok(code.includes('RematchAnte'));
+        assert.ok(code.includes('RematchCurrency'));
+        assert.ok(code.includes('RematchTarget'));
+        assert.ok(styles.includes('.parlor-zonk-victory-overlay'));
+        assert.ok(styles.includes('.parlor-zonk-rematch-form'));
+        for (const lang of ['ru','en','cn']) {
+            const locale = JSON.parse(await source('languages/'+lang+'.json')).PARLOR.Zonk;
+            for (const key of ['VictoryNotice','VictoryTitle','Rematch','RematchAnte','RematchCurrency','RematchTarget','RematchFailed'])
+                assert.ok(locale[key], lang+' missing '+key);
+        }
+    });
+
+    it('holds bot dice for three seconds measured from the authoritative roll timestamp', async () => {
+        const rules = await source('scripts/games/zonk/ZonkGame.js');
+        const bot = await source('scripts/core/BotManager.js');
+        assert.ok(rules.includes('this.rollTimestamp = Date.now()'));
+        assert.ok(rules.includes('rollTimestamp: this.rollTimestamp'));
+        assert.ok(rules.includes("'rollId', 'rollTimestamp'"));
+        assert.ok(bot.includes('3000 - (Date.now() - startedAt)'));
+        assert.ok(bot.includes('latest.currentPlayerId !== id'));
+        assert.ok(bot.includes('latest.rollId !== state.rollId'));
+        assert.ok(bot.includes('getZonkKeepOptions(latest.currentDice'));
+    });
+
+    it('starts a new session only after paying the winner and validating the new stakes', async () => {
+        const manager = await source('scripts/core/ParlorManager.js');
+        assert.ok(manager.includes("action === 'rematchZonk'"));
+        assert.ok(manager.includes("current.phase !== 'FINISHED'"));
+        assert.ok(manager.includes('this._rematchesInProgress.has(sessionId)'));
+        assert.ok(manager.includes("await current.handleGMAction('finishGame')"));
+        assert.ok(manager.includes('if (!current.settlementApplied)'));
+        assert.ok(manager.includes('SettlementManager.canAfford(id, ante, gameOptions)'));
+        const settle = manager.indexOf("await current.handleGMAction('finishGame')");
+        const end = manager.indexOf('await this.endGame(sessionId, { settleBeforeEnd: false })');
+        const start = manager.indexOf("await this.startGame('zonk'");
+        assert.ok(settle >= 0 && end > settle && start > end);
     });
 
 });
