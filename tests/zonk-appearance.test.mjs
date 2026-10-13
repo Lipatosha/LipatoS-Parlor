@@ -34,4 +34,26 @@ describe('Zonk Foundry inventory redesign', () => {
             }
         }
     });
+
+    it('uses native denim texture and one bronze type palette across the entire screen', async () => {
+        const css = await source('styles/zonk-v14.css');
+        const code = await source('scripts/games/zonk/ZonkTable.js');
+        assert.match(css, /--z-ink: #9f9275/);
+        assert.match(css, /url\\("..\\/..\\/..\\/ui\\/denim065\\.png"\\)/);
+        assert.match(css, /parlor-zonk-rulebook-paper/);
+        assert.match(css, /parlor-zonk-manuscript/);
+        assert.match(code, /parlor-zonk-staircase/);
+        assert.match(code, /parlor-zonk-saved-area/);
+        assert.match(code, /parlor-zonk-turn/);
+        assert.match(code, /parlor-zonk-round/);
+        assert.ok(!code.includes('☠ ЗОНК!'));
+    });
+
+    it('shows Farkle everywhere and uses full Russian gold settlement wording', async () => {
+        const ru = JSON.parse(await source('languages/ru.json'));
+        assert.equal(ru.PARLOR.Games.Zonk.Name, 'Farkle');
+        assert.equal(ru.PARLOR.Zonk.Title, 'FARKLE');
+        assert.equal(ru.PARLOR.Lobby.Setup.SettlementGold, 'Расчёт золотом D&D');
+        assert.equal(ru.PARLOR.Zonk.Bust, 'Farkle');
+    });
 });
