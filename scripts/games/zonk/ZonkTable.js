@@ -29,6 +29,9 @@ export class ZonkTable {
         this._rulesOpen = false;
         this._busy = false;
         this._dsnRollTokens = new Set();
+        this._dsnShownRollId = null;
+        this._dsnVisible = false;
+        this._dsnFallback2d = false;
     }
 
     render(force = false) {
@@ -52,6 +55,8 @@ export class ZonkTable {
         this._overlay = null;
         for (const token of this._dsnRollTokens) Dsn3dBridge.detachOverlay(token);
         this._dsnRollTokens.clear();
+        Dsn3dBridge.clearFarkleDice();
+        this._dsnVisible = false;
         this._rulesOpen = false;
         this._busy = false;
     }
@@ -187,33 +192,71 @@ export class ZonkTable {
             this._visibleRollId = state.rollId;
             this._visiblePlayerId = state.currentPlayerId;
         }
-        // A roll's results are GM-authoritative and remain visible in the blue
-        // play zone until the action changes to keep / bank / skip / Farkle.
-        // Dice So Nice handles only the 3D animation of these exact values.
-        // The persistent interactive faces are in our own synced table DOM,
-        // not in DSN's auto-hiding full-screen scene.
-        if (this._soundRollId === null) this._soundRollId = state.rollId;
-        else if (this._soundRollId !== state.rollId) {
+        // The GM decides each value. During Farkle, Dice So Nice's actual
+        // physics-rendered dice are the PRIMARY play surface; the old 2D die
+        // images are used only when DSN is unavailable or rejects a roll.
+        // Its runtime auto-hide setting is temporarily disabled for this
+        // individual Farkle throw (never saved to the user's preferences).
+        const choosingDsn = state.turnPhase === 'choose'
+            && Array.isArray(state.currentDice) && state.currentDice.length > 0
+            && Dsn3dBridge.isAvailable();
+        if (choosingDsn && this._dsnShownRollId !== state.rollId) {
+            this._dsnShownRollId = state.rollId;
             this._soundRollId = state.rollId;
-            if (state.turnPhase === 'choose' && Array.isArray(state.currentDice) && state.currentDice.length) {
-                if (Dsn3dBridge.isAvailable()) {
-                    // DSN's WebGL stage is raised over Farkle ONLY for the 3D
-                    // animation. Its canvas otherwise hides the interactive
-                    // white die faces while leaving the gold border visible.
-                    const token = `zonk-roll:${this.gameInstance.sessionId}:${state.rollId}`;
-                    const overlay = this._overlay;
-                    this._dsnRollTokens.add(token);
-                    overlay.classList.add('parlor-zonk-dsn-rolling');
-                    Dsn3dBridge.attachOverlay(token);
-                    Promise.resolve(Dsn3dBridge.rollD6Visuals(state.currentDice, { broadcast: false }))
-                        .catch(error => console.warn('parlor | Farkle DSN roll failed', error))
-                        .finally(() => {
-                            Dsn3dBridge.detachOverlay(token);
-                            this._dsnRollTokens.delete(token);
-                            if (!this._dsnRollTokens.size) overlay?.classList.remove('parlor-zonk-dsn-rolling');
-                        });
-                } else this._playRollSound();
-            }
+            this._dsnVisible = true;
+            this._dsnFallback2d = false;
+            const token = `zonk-roll:${this.gameInstance.sessionId}:${state.rollId}`;
+            const overlay = this._overlay;
+            this._dsnRollTokens.add(token);
+            overlay.classList.add('parlor-zonk-dsn-rolling', 'parlor-zonk-3d-active');
+            const holdSupported = Dsn3dBridge.holdFarkleDice(token);
+            Dsn3dBridge.attachOverlay(token);
+            Promise.resolve(Dsn3dBridge.rollD6Visuals(state.currentDice, {
+                broadcast: false,
+                appearance: {
+                    colorset: 'custom',
+                    system: 'standard',
+                    foreground: '#FFFFFF',
+                    background: '#2845cc',
+                    outline: '#2845cc',
+                    edge: '#2845cc',
+                    material: 'stone',
+                    texture: '',
+                    font: 'Arial'
+                }
+            })).then(displayed => {
+                if (!displayed || !holdSupported) {
+                    this._dsnFallback2d = true;
+                    this._dsnVisible = false;
+                    Dsn3dBridge.detachOverlay(token);
+                    this._dsnRollTokens.delete(token);
+                    overlay?.classList.remove('parlor-zonk-dsn-rolling','parlor-zonk-3d-active');
+                    this.refresh();
+                }
+            }).catch(error => {
+                console.warn('parlor | Dice So Nice Farkle roll failed', error);
+                this._dsnFallback2d = true;
+                this._dsnVisible = false;
+                Dsn3dBridge.detachOverlay(token);
+                this._dsnRollTokens.delete(token);
+                overlay?.classList.remove('parlor-zonk-dsn-rolling','parlor-zonk-3d-active');
+                this.refresh();
+            }).finally(() => {
+                // Leave the REAL 3D dice in DSN until keep / skip, but restore
+                // the global runtime auto-hide config immediately after roll.
+                Dsn3dBridge.releaseFarkleDice(token);
+            });
+        } else if (state.turnPhase !== 'choose' && this._dsnVisible) {
+            this._dsnVisible = false;
+            this._dsnFallback2d = false;
+            this._dsnShownRollId = null;
+            Dsn3dBridge.clearFarkleDice();
+            for (const token of this._dsnRollTokens) Dsn3dBridge.detachOverlay(token);
+            this._dsnRollTokens.clear();
+            this._overlay.classList.remove('parlor-zonk-dsn-rolling','parlor-zonk-3d-active');
+        } else if (this._soundRollId !== state.rollId) {
+            this._soundRollId = state.rollId;
+            if (!choosingDsn && state.turnPhase === 'choose') this._playRollSound();
         }
 
         const choosing = state.turnPhase === 'choose';
@@ -246,15 +289,18 @@ export class ZonkTable {
             </div>`;
         }).join('');
 
+        const use3d = choosing && Dsn3dBridge.isAvailable() && !this._dsnFallback2d;
+        // In 3D mode these are only SMALL numeric selection controls, not
+        // imitation 2D dice. The visible full-size dice are DSN WebGL meshes.
         const dice = choosing
             ? (state.currentDice || []).map((value, index) => `
-                <button type="button" class="parlor-zonk-pick ${this._selected.has(index) ? 'is-selected' : ''}"
-                    data-zonk-die="${index}" style="--z-roll-tilt:${[-5, 4, -2, 6, -3, 3][index % 6]}deg"
+                <button type="button" class="${use3d ? 'parlor-zonk-dsn-choice' : 'parlor-zonk-pick'} ${this._selected.has(index) ? 'is-selected' : ''}"
+                    data-zonk-die="${index}" style="--z-roll-tilt:${[-5,4,-2,6,-3,3][index % 6]}deg"
                     aria-pressed="${this._selected.has(index)}"
                     aria-label="${esc(t('Face', { value }))}" ${canPlay ? '' : 'disabled'}>
-                    ${pipDie(value)}
+                    ${use3d ? `<span class="parlor-zonk-dsn-choice-index">${index + 1}</span><b>${value}</b>` : pipDie(value)}
                 </button>`).join('')
-            : ''; // Nothing on the 3D roll surface until a real roll lands.
+            : '';
 
         // Each keep action starts its OWN new row, rather than being packed
         // into remaining empty cells of the previous row.
@@ -324,7 +370,7 @@ export class ZonkTable {
                 </div>
                 <section class="parlor-zonk-roll-zone" aria-label="${esc(t('DiceLeft'))}">
                   <div class="parlor-zonk-roll-zone-heading">${esc(t('RollZone'))}</div>
-                  <div class="parlor-zonk-dice-tray" data-zonk-roll-zone aria-live="polite">${dice}</div>
+                  <div class="parlor-zonk-dice-tray ${use3d ? 'is-dsn-3d' : ''}" data-zonk-roll-zone aria-live="polite">${dice}</div>
                   ${!choosing && !ended ? `<div class="parlor-zonk-roll-zone-hint">${esc(t('RollZoneHint'))}</div>` : ''}
                 </section>
                 <div class="parlor-zonk-buttons">
