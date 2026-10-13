@@ -16,7 +16,7 @@
     background-image: url('../assets/dice/d6-white-faces.webp') !important;
     background-repeat: no-repeat !important;
     background-size: 600% 100% !important;
-    background-position: calc(var(--parlor-d6-index, 0) * 20%) 50% !important;
+    background-position: var(--parlor-d6-position, 0%) 50% !important;
     border: 0 !important;
     border-radius: 9% !important;
     box-shadow: none !important;
