@@ -9,6 +9,30 @@ import { GAME_GUIDE_RU, BACCARAT_DRAW_GUIDE_RU } from './GameGuideRu.js';
 
 // 玩法长说明先收在这里，后面真改规则时只改一处就够了。
 const GAME_GUIDE_TEXT = {
+    zonk: {
+        en: {
+            summary: 'Zonk (Farkle) is a six-dice push-your-luck tavern game with a shared entry-fee pot.',
+            flow: [
+                'All players pay a fixed entry fee once at the start.',
+                'On your turn roll six dice, select scoring dice and keep them. Bank at least 300 turn points or roll the remaining dice again.',
+                'If no die can score, you Zonk and lose unbanked turn points. When all six dice score, roll all six again.',
+                'At the target score the other players each get one final turn.'
+            ],
+            win: [
+                'Single 1s score 100; single 5s score 50. Three 1s score 1000; other triples score face × 100.',
+                'Four, five and six of a kind score 2×, 3× and 4× a triple. Three pairs score 750; a 1–6 straight scores 1500.',
+                'The highest score after the final turns wins the shared pot. Ties split it.'
+            ],
+            notes: ['All dice rolls are controlled by the host GM. Unfinished matches refund entry fees.']
+        },
+        zh: {
+            summary: 'Zonk 是六骰子的酒馆积分游戏。',
+            flow: ['全员先缴纳底注。每回合投六颗骰子，留下得分骰子。', '累计至少300分可以存分；继续投骰子可能丢失本回合所有分数。', '六颗骰子全部用完可继续投六颗。有人达到目标后，其他玩家各有一次最终回合。'],
+            win: ['单个1为100，单个5为50，三个相同骰子按规则得分。', '三对得750分，1–6顺子得1500分。分数最高的玩家赢取奖池。'],
+            notes: ['中途取消对局将退还底注。']
+        }
+    },
+
     roulette: {
         zh: {
             summary: '这是一桌经典轮盘赌。所有人先把筹码压在想赌的位置上，DM 统一开转，最后按落点一次性结算全部下注。',
@@ -455,6 +479,25 @@ function getGuideLocale() {
 }
 
 const GAME_REGISTRY = {
+    zonk: {
+        id: 'zonk',
+        name: 'PARLOR.Games.Zonk.Name',
+        desc: 'PARLOR.Games.Zonk.Desc',
+        icon: 'fas fa-dice-six',
+        color: '#725127',
+        dealerMode: 'gm',
+        lobby: {
+            minParticipants: 2,
+            maxParticipants: 8,
+            allowGM: true,
+            allowNpc: true,
+            autoFillBots: true,
+            participantsNoteKey: 'PARLOR.Lobby.Setup.ZonkParticipantsNote'
+        },
+        load: () => import('../games/zonk/ZonkGame.js').then(m => m.ZonkGame),
+        loadUI: () => import('../games/zonk/ZonkTable.js').then(m => m.ZonkTable)
+    },
+
     roulette: {
         id: 'roulette',
         name: 'PARLOR.Games.Roulette.Name',
