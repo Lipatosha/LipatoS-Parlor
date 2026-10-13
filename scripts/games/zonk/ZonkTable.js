@@ -102,7 +102,7 @@ export class ZonkTable {
     }
 
     /** Exact illustrated rules order, re-skinned using the shared Foundry materials. */
-    _combos() {
+    _combos({ showDescriptions = false } = {}) {
         const combo = (faces, points, note = '') => `<div class="parlor-zonk-combo-row">
             <span class="parlor-zonk-combo-faces">${diceRow(faces, true)}</span>
             <strong class="parlor-zonk-combo-value">${fmt(points)}</strong>
@@ -119,8 +119,8 @@ export class ZonkTable {
         const group = (label, body) => `<section class="parlor-zonk-manuscript-section">
             <h4>${esc(label)}</h4><div class="parlor-zonk-manuscript-entries">${body}</div>
         </section>`;
-        const simpleKind = (count, label, points) =>
-            `<div class="parlor-zonk-kind-row"><span>${esc(label)}</span><b>${fmt(points)}</b></div>`;
+        const simpleKind = (label, multiplier) =>
+            `<div class="parlor-zonk-kind-row"><span>${esc(label)} ${esc(t('Multiplier'))}</span> <b>${esc(multiplier)}</b></div>`;
         return `<div class="parlor-zonk-manuscript" aria-label="${esc(t('Scoring'))}">
             <div class="parlor-zonk-manuscript-columns">
                 <div class="parlor-zonk-guide-column">
@@ -130,9 +130,9 @@ export class ZonkTable {
                         combo([4,4,4],400), combo([5,5,5],500), combo([6,6,6],600)
                     ].join(''))}
                     <div class="parlor-zonk-multiples">
-                        ${simpleKind(4,t('FourKind'),'×2')}
-                        ${simpleKind(5,t('FiveKind'),'×4')}
-                        ${simpleKind(6,t('SixKind'),'×8')}
+                        ${simpleKind(t('FourKind'),'×2')}
+                        ${simpleKind(t('FiveKind'),'×4')}
+                        ${simpleKind(t('SixKind'),'×8')}
                     </div>
                 </div>
                 <div class="parlor-zonk-guide-column">
@@ -141,11 +141,11 @@ export class ZonkTable {
                     ${group(t('SectionPairs'),anyDice([2,2,2],1500))}
                     ${group(t('SectionDoubleTriples'),anyDice([3,3],2500))}
                     ${group(t('SectionFourPlusPair'),anyDice([4,2],1500))}
-                    <div class="parlor-zonk-combo-extra">
+                    ${showDescriptions ? `<div class="parlor-zonk-combo-extra">
                         <p>${esc(t('ScoreHelpText'))}</p>
                         <p>${esc(t('ScoreHelpFullHand'))}</p>
                         <p>${esc(t('ScoreHelpBust'))}</p>
-                    </div>
+                    </div>` : ''}
                 </div>
             </div>
         </div>`;
@@ -168,7 +168,7 @@ export class ZonkTable {
                 </div>
                 ${guide?.note ? `<p class="parlor-zonk-rules-note">${esc(guide.note)}</p>` : ''}
                 <h3 class="parlor-zonk-rulebook-title">${esc(t('Scoring'))}</h3>
-                <div class="parlor-zonk-rules-combos">${this._combos()}</div>
+                <div class="parlor-zonk-rules-combos">${this._combos({ showDescriptions: true })}</div>
               </article>
             </div>
             <footer><button type="button" data-zonk-action="hide-rules">${esc(t('Understood'))}</button></footer>
@@ -317,7 +317,7 @@ export class ZonkTable {
             </main>
             <aside class="parlor-zonk-combos">
                 <div class="parlor-zonk-panel-title">${esc(t('Scoring'))}</div>
-                <div class="parlor-zonk-combo-list">${this._combos()}</div>
+                <div class="parlor-zonk-combo-list">${this._combos({ showDescriptions: false })}</div>
             </aside>
             ${this._rulesOpen ? this._rules() : ''}
         </div>`;
