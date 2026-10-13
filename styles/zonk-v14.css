@@ -1,0 +1,94 @@
+/* Zonk: warm tavern felt table, readable in Foundry 13 / 14. */
+#parlor-zonk-overlay.parlor-zonk-overlay {
+  position: fixed; inset: 0; z-index: 2300; overflow: auto;
+  box-sizing: border-box; padding: clamp(12px, 2.2vw, 30px);
+  background: radial-gradient(circle at 50% 20%, #493322 0%, #1c1613 74%, #100e0d 100%);
+  color: #f4e4c6; font: 15px/1.35 Georgia, serif;
+}
+#parlor-zonk-overlay * { box-sizing: border-box; }
+#parlor-zonk-overlay button { cursor: pointer; font: inherit; }
+#parlor-zonk-overlay button:disabled { cursor: not-allowed; opacity: .42; }
+#parlor-zonk-overlay .parlor-zonk-layout {
+  width: min(1360px, 100%); min-height: min(810px, 90vh); margin: 0 auto;
+  padding: 22px; border-radius: 20px;
+  background: linear-gradient(145deg, #403025, #241910);
+  border: 2px solid #a17a46; box-shadow: 0 15px 55px #080605bb, inset 0 0 0 6px #20150d;
+}
+#parlor-zonk-overlay .parlor-zonk-header {
+  display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;
+  gap: 16px; padding: 4px 8px 20px; border-bottom: 1px solid #9d784d6e;
+}
+#parlor-zonk-overlay .parlor-zonk-kicker { color: #d9af69; letter-spacing: .24em; font-size: 11px; text-transform: uppercase; }
+#parlor-zonk-overlay h1 { font: 700 clamp(31px, 4vw, 52px) Georgia,serif; color: #f6e0aa; margin: 0; letter-spacing: .08em; text-shadow: 0 2px 3px #060503; }
+#parlor-zonk-overlay .parlor-zonk-tagline { color: #cfbaa0; font-size: 13px; }
+#parlor-zonk-overlay .parlor-zonk-header-right { display: flex; gap: 20px; align-items: center; }
+#parlor-zonk-overlay .parlor-zonk-metric { display: flex; flex-direction: column; align-items: end; gap: 3px; }
+#parlor-zonk-overlay .parlor-zonk-metric small { color: #c6aa85; font-size: 12px; }
+#parlor-zonk-overlay .parlor-zonk-metric strong { color: #f2cf78; font-size: 24px; }
+#parlor-zonk-overlay .parlor-zonk-close { width: 38px; height: 38px; color: #e6cbae; background: #492e22; border: 1px solid #ab7b51; border-radius: 8px; font-size: 27px; line-height: 1; }
+#parlor-zonk-overlay .parlor-zonk-body { display: grid; grid-template-columns: minmax(0, 1fr) minmax(240px, 310px); gap: 22px; padding-top: 22px; }
+#parlor-zonk-overlay .parlor-zonk-table {
+  display: grid; align-items: center; min-height: 620px; padding: 19px;
+  border-radius: 36% / 15%; border: 15px ridge #835432;
+  background: radial-gradient(ellipse at 50% 35%, #205944, #143a30 75%, #11251f);
+  box-shadow: inset 0 0 0 2px #c6a06c, inset 0 0 90px #07130fb3, 4px 10px 20px #0c0909a6;
+}
+#parlor-zonk-overlay .parlor-zonk-table-inner { text-align: center; width: 100%; min-width: 0; }
+#parlor-zonk-overlay .parlor-zonk-round { text-transform: uppercase; color: #edd198; letter-spacing: .17em; font-size: 12px; }
+#parlor-zonk-overlay .parlor-zonk-current { margin: 17px 0 16px; font-size: clamp(18px,2vw,25px); }
+#parlor-zonk-overlay .parlor-zonk-current b { color: #ffd58d; }
+#parlor-zonk-overlay .parlor-zonk-last { margin: 12px; font-size: 20px; font-weight: bold; color: #ffe2a0; }
+#parlor-zonk-overlay .parlor-zonk-dice {
+  display: flex; flex-wrap: wrap; justify-content: center; gap: clamp(8px,1vw,15px);
+  min-height: 128px; align-items: center; padding: 12px 0;
+}
+#parlor-zonk-overlay .parlor-zonk-die {
+  position: relative; width: clamp(55px,6.5vw,86px); height: clamp(55px,6.5vw,86px);
+  padding: 0; border-radius: 14px; border: 3px solid #e6dac6;
+  color: #282521; background: linear-gradient(140deg,#fff9eb,#c8bda7);
+  box-shadow: 1px 5px 11px #06150d99, inset 1px 2px 3px #ffffff;
+  transition: transform .12s ease, outline-color .12s ease;
+}
+#parlor-zonk-overlay button.parlor-zonk-die:not(:disabled):hover { transform: translateY(-5px); }
+#parlor-zonk-overlay .parlor-zonk-die span { font: 65px/.95 Georgia,serif; display: block; }
+#parlor-zonk-overlay .parlor-zonk-die em { position: absolute; bottom: 3px; right: 7px; font: 700 10px Arial,sans-serif; color: #544b40; }
+#parlor-zonk-overlay .parlor-zonk-die.is-selected { outline: 4px solid #f9cc59; transform: translateY(-8px); box-shadow: 0 0 24px #f6c64e66; }
+#parlor-zonk-overlay .parlor-zonk-die.is-waiting { display: flex; align-items: center; justify-content: center; opacity: .25; filter: grayscale(1); }
+#parlor-zonk-overlay .parlor-zonk-info { color: #f4dfbd; font-size: 17px; min-height: 27px; margin: 8px 0; }
+#parlor-zonk-overlay .parlor-zonk-selection { color: #ffd47c; font-weight: bold; min-height: 23px; }
+#parlor-zonk-overlay .parlor-zonk-totals { display: flex; flex-wrap: wrap; justify-content: center; gap: 9px; margin: 20px 0; }
+#parlor-zonk-overlay .parlor-zonk-totals > div { min-width: 110px; padding: 9px 15px; border: 1px solid #d9b97b88; background: #071a1680; border-radius: 10px; display: flex; flex-direction: column; }
+#parlor-zonk-overlay .parlor-zonk-totals small { color: #ccb792; font-size: 12px; }
+#parlor-zonk-overlay .parlor-zonk-totals b { color: #f5dba6; font-size: 23px; }
+#parlor-zonk-overlay .parlor-zonk-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; min-height: 47px; }
+#parlor-zonk-overlay .parlor-zonk-btn { min-height: 42px; padding: 9px 18px; border-radius: 8px; border: 1px solid #b08a55; background: linear-gradient(#573f2a,#34271c); color: #fae3bd; font-weight: bold; }
+#parlor-zonk-overlay .parlor-zonk-btn.is-primary { background: linear-gradient(#b08a47,#805523); color: #20150d; border-color: #f1c778; }
+#parlor-zonk-overlay .parlor-zonk-btn.is-danger { background: linear-gradient(#6c3830,#43231f); color: #ffddd2; border-color: #a76b60; width: 100%; }
+#parlor-zonk-overlay .parlor-zonk-event { max-width: 500px; margin: 15px auto 0; color: #ddc4a0; font-style: italic; min-height: 20px; }
+#parlor-zonk-overlay .parlor-zonk-final { color: #f2c871; margin-top: 8px; font-weight: bold; }
+#parlor-zonk-overlay .parlor-zonk-sidebar { display: flex; flex-direction: column; gap: 15px; }
+#parlor-zonk-overlay .parlor-zonk-sidebar h2 { margin: 0; font: 700 23px Georgia,serif; color: #eac58a; }
+#parlor-zonk-overlay .parlor-zonk-seats { display: flex; flex-direction: column; gap: 6px; }
+#parlor-zonk-overlay .parlor-zonk-seat { display: flex; align-items: center; gap: 9px; padding: 10px 8px; border-radius: 8px; border: 1px solid #826b473f; background: #120c0999; }
+#parlor-zonk-overlay .parlor-zonk-seat.is-active { border-color: #e6c47e; background: #3c3424; }
+#parlor-zonk-overlay .parlor-zonk-seat.is-winner { border-color: #83b878; background: #24452e; }
+#parlor-zonk-overlay .parlor-zonk-seat-rank { color: #b39165; min-width: 14px; }
+#parlor-zonk-overlay .parlor-zonk-seat-name { min-width: 0; flex: 1; overflow-wrap: anywhere; font-weight: bold; font-size: 13px; }
+#parlor-zonk-overlay .parlor-zonk-seat-name small { color: #d4ac77; display: block; font-weight: normal; font-size: 11px; }
+#parlor-zonk-overlay .parlor-zonk-seat strong { color: #f4cf89; font-size: 16px; white-space: nowrap; }
+#parlor-zonk-overlay .parlor-zonk-seat-zonks { color: #b3a49a; font-size: 11px; white-space: nowrap; }
+#parlor-zonk-overlay .parlor-zonk-cheatsheet { padding: 15px; background: #15110eae; border-radius: 12px; border: 1px solid #765c3b; display: grid; gap: 5px; font-size: 13px; color: #e4d1b5; }
+#parlor-zonk-overlay .parlor-zonk-cheatsheet h3 { margin: 0 0 5px; color: #f5cd8b; font: 700 19px Georgia,serif; }
+#parlor-zonk-overlay .parlor-zonk-gm { display: flex; flex-wrap: wrap; flex-direction: column; gap: 9px; border-top: 1px solid #735637; padding-top: 14px; font-size: 13px; color: #e4c49a; }
+@media(max-width:850px) {
+  #parlor-zonk-overlay .parlor-zonk-body { grid-template-columns: 1fr; }
+  #parlor-zonk-overlay .parlor-zonk-table { min-height: 470px; border-radius: 28px; }
+  #parlor-zonk-overlay .parlor-zonk-sidebar { display: grid; grid-template-columns: repeat(auto-fit,minmax(230px,1fr)); }
+  #parlor-zonk-overlay .parlor-zonk-sidebar h2 { grid-column: 1 / -1; }
+}
+@media(max-width:500px) {
+  #parlor-zonk-overlay .parlor-zonk-layout { padding: 13px; }
+  #parlor-zonk-overlay .parlor-zonk-table { padding: 8px; border-width: 7px; }
+  #parlor-zonk-overlay .parlor-zonk-die span { font-size: 44px; }
+  #parlor-zonk-overlay .parlor-zonk-header-right { gap: 11px; }
+}
