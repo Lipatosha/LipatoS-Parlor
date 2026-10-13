@@ -107,10 +107,36 @@ describe('D&D coin denomination modes', () => {
         gameInstance.playerStates['actor:a1'].score = 2400;
         gameInstance.playerStates['actor:b1'].score = 300;
         gameInstance._finishMatch();
+        await gameInstance._settlementPromise;
+        assert.equal(alice.system.currency.sp, 62, 'Prize paid automatically');
         await gameInstance.handleGMAction('finishGame');
+        assert.equal(alice.updates.length, 2, 'Do not pay twice after manual close');
         assert.equal(alice.system.currency.sp, 62);
         assert.equal(bob.system.currency.sp, 38);
         assert.equal(alice.system.currency.gp, 15);
         assert.equal(alice.system.currency.cp, 90);
     });
+    it('automatically pays gold and copper winnings without GM interaction', async () => {
+        for (const [coin, mode] of [['gp', 'dnd5e-gold'], ['cp', 'dnd5e-copper']]) {
+            const first = addActor('a1', 100, 100, 100);
+            const second = addActor('b1', 100, 100, 100);
+            const match = new ZonkGame({
+                sessionId: 'prize-' + coin,
+                playerIds: ['actor:a1', 'actor:b1'],
+                participants: [{ id: 'actor:a1' }, { id: 'actor:b1' }],
+                gameOptions: { ante: 10, targetScore: 2000, settlementMode: mode }
+            });
+            match._broadcastState = async () => {};
+            assert.deepEqual(await match.start(), { ok: true });
+            match.playerStates['actor:a1'].score = 2000;
+            match._finishMatch();
+            await match._settlementPromise;
+            assert.equal(first.system.currency[coin], 110);
+            assert.equal(second.system.currency[coin], 90);
+            assert.equal(match.settlementApplied, true);
+            await match.handleGMAction('finishGame');
+            assert.equal(first.system.currency[coin], 110, 'Prize paid exactly once');
+        }
+    });
+
 });
