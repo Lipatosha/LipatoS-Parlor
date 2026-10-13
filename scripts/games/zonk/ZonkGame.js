@@ -36,6 +36,8 @@ export class ZonkGame extends GameBase {
         this.pot = 0;
         this.lastRoll = [];
         this.lastEvent = '';
+        this.history = [];
+        this.historySequence = 0;
         this.winnerIds = [];
         this.finalTurnsRemaining = null;
         this.settlementApplied = false;
@@ -74,6 +76,7 @@ export class ZonkGame extends GameBase {
         }
         this.started = true;
         this.pot = this.ante * contributions.length;
+        this._record('start', '', { points: this.pot });
         this.playerStates = Object.fromEntries(this.turnOrder.map(id => [id, {
             score: 0, status: 'waiting', lastGain: 0, zonks: 0, turns: 0
         }]));
@@ -101,6 +104,8 @@ export class ZonkGame extends GameBase {
             pot: this.pot,
             lastRoll: this.lastRoll,
             lastEvent: this.lastEvent,
+            history: this.history,
+            historySequence: this.historySequence,
             winnerIds: this.winnerIds,
             finalTurnsRemaining: this.finalTurnsRemaining,
             settlementApplied: this.settlementApplied,
@@ -115,7 +120,8 @@ export class ZonkGame extends GameBase {
             'ante', 'targetScore', 'minBank', 'turnOrder', 'playerStates',
             'currentPlayerId', 'currentDice', 'remainingDice', 'turnPoints',
             'turnPhase', 'rollId', 'pot', 'lastRoll', 'lastEvent', 'winnerIds',
-            'finalTurnsRemaining', 'settlementApplied', 'started', 'lastError'
+            'finalTurnsRemaining', 'settlementApplied', 'started', 'lastError',
+            'history', 'historySequence'
         ]) {
             if (Object.prototype.hasOwnProperty.call(state, key)) this[key] = state[key];
         }
@@ -132,6 +138,7 @@ export class ZonkGame extends GameBase {
             this.currentDice = Array.from({ length: this.remainingDice }, () => rollD6(this._rng));
             this.lastRoll = [...this.currentDice];
             this.rollId++;
+            this._record('roll', participantId, { dice: [...this.currentDice] });
             this.turnPhase = 'choose';
             if (!canScoreZonkRoll(this.currentDice)) {
                 this._finishTurn(0, true);
@@ -152,6 +159,7 @@ export class ZonkGame extends GameBase {
             const points = scoreZonkDice(indices.map(i => this.currentDice[i]));
             if (!points) return { ok: false, reason: 'invalid-combination' };
             this.turnPoints += points;
+            this._record('keep', participantId, { dice: indices.map(i => this.currentDice[i]), points });
             this.remainingDice -= indices.length;
             this.currentDice = [];
             if (this.remainingDice === 0) this.remainingDice = ZONK_DICE;
@@ -174,7 +182,7 @@ export class ZonkGame extends GameBase {
 
     async handleGMAction(action) {
         if (action === 'skipTurn' && this.phase === 'PLAYER_TURNS') {
-            this._finishTurn(0, true);
+            this._finishTurn(0, true, { skipped: true });
             await this._broadcastState();
             return { ok: true };
         }
@@ -197,13 +205,28 @@ export class ZonkGame extends GameBase {
         }
     }
 
-    _finishTurn(gain, zonk) {
+    _record(kind, participantId = '', payload = {}) {
+        const entry = {
+            id: ++this.historySequence,
+            kind,
+            participantId: String(participantId || ''),
+            dice: Array.isArray(payload.dice) ? payload.dice.slice(0, ZONK_DICE) : [],
+            points: Number(payload.points || 0),
+            time: Date.now()
+        };
+        this.history = [entry, ...this.history].slice(0, 7);
+    }
+
+    _finishTurn(gain, zonk, { skipped = false } = {}) {
         const id = this.currentPlayerId;
         const seat = this.playerStates[id];
         if (!seat) return;
         seat.turns++;
         seat.lastGain = gain;
         if (zonk) seat.zonks++;
+        this._record(skipped ? 'skip' : (zonk ? 'zonk' : 'bank'), id, {
+            points: gain, dice: zonk ? this.lastRoll : []
+        });
         seat.score += gain;
         seat.status = zonk ? 'zonk' : 'banked';
         this.lastEvent = zonk
@@ -239,6 +262,7 @@ export class ZonkGame extends GameBase {
             ? 'Партия завершена. Победитель определён!'
             : 'Партия завершена. Ничья по очкам!';
         this._transition('FINISHED');
+        this._record('finish', this.winnerIds[0] || '', { points: maxScore });
     }
 
     async _settleOrRefund() {
@@ -258,6 +282,7 @@ export class ZonkGame extends GameBase {
         const applied = await SettlementManager.applyDeltas(entries, this);
         if (applied !== false) {
             this.settlementApplied = true;
+            this._record(this.phase === 'FINISHED' ? 'paid' : 'refund', '', { points: this.pot });
             await this._broadcastState();
         }
     }
