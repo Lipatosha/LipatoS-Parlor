@@ -551,3 +551,45 @@
     #parlor-zonk-overlay .parlor-zonk-lower-board { grid-template-columns: 1fr; }
     #parlor-zonk-overlay .parlor-zonk-stair-slot { --z-slot: clamp(30px,7vw,47px); }
 }
+
+/* v2.1.2 — Selection ring painted ABOVE the white dice sprite.
+ * The previous border was on the button behind its large child die,
+ * making only thin protruding segments visible on the left and right.
+ */
+#parlor-zonk-overlay button.parlor-zonk-pick {
+    position: relative;
+    isolation: isolate;
+    overflow: visible;
+    border: 1px solid transparent;
+    background: transparent;
+    box-shadow: none;
+    padding: 5px;
+}
+#parlor-zonk-overlay button.parlor-zonk-pick::after {
+    content: "";
+    position: absolute;
+    z-index: 3;
+    inset: 7px;
+    border: 3px solid #e5c88a;
+    border-radius: 9%;
+    box-shadow: inset 0 0 0 1px rgba(35, 28, 17, .62),
+                0 0 0 1px rgba(16, 13, 9, .72),
+                0 0 9px rgba(231, 195, 117, .55);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .13s ease;
+}
+#parlor-zonk-overlay button.parlor-zonk-pick:not(:disabled):hover::after,
+#parlor-zonk-overlay button.parlor-zonk-pick.is-selected::after,
+#parlor-zonk-overlay button.parlor-zonk-pick:focus-visible::after {
+    opacity: 1;
+}
+#parlor-zonk-overlay button.parlor-zonk-pick.is-selected {
+    background: transparent;
+    border-color: transparent;
+    transform: translateY(-3px);
+}
+#parlor-zonk-overlay button.parlor-zonk-pick:not(:disabled):hover {
+    background: transparent;
+    border-color: transparent;
+}
