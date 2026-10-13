@@ -1,8 +1,8 @@
 {
   "id": "parlor",
   "title": "LipatoS — Parlor",
-  "description": "Казино и фэнтезийная таверна с полностью русским интерфейсом и правилами всех игр для Foundry VTT.",
-  "version": "1.5.1",
+  "description": "Казино и фэнтезийная таверна: 13 игр, включая Зонк, с русским интерфейсом и правилами для Foundry VTT.",
+  "version": "1.6.0",
   "manifest": "https://github.com/Lipatosha/LipatoS-Parlor/releases/latest/download/module.json",
   "url": "https://github.com/Lipatosha/LipatoS-Parlor",
   "compatibility": {
@@ -32,6 +32,7 @@
     "styles/crazyeights-v14.css",
     "styles/beetlerace-v14.css",
     "styles/slotmachine-v14.css",
+    "styles/zonk-v14.css",
     "styles/tavern.css"
   ],
   "languages": [
@@ -51,5 +52,5 @@
       "path": "languages/ru.json"
     }
   ],
-  "download": "https://github.com/Lipatosha/LipatoS-Parlor/releases/download/v1.5.1/lipatos-parlor-v1.5.1.zip"
+  "download": "https://github.com/Lipatosha/LipatoS-Parlor/releases/download/v1.6.0/lipatos-parlor-v1.6.0.zip"
 }
