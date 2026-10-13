@@ -1,14 +1,7 @@
+import { renderD6Face } from '../../core/DiceFaces.js';
+
 const MAX_SIDE_SEATS = 5;
 const MAX_PRESENTER_SEATS = MAX_SIDE_SEATS * 2;
-const DIE_PIPS = Object.freeze({
-    1: [5],
-    2: [1, 9],
-    3: [1, 5, 9],
-    4: [1, 3, 7, 9],
-    5: [1, 3, 5, 7, 9],
-    6: [1, 3, 4, 6, 7, 9]
-});
-
 function fallbackT(key, data = null) {
     if (!data) return String(key || '');
     return `${String(key || '')}:${JSON.stringify(data)}`;
@@ -165,23 +158,10 @@ function getSeatLayout(state, helpers) {
 }
 
 function buildDie(value, { small = false, compact = false } = {}) {
-    const safeValue = Math.max(1, Math.min(6, Math.floor(Number(value || 0))));
-    const pips = DIE_PIPS[safeValue] || [];
-    const classes = [
-        'parlor-ld-die',
-        small ? 'is-small' : '',
-        compact ? 'is-compact' : ''
-    ].filter(Boolean).join(' ');
-
-    return `
-        <div class="${classes}" data-value="${safeValue}">
-            ${Array.from({ length: 9 }, (_, index) => {
-                const pipIndex = index + 1;
-                const className = pips.includes(pipIndex) ? 'is-on' : '';
-                return `<span class="parlor-ld-pip pip-${pipIndex} ${className}"></span>`;
-            }).join('')}
-        </div>
-    `;
+    return renderD6Face(value, {
+        className: ['parlor-ld-die', compact ? 'is-compact' : ''].filter(Boolean).join(' '),
+        small
+    });
 }
 
 function buildDiceRow(dice, { small = false, compact = false } = {}) {
