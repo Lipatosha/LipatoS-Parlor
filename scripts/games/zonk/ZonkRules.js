@@ -59,7 +59,7 @@ export function scoreZonkDice(dice) {
         if (special) best = Math.max(best, special);
         for (let face = 1; face <= 6; face++) {
             if (!remaining[face]) continue;
-            if (face === 1 || face === 5) {
+            if ((face === 1 || face === 5) && remaining[face] < 3) {
                 const taken = Array(7).fill(0);
                 taken[face] = 1;
                 candidate(taken, face === 1 ? FARKLE_SCORE.singleOne : FARKLE_SCORE.singleFive);
