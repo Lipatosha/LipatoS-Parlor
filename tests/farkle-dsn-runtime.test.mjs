@@ -5,9 +5,13 @@ import { Dsn3dBridge } from '../scripts/core/Dsn3dBridge.js';
 describe('Farkle DSN runtime hold behavior', () => {
     it('temporarily disables real 3D auto-hide and restores settings afterward', () => {
         const oldGame = globalThis.game;
+        const oldHTMLElement = globalThis.HTMLElement;
+        const oldDocument = globalThis.document;
         const originalWarn = console.warn;
         let cleared = 0;
         const CONFIG = { hideAfterRoll: true };
+        globalThis.HTMLElement = class HTMLElement {};
+        globalThis.document = { querySelectorAll: () => [] };
         globalThis.game = {
             settings: { get: (_id, key) => key === 'dsnIntegration' ? 'auto' : null },
             modules: { get: id => id === 'dice-so-nice' ? { active: true } : null },
@@ -27,6 +31,8 @@ describe('Farkle DSN runtime hold behavior', () => {
             assert.equal(CONFIG.hideAfterRoll, true);
         } finally {
             globalThis.game = oldGame;
+            globalThis.HTMLElement = oldHTMLElement;
+            globalThis.document = oldDocument;
             console.warn = originalWarn;
         }
     });
