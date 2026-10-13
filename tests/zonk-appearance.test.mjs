@@ -210,6 +210,31 @@ describe('Farkle widescreen 16:9 existing-game redesign', () => {
         }
     });
 
+    it('elevates the new-game settings DialogV2 above the fullscreen victory panel', async () => {
+        const code = await table();
+        const styles = await source('styles/parlor.css');
+        assert.ok(code.includes('parlor-zonk-rematch-dialog'));
+        assert.ok(code.includes("windowRoot.style.zIndex = '3200'"));
+        assert.ok(code.includes('requestAnimationFrame(elevate)'));
+        assert.ok(code.includes('setTimeout(elevate, 60)'));
+        assert.ok(styles.includes('.parlor-overlay-dialog'));
+        assert.ok(styles.includes('z-index: 3200 !important'));
+    });
+
+    it('shows selected dice from other players using GM-synced selection state', async () => {
+        const tableCode = await table();
+        const gameCode = await source('scripts/games/zonk/ZonkGame.js');
+        assert.ok(tableCode.includes('state.playerSelectedIndices || []'));
+        assert.ok(tableCode.includes('this._broadcastSelectionPreview('));
+        assert.ok(tableCode.includes("action: 'previewSelection'"));
+        assert.ok(tableCode.includes('this._previewQueue = this._previewQueue.catch'));
+        assert.ok(tableCode.includes('displaySelection.has(index)'));
+        assert.ok(gameCode.includes('playerSelectedIndices: this.playerSelectedIndices'));
+        assert.ok(gameCode.includes("if (action === 'previewSelection')"));
+        assert.ok(gameCode.includes("Number(data?.rollId) !== this.rollId"));
+        assert.ok(gameCode.includes('void this._broadcastState()'));
+    });
+
     it('holds bot dice for three seconds measured from the authoritative roll timestamp', async () => {
         const rules = await source('scripts/games/zonk/ZonkGame.js');
         const bot = await source('scripts/core/BotManager.js');
