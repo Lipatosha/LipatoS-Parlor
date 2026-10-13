@@ -1,8 +1,8 @@
 {
   "id": "parlor",
   "title": "LipatoS — Parlor",
-  "description": "Казино Аиндора: Farkle 16:9 — история ходов под полем, полный справочник комбинаций справа, пропуск хода внизу панели игроков, две кнопки управления.",
-  "version": "2.2.1",
+  "description": "Казино Аиндора: Farkle — объявление победителя, повторная партия с новыми ставками, полное поле броска без панели отложенных костей и 3 секунды показа броска бота.",
+  "version": "2.2.2",
   "manifest": "https://github.com/Lipatosha/LipatoS-Parlor/releases/latest/download/module.json",
   "url": "https://github.com/Lipatosha/LipatoS-Parlor",
   "compatibility": {
@@ -54,5 +54,5 @@
       "path": "languages/ru.json"
     }
   ],
-  "download": "https://github.com/Lipatosha/LipatoS-Parlor/releases/download/v2.2.1/lipatos-parlor-v2.2.1.zip"
+  "download": "https://github.com/Lipatosha/LipatoS-Parlor/releases/download/v2.2.2/lipatos-parlor-v2.2.2.zip"
 }
