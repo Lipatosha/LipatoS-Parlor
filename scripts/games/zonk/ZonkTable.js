@@ -28,6 +28,7 @@ export class ZonkTable {
         this._soundOn = true;
         this._rulesOpen = false;
         this._busy = false;
+        this._dsnRollTokens = new Set();
     }
 
     render(force = false) {
@@ -39,7 +40,8 @@ export class ZonkTable {
             this._overlay.id = 'parlor-zonk-overlay';
             this._overlay.className = 'parlor-zonk-overlay';
             document.body.appendChild(this._overlay);
-            Dsn3dBridge.attachOverlay(`zonk:${this.gameInstance.sessionId}`);
+            // Do NOT leave the Dice So Nice canvas (z-index 3100) above the
+            // Farkle table (previously 2300) for the entire match.
         }
         this.refresh();
     }
@@ -48,7 +50,8 @@ export class ZonkTable {
         if (dismiss) this._dismissedByUser = true;
         this._overlay?.remove();
         this._overlay = null;
-        Dsn3dBridge.detachOverlay(`zonk:${this.gameInstance.sessionId}`);
+        for (const token of this._dsnRollTokens) Dsn3dBridge.detachOverlay(token);
+        this._dsnRollTokens.clear();
         this._rulesOpen = false;
         this._busy = false;
     }
@@ -194,8 +197,21 @@ export class ZonkTable {
             this._soundRollId = state.rollId;
             if (state.turnPhase === 'choose' && Array.isArray(state.currentDice) && state.currentDice.length) {
                 if (Dsn3dBridge.isAvailable()) {
+                    // DSN's WebGL stage is raised over Farkle ONLY for the 3D
+                    // animation. Its canvas otherwise hides the interactive
+                    // white die faces while leaving the gold border visible.
+                    const token = `zonk-roll:${this.gameInstance.sessionId}:${state.rollId}`;
+                    const overlay = this._overlay;
+                    this._dsnRollTokens.add(token);
+                    overlay.classList.add('parlor-zonk-dsn-rolling');
+                    Dsn3dBridge.attachOverlay(token);
                     Promise.resolve(Dsn3dBridge.rollD6Visuals(state.currentDice, { broadcast: false }))
-                        .catch(error => console.warn('parlor | Farkle DSN roll failed', error));
+                        .catch(error => console.warn('parlor | Farkle DSN roll failed', error))
+                        .finally(() => {
+                            Dsn3dBridge.detachOverlay(token);
+                            this._dsnRollTokens.delete(token);
+                            if (!this._dsnRollTokens.size) overlay?.classList.remove('parlor-zonk-dsn-rolling');
+                        });
                 } else this._playRollSound();
             }
         }
