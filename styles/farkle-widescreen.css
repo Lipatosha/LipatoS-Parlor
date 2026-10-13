@@ -560,7 +560,7 @@
 #parlor-zonk-overlay .parlor-zonk-right .parlor-zonk-any-groups {
   display:flex;
   flex-wrap:nowrap;
-  gap:2em !important; /* approximately five word spaces between each dice group */
+  gap:1.2em !important; /* approximately three word spaces between dice groups */
 }
 #parlor-zonk-overlay .parlor-zonk-right .parlor-zonk-any-group {
   display:flex;
