@@ -576,6 +576,12 @@ export class BotManager {
         if (phase !== 'PLAYER_TURNS' || !this.isBot(state.currentPlayerId)) return;
         const id = state.currentPlayerId;
         if (state.turnPhase === 'choose') {
+            // Broadcast the bot's proposed choice before its three-second pause ends.
+            const preview = getZonkKeepOptions(state.currentDice || [])[0];
+            if (preview && !(game.botSelectedIndices?.length)) {
+                game.botSelectedIndices = [...preview.indices];
+                await game._broadcastState();
+            }
             // Three seconds TOTAL from the GM roll, including bot-scheduler time.
             const startedAt = Number(state.rollTimestamp || Date.now());
             const remaining = Math.max(0, 3000 - (Date.now() - startedAt));
