@@ -6,6 +6,7 @@
 import { SocketManager, SOCKET_EVENTS } from './SocketManager.js';
 import { createGameInstance, createGameUI, getGameConfig } from './GameRegistry.js';
 import { BotManager } from './BotManager.js';
+import { SettlementManager } from './SettlementManager.js';
 import { getParticipants } from './ParticipantRoster.js';
 
 const MODULE_ID = 'parlor';
@@ -447,6 +448,12 @@ export class ParlorManager {
             );
         }
 
+        // Rematch must run on the HOST GM. A new session is created through
+        // the usual START_GAME event, after the previous prize is paid once.
+        if (action === 'rematchZonk') {
+            return this._rematchZonkSession(sessionId, session, data);
+        }
+
         const result = await session.game.handleGMAction(action, data);
 
         if (action === 'finishGame') {
@@ -457,6 +464,58 @@ export class ParlorManager {
         // 主持人手动推进后，测试机器人可能也能继续走了。
         this._triggerBots(sessionId);
         return result;
+    }
+
+    static _rematchesInProgress = new Set();
+
+    /**
+     * Start a fresh Farkle match with the same seats and NEW wager settings.
+     * Only the host GM can reach this method through the GM_ACTION router.
+     * Finish the old pot before applying new entry fees; no double payment.
+     */
+    static async _rematchZonkSession(sessionId, session, data = {}) {
+        const current = session?.game;
+        if (!current || current.gameType !== 'zonk' || current.phase !== 'FINISHED') {
+            return { ok: false, reason: 'not-finished' };
+        }
+        if (this._rematchesInProgress.has(sessionId)) {
+            return { ok: false, reason: 'rematch-pending' };
+        }
+        const ante = Number(data?.ante);
+        const targetScore = Number(data?.targetScore);
+        const currency = String(data?.settlementMode || current.settlementMode);
+        const allowedTargets = [2000, 3000, 5000, 10000];
+        const allowedModes = ['chips', 'dnd5e-gold', 'dnd5e-silver', 'dnd5e-copper'];
+        if (!Number.isInteger(ante) || ante < 1 || ante > 100000
+            || !allowedTargets.includes(targetScore) || !allowedModes.includes(currency)
+            || (currency !== 'chips' && !SettlementManager.canUseDnd5eGold())) {
+            return { ok: false, reason: 'rematch-options' };
+        }
+        this._rematchesInProgress.add(sessionId);
+        try {
+            // Settlement changes the winner's funds; validate the NEW bet after
+            // the payout. A failed payout leaves the completed match in place.
+            await current.handleGMAction('finishGame');
+            if (!current.settlementApplied) return { ok: false, reason: 'settlement' };
+            const gameOptions = {
+                ...current.gameOptions,
+                settlementMode: currency,
+                ante,
+                targetScore
+            };
+            const exempt = new Set(gameOptions.exemptParticipantIds || []);
+            const insufficient = [...current.playerIds].filter(id => !exempt.has(id)
+                && !SettlementManager.canAfford(id, ante, gameOptions));
+            if (insufficient.length) return { ok: false, reason: 'funds', insufficient };
+
+            // Teardown is propagated to every client BEFORE the new session.
+            await this.endGame(sessionId, { settleBeforeEnd: false });
+            const started = await this.startGame('zonk', current.participants,
+                current.isPublic, null, gameOptions);
+            return started ? { ok: true } : { ok: false, reason: 'start-failed' };
+        } finally {
+            this._rematchesInProgress.delete(sessionId);
+        }
     }
 
     /**
