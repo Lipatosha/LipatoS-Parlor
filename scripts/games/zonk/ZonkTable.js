@@ -191,9 +191,10 @@ export class ZonkTable {
         // A rollId is authoritative and changes once per new GM-synced throw.
         if (this._soundRollId !== state.rollId) {
             this._soundRollId = state.rollId;
-            if (state.turnPhase === 'choose' && state.currentDice?.length) this._playRollSound();
+            if (['choose', 'zonked'].includes(state.turnPhase) && state.currentDice?.length) this._playRollSound();
         }
         const choosing = state.turnPhase === 'choose';
+        const zonked = state.turnPhase === 'zonked';
         const ready = state.turnPhase === 'ready';
         const ended = state.phase === 'FINISHED';
         if (ended && !this._winnerNoticeShown && state.winnerIds?.length) {
@@ -206,6 +207,8 @@ export class ZonkTable {
         const pending = !state.started;
         const hot = ready && state.remainingDice === 6;
         const canPlay = this._canPlay(state) && !this._busy;
+        const displaySelection = choosing && BotManager.isBot(state.currentPlayerId)
+            ? new Set(state.botSelectedIndices || []) : this._selected;
         const selectedIndices = [...this._selected].sort((a, b) => a - b);
         const points = scoreZonkDice(selectedIndices.map(index => state.currentDice?.[index]));
         const current = state.currentPlayerId ? this._participantName(state, state.currentPlayerId) : '';
@@ -236,20 +239,21 @@ export class ZonkTable {
 
         const animateRoll = choosing && this._lastAnimatedRollId !== state.rollId;
         if (animateRoll) this._lastAnimatedRollId = state.rollId;
-        const dice = choosing
+        const dice = (choosing || zonked)
             ? (state.currentDice || []).map((value, index) => `
-                <button type="button" class="parlor-zonk-pick ${this._selected.has(index) ? 'is-selected' : ''}"
+                <button type="button" class="parlor-zonk-pick ${displaySelection.has(index) ? 'is-selected' : ''}"
                     data-zonk-die="${index}" style="--z-roll-tilt:${[-5,4,-2,6,-3,3][index % 6]}deg"
-                    aria-pressed="${this._selected.has(index)}"
+                    aria-pressed="${displaySelection.has(index)}"
                     aria-label="${esc(t('Face', { value }))}" ${canPlay ? '' : 'disabled'}>
                     ${pipDie(value)}
                 </button>`).join('')
             : '';
 
         const last = (state.history || [])[0];
-        const showZonk = last?.kind === 'zonk' || last?.kind === 'skip';
+        const showZonk = zonked;
         const status = pending ? (state.lastError || t('Waiting'))
             : ended ? t('GameOver')
+            : zonked ? t('Bust')
             : choosing ? t('ChooseDice')
             : ready ? (hot ? t('HotDice') : t('RollOrBank'))
             : t('ReadyToRoll');
@@ -285,7 +289,7 @@ export class ZonkTable {
                 <div class="parlor-zonk-players-heading"><strong>${esc(t('Players'))}</strong><span>${standings.length}/10</span></div>
                 <div class="parlor-zonk-progress-players">${roster}</div>
                 <div class="parlor-zonk-progress-foot">
-                    ${actionButton('skip', t('SkipTurn'), game.user.isGM && !ended && !pending && !this._busy, 'is-skip')}
+                    ${actionButton('skip', t('SkipTurn'), game.user.isGM && !ended && !pending && !this._busy && !zonked, 'is-skip')}
                 </div>
             </aside>
             <main class="parlor-zonk-center">
@@ -299,7 +303,7 @@ export class ZonkTable {
                         <div class="parlor-zonk-roll-zone-heading"><strong>${esc(t('RollField'))}</strong><span>${choosing ? state.currentDice?.length || 0 : state.remainingDice || 6} ${esc(t('DiceShort'))}</span></div>
                         <div class="parlor-zonk-dice-tray ${animateRoll ? 'is-new-roll' : ''}" data-zonk-roll-zone aria-live="polite">${dice}</div>
                         <div class="parlor-zonk-roll-hint">
-                            ${showZonk ? `<strong>${esc(t('Bust'))}!</strong> ` : ''}
+                            ${showZonk ? `<strong>${esc(t('Bust'))}</strong>` : ''}
                             ${choosing ? esc(status) + (points > 0 ? ` · +${fmt(points)} ${esc(t('Points'))}` : '') : esc(status)}
                         </div>
                     </section>
@@ -308,7 +312,7 @@ export class ZonkTable {
                     ${choosing
                         ? actionButton('keep', t('Bank'), canPlay && points > 0, 'is-save')
                         : actionButton('bank', t('Bank'), canPlay && ready && Number(state.turnPoints || 0) >= 0, 'is-save')}
-                    ${actionButton('roll', hot ? t('BonusRoll') : t('Roll'), canPlay && !choosing && !ended && !pending, 'is-throw')}
+                    ${actionButton('roll', hot ? t('BonusRoll') : t('Roll'), canPlay && !choosing && !zonked && !ended && !pending, 'is-throw')}
                 </div>
                 ${state.finalTurnsRemaining !== null && !ended ? `<div class="parlor-zonk-final">${esc(t('FinalRemaining', { count: state.finalTurnsRemaining }))}</div>` : ''}
                 <div class="parlor-zonk-ante">${esc(t('EntryFee'))}: ${esc(bet)}</div>
