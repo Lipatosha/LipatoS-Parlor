@@ -1,4 +1,4 @@
-# v2.1.8: keep Farkle HTML dice above the DSN stage, update legacy shared-sprite test.
+# v2.1.9: real DSN Farkle roll with scoped blue-stone appearance and runtime hold, corrected tests.
 name: Publish Foundry module
 on:
   push:
