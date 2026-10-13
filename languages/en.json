@@ -2473,7 +2473,8 @@
       "RematchCancel": "Cancel",
       "RematchInvalid": "Enter a wager between 1 and 100,000.",
       "RematchInsufficient": "One or more players cannot afford the new entry fee.",
-      "RematchFailed": "Unable to start a new match."
+      "RematchFailed": "Unable to start a new match.",
+      "UpcomingTurn": "Turn order: {number}"
     },
     "Currency": {
       "Gold": "Gold",
