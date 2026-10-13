@@ -30,6 +30,7 @@ export class ZonkGame extends GameBase {
         this.playerStates = {};
         this.currentPlayerId = '';
         this.currentDice = [];
+        this.botSelectedIndices = [];
         this.keptDice = [];
         this.keptDiceRows = [];
         this.remainingDice = ZONK_DICE;
@@ -47,6 +48,9 @@ export class ZonkGame extends GameBase {
         this.settlementApplied = false;
         this.started = false;
         this.lastError = '';
+        this._zonkTimer = null;
+        this._zonkPauseMs = 3000;
+        this._settlementPromise = null;
     }
 
     get phases() { return ['IDLE', 'PLAYER_TURNS', 'FINISHED']; }
@@ -101,6 +105,7 @@ export class ZonkGame extends GameBase {
             playerStates: this.playerStates,
             currentPlayerId: this.currentPlayerId,
             currentDice: this.currentDice,
+            botSelectedIndices: this.botSelectedIndices,
             keptDice: this.keptDice,
             keptDiceRows: this.keptDiceRows,
             remainingDice: this.remainingDice,
@@ -125,7 +130,7 @@ export class ZonkGame extends GameBase {
         super.setState(state);
         for (const key of [
             'ante', 'targetScore', 'minBank', 'turnOrder', 'playerStates',
-            'currentPlayerId', 'currentDice', 'keptDice', 'keptDiceRows', 'remainingDice', 'turnPoints',
+            'currentPlayerId', 'currentDice', 'botSelectedIndices', 'keptDice', 'keptDiceRows', 'remainingDice', 'turnPoints',
             'turnPhase', 'rollId', 'rollTimestamp', 'pot', 'lastRoll', 'lastEvent', 'winnerIds',
             'finalTurnsRemaining', 'settlementApplied', 'started', 'lastError',
             'history', 'historySequence'
@@ -144,6 +149,7 @@ export class ZonkGame extends GameBase {
             if (!['needRoll', 'ready'].includes(this.turnPhase)) return { ok: false, reason: 'keep-first' };
             // All hot-dice rerolls keep their saved dice, filling the 6→1 staircase
             // across throws. We retain the most recent 21 dice (six visible tiers).
+            this.botSelectedIndices = [];
             this.currentDice = Array.from({ length: this.remainingDice }, () => rollD6(this._rng));
             this.lastRoll = [...this.currentDice];
             this.rollId++;
@@ -151,7 +157,18 @@ export class ZonkGame extends GameBase {
             this._record('roll', participantId, { dice: [...this.currentDice] });
             this.turnPhase = 'choose';
             if (!canScoreZonkRoll(this.currentDice)) {
-                this._finishTurn(0, true);
+                // Hold the losing dice on every client for three seconds before the next turn.
+                this.turnPhase = 'zonked';
+                this.lastEvent = 'Вы обосрались!';
+                const lostPlayer = participantId;
+                const lostRoll = this.rollId;
+                this._zonkTimer = setTimeout(() => {
+                    this._zonkTimer = null;
+                    if (this.phase !== 'PLAYER_TURNS' || this.turnPhase !== 'zonked'
+                        || this.currentPlayerId !== lostPlayer || this.rollId !== lostRoll) return;
+                    this._finishTurn(0, true);
+                    void this._broadcastState();
+                }, Math.max(0, this._zonkPauseMs - (Date.now() - this.rollTimestamp)));
             }
             this._broadcastState();
             return { ok: true };
@@ -175,6 +192,7 @@ export class ZonkGame extends GameBase {
             this._record('keep', participantId, { dice: kept, points });
             this.remainingDice -= indices.length;
             this.currentDice = [];
+            this.botSelectedIndices = [];
             if (this.remainingDice === 0) this.remainingDice = ZONK_DICE;
             this.turnPhase = 'ready';
             this.lastEvent = `+${points} очков за комбинацию`;
@@ -207,6 +225,7 @@ export class ZonkGame extends GameBase {
     }
 
     _beginTurn() {
+        this._cancelZonkPause();
         this.currentPlayerId = this.turnOrder[this._nextIndex || 0] || '';
         this._nextIndex = this._nextIndex ?? 0;
         this.currentDice = [];
@@ -215,9 +234,15 @@ export class ZonkGame extends GameBase {
         this.remainingDice = ZONK_DICE;
         this.turnPoints = 0;
         this.turnPhase = 'needRoll';
+        this.botSelectedIndices = [];
         if (this.playerStates[this.currentPlayerId]) {
             this.playerStates[this.currentPlayerId].status = 'playing';
         }
+    }
+
+    _cancelZonkPause() {
+        if (this._zonkTimer !== null) clearTimeout(this._zonkTimer);
+        this._zonkTimer = null;
     }
 
     _record(kind, participantId = '', payload = {}) {
@@ -233,6 +258,7 @@ export class ZonkGame extends GameBase {
     }
 
     _finishTurn(gain, zonk, { skipped = false } = {}) {
+        this._cancelZonkPause();
         const id = this.currentPlayerId;
         const seat = this.playerStates[id];
         if (!seat) return;
@@ -245,7 +271,7 @@ export class ZonkGame extends GameBase {
         seat.score += gain;
         seat.status = zonk ? 'zonk' : 'banked';
         this.lastEvent = zonk
-            ? 'Farkle! Очки текущего хода сгорели.'
+            ? 'Вы обосрались! Очки текущего хода сгорели.'
             : `В копилку добавлено ${gain} очков.`;
         this.currentDice = [];
         this.keptDice = [];
@@ -282,27 +308,43 @@ export class ZonkGame extends GameBase {
             : 'Партия завершена. Ничья по очкам!';
         this._transition('FINISHED');
         this._record('finish', this.winnerIds[0] || '', { points: maxScore });
+        // Winner receives the actual stake pot immediately, without requiring GM to close.
+        if (game.user?.isGM) {
+            void this._settleOrRefund().catch(error => {
+                console.error('parlor | Automatic Farkle winner payout failed', error);
+                this.lastError = 'Не удалось выплатить призовой фонд.';
+                void this._broadcastState();
+            });
+        }
     }
 
     async _settleOrRefund() {
+        // Automatic payout and rematch/close must never run concurrently.
+        if (this._settlementPromise) return this._settlementPromise;
         if (this.settlementApplied || !this.started) return;
-        // A cancelled, unfinished match returns all entry fees.
-        const payers = this.turnOrder.filter(id => !this.exemptIds.has(id));
-        let entries = [];
-        if (this.phase === 'FINISHED' && this.winnerIds.length) {
-            const share = Math.floor(this.pot / this.winnerIds.length);
-            let remainder = this.pot - share * this.winnerIds.length;
-            entries = this.winnerIds.map(id => ({
-                userId: id, delta: share + (remainder-- > 0 ? 1 : 0)
-            }));
-        } else {
-            entries = payers.map(userId => ({ userId, delta: this.ante }));
-        }
-        const applied = await SettlementManager.applyDeltas(entries, this);
-        if (applied !== false) {
+        const settle = async () => {
+            const payers = this.turnOrder.filter(id => !this.exemptIds.has(id));
+            let entries;
+            if (this.phase === 'FINISHED' && this.winnerIds.length) {
+                const share = Math.floor(this.pot / this.winnerIds.length);
+                let remainder = this.pot - share * this.winnerIds.length;
+                entries = this.winnerIds.map(id => ({
+                    userId: id, delta: share + (remainder-- > 0 ? 1 : 0)
+                }));
+            } else {
+                entries = payers.map(userId => ({ userId, delta: this.ante }));
+            }
+            const applied = await SettlementManager.applyDeltas(entries, this);
+            if (applied === false) throw new Error('Farkle payout rejected');
             this.settlementApplied = true;
             this._record(this.phase === 'FINISHED' ? 'paid' : 'refund', '', { points: this.pot });
             await this._broadcastState();
+        };
+        this._settlementPromise = settle();
+        try {
+            return await this._settlementPromise;
+        } finally {
+            this._settlementPromise = null;
         }
     }
 }
