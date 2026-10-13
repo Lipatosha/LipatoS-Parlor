@@ -229,8 +229,8 @@ describe('Farkle widescreen 16:9 existing-game redesign', () => {
         assert.ok(manager.includes('if (!current.settlementApplied)'));
         assert.ok(manager.includes('SettlementManager.canAfford(id, ante, gameOptions)'));
         const settle = manager.indexOf("await current.handleGMAction('finishGame')");
-        const end = manager.indexOf('await this.endGame(sessionId, { settleBeforeEnd: false })');
-        const start = manager.indexOf("await this.startGame('zonk'");
+        const end = manager.indexOf('await this.endGame(sessionId, { settleBeforeEnd: false })', settle);
+        const start = manager.indexOf("await this.startGame('zonk'", end);
         assert.ok(settle >= 0 && end > settle && start > end);
     });
 
