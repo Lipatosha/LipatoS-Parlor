@@ -152,3 +152,26 @@ describe('Zonk table flow and entry-fee settlement', () => {
         assert.equal(applied.length, 0);
     });
 });
+
+describe('Zonk table capacity', () => {
+    it('accepts ten participants but rejects eleven before collecting stakes', async () => {
+        const setup = count => {
+            const ids = Array.from({ length: count }, (_, index) => `player-${index + 1}`);
+            const table = new ZonkGame({
+                sessionId: `capacity-${count}`,
+                playerIds: ids,
+                participants: ids.map(id => ({ id, name: id, type: 'user' })),
+                gameOptions: { ante: 2, targetScore: 2000 }
+            });
+            table._broadcastState = async () => {};
+            return table;
+        };
+        const ten = setup(10);
+        assert.deepEqual(await ten.start(), { ok: true });
+        assert.equal(ten.turnOrder.length, 10);
+        assert.equal(applied[0].length, 10);
+        const eleven = setup(11);
+        assert.equal((await eleven.start()).reason, 'players');
+        assert.equal(applied.length, 1, 'An over-capacity table must never debit currency');
+    });
+});
