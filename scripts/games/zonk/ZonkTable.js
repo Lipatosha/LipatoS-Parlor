@@ -6,7 +6,6 @@ import { BotManager } from '../../core/BotManager.js';
 import { scoreZonkDice } from './ZonkRules.js';
 import { getFarkleRackDisplay } from './FarkleRack.js';
 import { renderFarkleDie as pipDie } from './FarkleDie.js';
-import { Dsn3dBridge } from '../../core/Dsn3dBridge.js';
 
 // Dice markup is intentionally isolated from all other Parlor dice skins.
 const t = (key, data) => data
@@ -28,10 +27,7 @@ export class ZonkTable {
         this._soundOn = true;
         this._rulesOpen = false;
         this._busy = false;
-        this._dsnRollTokens = new Set();
-        this._dsnShownRollId = null;
-        this._dsnVisible = false;
-        this._dsnFallback2d = false;
+        this._lastAnimatedRollId = null;
     }
 
     render(force = false) {
@@ -43,8 +39,6 @@ export class ZonkTable {
             this._overlay.id = 'parlor-zonk-overlay';
             this._overlay.className = 'parlor-zonk-overlay';
             document.body.appendChild(this._overlay);
-            // Do NOT leave the Dice So Nice canvas (z-index 3100) above the
-            // Farkle table (previously 2300) for the entire match.
         }
         this.refresh();
     }
@@ -53,10 +47,6 @@ export class ZonkTable {
         if (dismiss) this._dismissedByUser = true;
         this._overlay?.remove();
         this._overlay = null;
-        for (const token of this._dsnRollTokens) Dsn3dBridge.detachOverlay(token);
-        this._dsnRollTokens.clear();
-        Dsn3dBridge.clearFarkleDice();
-        this._dsnVisible = false;
         this._rulesOpen = false;
         this._busy = false;
     }
@@ -90,7 +80,7 @@ export class ZonkTable {
     }
 
     _history(state) {
-        const rows = (state.history || []).slice(0, 6).map(entry => {
+        const rows = (state.history || []).slice(0, 100).map(entry => {
             const name = entry.participantId ? this._participantName(state, entry.participantId) : '';
             const key = ({
                 start: 'HistoryStart', roll: 'HistoryRoll', keep: 'HistoryKeep',
@@ -192,73 +182,12 @@ export class ZonkTable {
             this._visibleRollId = state.rollId;
             this._visiblePlayerId = state.currentPlayerId;
         }
-        // The GM decides each value. During Farkle, Dice So Nice's actual
-        // physics-rendered dice are the PRIMARY play surface; the old 2D die
-        // images are used only when DSN is unavailable or rejects a roll.
-        // Its runtime auto-hide setting is temporarily disabled for this
-        // individual Farkle throw (never saved to the user's preferences).
-        const choosingDsn = state.turnPhase === 'choose'
-            && Array.isArray(state.currentDice) && state.currentDice.length > 0
-            && Dsn3dBridge.isAvailable();
-        if (choosingDsn && this._dsnShownRollId !== state.rollId) {
-            this._dsnShownRollId = state.rollId;
+        // Local Foundry dice.wav only: no Dice So Nice in Farkle.
+        // A rollId is authoritative and changes once per new GM-synced throw.
+        if (this._soundRollId !== state.rollId) {
             this._soundRollId = state.rollId;
-            this._dsnVisible = true;
-            this._dsnFallback2d = false;
-            const token = `zonk-roll:${this.gameInstance.sessionId}:${state.rollId}`;
-            const overlay = this._overlay;
-            this._dsnRollTokens.add(token);
-            overlay.classList.add('parlor-zonk-dsn-rolling', 'parlor-zonk-3d-active');
-            const holdSupported = Dsn3dBridge.holdFarkleDice(token);
-            Dsn3dBridge.attachOverlay(token);
-            Promise.resolve(Dsn3dBridge.rollD6Visuals(state.currentDice, {
-                broadcast: false,
-                appearance: {
-                    colorset: 'custom',
-                    system: 'standard',
-                    foreground: '#FFFFFF',
-                    background: '#2845cc',
-                    outline: '#2845cc',
-                    edge: '#2845cc',
-                    material: 'stone',
-                    texture: '',
-                    font: 'Arial'
-                }
-            })).then(displayed => {
-                if (!displayed || !holdSupported) {
-                    this._dsnFallback2d = true;
-                    this._dsnVisible = false;
-                    Dsn3dBridge.detachOverlay(token);
-                    this._dsnRollTokens.delete(token);
-                    overlay?.classList.remove('parlor-zonk-dsn-rolling','parlor-zonk-3d-active');
-                    this.refresh();
-                }
-            }).catch(error => {
-                console.warn('parlor | Dice So Nice Farkle roll failed', error);
-                this._dsnFallback2d = true;
-                this._dsnVisible = false;
-                Dsn3dBridge.detachOverlay(token);
-                this._dsnRollTokens.delete(token);
-                overlay?.classList.remove('parlor-zonk-dsn-rolling','parlor-zonk-3d-active');
-                this.refresh();
-            }).finally(() => {
-                // Leave the REAL 3D dice in DSN until keep / skip, but restore
-                // the global runtime auto-hide config immediately after roll.
-                Dsn3dBridge.releaseFarkleDice(token);
-            });
-        } else if (state.turnPhase !== 'choose' && this._dsnVisible) {
-            this._dsnVisible = false;
-            this._dsnFallback2d = false;
-            this._dsnShownRollId = null;
-            Dsn3dBridge.clearFarkleDice();
-            for (const token of this._dsnRollTokens) Dsn3dBridge.detachOverlay(token);
-            this._dsnRollTokens.clear();
-            this._overlay.classList.remove('parlor-zonk-dsn-rolling','parlor-zonk-3d-active');
-        } else if (this._soundRollId !== state.rollId) {
-            this._soundRollId = state.rollId;
-            if (!choosingDsn && state.turnPhase === 'choose') this._playRollSound();
+            if (state.turnPhase === 'choose' && state.currentDice?.length) this._playRollSound();
         }
-
         const choosing = state.turnPhase === 'choose';
         const ready = state.turnPhase === 'ready';
         const ended = state.phase === 'FINISHED';
@@ -289,23 +218,21 @@ export class ZonkTable {
             </div>`;
         }).join('');
 
-        const use3d = choosing && Dsn3dBridge.isAvailable() && !this._dsnFallback2d;
-        // In 3D mode these are only SMALL numeric selection controls, not
-        // imitation 2D dice. The visible full-size dice are DSN WebGL meshes.
+        const animateRoll = choosing && this._lastAnimatedRollId !== state.rollId;
+        if (animateRoll) this._lastAnimatedRollId = state.rollId;
         const dice = choosing
             ? (state.currentDice || []).map((value, index) => `
-                <button type="button" class="${use3d ? 'parlor-zonk-dsn-choice' : 'parlor-zonk-pick'} ${this._selected.has(index) ? 'is-selected' : ''}"
+                <button type="button" class="parlor-zonk-pick ${this._selected.has(index) ? 'is-selected' : ''}"
                     data-zonk-die="${index}" style="--z-roll-tilt:${[-5,4,-2,6,-3,3][index % 6]}deg"
                     aria-pressed="${this._selected.has(index)}"
                     aria-label="${esc(t('Face', { value }))}" ${canPlay ? '' : 'disabled'}>
-                    ${use3d ? `<span class="parlor-zonk-dsn-choice-index">${index + 1}</span><b>${value}</b>` : pipDie(value)}
+                    ${pipDie(value)}
                 </button>`).join('')
             : '';
 
         // Each keep action starts its OWN new row, rather than being packed
         // into remaining empty cells of the previous row.
         const rackRows = getFarkleRackDisplay(state.keptDiceRows);
-        const savedCount = rackRows.reduce((sum, row) => sum + row.values.length, 0);
         const stairs = rackRows.map(({ capacity, rowIndex, values }) =>
             `<div class="parlor-zonk-stair-row" data-stair-row="${rowIndex}" data-capacity="${capacity}">
                 ${Array.from({ length: capacity }, (_, col) => {
@@ -325,75 +252,77 @@ export class ZonkTable {
             : t('ReadyToRoll');
 
         this._overlay.innerHTML = `<div class="parlor-zonk-layout">
+            <header class="parlor-zonk-toolbar">
+                <div class="parlor-zonk-brand"><small>АИНДОР</small><strong>FARKLE</strong></div>
+                <div class="parlor-zonk-turn">${ended
+                    ? esc(t('WinnerLabel')) + ' ' + esc((state.winnerIds || []).map(id => this._participantName(state, id)).join(', '))
+                    : esc(t('TurnOf')) + ' ' + esc(current || '—')}</div>
+                <div class="parlor-zonk-toolbar-right">
+                    <div class="parlor-zonk-round">${esc(t('Round'))} ${Number(state.round || 1)}
+                        ${state.finalTurnsRemaining !== null ? ' · ' + esc(t('FinalRound')) : ''}</div>
+                    <div class="parlor-zonk-toolbar-buttons">
+                        <button type="button" data-zonk-action="rules" title="${esc(t('Rules'))}">◫ ${esc(t('Rules'))}</button>
+                        <button type="button" data-zonk-action="sound" aria-pressed="${this._soundOn}" title="${esc(t('Sound'))}">${this._soundOn ? '◖))' : '◖×'}</button>
+                        <button type="button" data-zonk-action="close" title="${esc(t('Close'))}">✕</button>
+                    </div>
+                    <details class="parlor-zonk-more">
+                        <summary title="${esc(t('ExtraActions'))}" aria-label="${esc(t('ExtraActions'))}">⋯</summary>
+                        <div class="parlor-zonk-more-menu">
+                            ${game.user.isGM
+                                ? actionButton('finish', ended ? t('PayAndClose') : t('RefundAndClose'), !this._busy, 'is-danger')
+                                : `<span>${esc(t('OnlyGM'))}</span>`}
+                        </div>
+                    </details>
+                </div>
+            </header>
             <aside class="parlor-zonk-progress">
                 <div class="parlor-zonk-panel-title">${esc(t('Progress'))}</div>
                 <div class="parlor-zonk-progress-score">${fmt(topScore)}<span>/${fmt(state.targetScore || 5000)}</span></div>
                 <div class="parlor-zonk-progress-track"><div style="width:${progress}%"></div></div>
+                <div class="parlor-zonk-players-heading"><strong>${esc(t('Players'))}</strong><span>${standings.length}/10</span></div>
                 <div class="parlor-zonk-progress-players">${roster}</div>
                 <div class="parlor-zonk-progress-foot">
                     <small>${esc(t('Leader'))}</small><strong>${fmt(topScore)}</strong>
                 </div>
             </aside>
             <main class="parlor-zonk-center">
-              <header class="parlor-zonk-toolbar">
-                <div class="parlor-zonk-brand"><small>АИНДОР</small><strong>FARKLE</strong></div>
-                <div class="parlor-zonk-turn">${ended
-                    ? esc(t('WinnerLabel')) + ' ' + esc((state.winnerIds || []).map(id => this._participantName(state, id)).join(', '))
-                    : esc(t('TurnOf')) + ' ' + esc(current || '—')}</div>
-                <div class="parlor-zonk-round">${esc(t('Round'))} ${Number(state.round || 1)}
-                    ${state.finalTurnsRemaining !== null ? ' · ' + esc(t('FinalRound')) : ''}</div>
-                <div class="parlor-zonk-toolbar-buttons">
-                    <button type="button" data-zonk-action="rules" title="${esc(t('Rules'))}">◫ ${esc(t('Rules'))}</button>
-                    <button type="button" data-zonk-action="sound" aria-pressed="${this._soundOn}" title="${esc(t('Sound'))}">${this._soundOn ? '◖))' : '◖×'}</button>
-                    <button type="button" data-zonk-action="close" title="${esc(t('Close'))}">✕</button>
+                <div class="parlor-zonk-mini-stats">
+                    <div><small>${esc(t('TurnPoints'))}</small><b>${fmt(state.turnPoints || 0)}</b></div>
+                    <div><small>${esc(t('DiceLeft'))}</small><b>${state.remainingDice || 6}</b></div>
+                    <div><small>${esc(t('Pot'))}</small><b>${esc(pot)}</b></div>
                 </div>
-              </header>
-              <div class="parlor-zonk-velvet">
-                <div class="parlor-zonk-lower-board">
-                  <section class="parlor-zonk-status-area">
-                    <div class="parlor-zonk-choice">
-                      ${showZonk ? `<strong class="parlor-zonk-bust-mark">${esc(t('Bust'))}!</strong>` : ''}
-                      <span>${esc(status)}</span>
-                    </div>
-                    ${choosing && canPlay ? `<div class="parlor-zonk-selection">${points > 0
-                      ? '+' + fmt(points) + ' ' + esc(t('Points')) : esc(t('SelectValid'))}</div>` : ''}
-                    <div class="parlor-zonk-mini-stats">
-                      <div><small>${esc(t('TurnPoints'))}</small><b>${fmt(state.turnPoints || 0)}</b></div>
-                      <div><small>${esc(t('DiceLeft'))}</small><b>${state.remainingDice || 6}</b></div>
-                      <div><small>${esc(t('Pot'))}</small><b>${esc(pot)}</b></div>
-                    </div>
-                  </section>
-                  <section class="parlor-zonk-saved-area" aria-label="${esc(t('SavedDice'))}">
-                    <div class="parlor-zonk-saved-heading">${esc(t('SavedDice'))} <span>${savedCount}/21</span></div>
-                    <div class="parlor-zonk-staircase">${stairs}</div>
-                  </section>
+                <div class="parlor-zonk-velvet">
+                    <section class="parlor-zonk-roll-zone" aria-label="${esc(t('RollField'))}">
+                        <div class="parlor-zonk-roll-zone-heading"><strong>${esc(t('RollField'))}</strong><span>${choosing ? state.currentDice?.length || 0 : state.remainingDice || 6} ${esc(t('DiceShort'))}</span></div>
+                        <div class="parlor-zonk-dice-tray ${animateRoll ? 'is-new-roll' : ''}" data-zonk-roll-zone aria-live="polite">${dice}</div>
+                        <div class="parlor-zonk-roll-hint">
+                            ${showZonk ? `<strong>${esc(t('Bust'))}!</strong> ` : ''}
+                            ${choosing ? esc(status) + (points > 0 ? ` · +${fmt(points)} ${esc(t('Points'))}` : '') : esc(status)}
+                        </div>
+                    </section>
+                    <section class="parlor-zonk-saved-area" aria-label="${esc(t('SavedDice'))}">
+                        <div class="parlor-zonk-saved-heading">${esc(t('SavedDice'))}</div>
+                        <div class="parlor-zonk-staircase">${stairs}</div>
+                    </section>
                 </div>
-                <section class="parlor-zonk-roll-zone" aria-label="${esc(t('DiceLeft'))}">
-                  <div class="parlor-zonk-roll-zone-heading">${esc(t('RollZone'))}</div>
-                  <div class="parlor-zonk-dice-tray ${use3d ? 'is-dsn-3d' : ''}" data-zonk-roll-zone aria-live="polite">${dice}</div>
-                  ${!choosing && !ended ? `<div class="parlor-zonk-roll-zone-hint">${esc(t('RollZoneHint'))}</div>` : ''}
-                </section>
                 <div class="parlor-zonk-buttons">
-                  ${choosing
-                    ? actionButton('keep', t('Keep', { points: fmt(points || 0) }), canPlay && points > 0, 'is-save')
-                    : actionButton('bank', t('Bank'), canPlay && ready && Number(state.turnPoints || 0) >= (state.minBank || 300), 'is-save')}
-                  ${actionButton('roll', hot ? t('BonusRoll') : t('Roll'), canPlay && !choosing && !ended && !pending, 'is-throw')}
+                    ${actionButton('bank', t('Bank'), canPlay && ready && Number(state.turnPoints || 0) >= (state.minBank || 300), 'is-save')}
+                    ${actionButton('roll', hot ? t('BonusRoll') : t('Roll'), canPlay && !choosing && !ended && !pending, 'is-throw')}
+                    ${actionButton('skip', t('SkipTurn'), game.user.isGM && !ended && !pending && !this._busy, 'is-skip')}
+                    ${choosing ? actionButton('keep', t('Keep', { points: fmt(points || 0) }), canPlay && points > 0, 'is-keep') : ''}
                 </div>
                 ${state.finalTurnsRemaining !== null && !ended ? `<div class="parlor-zonk-final">${esc(t('FinalRemaining', { count: state.finalTurnsRemaining }))}</div>` : ''}
                 <div class="parlor-zonk-ante">${esc(t('EntryFee'))}: ${esc(bet)} · ${esc(t('MinBank'))}: ${fmt(state.minBank || 300)}</div>
-              </div>
-              <section class="parlor-zonk-history">
-                <div class="parlor-zonk-history-heading"><span>${esc(t('History'))}</span><small>${esc(t('RecentActions'))}</small></div>
-                <div class="parlor-zonk-history-list">${this._history(state)}</div>
-              </section>
-              ${game.user.isGM ? `<div class="parlor-zonk-gm">
-                  ${actionButton('skip', t('SkipTurn'), !ended && !pending && !this._busy)}
-                  ${actionButton('finish', ended ? t('PayAndClose') : t('RefundAndClose'), !this._busy, 'is-danger')}
-              </div>` : ''}
             </main>
-            <aside class="parlor-zonk-combos">
-                <div class="parlor-zonk-panel-title">${esc(t('Scoring'))}</div>
-                <div class="parlor-zonk-combo-list">${this._combos({ showDescriptions: false })}</div>
+            <aside class="parlor-zonk-right">
+                <section class="parlor-zonk-combos">
+                    <div class="parlor-zonk-panel-title">${esc(t('Scoring'))}</div>
+                    <div class="parlor-zonk-combo-list">${this._combos({ showDescriptions: false })}</div>
+                </section>
+                <section class="parlor-zonk-history">
+                    <div class="parlor-zonk-history-heading"><span>${esc(t('History'))}</span><small>${esc(t('RecentActions'))}</small></div>
+                    <div class="parlor-zonk-history-list">${this._history(state)}</div>
+                </section>
             </aside>
             ${this._rulesOpen ? this._rules() : ''}
         </div>`;
