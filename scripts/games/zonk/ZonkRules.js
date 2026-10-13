@@ -4,7 +4,7 @@
  */
 export const ZONK_DICE = 6;
 export const ZONK_DEFAULT_TARGET = 5000;
-export const ZONK_MIN_BANK = 300;
+export const ZONK_MIN_BANK = 0;
 
 export const FARKLE_SCORE = Object.freeze({
     singleOne: 100,
