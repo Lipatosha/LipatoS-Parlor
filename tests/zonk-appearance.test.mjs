@@ -159,4 +159,21 @@ describe('Zonk Foundry inventory redesign', () => {
         }
     });
 
+    it('renders actual white dice images above the Farkle play surface and not just outlines', async () => {
+        const code = await source('scripts/games/zonk/ZonkTable.js');
+        const css = await source('styles/zonk-v14.css');
+        assert.ok(code.includes("import { D6_SPRITE_PATH, normalizeD6, renderD6Face }"));
+        assert.ok(code.includes('class="parlor-zonk-face-image"'));
+        assert.ok(code.includes('src="${D6_SPRITE_PATH}"'));
+        assert.ok(code.includes('loading="eager"'));
+        assert.ok(code.includes("if (small) return face"), 'History/rules retain existing small sprite dice');
+        assert.ok(code.includes('face.replace(\'</span>\', image + \'</span>\')'));
+        assert.ok(css.includes('.parlor-zonk-pick > .parlor-d6-face > .parlor-zonk-face-image'));
+        assert.ok(css.includes('width: 600% !important'));
+        assert.ok(css.includes('max-width: none !important'));
+        assert.ok(css.includes('pointer-events: none !important'));
+        assert.ok(css.includes('opacity: 1 !important'));
+        assert.match(css, /\.parlor-zonk-roll-zone button\.parlor-zonk-pick:disabled\s*\{\s*opacity:\s*1 !important;/);
+    });
+
 });
