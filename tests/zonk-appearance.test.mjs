@@ -128,4 +128,35 @@ describe('Zonk Foundry inventory redesign', () => {
         }
     });
 
+    it('lays out the wide right Dice So Nice zone and compact left statistics / rack', async () => {
+        const markup = await source('scripts/games/zonk/ZonkTable.js');
+        const css = await source('styles/zonk-v14.css');
+        assert.ok(markup.includes('class="parlor-zonk-roll-zone"'));
+        assert.ok(markup.includes('class="parlor-zonk-lower-board"'));
+        assert.ok(markup.includes('class="parlor-zonk-status-area"'));
+        assert.ok(markup.includes('class="parlor-zonk-saved-area"'));
+        assert.ok(markup.includes('data-zonk-roll-zone'));
+        assert.match(css, /\.parlor-zonk-velvet\s*\{[^}]*grid-template-columns:\s*minmax\(245px, 32%\) minmax\(0, 1fr\)/);
+        assert.match(css, /\.parlor-zonk-roll-zone\s*\{[^}]*grid-column:\s*2;[^}]*grid-row:\s*1;/);
+        assert.match(css, /\.parlor-zonk-lower-board\s*\{[^}]*grid-column:\s*1;[^}]*grid-row:\s*1;/);
+    });
+
+    it('animates GM-authoritative dice via optional DSN and keeps results until the turn changes', async () => {
+        const code = await source('scripts/games/zonk/ZonkTable.js');
+        assert.match(code, /import \{ Dsn3dBridge \} from '\.\.\/\.\.\/core\/Dsn3dBridge\.js'/);
+        assert.ok(code.includes('Dsn3dBridge.attachOverlay(`zonk:'));
+        assert.ok(code.includes('Dsn3dBridge.detachOverlay(`zonk:'));
+        assert.ok(code.includes("state.turnPhase === 'choose'"));
+        assert.ok(code.includes('Dsn3dBridge.rollD6Visuals(state.currentDice'));
+        assert.ok(code.includes('state.rollId'));
+        assert.ok(code.includes('const dice = choosing'));
+        assert.ok(code.includes(" : ''; // Nothing on the 3D roll surface until a real roll lands."));
+        assert.ok(code.includes('data-zonk-die='));
+        for (const lang of ['ru', 'en', 'cn']) {
+            const locale = JSON.parse(await source('languages/' + lang + '.json'));
+            assert.ok(locale.PARLOR.Zonk.RollZone);
+            assert.ok(locale.PARLOR.Zonk.RollZoneHint);
+        }
+    });
+
 });
