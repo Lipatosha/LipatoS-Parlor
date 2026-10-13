@@ -1,8 +1,8 @@
 {
   "id": "parlor",
   "title": "LipatoS — Parlor",
-  "description": "Казино Аиндора: Farkle использует реальные анимированные 3D-кубики Dice So Nice!, синий камень, сохранение результата до выбора; локальный откат настроек DSN.",
-  "version": "2.1.9",
+  "description": "Казино Аиндора для Foundry VTT: Farkle переработан под 16:9, три колонки, 10 игроков, история справа, стандартный звук броска dice.wav, без Dice So Nice!",
+  "version": "2.2.0",
   "manifest": "https://github.com/Lipatosha/LipatoS-Parlor/releases/latest/download/module.json",
   "url": "https://github.com/Lipatosha/LipatoS-Parlor",
   "compatibility": {
@@ -34,7 +34,8 @@
     "styles/slotmachine-v14.css",
     "styles/zonk-v14.css",
     "styles/tavern.css",
-    "styles/dice-faces.css"
+    "styles/dice-faces.css",
+    "styles/farkle-widescreen.css"
   ],
   "languages": [
     {
@@ -53,5 +54,5 @@
       "path": "languages/ru.json"
     }
   ],
-  "download": "https://github.com/Lipatosha/LipatoS-Parlor/releases/download/v2.1.9/lipatos-parlor-v2.1.9.zip"
+  "download": "https://github.com/Lipatosha/LipatoS-Parlor/releases/download/v2.2.0/lipatos-parlor-v2.2.0.zip"
 }
