@@ -1,0 +1,43 @@
+/* Six user-provided white dice: exact artwork, all faces in one shared sprite.
+ * 768 × 128 lossless WebP, 128 source pixels per face (HiDPI ready).
+ * This stylesheet is loaded LAST to override the older dot-built dice skins.
+ */
+.parlor-d6-face,
+.parlor-ld-die.parlor-d6-face,
+.parlor-b21-die.parlor-d6-face,
+.ptt-root .die.parlor-d6-face {
+    display: inline-block;
+    flex: 0 0 auto;
+    position: relative;
+    box-sizing: border-box;
+    padding: 0 !important;
+    overflow: hidden;
+    background-color: transparent !important;
+    background-image: url('../assets/dice/d6-white-faces.webp') !important;
+    background-repeat: no-repeat !important;
+    background-size: 600% 100% !important;
+    background-position: calc(var(--parlor-d6-index, 0) * 20%) 50% !important;
+    border: 0 !important;
+    border-radius: 9% !important;
+    box-shadow: none !important;
+    filter: none;
+    vertical-align: middle;
+}
+.parlor-d6-face:not(.parlor-ld-die):not(.parlor-b21-die):not(.die) {
+    width: 48px;
+    height: 48px;
+    aspect-ratio: 1;
+}
+.parlor-d6-face.is-small:not(.parlor-ld-die):not(.parlor-b21-die):not(.die) {
+    width: 32px;
+    height: 32px;
+}
+.parlor-d6-face.is-compact:not(.parlor-ld-die):not(.parlor-b21-die):not(.die) {
+    width: 42px;
+    height: 42px;
+}
+.parlor-d6-face .parlor-ld-pip,
+.parlor-d6-face .parlor-b21-pip,
+.ptt-root .die.parlor-d6-face i {
+    display: none !important;
+}
