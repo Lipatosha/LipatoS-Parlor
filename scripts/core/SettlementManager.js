@@ -124,7 +124,8 @@ export class SettlementManager {
             if (this._isUnlimitedParticipant(participantId)) continue;
 
             const actor = this._getActor(participantId);
-            if (!actor) continue;
+            // A missing recipient must not be treated as a successful payout.
+            if (!actor) return false;
             changes.set(actor.id, {
                 actor,
                 delta: Math.round(((changes.get(actor.id)?.delta || 0) + delta) * 100) / 100
