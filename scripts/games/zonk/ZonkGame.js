@@ -4,6 +4,7 @@ import {
     ZONK_DICE, ZONK_DEFAULT_TARGET, ZONK_MIN_BANK,
     scoreZonkDice, canScoreZonkRoll
 } from './ZonkRules.js';
+import { appendFarkleRackRow } from './FarkleRack.js';
 
 const boundedInt = (value, fallback, min, max) => {
     const n = Number(value);
@@ -30,6 +31,7 @@ export class ZonkGame extends GameBase {
         this.currentPlayerId = '';
         this.currentDice = [];
         this.keptDice = [];
+        this.keptDiceRows = [];
         this.remainingDice = ZONK_DICE;
         this.turnPoints = 0;
         this.turnPhase = 'needRoll';
@@ -99,6 +101,7 @@ export class ZonkGame extends GameBase {
             currentPlayerId: this.currentPlayerId,
             currentDice: this.currentDice,
             keptDice: this.keptDice,
+            keptDiceRows: this.keptDiceRows,
             remainingDice: this.remainingDice,
             turnPoints: this.turnPoints,
             turnPhase: this.turnPhase,
@@ -120,7 +123,7 @@ export class ZonkGame extends GameBase {
         super.setState(state);
         for (const key of [
             'ante', 'targetScore', 'minBank', 'turnOrder', 'playerStates',
-            'currentPlayerId', 'currentDice', 'keptDice', 'remainingDice', 'turnPoints',
+            'currentPlayerId', 'currentDice', 'keptDice', 'keptDiceRows', 'remainingDice', 'turnPoints',
             'turnPhase', 'rollId', 'pot', 'lastRoll', 'lastEvent', 'winnerIds',
             'finalTurnsRemaining', 'settlementApplied', 'started', 'lastError',
             'history', 'historySequence'
@@ -164,6 +167,7 @@ export class ZonkGame extends GameBase {
             if (!points) return { ok: false, reason: 'invalid-combination' };
             this.turnPoints += points;
             const kept = indices.map(i => this.currentDice[i]);
+            this.keptDiceRows = appendFarkleRackRow(this.keptDiceRows, kept);
             this.keptDice = [...this.keptDice, ...kept].slice(-21);
             this._record('keep', participantId, { dice: kept, points });
             this.remainingDice -= indices.length;
@@ -204,6 +208,7 @@ export class ZonkGame extends GameBase {
         this._nextIndex = this._nextIndex ?? 0;
         this.currentDice = [];
         this.keptDice = [];
+        this.keptDiceRows = [];
         this.remainingDice = ZONK_DICE;
         this.turnPoints = 0;
         this.turnPhase = 'needRoll';
@@ -241,6 +246,7 @@ export class ZonkGame extends GameBase {
             : `В копилку добавлено ${gain} очков.`;
         this.currentDice = [];
         this.keptDice = [];
+        this.keptDiceRows = [];
         this.turnPoints = 0;
 
         const triggeredFinal = this.finalTurnsRemaining === null && seat.score >= this.targetScore;
@@ -266,6 +272,7 @@ export class ZonkGame extends GameBase {
         this.currentPlayerId = '';
         this.currentDice = [];
         this.keptDice = [];
+        this.keptDiceRows = [];
         this.turnPhase = 'complete';
         this.lastEvent = this.winnerIds.length === 1
             ? 'Партия завершена. Победитель определён!'
