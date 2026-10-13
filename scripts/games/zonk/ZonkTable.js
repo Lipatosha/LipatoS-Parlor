@@ -24,6 +24,9 @@ export class ZonkTable {
         this._overlay = null;
         this._dismissedByUser = false;
         this._selected = new Set();
+        this._editedRollId = null;
+        this._editedPlayerId = '';
+        this._previewQueue = Promise.resolve();
         this._visibleRollId = null;
         this._visiblePlayerId = '';
         this._soundRollId = null;
@@ -184,6 +187,8 @@ export class ZonkTable {
         const state = this.gameInstance.getState();
         if (this._visibleRollId !== state.rollId || this._visiblePlayerId !== state.currentPlayerId || state.turnPhase !== 'choose') {
             this._selected.clear();
+            this._editedRollId = null;
+            this._editedPlayerId = '';
             this._visibleRollId = state.rollId;
             this._visiblePlayerId = state.currentPlayerId;
         }
@@ -207,8 +212,14 @@ export class ZonkTable {
         const pending = !state.started;
         const hot = ready && state.remainingDice === 6;
         const canPlay = this._canPlay(state) && !this._busy;
-        const displaySelection = choosing && BotManager.isBot(state.currentPlayerId)
-            ? new Set(state.botSelectedIndices || []) : this._selected;
+        // Spectators (including the GM viewing another player's turn) use GM-synced choices.
+        // Only the client actively clicking these dice keeps its optimistic local selection.
+        const localChoice = this._editedRollId === state.rollId
+            && this._editedPlayerId === state.currentPlayerId;
+        const displaySelection = new Set(choosing
+            ? (BotManager.isBot(state.currentPlayerId) ? (state.botSelectedIndices || [])
+                : (localChoice ? [...this._selected] : (state.playerSelectedIndices || [])))
+            : []);
         const selectedIndices = [...this._selected].sort((a, b) => a - b);
         const points = scoreZonkDice(selectedIndices.map(index => state.currentDice?.[index]));
         const current = state.currentPlayerId ? this._participantName(state, state.currentPlayerId) : '';
@@ -344,9 +355,15 @@ export class ZonkTable {
         for (const node of this._overlay.querySelectorAll('[data-zonk-die]')) {
             node.addEventListener('click', () => {
                 const index = Number(node.dataset.zonkDie);
+                // Start from the visible synced choice, not an empty spectator cache.
+                this._selected = new Set(displaySelection);
                 if (this._selected.has(index)) this._selected.delete(index);
                 else this._selected.add(index);
+                this._editedRollId = state.rollId;
+                this._editedPlayerId = state.currentPlayerId;
+                const indices = [...this._selected].sort((a, b) => a - b);
                 this.refresh();
+                this._broadcastSelectionPreview(state.currentPlayerId, state.rollId, indices);
             });
         }
         for (const node of this._overlay.querySelectorAll('[data-zonk-action]')) {
@@ -358,6 +375,21 @@ export class ZonkTable {
                 this.refresh();
             }
         });
+    }
+
+    _broadcastSelectionPreview(participantId, rollId, indices) {
+        // Serialize fast clicks so slower network requests cannot overwrite a newer preview.
+        this._previewQueue = this._previewQueue.catch(() => {}).then(async () => {
+            const state = this.gameInstance.getState();
+            if (state.phase !== 'PLAYER_TURNS' || state.turnPhase !== 'choose'
+                || state.currentPlayerId !== participantId || state.rollId !== rollId) return;
+            await SocketManager.requestGM(SOCKET_EVENTS.PLAYER_ACTION, {
+                sessionId: this.gameInstance.sessionId,
+                userId: participantId,
+                action: 'previewSelection',
+                data: { rollId, indices }
+            });
+        }).catch(error => console.warn('parlor | Farkle selection preview failed', error));
     }
 
     async _requestRematch() {
@@ -394,6 +426,16 @@ export class ZonkTable {
             content,
             render: (_event, dialog) => {
                 const root = dialog.element || dialog;
+                // The full-screen Farkle overlay is z-index 2300; Foundry dialogs
+                // need their top-level application raised ABOVE the victory screen.
+                const windowRoot = root.closest?.('.application') || root;
+                const elevate = () => {
+                    windowRoot.classList?.add('parlor-overlay-dialog', 'parlor-zonk-rematch-dialog');
+                    if (windowRoot.style) windowRoot.style.zIndex = '3200';
+                };
+                elevate();
+                requestAnimationFrame(elevate);
+                setTimeout(elevate, 60);
                 const fields = root.querySelectorAll('.parlor-zonk-rematch-form [name]');
                 for (const field of fields) field.addEventListener('change', () => {
                     if (field.name === 'ante') draft.ante = Number(field.value);
