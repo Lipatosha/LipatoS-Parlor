@@ -513,3 +513,91 @@
   #parlor-zonk-overlay .parlor-zonk-victory {padding:14px}
   #parlor-zonk-overlay .parlor-zonk-victory h2 {font-size:20px}
 }
+
+/* v2.2.3 — pending player turn labels, grouped five-space dice, taller history. */
+#parlor-zonk-overlay .parlor-zonk-progress-row {
+  grid-template-columns:20px 30px minmax(0,1fr) auto;
+  column-gap:5px;
+}
+#parlor-zonk-overlay .parlor-zonk-progress-row .parlor-zonk-rank {
+  grid-column:1;
+}
+#parlor-zonk-overlay .parlor-zonk-progress-row .parlor-zonk-turn-order {
+  grid-column:2;
+  width:27px;
+  height:23px;
+  min-width:0;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:0 3px;
+  border:1px solid #816d50;
+  border-radius:3px;
+  background:#393127;
+  color:#dcc59a;
+  font-size:12px;
+  font-weight:700;
+  font-variant-numeric:tabular-nums;
+}
+#parlor-zonk-overlay .parlor-zonk-progress-row.is-current .parlor-zonk-turn-order {
+  background:#6b5436;
+  border-color:#d0aa75;
+  color:#fff0ce;
+}
+#parlor-zonk-overlay .parlor-zonk-progress-row .parlor-zonk-player {
+  grid-column:3;
+  min-width:0;
+  overflow:hidden;
+  white-space:nowrap;
+  text-overflow:ellipsis;
+}
+#parlor-zonk-overlay .parlor-zonk-progress-row.is-played .parlor-zonk-player {
+  grid-column:2 / 4;
+}
+#parlor-zonk-overlay .parlor-zonk-progress-row > strong {
+  grid-column:4;
+}
+#parlor-zonk-overlay .parlor-zonk-right .parlor-zonk-any-groups {
+  display:flex;
+  flex-wrap:nowrap;
+  gap:2em !important; /* approximately five word spaces between each dice group */
+}
+#parlor-zonk-overlay .parlor-zonk-right .parlor-zonk-any-group {
+  display:flex;
+  flex-wrap:nowrap;
+  flex:0 0 auto;
+  gap:2px;
+}
+#parlor-zonk-overlay .parlor-zonk-center {
+  grid-template-rows:68px minmax(0,40fr) 42px 22px minmax(0,60fr) !important;
+}
+#parlor-zonk-overlay .parlor-zonk-center > .parlor-zonk-history {
+  height:100% !important;
+  min-height:0;
+  align-self:stretch;
+  margin-bottom:0;
+}
+#parlor-zonk-overlay .parlor-zonk-center > .parlor-zonk-history .parlor-zonk-history-list {
+  flex:1 1 auto;
+  min-height:0;
+  height:auto;
+  max-height:none !important;
+  overflow-y:auto !important;
+}
+@media (max-width:1050px), (max-height:650px) {
+  #parlor-zonk-overlay .parlor-zonk-center {
+    grid-template-rows:54px minmax(0,42fr) 34px 20px minmax(0,58fr) !important;
+  }
+  #parlor-zonk-overlay .parlor-zonk-progress-row {
+    grid-template-columns:17px 23px minmax(0,1fr) auto;
+    gap:3px;
+  }
+  #parlor-zonk-overlay .parlor-zonk-progress-row .parlor-zonk-turn-order {
+    width:22px;
+    height:20px;
+    font-size:10px;
+  }
+  #parlor-zonk-overlay .parlor-zonk-right .parlor-zonk-any-groups {
+    gap:1.75em !important;
+  }
+}
