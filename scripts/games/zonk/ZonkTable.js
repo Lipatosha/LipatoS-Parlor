@@ -4,26 +4,17 @@ import { SettlementManager } from '../../core/SettlementManager.js';
 import { getGameGuide } from '../../core/GameRegistry.js';
 import { BotManager } from '../../core/BotManager.js';
 import { scoreZonkDice } from './ZonkRules.js';
+import { renderD6Face } from '../../core/DiceFaces.js';
 
 // The same physical pip dice and CSS classes used by LiarsDiceTable.
 // Its stylesheet is already loaded by the parent Parlor module.
-const PIPS = Object.freeze({
-    1: [5], 2: [1, 9], 3: [1, 5, 9],
-    4: [1, 3, 7, 9], 5: [1, 3, 5, 7, 9],
-    6: [1, 3, 4, 6, 7, 9]
-});
 const t = (key, data) => data
     ? game.i18n.format('PARLOR.Zonk.' + key, data)
     : game.i18n.localize('PARLOR.Zonk.' + key);
 const esc = value => foundry.utils.escapeHTML(String(value ?? ''));
 const fmt = value => Number(value || 0).toLocaleString(game.i18n?.lang || 'ru-RU');
-const pipDie = (value, small = false) => {
-    const dots = PIPS[value] || [];
-    return `<span class="parlor-ld-die ${small ? 'is-small' : ''}" aria-label="${esc(t('Face', { value }))}">
-        ${Array.from({ length: 9 }, (_, i) =>
-            `<span class="parlor-ld-pip pip-${i + 1} ${dots.includes(i + 1) ? 'is-on' : ''}"></span>`).join('')}
-    </span>`;
-};
+const pipDie = (value, small = false) =>
+    renderD6Face(value, { className: 'parlor-ld-die', small });
 const diceRow = (dice, small = false) => (dice || []).map(value => pipDie(value, small)).join('');
 
 export class ZonkTable {
