@@ -872,3 +872,204 @@
     }
     #parlor-zonk-overlay .parlor-zonk-history { width: 100%; min-width: 0; }
 }
+
+/* v2.1.5 — purpose-built Dice So Nice Farkle roll surface.
+ * Left: compact status + six-tier kept dice. Right: a large dedicated rolling
+ * surface which retains GM-authoritative, clickable faces after DSN animation.
+ * Do not reposition the shared DSN WebGL canvas: that would break other games
+ * and other clients' custom rollable area settings.
+ */
+#parlor-zonk-overlay .parlor-zonk-velvet {
+    display: grid;
+    grid-template-columns: minmax(245px, 32%) minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr) auto auto auto;
+    align-items: stretch;
+    gap: 8px 12px;
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow: hidden;
+    padding: 10px;
+}
+#parlor-zonk-overlay .parlor-zonk-lower-board {
+    grid-column: 1;
+    grid-row: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    height: 100%;
+    gap: 9px;
+    padding: 0;
+}
+#parlor-zonk-overlay .parlor-zonk-status-area {
+    grid-column: auto;
+    grid-row: auto;
+    display: flex;
+    flex: 0 0 auto;
+    flex-direction: column;
+    min-height: 0;
+    gap: 7px;
+    padding: 9px 7px;
+    border: 1px solid #605749;
+    border-radius: 4px;
+    background: linear-gradient(#17171980,#25232078), url("../../../ui/denim065.png");
+}
+#parlor-zonk-overlay .parlor-zonk-status-area .parlor-zonk-choice {
+    min-height: 0;
+    font-size: 12px;
+}
+#parlor-zonk-overlay .parlor-zonk-status-area .parlor-zonk-mini-stats {
+    display: grid;
+    grid-template-columns: repeat(3,minmax(0,1fr));
+    gap: 4px;
+}
+#parlor-zonk-overlay .parlor-zonk-status-area .parlor-zonk-mini-stats > div {
+    min-width: 0;
+    padding: 5px 3px;
+}
+#parlor-zonk-overlay .parlor-zonk-status-area .parlor-zonk-mini-stats small {
+    font-size: 10px;
+    text-align: center;
+}
+#parlor-zonk-overlay .parlor-zonk-status-area .parlor-zonk-mini-stats b {
+    font-size: 13px;
+}
+#parlor-zonk-overlay .parlor-zonk-saved-area {
+    grid-column: auto;
+    grid-row: auto;
+    align-self: stretch;
+    flex: 1 1 auto;
+    height: auto;
+    min-height: 0;
+    min-width: 0;
+    overflow: hidden;
+    padding: 6px 7px;
+}
+#parlor-zonk-overlay .parlor-zonk-staircase {
+    flex: 1 1 auto;
+    min-height: 0;
+    height: auto;
+    justify-content: flex-end;
+    gap: 2px;
+}
+#parlor-zonk-overlay .parlor-zonk-stair-slot {
+    --z-slot: clamp(27px, 2.8vw, 44px);
+}
+#parlor-zonk-overlay .parlor-zonk-roll-zone {
+    grid-column: 2;
+    grid-row: 1;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    min-width: 0;
+    width: 100%;
+    overflow: hidden;
+    border: 1px solid #786a53;
+    border-radius: 5px;
+    background:
+      radial-gradient(ellipse at 55% 47%, #50433440, transparent 78%),
+      linear-gradient(135deg, #222326c6, #141415ec),
+      url("../../../ui/denim065.png");
+    box-shadow: inset 0 2px 24px #0008, inset 0 0 0 2px #171613bd;
+}
+#parlor-zonk-overlay .parlor-zonk-roll-zone-heading {
+    flex: 0 0 auto;
+    min-height: 30px;
+    padding: 7px 11px;
+    color: #b5a583;
+    background: linear-gradient(#272727a0,#1c1b19b5);
+    border-bottom: 1px solid #554f45;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .025em;
+}
+#parlor-zonk-overlay .parlor-zonk-roll-zone .parlor-zonk-dice-tray {
+    position: relative;
+    display: flex;
+    flex: 1 1 auto;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    gap: clamp(8px, 1.4vw, 22px);
+    width: 100%;
+    height: 100%;
+    min-height: 185px;
+    min-width: 0;
+    padding: 14px;
+    margin: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+}
+#parlor-zonk-overlay .parlor-zonk-roll-zone .parlor-zonk-pick {
+    --z-die-size: clamp(43px, 5vw, 73px);
+    flex: 0 0 var(--z-die-size);
+    transform: rotate(var(--z-roll-tilt,0deg));
+    filter: drop-shadow(2px 6px 5px #000a);
+}
+#parlor-zonk-overlay .parlor-zonk-roll-zone .parlor-zonk-pick.is-selected {
+    transform: translateY(-6px) rotate(var(--z-roll-tilt,0deg));
+}
+#parlor-zonk-overlay .parlor-zonk-roll-zone .parlor-zonk-dice-tray button.parlor-zonk-pick:focus-visible::after {
+    opacity: 1;
+}
+#parlor-zonk-overlay .parlor-zonk-roll-zone-hint {
+    flex: 0 0 auto;
+    padding: 11px;
+    text-align: center;
+    color: #877b64;
+    font-size: 12px;
+}
+#parlor-zonk-overlay .parlor-zonk-buttons {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    align-self: center;
+    justify-self: center;
+    padding: 0;
+}
+#parlor-zonk-overlay .parlor-zonk-ante {
+    grid-column: 1 / -1;
+    grid-row: 4;
+}
+#parlor-zonk-overlay .parlor-zonk-final {
+    grid-column: 1 / -1;
+    grid-row: 3;
+}
+#parlor-zonk-overlay .parlor-zonk-history { width: min(48%, 370px); }
+@media (max-height: 710px) and (min-width: 921px) {
+    #parlor-zonk-overlay .parlor-zonk-velvet { overflow-y: auto; }
+    #parlor-zonk-overlay .parlor-zonk-saved-area { min-height: 255px; }
+    #parlor-zonk-overlay .parlor-zonk-roll-zone { min-height: 320px; }
+}
+@media (max-width: 1120px) and (min-width: 921px) {
+    #parlor-zonk-overlay .parlor-zonk-velvet {
+        grid-template-columns: minmax(215px, 34%) minmax(0, 1fr);
+        gap: 7px;
+    }
+    #parlor-zonk-overlay .parlor-zonk-stair-slot { --z-slot: 31px; }
+    #parlor-zonk-overlay .parlor-zonk-roll-zone .parlor-zonk-pick { --z-die-size: 46px; }
+}
+@media (max-width: 920px) {
+    #parlor-zonk-overlay .parlor-zonk-velvet {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto minmax(240px,auto) auto auto auto;
+        overflow: visible;
+    }
+    #parlor-zonk-overlay .parlor-zonk-lower-board {
+        grid-column: 1;
+        grid-row: 1;
+        height: auto;
+    }
+    #parlor-zonk-overlay .parlor-zonk-saved-area { min-height: 240px; }
+    #parlor-zonk-overlay .parlor-zonk-roll-zone {
+        grid-column: 1;
+        grid-row: 2;
+        min-height: 240px;
+    }
+    #parlor-zonk-overlay .parlor-zonk-buttons { grid-column: 1; grid-row: 3; }
+    #parlor-zonk-overlay .parlor-zonk-final { grid-column: 1; grid-row: 4; }
+    #parlor-zonk-overlay .parlor-zonk-ante { grid-column: 1; grid-row: 5; }
+    #parlor-zonk-overlay .parlor-zonk-history { width: 100%; max-width: none; }
+}
