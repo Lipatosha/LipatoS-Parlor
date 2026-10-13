@@ -1,4 +1,4 @@
-# v2.2.4: automatic payouts, highlighted bot selections, three-second failed rolls, tighter dice groups.
+# v2.2.5: rematch DialogV2 above the victory overlay and synchronized player dice outlines.
 # Re-validate v2.2.2 rematch handler order assertions.
 # Release verification: shared D6 assets load ahead of Farkle widescreen CSS.
 name: Publish Foundry module
@@ -67,6 +67,6 @@ jobs:
           VERSION=$(node -p "JSON.parse(require('fs').readFileSync('module.json')).version")
           TAG="v$VERSION"
           if ! gh release view "$TAG" >/dev/null 2>&1; then
-            gh release create "$TAG" --target "$(git rev-parse HEAD)" --title "LipatoS — Parlor $TAG" --notes "LipatoS Parlor v2.2.4: выплата победителю сразу по окончании Farkle в выбранной валюте, подсветка выбранных ботами кубов, проигрышный бросок и надпись Вы обосрались! на 3 секунды, расстояние между группами комбинаций сокращено до трёх пробелов. Манифест: https://github.com/Lipatosha/LipatoS-Parlor/releases/latest/download/module.json . Проверка в Foundry VTT необходима." --latest
+            gh release create "$TAG" --target "$(git rev-parse HEAD)" --title "LipatoS — Parlor $TAG" --notes "LipatoS Parlor v2.2.5: окно настройки новой партии теперь открывается поверх экрана победителя, выбранные обычным игроком кости видны всем участникам через синхронизацию с ведущим. Сохранены автоматические выплаты, подсветка ботов и 3-секундный проигрышный бросок. Манифест: https://github.com/Lipatosha/LipatoS-Parlor/releases/latest/download/module.json . Проверка в Foundry VTT необходима." --latest
           fi
           gh release upload "$TAG" module.json "lipatos-parlor-$TAG.zip" --clobber
