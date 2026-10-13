@@ -5,6 +5,7 @@ import { getGameGuide } from '../../core/GameRegistry.js';
 import { BotManager } from '../../core/BotManager.js';
 import { scoreZonkDice } from './ZonkRules.js';
 import { renderFarkleDie as pipDie } from './FarkleDie.js';
+import { getUpcomingZonkTurns } from './ZonkRoundTurns.js';
 import { renderD6Face } from '../../core/DiceFaces.js';
 
 // Dice markup is intentionally isolated from all other Parlor dice skins.
@@ -217,13 +218,8 @@ export class ZonkTable {
 
         const standings = [...(state.turnOrder || [])].sort((a, b) =>
             (state.playerStates?.[b]?.score || 0) - (state.playerStates?.[a]?.score || 0));
-        // Turn order is authoritative and is independent of the score-sorted roster.
-        // Seats before currentPlayerId have already completed this round.
-        const nextTurnIndex = (state.turnOrder || []).indexOf(state.currentPlayerId);
-        const upcomingOrder = new Map(
-            nextTurnIndex < 0 ? [] : state.turnOrder.slice(nextTurnIndex)
-                .map((id, offset) => [id, nextTurnIndex + offset + 1])
-        );
+        // Keep these numbers in turn order, regardless of scoreboard rank.
+        const upcomingOrder = getUpcomingZonkTurns(state);
         // Show actual seated participants only, up to the supported ten.
         const roster = standings.slice(0, 10).map((id, index) => {
             const p = state.playerStates?.[id] || {};
