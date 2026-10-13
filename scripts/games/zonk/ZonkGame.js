@@ -36,6 +36,7 @@ export class ZonkGame extends GameBase {
         this.turnPoints = 0;
         this.turnPhase = 'needRoll';
         this.rollId = 0;
+        this.rollTimestamp = 0;
         this.pot = 0;
         this.lastRoll = [];
         this.lastEvent = '';
@@ -106,6 +107,7 @@ export class ZonkGame extends GameBase {
             turnPoints: this.turnPoints,
             turnPhase: this.turnPhase,
             rollId: this.rollId,
+            rollTimestamp: this.rollTimestamp,
             pot: this.pot,
             lastRoll: this.lastRoll,
             lastEvent: this.lastEvent,
@@ -124,7 +126,7 @@ export class ZonkGame extends GameBase {
         for (const key of [
             'ante', 'targetScore', 'minBank', 'turnOrder', 'playerStates',
             'currentPlayerId', 'currentDice', 'keptDice', 'keptDiceRows', 'remainingDice', 'turnPoints',
-            'turnPhase', 'rollId', 'pot', 'lastRoll', 'lastEvent', 'winnerIds',
+            'turnPhase', 'rollId', 'rollTimestamp', 'pot', 'lastRoll', 'lastEvent', 'winnerIds',
             'finalTurnsRemaining', 'settlementApplied', 'started', 'lastError',
             'history', 'historySequence'
         ]) {
@@ -145,6 +147,7 @@ export class ZonkGame extends GameBase {
             this.currentDice = Array.from({ length: this.remainingDice }, () => rollD6(this._rng));
             this.lastRoll = [...this.currentDice];
             this.rollId++;
+            this.rollTimestamp = Date.now();
             this._record('roll', participantId, { dice: [...this.currentDice] });
             this.turnPhase = 'choose';
             if (!canScoreZonkRoll(this.currentDice)) {
