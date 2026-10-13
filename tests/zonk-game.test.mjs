@@ -205,3 +205,18 @@ describe('Farkle kept-dice staircase state', () => {
         assert.deepEqual(table.getState().keptDice, [], 'Staircase clears for the next participant');
     });
 });
+
+describe('Farkle six-level bonus-dice capacity', () => {
+    it('fills all twenty-one cells from the bottom across repeated hot-dice throws', async () => {
+        const table = makeGame([1, 1, 1, 1, 1, 1]);
+        await table.start();
+        for (const expected of [6, 12, 18, 21, 21]) {
+            assert.equal(table.handlePlayerAction('p1', 'roll').ok, true);
+            assert.equal(table.handlePlayerAction('p1', 'keep', { indices: [0, 1, 2, 3, 4, 5] }).ok, true);
+            assert.equal(table.getState().keptDice.length, expected);
+        }
+        table.handlePlayerAction('p1', 'bank');
+        assert.deepEqual(table.getState().keptDice, []);
+        assert.equal(table.currentPlayerId, 'p2');
+    });
+});
