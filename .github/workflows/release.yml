@@ -1,4 +1,5 @@
 # v2.2.2: winner/rematch with wager settings, full-width roll field and 3-second bot choice delay.
+# Re-validate v2.2.2 rematch handler order assertions.
 # Release verification: shared D6 assets load ahead of Farkle widescreen CSS.
 name: Publish Foundry module
 on:
