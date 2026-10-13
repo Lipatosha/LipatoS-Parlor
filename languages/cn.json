@@ -2473,7 +2473,8 @@
       "RematchCancel": "取消",
       "RematchInvalid": "请输入 1 到 100000 的入场费。",
       "RematchInsufficient": "一名或多名玩家无法支付新入场费。",
-      "RematchFailed": "无法开始新对局。"
+      "RematchFailed": "无法开始新对局。",
+      "UpcomingTurn": "回合顺序：{number}"
     },
     "Currency": {
       "Gold": "金币",
