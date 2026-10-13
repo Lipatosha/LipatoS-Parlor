@@ -1,4 +1,5 @@
 # v2.2.0: 16:9 Farkle with original Foundry dice.wav and no DSN integration.
+# Release verification: shared D6 assets load ahead of Farkle widescreen CSS.
 name: Publish Foundry module
 on:
   push:
