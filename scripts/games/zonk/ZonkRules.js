@@ -66,7 +66,10 @@ export function scoreZonkDice(dice) {
             }
             if (remaining[face] >= 3) {
                 const taken = Array(7).fill(0);
-                for (let length = 3; length <= remaining[face]; length++) {
+                // A four/five/six-of-a-kind is one fixed-value combination,
+                // never a triple plus loose singles from the same matching group.
+                for (let length = remaining[face] >= 4 ? remaining[face] : 3;
+                    length <= remaining[face]; length++) {
                     taken[face] = length;
                     const points = length === 3 ? (face === 1 ? 1000 : face * 100)
                         : length === 4 ? FARKLE_SCORE.fourKind
