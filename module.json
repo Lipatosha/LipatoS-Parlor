@@ -1,8 +1,8 @@
 {
   "id": "parlor",
   "title": "LipatoS — Parlor",
-  "description": "Казино Аиндора для Foundry VTT: Farkle переработан под 16:9, три колонки, 10 игроков, история справа, стандартный звук броска dice.wav, без Dice So Nice!",
-  "version": "2.2.0",
+  "description": "Казино Аиндора: Farkle 16:9 — история ходов под полем, полный справочник комбинаций справа, пропуск хода внизу панели игроков, две кнопки управления.",
+  "version": "2.2.1",
   "manifest": "https://github.com/Lipatosha/LipatoS-Parlor/releases/latest/download/module.json",
   "url": "https://github.com/Lipatosha/LipatoS-Parlor",
   "compatibility": {
@@ -54,5 +54,5 @@
       "path": "languages/ru.json"
     }
   ],
-  "download": "https://github.com/Lipatosha/LipatoS-Parlor/releases/download/v2.2.0/lipatos-parlor-v2.2.0.zip"
+  "download": "https://github.com/Lipatosha/LipatoS-Parlor/releases/download/v2.2.1/lipatos-parlor-v2.2.1.zip"
 }
