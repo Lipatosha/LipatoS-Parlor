@@ -592,7 +592,7 @@ export class BotManager {
             const points = Number(state.turnPoints || 0);
             const mode = this.getBotMode(state, id);
             const threshold = mode === 'win' ? 650 : mode === 'lose' ? 1300 : 850;
-            if (points >= (state.minBank || 300) && (
+            if (points >= Number(state.minBank ?? 0) && (
                 points >= threshold ||
                 (state.remainingDice <= 2 && Math.random() < .8)
             )) {
