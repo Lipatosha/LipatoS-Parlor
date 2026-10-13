@@ -14,8 +14,8 @@ const GAME_GUIDE_TEXT = {
             summary: 'Farkle is a six-dice push-your-luck tavern game for 2–10 players with a shared prize pot.',
             flow: [
                 'Each player pays one entry fee. On your turn, roll six dice and choose at least one scoring combination.',
-                'Each time you keep dice, those dice occupy a NEW tier of the staircase: first the bottom six-slot row, then five, four, three, two and one. Empty spaces in earlier tiers stay empty. If the remaining tiers cannot fit a selected combination, the visual rack starts over without losing the turn score.',
-                'After reaching 300 unbanked points you may bank your score or roll the remaining dice again.',
+                'Scoring combinations that you keep are recorded in the turn history, along with their dice and points.',
+                'There is no minimum score to bank: after keeping any scoring combination you may bank your points or roll the remaining dice again.',
                 'After scoring all six dice in a roll you can roll all six again. A roll with no scoring dice is a Farkle and loses your unbanked turn points.',
                 'When a player reaches the target, every opponent receives one final turn.'
             ],
@@ -33,8 +33,8 @@ const GAME_GUIDE_TEXT = {
             summary: 'Farkle 是供 2–10 位玩家参与的六骰冒险游戏，所有底注构成共同奖池。',
             flow: [
                 '所有玩家各付一次底注。每回合掷六枚骰子并选择有效计分组合。',
-                '每次保留骰子都从新的一层开始：底层六格，然后依次往上五、四、三、二、一格；上一层空格不补填。剩余层数容不下整组骰子时，仅重置阶梯显示，回合积分保留。',
-                '本回合累计至少 300 分可以存分，也可以继续掷剩余骰子。',
+                '每次保留的有效组合、骰子和积分都会记录在回合历史中。',
+                '没有最低存分门槛：保留任何有效组合后都可以存分或继续投掷剩余骰子。',
                 '若一轮投出的六颗骰子全部计分，可以再次投六颗。若投掷结果没有任何得分骰子，则发生 Farkle，丢失本回合未存的分数。',
                 '达到目标分数后其他玩家各有一次最后回合。'
             ],
