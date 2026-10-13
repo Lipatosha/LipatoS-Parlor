@@ -1,4 +1,4 @@
-# v2.1.9: real DSN Farkle roll with scoped blue-stone appearance and runtime hold, corrected tests.
+# v2.2.0: 16:9 Farkle with original Foundry dice.wav and no DSN integration.
 name: Publish Foundry module
 on:
   push:
@@ -65,6 +65,6 @@ jobs:
           VERSION=$(node -p "JSON.parse(require('fs').readFileSync('module.json')).version")
           TAG="v$VERSION"
           if ! gh release view "$TAG" >/dev/null 2>&1; then
-            gh release create "$TAG" --target "$(git rev-parse HEAD)" --title "LipatoS — Parlor $TAG" --notes "LipatoS Parlor v2.1.9: реальные анимированные 3D-кубики Dice So Nice! используются в Farkle как основной бросок. Синий камень #2845cc, белые надписи; 3D удерживаются до выбора костей, авто-скрытие DSN восстанавливается после броска. Сохранены английский и китайский языки. Манифест: https://github.com/Lipatosha/LipatoS-Parlor/releases/latest/download/module.json . Автоматические тесты пройдены; проверка в запущенном Foundry VTT остаётся необходимой." --latest
+            gh release create "$TAG" --target "$(git rev-parse HEAD)" --title "LipatoS — Parlor $TAG" --notes "LipatoS Parlor v2.2.0: полный интерфейс Farkle 16:9, 21/54/25 колонки, список до 10 игроков, 21 ячейка 1–2–3–4–5–6 слева, история и комбинации справа, стандартный dice.wav и никаких вызовов Dice So Nice! в Farkle. Сохранены английский и китайский языки. Манифест: https://github.com/Lipatosha/LipatoS-Parlor/releases/latest/download/module.json . Автоматические тесты пройдены; проверка в запущенном Foundry VTT остаётся необходимой." --latest
           fi
           gh release upload "$TAG" module.json "lipatos-parlor-$TAG.zip" --clobber
